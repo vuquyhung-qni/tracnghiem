@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@700;800&display=swap" rel="stylesheet">
 
-<!-- Thư viện cho xuất Word và Excel -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.8.2/docx.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
@@ -235,16 +234,16 @@ img{display:block;max-width:100%}
 .welcome-badge-val{font-size:1.6rem;font-weight:800;color:var(--gold2);line-height:1}
 .welcome-badge-label{font-size:.7rem;color:rgba(255,255,255,.5);margin-top:2px}
 
-/* ═══════════════ BANK SELECT DROPDOWN ════════════════ */
+/* ═══════════════ DROPDOWN BỘ ĐỀ MỚI ════════════════ */
 .bank-select{
-  width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:9px;
+  width:100%;padding:14px 16px;border:1.5px solid var(--border);border-radius:9px;
   font-size:.95rem;font-weight:600;color:var(--text);background:var(--surface2);
   outline:none;cursor:pointer;appearance:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234a5c7a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right 16px center;padding-right:40px;
   margin-bottom:8px;transition:border-color .2s;
 }
-.bank-select:focus{border-color:var(--c5);background:var(--surface)}
+.bank-select:focus{border-color:var(--c5);background:var(--surface);box-shadow:0 0 0 3px var(--c8)}
 
 /* ═══════════════ MODE BUTTONS ════════════════ */
 .mode-row{display:flex;gap:10px;margin-bottom:16px}
@@ -715,7 +714,7 @@ img{display:block;max-width:100%}
             Chọn bộ đề
           </span>
         </div>
-        <!-- Dropdown thay thế cho Grid -->
+        <!-- DANH SÁCH DROPDOWN BỘ ĐỀ -->
         <select id="bankSelect" class="bank-select">
           <option value="">Đang tải danh sách bộ đề...</option>
         </select>
@@ -918,14 +917,11 @@ img{display:block;max-width:100%}
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════
-// CẤU HÌNH — HÃY THAY ĐỔI URL DƯỚI ĐÂY
-// ═══════════════════════════════════════════════════
+// =======================================================
+// NHỚ THAY ĐƯỜNG LINK GAS_URL (TỪ BƯỚC 1) VÀO DƯỚI ĐÂY
+// =======================================================
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbzpm6N6jX4P91QDiPqdXLH0g-KCxIGIZ1_x82rc16K13Uqo8qGq1PqVym_ovMCbR9zN/exec';
 
-// ═══════════════════════════════════════════════════
-// HÀM MÃ HÓA MẬT KHẨU SHA-256 (CLIENT-SIDE)
-// ═══════════════════════════════════════════════════
 async function sha256(message) {
   const msgBuffer = new TextEncoder().encode(message);
   const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
@@ -933,12 +929,9 @@ async function sha256(message) {
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-// ═══════════════════════════════════════════════════
-// API GỌI GOOGLE APPS SCRIPT (CÓ TIMEOUT & ABORT)
-// ═══════════════════════════════════════════════════
 async function callGAS(p){
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 giây timeout
+  const timeoutId = setTimeout(() => controller.abort(), 15000);
   
   try {
     const r = await fetch(GAS_URL, {
@@ -959,17 +952,11 @@ async function callGAS(p){
   }
 }
 
-// ═══════════════════════════════════════════════════
-// STATE QUẢN LÝ
-// ═══════════════════════════════════════════════════
 const S = {
   user: null, allBanks: [], mode: 'study', examCount: 30,
   quizData: null, answers: {}, timerIv: null, timeLeft: 0,
 };
 
-// ═══════════════════════════════════════════════════
-// HELPERS
-// ═══════════════════════════════════════════════════
 const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const letter = i => String.fromCharCode(65+i);
 const fmtDate = v => { if(!v) return '—'; const d=new Date(v); return `${d.getDate()}/${d.getMonth()+1} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; };
@@ -980,19 +967,13 @@ const canSeeUnit = r => ['admin','manager','truong_don_vi'].includes(r);
 
 document.title = "Hệ thống Thi Trắc nghiệm - Chi cục Hải quan khu vực VIII";
 
-// ═══════════════════════════════════════════════════
-// APP CONTROLLER
-// ═══════════════════════════════════════════════════
 const App = {
-
-  /* ─── INIT ─────────────────────────────────── */
   init(){
     const saved = localStorage.getItem('qz_user');
     if(saved){ S.user=JSON.parse(saved); this.afterLogin(); }
     document.getElementById('loginPassword').addEventListener('keydown',e=>{ if(e.key==='Enter') this.login(); });
   },
 
-  /* ─── SCREENS ──────────────────────────────── */
   goto(id){
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
@@ -1022,13 +1003,12 @@ const App = {
   },
   hideAlert(id){ document.getElementById(id).className='alert alert-hidden'; },
 
-  /* ─── AUTH ─────────────────────────────────── */
   async login(){
     const username=document.getElementById('loginUsername').value.trim();
     const plainPass=document.getElementById('loginPassword').value;
     if(!username||!plainPass){ this.showLoginAlert('Vui lòng nhập đầy đủ','err'); return; }
     
-    this.showLoading('Đang mã hóa & đăng nhập...');
+    this.showLoading('Đang đăng nhập...');
     try{
       const hashedPass = await sha256(plainPass);
       const res = await callGAS({ action: 'login', username, password: hashedPass });
@@ -1040,7 +1020,7 @@ const App = {
         if(res.user.isDefaultPass){
           document.getElementById('chpwUsername').value=username;
           this.showModal('modal-chpw',true);
-          this.showAlert('chpwAlert','Vui lòng đổi mật khẩu mặc định trước khi sử dụng','info');
+          this.showAlert('chpwAlert','Vui lòng đổi mật khẩu mặc định','info');
         }
         this.afterLogin();
       }
@@ -1094,7 +1074,7 @@ const App = {
     if(n!==c){ this.showAlert('chpwAlert','Mật khẩu xác nhận không khớp'); return; }
     if(n.length<6){ this.showAlert('chpwAlert','Mật khẩu mới phải ≥ 6 ký tự'); return; }
     
-    this.showLoading('Đang mã hóa & xử lý...');
+    this.showLoading('Đang xử lý...');
     try{
       const hashedOld = await sha256(o);
       const hashedNew = await sha256(n);
@@ -1109,7 +1089,6 @@ const App = {
     this.hideLoading();
   },
 
-  /* ─── DASHBOARD ────────────────────────────── */
   async loadDashboard(){
     try{
       const res=await callGAS({action:'getHistory',username:S.user.username});
@@ -1136,14 +1115,13 @@ const App = {
     }catch(e){}
   },
 
-  /* ─── BANKS & QUIZ ─────────────────────────── */
   async loadBanks(){
     if(S.allBanks.length){ this.renderBanks(S.allBanks); return; }
     try{
       const res=await callGAS({action:'getBanks'});
       if(res.ok){ S.allBanks=res.banks; this.renderBanks(res.banks); }
       else document.getElementById('bankSelect').innerHTML='<option value="">Lỗi: '+esc(res.msg)+'</option>';
-    }catch(e){ document.getElementById('bankSelect').innerHTML='<option value="">Lỗi kết nối</option>'; }
+    }catch(e){ document.getElementById('bankSelect').innerHTML='<option value="">Lỗi kết nối tới Server</option>'; }
   },
 
   renderBanks(banks){
@@ -1176,7 +1154,7 @@ const App = {
   async startQuiz(){
     const sel = document.getElementById('bankSelect');
     if(!sel || !sel.value) {
-      this.showAlert('dashAlert', 'Vui lòng chọn 1 bộ đề để bắt đầu');
+      this.showAlert('dashAlert', 'Vui lòng bấm vào danh sách phía trên để chọn 1 bộ đề!');
       return;
     }
     
@@ -1366,7 +1344,6 @@ const App = {
     document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   },
 
-  /* ─── THỐNG KÊ ─────────────────────────────── */
   async loadMyStats(){
     document.getElementById('myHistoryBody').innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text3)">Đang tải...</td></tr>';
     try{
@@ -1469,243 +1446,63 @@ const App = {
     }catch(e){ document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--r1);padding:20px">Lỗi kết nối</td></tr>'; }
   },
 
-  /* ─── XUẤT WORD ─────────────────────────────── */
   async exportToWord() {
-    if (!S.quizData || !S.quizData.questions) {
-      alert('Không có dữ liệu kết quả để xuất');
-      return;
-    }
-
+    if (!S.quizData || !S.quizData.questions) { alert('Không có dữ liệu để xuất'); return; }
     this.showLoading('Đang tạo file Word...');
-
     try {
-      const { Document, Paragraph, TextRun, HeadingLevel, AlignmentType, Table, TableRow, TableCell, WidthType, BorderStyle } = docx;
-      
+      const { Document, Paragraph, TextRun, HeadingLevel, AlignmentType } = docx;
       const resultScore = document.getElementById('resultScore').textContent;
       const resultScore10 = document.getElementById('resultScore10').textContent;
-      const bankName = S.quizData.bankName || 'Bài thi trắc nghiệm';
-      const userName = S.user.fullname || S.user.username;
-      const currentDate = new Date().toLocaleDateString('vi-VN');
-      const headerD1 = S.quizData.headerLines?.d1 || '';
-      const headerD2 = S.quizData.headerLines?.d2 || '';
-      const headerD3 = S.quizData.headerLines?.d3 || bankName;
-
       const doc = new Document({
         sections: [{
           properties: {},
           children: [
-            new Paragraph({
-              text: headerD1 || "CHI CỤC HẢI QUAN KHU VỰC VIII",
-              heading: HeadingLevel.HEADING_1,
-              alignment: AlignmentType.CENTER,
-              spacing: { after: 200 }
-            }),
-            new Paragraph({
-              text: headerD2 || "KẾT QUẢ BÀI THI TRẮC NGHIỆM",
-              heading: HeadingLevel.HEADING_2,
-              alignment: AlignmentType.CENTER,
-              spacing: { after: 200 }
-            }),
-            new Paragraph({
-              text: headerD3,
-              heading: HeadingLevel.HEADING_3,
-              alignment: AlignmentType.CENTER,
-              spacing: { after: 400 }
-            }),
-            
-            new Paragraph({
-              children: [
-                new TextRun({ text: "Họ và tên: ", bold: true }),
-                new TextRun(userName)
-              ],
-              spacing: { after: 200 }
-            }),
-            new Paragraph({
-              children: [
-                new TextRun({ text: "Ngày thi: ", bold: true }),
-                new TextRun(currentDate)
-              ],
-              spacing: { after: 200 }
-            }),
-            new Paragraph({
-              children: [
-                new TextRun({ text: "Kết quả: ", bold: true }),
-                new TextRun(resultScore + " - " + resultScore10)
-              ],
-              spacing: { after: 400 }
-            }),
-
-            new Paragraph({
-              text: "CHI TIẾT TỪNG CÂU",
-              heading: HeadingLevel.HEADING_3,
-              spacing: { before: 400, after: 200 }
-            })
+            new Paragraph({ text: S.quizData.headerLines?.d1 || "CHI CỤC HẢI QUAN", heading: HeadingLevel.HEADING_1, alignment: AlignmentType.CENTER }),
+            new Paragraph({ text: S.quizData.headerLines?.d2 || "KẾT QUẢ BÀI THI", heading: HeadingLevel.HEADING_2, alignment: AlignmentType.CENTER }),
+            new Paragraph({ text: S.quizData.headerLines?.d3 || S.quizData.bankName, heading: HeadingLevel.HEADING_3, alignment: AlignmentType.CENTER, spacing: { after: 400 } }),
+            new Paragraph({ text: "CHI TIẾT TỪNG CÂU", heading: HeadingLevel.HEADING_3, spacing: { before: 400, after: 200 } })
           ]
         }]
       });
 
-      const resultDetail = document.querySelectorAll('.rq');
-      resultDetail.forEach((rq, index) => {
-        const question = rq.querySelector('.rq-text').textContent;
-        const score = rq.querySelector('.rq-score').textContent;
-        const options = rq.querySelectorAll('.ropt');
-        const explain = rq.querySelector('.rexplain');
-        
-        doc.sections[0].children.push(
-          new Paragraph({
-            children: [
-              new TextRun({ text: `Câu ${index + 1}: `, bold: true }),
-              new TextRun(question)
-            ],
-            spacing: { before: 200, after: 100 }
-          })
-        );
-
-        options.forEach((opt) => {
-          const text = opt.textContent.trim();
-          const isCorrect = opt.classList.contains('ok');
-          const isWrong = opt.classList.contains('bad');
-          const isMissed = opt.classList.contains('missed');
-          
+      document.querySelectorAll('.rq').forEach((rq, index) => {
+        doc.sections[0].children.push(new Paragraph({ children: [new TextRun({ text: `Câu ${index + 1}: `, bold: true }), new TextRun(rq.querySelector('.rq-text').textContent)], spacing: { before: 200, after: 100 } }));
+        rq.querySelectorAll('.ropt').forEach((opt) => {
           let prefix = '  ';
-          if (isCorrect) prefix = '  ✓ ';
-          if (isWrong) prefix = '  ✗ ';
-          if (isMissed) prefix = '  ! ';
-
-          doc.sections[0].children.push(
-            new Paragraph({
-              text: prefix + text,
-              spacing: { after: 50 }
-            })
-          );
+          if (opt.classList.contains('ok')) prefix = '  ✓ ';
+          if (opt.classList.contains('bad')) prefix = '  ✗ ';
+          if (opt.classList.contains('missed')) prefix = '  ! ';
+          doc.sections[0].children.push(new Paragraph({ text: prefix + opt.textContent.trim(), spacing: { after: 50 } }));
         });
-
-        doc.sections[0].children.push(
-          new Paragraph({
-            children: [
-              new TextRun({ text: `Điểm: ${score}`, bold: true })
-            ],
-            spacing: { after: 100 }
-          })
-        );
-
-        if (explain) {
-          doc.sections[0].children.push(
-            new Paragraph({
-              children: [
-                new TextRun({ text: "💡 Giải thích: ", bold: true, italics: true }),
-                new TextRun({ text: explain.textContent.replace('💡 ', ''), italics: true })
-              ],
-              spacing: { after: 200 }
-            })
-          );
-        }
+        doc.sections[0].children.push(new Paragraph({ children: [new TextRun({ text: `Điểm: ${rq.querySelector('.rq-score').textContent}`, bold: true })], spacing: { after: 100 } }));
       });
-
       const blob = await docx.Packer.toBlob(doc);
-      saveAs(blob, `ket-qua-thi-${userName}-${Date.now()}.docx`);
-      
+      saveAs(blob, `Ket-qua-${S.user.username}-${Date.now()}.docx`);
       this.hideLoading();
-      alert('Đã xuất file Word thành công!');
-    } catch (e) {
-      this.hideLoading();
-      alert('Lỗi khi xuất Word: ' + e.message);
-      console.error(e);
-    }
+    } catch (e) { this.hideLoading(); alert('Lỗi: ' + e.message); }
   },
 
-  /* ─── XUẤT EXCEL ────────────────────────────── */
   exportToExcel() {
-    if (!S.quizData || !S.quizData.questions) {
-      alert('Không có dữ liệu kết quả để xuất');
-      return;
-    }
-
-    this.showLoading('Đang tạo file Excel...');
-
+    if (!S.quizData || !S.quizData.questions) { alert('Không có dữ liệu để xuất'); return; }
+    this.showLoading('Đang tạo Excel...');
     try {
-      const resultScore = document.getElementById('resultScore').textContent;
-      const resultScore10 = document.getElementById('resultScore10').textContent;
-      const bankName = S.quizData.bankName || 'Bài thi trắc nghiệm';
-      const userName = S.user.fullname || S.user.username;
-      const currentDate = new Date().toLocaleDateString('vi-VN');
-      const headerD1 = S.quizData.headerLines?.d1 || 'CHI CỤC HẢI QUAN KHU VỰC VIII';
-      const headerD2 = S.quizData.headerLines?.d2 || 'KẾT QUẢ BÀI THI TRẮC NGHIỆM';
-      const headerD3 = S.quizData.headerLines?.d3 || bankName;
-
-      const data = [
-        [headerD1],
-        [headerD2],
-        [headerD3],
-        [],
-        ['Họ và tên:', userName],
-        ['Ngày thi:', currentDate],
-        ['Kết quả:', resultScore + ' - ' + resultScore10],
-        [],
-        ['STT', 'Câu hỏi', 'Đáp án đúng', 'Đáp án của bạn', 'Điểm', 'Giải thích']
-      ];
-
-      const resultDetail = document.querySelectorAll('.rq');
-      resultDetail.forEach((rq, index) => {
-        const question = rq.querySelector('.rq-text').textContent;
-        const score = rq.querySelector('.rq-score').textContent;
-        const options = rq.querySelectorAll('.ropt');
-        const explain = rq.querySelector('.rexplain');
-        
-        let correctAnswers = [];
-        let userAnswers = [];
-        
-        options.forEach((opt) => {
+      const data = [['STT', 'Câu hỏi', 'Đáp án đúng', 'Đáp án của bạn', 'Điểm']];
+      document.querySelectorAll('.rq').forEach((rq, index) => {
+        let correctAnswers = [], userAnswers = [];
+        rq.querySelectorAll('.ropt').forEach((opt) => {
           const text = opt.textContent.trim();
-          if (opt.classList.contains('ok')) {
-            correctAnswers.push(text);
-            userAnswers.push(text);
-          } else if (opt.classList.contains('bad')) {
-            userAnswers.push(text);
-          } else if (opt.classList.contains('missed')) {
-            correctAnswers.push(text);
-          }
+          if (opt.classList.contains('ok')) { correctAnswers.push(text); userAnswers.push(text); } 
+          else if (opt.classList.contains('bad')) { userAnswers.push(text); } 
+          else if (opt.classList.contains('missed')) { correctAnswers.push(text); }
         });
-
-        data.push([
-          index + 1,
-          question,
-          correctAnswers.join('; '),
-          userAnswers.join('; '),
-          score,
-          explain ? explain.textContent.replace('💡 ', '') : ''
-        ]);
+        data.push([index + 1, rq.querySelector('.rq-text').textContent, correctAnswers.join('; '), userAnswers.join('; '), rq.querySelector('.rq-score').textContent]);
       });
-
       const ws = XLSX.utils.aoa_to_sheet(data);
-      
-      ws['!merges'] = [
-        { s: { r: 0, c: 0 }, e: { r: 0, c: 5 } }, 
-        { s: { r: 1, c: 0 }, e: { r: 1, c: 5 } }, 
-        { s: { r: 2, c: 0 }, e: { r: 2, c: 5 } }  
-      ];
-
-      ws['!cols'] = [
-        { wch: 5 },   
-        { wch: 60 },  
-        { wch: 30 },  
-        { wch: 30 },  
-        { wch: 15 },  
-        { wch: 40 }   
-      ];
-
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, "Kết quả");
-      
-      XLSX.writeFile(wb, `ket-qua-thi-${userName}-${Date.now()}.xlsx`);
-      
+      XLSX.writeFile(wb, `Ket-qua-${S.user.username}-${Date.now()}.xlsx`);
       this.hideLoading();
-      alert('Đã xuất file Excel thành công!');
-    } catch (e) {
-      this.hideLoading();
-      alert('Lỗi khi xuất Excel: ' + e.message);
-      console.error(e);
-    }
+    } catch (e) { this.hideLoading(); alert('Lỗi: ' + e.message); }
   }
 };
 
