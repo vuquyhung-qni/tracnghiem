@@ -6,6 +6,12 @@
 <title>Hệ thống Thi Trắc nghiệm - Chi cục Hải quan khu vực VIII</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@700;800&display=swap" rel="stylesheet">
+```html
+<!-- Thư viện cho xuất Word và Excel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.8.2/docx.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+```
 <style>
 /* ═══════════════ DESIGN TOKENS ════════════════ */
 :root{
@@ -480,8 +486,15 @@ img{display:block;max-width:100%}
 .loading-box p{font-size:.85rem;color:var(--text2);font-weight:600}
 
 /* ═══════════════ RESPONSIVE ════════════════ */
+```css
 @media(max-width:768px){
-  .sidebar{position:fixed;inset:0 auto 0 0;transform:translateX(-100%);transition:transform .25s}
+  .sidebar{
+    position:fixed;
+    inset:0 auto 0 0;
+    transform:translateX(-100%);
+    transition:transform .25s;
+    z-index:400;
+  }
   .sidebar.open{transform:translateX(0)}
   .burger{display:flex}
   .layout{display:block}
@@ -493,13 +506,99 @@ img{display:block;max-width:100%}
   .result-stats-row{grid-template-columns:1fr 1fr}
   .rank-hero{grid-template-columns:1fr}
   .stat-grid{grid-template-columns:1fr 1fr}
-  .welcome-hero{grid-template-columns:1fr}
-  .welcome-badge{display:none}
+  .welcome-hero{flex-direction:column;text-align:center}
+  .welcome-badge{margin-top:16px}
+  .bank-grid{grid-template-columns:1fr}
+  .mode-row{flex-direction:column}
+  .count-chips{justify-content:center}
 }
 @media(max-width:400px){
   .stat-grid{grid-template-columns:1fr}
   .result-stats-row{grid-template-columns:1fr}
 }
+```
+
+}
+@media(max-width:400px){
+  .stat-grid{grid-template-columns:1fr}
+  .result-stats-row{grid-template-columns:1fr}
+}
+```css
+/* ═══════════════ PRINT STYLES ════════════════ */
+@media print {
+  /* Ẩn các phần không cần in */
+  .sidebar, .topbar, .btn-back, .btn-print, .btn-export-word, .btn-export-excel, .nav-item, .burger {
+    display: none !important;
+  }
+  
+  /* Tối ưu cho in */
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .main {
+    padding: 0;
+    display: block;
+  }
+  
+  .page-body {
+    padding: 20px;
+  }
+  
+  .result-hero, .rq {
+    page-break-inside: avoid;
+  }
+  
+  .result-hero {
+    background: white !important;
+    border: 2px solid #333;
+    color: black !important;
+  }
+  
+  .result-score-big, .result-score10, .donut-pct {
+    color: black !important;
+  }
+  
+  .card {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+}
+
+/* ═══════════════ BUTTON STYLES ════════════════ */
+.btn-print, .btn-export-word, .btn-export-excel {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 9px;
+  font-size: .88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity .2s, transform .1s;
+}
+
+.btn-print {
+  background: var(--c4);
+  color: #fff;
+}
+
+.btn-export-word {
+  background: var(--gold);
+  color: var(--c0);
+}
+
+.btn-export-excel {
+  background: var(--g1);
+  color: #fff;
+}
+
+.btn-print:hover, .btn-export-word:hover, .btn-export-excel:hover {
+  opacity: .9;
+  transform: translateY(-1px);
+}
+```
 </style>
 </head>
 <body>
@@ -737,7 +836,13 @@ img{display:block;max-width:100%}
 
       <div style="font-size:.82rem;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Chi tiết từng câu</div>
       <div id="resultDetail"></div>
-      <button class="btn-back" onclick="App.goto('dashboard')">← Về trang chủ</button>
+      ```html
+<button class="btn-back" onclick="App.goto('dashboard')">← Về trang chủ</button>
+<button class="btn-print" onclick="window.print()">🖨️ In kết quả</button>
+<button class="btn-export-word" onclick="App.exportToWord()">📄 Xuất Word</button>
+<button class="btn-export-excel" onclick="App.exportToExcel()">📊 Xuất Excel</button>
+```
+
     </div>
 
     <div class="screen page-body" id="screen-my-stats">
@@ -1407,8 +1512,262 @@ const App = {
         <td style="text-align:center;font-size:.82rem">${Math.round(r.pass/r.count*100)}%</td></tr>`).join('');
     }catch(e){ document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--r1);padding:20px">Lỗi kết nối</td></tr>'; }
   },
-};
+```javascript
+  /* ─── XUẤT WORD ─────────────────────────────── */
+  async exportToWord() {
+    if (!S.quizData || !S.quizData.questions) {
+      alert('Không có dữ liệu kết quả để xuất');
+      return;
+    }
 
+    this.showLoading('Đang tạo file Word...');
+
+    try {
+      const { Document, Paragraph, TextRun, HeadingLevel, AlignmentType, Table, TableRow, TableCell, WidthType, BorderStyle } = docx;
+      
+      // Lấy thông tin kết quả
+      const resultScore = document.getElementById('resultScore').textContent;
+      const resultScore10 = document.getElementById('resultScore10').textContent;
+      const bankName = S.quizData.bankName || 'Bài thi trắc nghiệm';
+      const userName = S.user.fullname || S.user.username;
+      const currentDate = new Date().toLocaleDateString('vi-VN');
+      const headerD1 = S.quizData.headerLines?.d1 || '';
+      const headerD2 = S.quizData.headerLines?.d2 || '';
+      const headerD3 = S.quizData.headerLines?.d3 || bankName;
+
+      // Tạo document
+      const doc = new Document({
+        sections: [{
+          properties: {},
+          children: [
+            // Header
+            new Paragraph({
+              text: headerD1 || "CHI CỤC HẢI QUAN KHU VỰC VIII",
+              heading: HeadingLevel.HEADING_1,
+              alignment: AlignmentType.CENTER,
+              spacing: { after: 200 }
+            }),
+            new Paragraph({
+              text: headerD2 || "KẾT QUẢ BÀI THI TRẮC NGHIỆM",
+              heading: HeadingLevel.HEADING_2,
+              alignment: AlignmentType.CENTER,
+              spacing: { after: 200 }
+            }),
+            new Paragraph({
+              text: headerD3,
+              heading: HeadingLevel.HEADING_3,
+              alignment: AlignmentType.CENTER,
+              spacing: { after: 400 }
+            }),
+            
+            // Thông tin chung
+            new Paragraph({
+              children: [
+                new TextRun({ text: "Họ và tên: ", bold: true }),
+                new TextRun(userName)
+              ],
+              spacing: { after: 200 }
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({ text: "Ngày thi: ", bold: true }),
+                new TextRun(currentDate)
+              ],
+              spacing: { after: 200 }
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({ text: "Kết quả: ", bold: true }),
+                new TextRun(resultScore + " - " + resultScore10)
+              ],
+              spacing: { after: 400 }
+            }),
+
+            // Chi tiết từng câu
+            new Paragraph({
+              text: "CHI TIẾT TỪNG CÂU",
+              heading: HeadingLevel.HEADING_3,
+              spacing: { before: 400, after: 200 }
+            })
+          ]
+        }]
+      });
+
+      // Thêm chi tiết từng câu
+      const resultDetail = document.querySelectorAll('.rq');
+      resultDetail.forEach((rq, index) => {
+        const question = rq.querySelector('.rq-text').textContent;
+        const score = rq.querySelector('.rq-score').textContent;
+        const options = rq.querySelectorAll('.ropt');
+        const explain = rq.querySelector('.rexplain');
+        
+        doc.sections[0].children.push(
+          new Paragraph({
+            children: [
+              new TextRun({ text: `Câu ${index + 1}: `, bold: true }),
+              new TextRun(question)
+            ],
+            spacing: { before: 200, after: 100 }
+          })
+        );
+
+        options.forEach((opt) => {
+          const text = opt.textContent.trim();
+          const isCorrect = opt.classList.contains('ok');
+          const isWrong = opt.classList.contains('bad');
+          const isMissed = opt.classList.contains('missed');
+          
+          let prefix = '  ';
+          if (isCorrect) prefix = '  ✓ ';
+          if (isWrong) prefix = '  ✗ ';
+          if (isMissed) prefix = '  ! ';
+
+          doc.sections[0].children.push(
+            new Paragraph({
+              text: prefix + text,
+              spacing: { after: 50 }
+            })
+          );
+        });
+
+        doc.sections[0].children.push(
+          new Paragraph({
+            children: [
+              new TextRun({ text: `Điểm: ${score}`, bold: true })
+            ],
+            spacing: { after: 100 }
+          })
+        );
+
+        if (explain) {
+          doc.sections[0].children.push(
+            new Paragraph({
+              children: [
+                new TextRun({ text: "💡 Giải thích: ", bold: true, italics: true }),
+                new TextRun({ text: explain.textContent.replace('💡 ', ''), italics: true })
+              ],
+              spacing: { after: 200 }
+            })
+          );
+        }
+      });
+
+      // Xuất file
+      const blob = await docx.Packer.toBlob(doc);
+      saveAs(blob, `ket-qua-thi-${userName}-${Date.now()}.docx`);
+      
+      this.hideLoading();
+      alert('Đã xuất file Word thành công!');
+    } catch (e) {
+      this.hideLoading();
+      alert('Lỗi khi xuất Word: ' + e.message);
+      console.error(e);
+    }
+  },
+```
+};
+```javascript
+  /* ─── XUẤT EXCEL ────────────────────────────── */
+  exportToExcel() {
+    if (!S.quizData || !S.quizData.questions) {
+      alert('Không có dữ liệu kết quả để xuất');
+      return;
+    }
+
+    this.showLoading('Đang tạo file Excel...');
+
+    try {
+      // Lấy thông tin
+      const resultScore = document.getElementById('resultScore').textContent;
+      const resultScore10 = document.getElementById('resultScore10').textContent;
+      const bankName = S.quizData.bankName || 'Bài thi trắc nghiệm';
+      const userName = S.user.fullname || S.user.username;
+      const currentDate = new Date().toLocaleDateString('vi-VN');
+      const headerD1 = S.quizData.headerLines?.d1 || 'CHI CỤC HẢI QUAN KHU VỰC VIII';
+      const headerD2 = S.quizData.headerLines?.d2 || 'KẾT QUẢ BÀI THI TRẮC NGHIỆM';
+      const headerD3 = S.quizData.headerLines?.d3 || bankName;
+
+      // Tạo dữ liệu header
+      const data = [
+        [headerD1],
+        [headerD2],
+        [headerD3],
+        [],
+        ['Họ và tên:', userName],
+        ['Ngày thi:', currentDate],
+        ['Kết quả:', resultScore + ' - ' + resultScore10],
+        [],
+        ['STT', 'Câu hỏi', 'Đáp án đúng', 'Đáp án của bạn', 'Điểm', 'Giải thích']
+      ];
+
+      // Thêm chi tiết từng câu
+      const resultDetail = document.querySelectorAll('.rq');
+      resultDetail.forEach((rq, index) => {
+        const question = rq.querySelector('.rq-text').textContent;
+        const score = rq.querySelector('.rq-score').textContent;
+        const options = rq.querySelectorAll('.ropt');
+        const explain = rq.querySelector('.rexplain');
+        
+        let correctAnswers = [];
+        let userAnswers = [];
+        
+        options.forEach((opt) => {
+          const text = opt.textContent.trim();
+          if (opt.classList.contains('ok')) {
+            correctAnswers.push(text);
+            userAnswers.push(text);
+          } else if (opt.classList.contains('bad')) {
+            userAnswers.push(text);
+          } else if (opt.classList.contains('missed')) {
+            correctAnswers.push(text);
+          }
+        });
+
+        data.push([
+          index + 1,
+          question,
+          correctAnswers.join('; '),
+          userAnswers.join('; '),
+          score,
+          explain ? explain.textContent.replace('💡 ', '') : ''
+        ]);
+      });
+
+      // Tạo workbook
+      const ws = XLSX.utils.aoa_to_sheet(data);
+      
+      // Merge cells cho header
+      ws['!merges'] = [
+        { s: { r: 0, c: 0 }, e: { r: 0, c: 5 } }, // Dòng 1
+        { s: { r: 1, c: 0 }, e: { r: 1, c: 5 } }, // Dòng 2
+        { s: { r: 2, c: 0 }, e: { r: 2, c: 5 } }  // Dòng 3
+      ];
+
+      // Set column widths
+      ws['!cols'] = [
+        { wch: 5 },   // STT
+        { wch: 60 },  // Câu hỏi
+        { wch: 30 },  // Đáp án đúng
+        { wch: 30 },  // Đáp án của bạn
+        { wch: 15 },  // Điểm
+        { wch: 40 }   // Giải thích
+      ];
+
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Kết quả");
+      
+      // Xuất file
+      XLSX.writeFile(wb, `ket-qua-thi-${userName}-${Date.now()}.xlsx`);
+      
+      this.hideLoading();
+      alert('Đã xuất file Excel thành công!');
+    } catch (e) {
+      this.hideLoading();
+      alert('Lỗi khi xuất Excel: ' + e.message);
+      console.error(e);
+    }
+  },
+```
 App.init();
 </script>
 </body>
