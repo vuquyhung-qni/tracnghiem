@@ -308,23 +308,37 @@ img{display:block;max-width:100%}
 .quiz-container {
   display: flex;
   gap: 24px;
-  max-width: 1100px;
+  max-width: 1400px; /* Tăng diện tích hiển thị trên Desktop */
+  width: 100%;
   margin: 0 auto;
   align-items: flex-start;
 }
 
 /* Cột trái: Bảng điều hướng */
 .quiz-left-panel {
-  width: 320px;
+  width: 340px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   position: sticky;
-  top: 78px; /* Dưới thanh topbar */
+  top: 78px; 
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r);
   box-shadow: var(--shadow);
+  padding: 0; /* Bỏ padding tổng để chia box */
+  overflow: hidden;
+}
+
+/* Phần Tiêu đề & Đồng hồ trên cùng */
+.quiz-panel-header {
+  background: var(--surface2);
+  padding: 24px 20px 16px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.quiz-panel-body {
   padding: 20px;
 }
 
@@ -332,19 +346,18 @@ img{display:block;max-width:100%}
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 8px;
-  margin-bottom: 20px;
-  max-height: calc(100vh - 400px);
+  max-height: calc(100vh - 460px);
   overflow-y: auto;
   padding-right: 4px;
 }
 
-/* Nút chọn câu hỏi (CSGT Style) */
+/* Nút chọn câu hỏi */
 .q-dot {
   width: 100%;
   aspect-ratio: 1;
   border-radius: 6px;
   border: 1.5px solid var(--border);
-  background: var(--surface2);
+  background: var(--surface);
   font-size: .9rem;
   font-weight: 700;
   color: var(--text2);
@@ -355,21 +368,20 @@ img{display:block;max-width:100%}
   justify-content: center;
 }
 .q-dot:hover { border-color: var(--c5); color: var(--c4); }
-.q-dot.answered { background: var(--c4); border-color: var(--c4); color: #fff; }
-.q-dot.active { box-shadow: 0 0 0 3px var(--gold2); border-color: var(--c0); }
+.q-dot.answered { background: var(--c9); border-color: var(--c4); color: var(--c4); }
+.q-dot.active { box-shadow: 0 0 0 3px var(--gold2); border-color: var(--gold); color: var(--text); background: var(--gold3); }
 
 /* Footer cột trái (Thời gian & Nộp bài) */
 .quiz-panel-footer {
-  border-top: 1px solid var(--border);
-  padding-top: 20px;
+  padding: 16px 20px 20px;
   text-align: center;
 }
 .timer-clock { 
-  font-size: 2.2rem; 
+  font-size: 2.5rem; 
   font-weight: 800; 
   font-variant-numeric: tabular-nums; 
   color: var(--c1); 
-  margin-bottom: 5px; 
+  line-height: 1.1;
 }
 .timer-clock.warning { color: var(--o1); }
 .timer-clock.danger { color: var(--r1); animation: pulse .6s ease-in-out infinite; }
@@ -387,54 +399,45 @@ img{display:block;max-width:100%}
   border: 1px solid var(--border);
   border-radius: var(--r);
   box-shadow: var(--shadow);
-  padding: 24px;
+  padding: 32px;
 }
 
 /* Logic ẩn hiện câu hỏi */
-.qblock { 
-  display: none; 
-  border: none; 
-  box-shadow: none; 
-  padding: 0; 
-  margin: 0; 
-}
-.qblock.active { 
-  display: block; 
-  animation: fadeIn 0.3s ease; 
-}
+.qblock { display: none; border: none; box-shadow: none; padding: 0; margin: 0; }
+.qblock.active { display: block; animation: fadeIn 0.3s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-.qnum{font-size:.8rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px}
-.qtext{font-size:1.05rem;font-weight:600;color:var(--text);line-height:1.65;margin-bottom:20px}
+.qnum{font-size:.85rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:12px}
+.qtext{font-size:1.1rem;font-weight:600;color:var(--text);line-height:1.65;margin-bottom:24px}
 .opt{
   display:flex;align-items:flex-start;gap:12px;
-  padding:12px 16px;border-radius:8px;border:1.5px solid var(--border);
-  margin-bottom:10px;cursor:pointer;transition:all .15s;
-  font-size:.95rem;font-weight:500;user-select:none;color:var(--text);
+  padding:14px 18px;border-radius:8px;border:1.5px solid var(--border);
+  margin-bottom:12px;cursor:pointer;transition:all .15s;
+  font-size:1rem;font-weight:500;user-select:none;color:var(--text);
 }
 .opt:hover{border-color:var(--c5);background:var(--c9)}
 .opt.selected{border-color:var(--c4);background:var(--c9)}
-.opt input[type=checkbox]{width:18px;height:18px;margin-top:2px;flex-shrink:0;accent-color:var(--c4)}
+.opt input[type=checkbox]{width:20px;height:20px;margin-top:2px;flex-shrink:0;accent-color:var(--c4)}
 
 /* Thanh điều hướng câu */
 .quiz-actions {
   display: flex;
   justify-content: space-between;
-  margin-top: 30px;
-  padding-top: 20px;
+  margin-top: 40px;
+  padding-top: 24px;
   border-top: 1px solid var(--border);
 }
 .btn-nav {
-  padding: 12px 24px;
-  background: var(--surface2);
+  padding: 12px 28px;
+  background: var(--surface);
   border: 1.5px solid var(--border2);
   border-radius: 8px;
   font-weight: 700;
-  color: var(--text);
+  color: var(--text2);
   cursor: pointer;
   transition: all .2s;
 }
-.btn-nav:hover:not(:disabled) { background: var(--c8); border-color: var(--c4); color: var(--c4); }
+.btn-nav:hover:not(:disabled) { background: var(--surface2); border-color: var(--text); color: var(--text); }
 .btn-nav:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .btn-submit{
@@ -444,10 +447,15 @@ img{display:block;max-width:100%}
   font-size:1rem;font-weight:800;letter-spacing:.3px;
   box-shadow:0 4px 16px rgba(15,35,71,.25);
   cursor:pointer;transition:opacity .2s;
-  margin-top: 16px;
 }
 .btn-submit:hover{opacity:.9}
 .btn-submit:disabled{opacity:.5;cursor:not-allowed}
+
+/* Wrapper thu gọn màn hình kết quả */
+.result-container {
+  max-width: 960px;
+  margin: 0 auto;
+}
 
 /* ═══════════════ RESULT ════════════════ */
 .result-hero{
@@ -826,51 +834,52 @@ img{display:block;max-width:100%}
     </div>
 
     <div class="screen page-body" id="screen-quiz-setup">
-      <div class="card">
-        <div class="card-header">
-          <span class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            Chọn bộ đề
-          </span>
-        </div>
-        <select id="bankSelect" class="bank-select">
-          <option value="">Đang tải danh sách bộ đề...</option>
-        </select>
-      </div>
+      <div class="screen page-body" id="screen-quiz">
+      <div class="quiz-container">
+        <!-- CỘT TRÁI: ĐIỀU HƯỚNG & NỘP BÀI -->
+        <div class="quiz-left-panel">
+          
+          <!-- Header cột trái: Tiêu đề & Đồng hồ -->
+          <div class="quiz-panel-header">
+            <div id="quizHeaderLines" style="margin-bottom:16px;">
+              <div id="line1" style="font-weight:600; font-size:.8rem; color:var(--text2)"></div>
+              <div id="line2" style="font-weight:800; font-size:.95rem; color:var(--c1); margin-top:2px;"></div>
+              <div id="line3" style="font-weight:800; font-size:1rem; color:var(--c4); margin-top:6px; text-transform:uppercase;"></div>
+            </div>
+            <div class="timer-clock" id="timerClock">--:--</div>
+          </div>
 
-      <div class="card">
-        <div class="card-header">
-          <span class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
-            Cấu hình bài thi
-          </span>
-        </div>
-        <div class="mode-row">
-          <button class="mode-btn active" id="modeStudy" onclick="App.setMode('study')">
-            📖 Ôn tập<small>Không giới hạn thời gian</small>
-          </button>
-          <button class="mode-btn" id="modeExam" onclick="App.setMode('exam')">
-            📝 Kiểm tra<small>Có đồng hồ đếm ngược</small>
-          </button>
-        </div>
-        <div id="studyCountRow">
-          <div style="font-size:.78rem;font-weight:600;color:var(--text2);margin-bottom:6px">Số câu muốn ôn (5 – 500)</div>
-          <input class="count-input" type="number" id="studyCount" value="30" min="5" max="500">
-        </div>
-        <div id="examCountRow" style="display:none">
-          <div style="font-size:.78rem;font-weight:600;color:var(--text2);margin-bottom:8px">Số câu kiểm tra</div>
-          <div class="count-chips">
-            <button class="chip active" onclick="App.setExamCount(30,this)">30 câu / 30 phút</button>
-            <button class="chip" onclick="App.setExamCount(60,this)">60 câu / 60 phút</button>
-            <button class="chip" onclick="App.setExamCount(90,this)">90 câu / 90 phút</button>
+          <!-- Body cột trái: Bộ đếm & Lưới câu hỏi -->
+          <div class="quiz-panel-body">
+            <div class="q-nav-meta" style="text-align:center; margin-bottom:16px; font-size:.85rem; font-weight:600; color:var(--text2);">
+              Đã trả lời: <b id="answeredCount" style="color:var(--c4)">0</b> / <b id="totalCount">0</b> câu
+            </div>
+            <div class="q-grid-box" id="qDots"></div>
+          </div>
+          
+          <!-- Footer cột trái: Nút Nộp bài -->
+          <div class="quiz-panel-footer">
+            <div class="timer-info" id="timerInfo" style="font-size:0.85rem; font-weight:600; color:var(--text3); margin-bottom: 16px;">Ôn tập</div>
+            <button class="btn-submit" onclick="App.confirmSubmit()">📤 NỘP BÀI</button>
           </div>
         </div>
-        <div class="alert alert-hidden" id="dashAlert"></div>
-        <button class="btn-start" onclick="App.startQuiz()">▶ Bắt đầu thi ngay</button>
+
+        <!-- CỘT PHẢI: NỘI DUNG CÂU HỎI -->
+        <div class="quiz-right-panel">
+          <div class="quiz-body" id="quizBody">
+            <!-- Các block câu hỏi sẽ đổ vào đây -->
+          </div>
+          
+          <!-- Nút điều hướng -->
+          <div class="quiz-actions">
+            <button class="btn-nav" id="btnPrev" onclick="App.prevQ()">⬅ Câu trước</button>
+            <button class="btn-nav" id="btnNext" onclick="App.nextQ()">Câu tiếp theo ➡</button>
+          </div>
+        </div>
       </div>
     </div>
-
-    <!-- MÀN HÌNH LÀM BÀI ĐÃ ĐƯỢC LÀM LẠI THEO GIAO DIỆN CHIA CỘT TỪNG CÂU -->
+ 
+     <!-- MÀN HÌNH LÀM BÀI ĐÃ ĐƯỢC LÀM LẠI THEO GIAO DIỆN CHIA CỘT TỪNG CÂU -->
     <div class="screen page-body" id="screen-quiz">
       <div class="quiz-container">
         <!-- CỘT TRÁI: ĐIỀU HƯỚNG & NỘP BÀI -->
@@ -912,45 +921,50 @@ img{display:block;max-width:100%}
     </div>
 
     <div class="screen page-body" id="screen-result">
-      <div id="printUserInfo" class="print-only"></div>
+      <!-- Mới: Bọc thẻ result-container để thu gọn bề ngang -->
+      <div class="result-container">
+        
+        <div id="printUserInfo" class="print-only"></div>
 
-      <div class="result-hero">
-        <div>
-          <div class="result-score-label">Điểm bài thi</div>
-          <div class="result-score-big" id="resultScore">0 / 10</div>
-          <div class="result-score10" id="resultScore10">Số câu đúng hoàn toàn: 0</div>
-          <div class="result-meta" id="resultMeta"></div>
-        </div>
-        <div class="result-donut">
-          <div class="donut-ring" id="donutWrap">
-            <svg viewBox="0 0 90 90">
-              <circle class="track" cx="45" cy="45" r="38"/>
-              <circle class="prog" id="donutProg" cx="45" cy="45" r="38" stroke-dasharray="0 239"/>
-            </svg>
-            <div class="donut-label">
-              <span class="donut-pct" id="donutPct">0%</span>
-              <span class="donut-sub">đúng</span>
+        <div class="result-hero">
+          <div>
+            <div class="result-score-label">Điểm bài thi</div>
+            <div class="result-score-big" id="resultScore">0 / 10</div>
+            <div class="result-score10" id="resultScore10">Số câu đúng hoàn toàn: 0</div>
+            <div class="result-meta" id="resultMeta"></div>
+          </div>
+          <div class="result-donut">
+            <div class="donut-ring" id="donutWrap">
+              <svg viewBox="0 0 90 90">
+                <circle class="track" cx="45" cy="45" r="38"/>
+                <circle class="prog" id="donutProg" cx="45" cy="45" r="38" stroke-dasharray="0 239"/>
+              </svg>
+              <div class="donut-label">
+                <span class="donut-pct" id="donutPct">0%</span>
+                <span class="donut-sub">đúng</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="late-banner" id="lateBanner">⚠️ Bài thi nộp sau giờ quy định — toàn bộ điểm tính bằng 0.</div>
+        <div class="late-banner" id="lateBanner">⚠️ Bài thi nộp sau giờ quy định — toàn bộ điểm tính bằng 0.</div>
 
-      <div class="result-stats-row">
-        <div class="result-stat"><div class="result-stat-val val-green" id="rs-full-correct">0</div><div class="result-stat-lbl">Đúng hoàn toàn</div></div>
-        <div class="result-stat"><div class="result-stat-val val-blue" id="rs-partial-correct">0</div><div class="result-stat-lbl">Đúng 1 phần</div></div>
-        <div class="result-stat"><div class="result-stat-val val-orange" id="rs-partial-wrong">0</div><div class="result-stat-lbl">Sai 1 phần</div></div>
-        <div class="result-stat"><div class="result-stat-val val-red" id="rs-full-wrong">0</div><div class="result-stat-lbl">Sai hoàn toàn</div></div>
-      </div>
+        <div class="result-stats-row">
+          <div class="result-stat"><div class="result-stat-val val-green" id="rs-full-correct">0</div><div class="result-stat-lbl">Đúng hoàn toàn</div></div>
+          <div class="result-stat"><div class="result-stat-val val-blue" id="rs-partial-correct">0</div><div class="result-stat-lbl">Đúng 1 phần</div></div>
+          <div class="result-stat"><div class="result-stat-val val-orange" id="rs-partial-wrong">0</div><div class="result-stat-lbl">Sai 1 phần</div></div>
+          <div class="result-stat"><div class="result-stat-val val-red" id="rs-full-wrong">0</div><div class="result-stat-lbl">Sai hoàn toàn</div></div>
+        </div>
 
-      <div style="font-size:.82rem;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Chi tiết từng câu</div>
-      <div id="resultDetail"></div>
-      
-      <button class="btn-back" onclick="App.goto('dashboard')">← Về trang chủ</button>
-      <button class="btn-print" onclick="window.print()">🖨️ In kết quả</button>
-      <button class="btn-export-word" onclick="App.exportToWord()">📄 Xuất Word</button>
-      <button class="btn-export-excel" onclick="App.exportToExcel()">📊 Xuất Excel</button>
+        <div style="font-size:.82rem;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Chi tiết từng câu</div>
+        <div id="resultDetail"></div>
+        
+        <button class="btn-back" onclick="App.goto('dashboard')">← Về trang chủ</button>
+        <button class="btn-print" onclick="window.print()">🖨️ In kết quả</button>
+        <button class="btn-export-word" onclick="App.exportToWord()">📄 Xuất Word</button>
+        <button class="btn-export-excel" onclick="App.exportToExcel()">📊 Xuất Excel</button>
+        
+      </div> <!-- Kết thúc result-container -->
     </div>
 
     <div class="screen page-body" id="screen-my-stats">
