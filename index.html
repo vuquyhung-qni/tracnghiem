@@ -245,38 +245,22 @@ img{display:block;max-width:100%}
 }
 .bank-select:focus{border-color:var(--c5);background:var(--surface);box-shadow:0 0 0 3px var(--c8)}
 
-/* ═══════════════ MODE BUTTONS ════════════════ */
-.mode-row{display:flex;gap:10px;margin-bottom:16px}
-.mode-btn{
-  flex:1;padding:13px 10px;border:1.5px solid var(--border);border-radius:9px;
-  background:var(--surface2);font-size:.85rem;font-weight:600;
-  color:var(--text2);text-align:center;cursor:pointer;transition:all .15s;
-}
-.mode-btn:hover{border-color:var(--c5)}
-.mode-btn.active{border-color:var(--c4);background:var(--c9);color:var(--c2)}
-.mode-btn small{display:block;font-size:.7rem;font-weight:400;opacity:.7;margin-top:2px}
-
+/* ═══════════════ COUNT CHIPS ════════════════ */
 .count-chips{display:flex;gap:8px;flex-wrap:wrap}
 .chip{
-  padding:7px 16px;border-radius:50px;
+  padding:8px 18px;border-radius:50px;
   border:1.5px solid var(--border);background:var(--surface2);
-  font-size:.82rem;font-weight:600;cursor:pointer;
+  font-size:.85rem;font-weight:600;cursor:pointer;
   color:var(--text2);transition:all .15s;
 }
 .chip:hover{border-color:var(--c5)}
 .chip.active{background:var(--c4);border-color:var(--c4);color:#fff}
-.count-input{
-  padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);
-  font-size:.92rem;width:120px;outline:none;background:var(--surface2);
-  color:var(--text);
-}
-.count-input:focus{border-color:var(--c5)}
 
 .btn-start{
-  width:100%;margin-top:18px;padding:13px;
+  width:100%;margin-top:18px;padding:14px;
   background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);
   color:var(--c0);border:none;border-radius:9px;
-  font-size:.95rem;font-weight:800;letter-spacing:.3px;
+  font-size:1rem;font-weight:800;letter-spacing:.3px;
   box-shadow:0 4px 16px rgba(212,168,67,.35);
   cursor:pointer;transition:opacity .2s,transform .1s;
 }
@@ -308,7 +292,7 @@ img{display:block;max-width:100%}
 .quiz-container {
   display: flex;
   gap: 24px;
-  max-width: 1400px; /* Tăng diện tích hiển thị trên Desktop */
+  max-width: 1400px;
   width: 100%;
   margin: 0 auto;
   align-items: flex-start;
@@ -326,11 +310,10 @@ img{display:block;max-width:100%}
   border: 1px solid var(--border);
   border-radius: var(--r);
   box-shadow: var(--shadow);
-  padding: 0; /* Bỏ padding tổng để chia box */
+  padding: 0;
   overflow: hidden;
 }
 
-/* Phần Tiêu đề & Đồng hồ trên cùng */
 .quiz-panel-header {
   background: var(--surface2);
   padding: 24px 20px 16px;
@@ -351,7 +334,6 @@ img{display:block;max-width:100%}
   padding-right: 4px;
 }
 
-/* Nút chọn câu hỏi */
 .q-dot {
   width: 100%;
   aspect-ratio: 1;
@@ -371,7 +353,6 @@ img{display:block;max-width:100%}
 .q-dot.answered { background: var(--c9); border-color: var(--c4); color: var(--c4); }
 .q-dot.active { box-shadow: 0 0 0 3px var(--gold2); border-color: var(--gold); color: var(--text); background: var(--gold3); }
 
-/* Footer cột trái (Thời gian & Nộp bài) */
 .quiz-panel-footer {
   padding: 16px 20px 20px;
   text-align: center;
@@ -402,7 +383,6 @@ img{display:block;max-width:100%}
   padding: 32px;
 }
 
-/* Logic ẩn hiện câu hỏi */
 .qblock { display: none; border: none; box-shadow: none; padding: 0; margin: 0; }
 .qblock.active { display: block; animation: fadeIn 0.3s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -419,7 +399,6 @@ img{display:block;max-width:100%}
 .opt.selected{border-color:var(--c4);background:var(--c9)}
 .opt input[type=checkbox]{width:20px;height:20px;margin-top:2px;flex-shrink:0;accent-color:var(--c4)}
 
-/* Thanh điều hướng câu */
 .quiz-actions {
   display: flex;
   justify-content: space-between;
@@ -591,10 +570,8 @@ img{display:block;max-width:100%}
   .stat-grid{grid-template-columns:1fr 1fr}
   .welcome-hero{flex-direction:column;text-align:center}
   .welcome-badge{margin-top:16px}
-  .mode-row{flex-direction:column}
   .count-chips{justify-content:center}
   
-  /* Cập nhật responsive phần Quiz mới */
   .quiz-container { flex-direction: column-reverse; padding: 12px; }
   .quiz-left-panel { width: 100%; position: static; max-height: none; }
   .q-grid-box { grid-template-columns: repeat(6, 1fr); max-height: 250px; }
@@ -826,15 +803,54 @@ img{display:block;max-width:100%}
         </div>
         <div class="tbl-wrap">
           <table class="tbl" id="dashHistoryTable">
-            <thead><tr><th>Thời gian</th><th>Loại</th><th>Bộ đề</th><th>Câu</th><th>Điểm</th><th>HT10</th></tr></thead>
-            <tbody id="dashHistoryBody"><tr><td colspan="6" style="text-align:center;color:var(--text3);padding:20px">Chưa có dữ liệu</td></tr></tbody>
+            <thead><tr><th>Thời gian</th><th>Bộ đề</th><th>Câu</th><th>Điểm</th><th>HT10</th></tr></thead>
+            <tbody id="dashHistoryBody"><tr><td colspan="5" style="text-align:center;color:var(--text3);padding:20px">Chưa có dữ liệu</td></tr></tbody>
           </table>
         </div>
       </div>
     </div>
 
     <div class="screen page-body" id="screen-quiz-setup">
-      <div class="screen page-body" id="screen-quiz">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Chọn bộ đề
+          </span>
+        </div>
+        <select id="bankSelect" class="bank-select">
+          <option value="">Đang tải danh sách bộ đề...</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+            Cấu hình bài thi
+          </span>
+        </div>
+        
+        <div id="examCountRow">
+          <div style="font-size:.85rem;font-weight:700;color:var(--text);margin-bottom:12px;text-transform:uppercase;">CHỌN SỐ CÂU HỎI</div>
+          <div class="count-chips">
+            <button class="chip" onclick="App.setExamCount(5,this)">5 câu</button>
+            <button class="chip" onclick="App.setExamCount(10,this)">10 câu</button>
+            <button class="chip" onclick="App.setExamCount(20,this)">20 câu</button>
+            <button class="chip active" onclick="App.setExamCount(30,this)">30 câu</button>
+            <button class="chip" onclick="App.setExamCount(50,this)">50 câu</button>
+            <button class="chip" onclick="App.setExamCount(60,this)">60 câu</button>
+            <button class="chip" onclick="App.setExamCount(100,this)">100 câu</button>
+          </div>
+        </div>
+        
+        <div class="alert alert-hidden" id="dashAlert"></div>
+        <button class="btn-start" onclick="App.startQuiz()">▶ Tạo bộ đề và làm bài kiểm tra</button>
+      </div>
+    </div>
+
+    <!-- MÀN HÌNH LÀM BÀI ĐÃ ĐƯỢC LÀM LẠI THEO GIAO DIỆN CHIA CỘT TỪNG CÂU -->
+    <div class="screen page-body" id="screen-quiz">
       <div class="quiz-container">
         <!-- CỘT TRÁI: ĐIỀU HƯỚNG & NỘP BÀI -->
         <div class="quiz-left-panel">
@@ -859,7 +875,7 @@ img{display:block;max-width:100%}
           
           <!-- Footer cột trái: Nút Nộp bài -->
           <div class="quiz-panel-footer">
-            <div class="timer-info" id="timerInfo" style="font-size:0.85rem; font-weight:600; color:var(--text3); margin-bottom: 16px;">Ôn tập</div>
+            <div class="timer-info" id="timerInfo" style="font-size:0.85rem; font-weight:600; color:var(--text3); margin-bottom: 16px;">Kiểm tra</div>
             <button class="btn-submit" onclick="App.confirmSubmit()">📤 NỘP BÀI</button>
           </div>
         </div>
@@ -878,50 +894,9 @@ img{display:block;max-width:100%}
         </div>
       </div>
     </div>
- 
-     <!-- MÀN HÌNH LÀM BÀI ĐÃ ĐƯỢC LÀM LẠI THEO GIAO DIỆN CHIA CỘT TỪNG CÂU -->
-    <div class="screen page-body" id="screen-quiz">
-      <div class="quiz-container">
-        <!-- CỘT TRÁI: ĐIỀU HƯỚNG & NỘP BÀI -->
-        <div class="quiz-left-panel">
-          <div class="q-nav-meta" style="text-align:center; margin-bottom:12px; font-size:.8rem; font-weight:600; color:var(--text2);">
-            Đã trả lời: <b id="answeredCount" style="color:var(--c4)">0</b> / <b id="totalCount">0</b> câu
-          </div>
-          
-          <!-- Lưới các nút chọn câu hỏi -->
-          <div class="q-grid-box" id="qDots"></div>
-          
-          <!-- Footer cột trái -->
-          <div class="quiz-panel-footer">
-            <div id="quizHeaderLines" style="margin-bottom:12px;">
-              <div id="line1" style="font-weight:700; font-size:.8rem; color:var(--text2)"></div>
-              <div id="line2" style="font-weight:800; font-size:.9rem; color:var(--c1)"></div>
-              <div id="line3" style="font-weight:800; font-size:.95rem; color:var(--c4); margin-top:4px; text-transform:uppercase;"></div>
-            </div>
-            <div class="timer-clock" id="timerClock">--:--</div>
-            <div class="timer-info" id="timerInfo" style="font-size:0.8rem; font-weight:600; color:var(--text3);">Ôn tập</div>
-            
-            <button class="btn-submit" onclick="App.confirmSubmit()">📤 NỘP BÀI</button>
-          </div>
-        </div>
-
-        <!-- CỘT PHẢI: NỘI DUNG CÂU HỎI -->
-        <div class="quiz-right-panel">
-          <div class="quiz-body" id="quizBody">
-            <!-- Các block câu hỏi sẽ đổ vào đây, hiển thị từng câu một qua css .qblock.active -->
-          </div>
-          
-          <!-- Nút điều hướng -->
-          <div class="quiz-actions">
-            <button class="btn-nav" id="btnPrev" onclick="App.prevQ()">⬅ Câu trước</button>
-            <button class="btn-nav" id="btnNext" onclick="App.nextQ()">Câu tiếp theo ➡</button>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div class="screen page-body" id="screen-result">
-      <!-- Mới: Bọc thẻ result-container để thu gọn bề ngang -->
+      <!-- Wrapper thu gọn màn hình kết quả -->
       <div class="result-container">
         
         <div id="printUserInfo" class="print-only"></div>
@@ -980,8 +955,8 @@ img{display:block;max-width:100%}
         </div>
         <div class="tbl-wrap">
           <table class="tbl">
-            <thead><tr><th>#</th><th>Thời gian</th><th>Loại</th><th>Bộ đề</th><th>Số câu</th><th>Điểm gốc</th><th>HT10</th></tr></thead>
-            <tbody id="myHistoryBody"><tr><td colspan="7" style="text-align:center;color:var(--text3);padding:20px">Đang tải...</td></tr></tbody>
+            <thead><tr><th>#</th><th>Thời gian</th><th>Bộ đề</th><th>Số câu</th><th>Điểm gốc</th><th>HT10</th></tr></thead>
+            <tbody id="myHistoryBody"><tr><td colspan="6" style="text-align:center;color:var(--text3);padding:20px">Đang tải...</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -1012,11 +987,6 @@ img{display:block;max-width:100%}
       <div class="filter-bar">
         <select id="filterUnit" onchange="App.loadAllStats()">
           <option value="">— Tất cả đơn vị —</option>
-        </select>
-        <select id="filterMode" onchange="App.loadAllStats()">
-          <option value="">— Tất cả loại hình —</option>
-          <option value="Ôn tập">Ôn tập</option>
-          <option value="Kiểm tra">Kiểm tra</option>
         </select>
         <input type="date" id="filterFrom" onchange="App.loadAllStats()">
         <input type="date" id="filterTo" onchange="App.loadAllStats()">
@@ -1103,9 +1073,9 @@ async function callGAS(p){
   }
 }
 
-// BỔ SUNG currentQ: 0 ĐỂ QUẢN LÝ CÂU ĐANG XEM
+// KHỞI TẠO MẶC ĐỊNH LUÔN LÀ KIỂM TRA (EXAM)
 const S = {
-  user: null, allBanks: [], mode: 'study', examCount: 30,
+  user: null, allBanks: [], mode: 'exam', examCount: 30,
   quizData: null, answers: {}, timerIv: null, timeLeft: 0, resultScore10Val: 0,
   currentQ: 0 
 };
@@ -1115,8 +1085,8 @@ const letter = i => String.fromCharCode(65+i);
 const fmtDate = v => { if(!v) return '—'; const d=new Date(v); return `${d.getDate()}/${d.getMonth()+1} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; };
 const scorePill = v => { const n=Number(v); const cls=n>=7?'score-high':n>=5?'score-mid':'score-low'; return `<span class="score-pill ${cls}">${n.toFixed(2)}</span>`; };
 
-const canSeeAll  = r => ['admin','manager'].includes(r);
-const canSeeUnit = r => ['admin','manager','truong_don_vi'].includes(r);
+const canSeeAll  = r => ['admin','lanh_dao_chi_cuc'].includes(r);
+const canSeeUnit = r => ['admin','lanh_dao_chi_cuc','lanh_dao_doi'].includes(r);
 
 document.title = "Hệ thống Thi Trắc nghiệm - Chi cục Hải quan khu vực VIII";
 
@@ -1207,7 +1177,14 @@ const App = {
     this.goto('dashboard');
   },
 
-  roleLabel(r){ return {admin:'Quản trị viên',manager:'Quản lý',truong_don_vi:'Trưởng đơn vị',user:'Cán bộ'}[r]||r; },
+  roleLabel(r){ 
+    return {
+      'admin': 'Quản trị viên',
+      'lanh_dao_chi_cuc': 'Lãnh đạo Chi cục',
+      'lanh_dao_doi': 'Lãnh đạo Phòng/Đội',
+      'user': 'Cán bộ'
+    }[r] || r; 
+  },
 
   logout(){
     if(!confirm('Đăng xuất?')) return;
@@ -1259,7 +1236,6 @@ const App = {
       document.getElementById('dashHistoryBody').innerHTML=h.slice(0,10).map(row=>`
         <tr>
           <td>${fmtDate(row.time)}</td>
-          <td><span style="font-size:.72rem;color:var(--text3)">${esc(row.type)}</span></td>
           <td style="max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(row.banks)}</td>
           <td style="text-align:center">${row.count}</td>
           <td style="text-align:center;font-weight:700">${Number(row.score10).toFixed(2)}</td>
@@ -1283,19 +1259,11 @@ const App = {
       sel.innerHTML = '<option value="">Chưa có bộ đề nào khả dụng</option>';
       return;
     }
+    // Cập nhật giao diện: Chỉ hiện tên bộ đề và thông tin thêm (d2), ẩn số lượng câu hỏi [XX câu hợp lệ]
     sel.innerHTML = '<option value="">— Vui lòng chọn một bộ đề —</option>' + banks.map(b => {
       const extra = b.d2 ? ` - ${esc(b.d2)}` : '';
-      const listWarn = (b.listCount && b.listCount !== b.count) ? ` (LIST ghi ${b.listCount})` : '';
-      return `<option value="${esc(b.id)}">${esc(b.name)} [${b.count} câu hợp lệ${listWarn}]${extra}</option>`;
+      return `<option value="${esc(b.id)}">${esc(b.name)}${extra}</option>`;
     }).join('');
-  },
-
-  setMode(m){
-    S.mode=m;
-    document.getElementById('modeStudy').classList.toggle('active',m==='study');
-    document.getElementById('modeExam').classList.toggle('active',m==='exam');
-    document.getElementById('studyCountRow').style.display=m==='study'?'':'none';
-    document.getElementById('examCountRow').style.display=m==='exam'?'':'none';
   },
 
   setExamCount(n,btn){
@@ -1312,22 +1280,19 @@ const App = {
     }
     
     const bankId = sel.value;
-    let count = S.mode === 'study' ? parseInt(document.getElementById('studyCount').value) : S.examCount;
+    let count = S.examCount; // Lấy trực tiếp số câu đã chọn (mặc định 30)
 
-    if(S.mode === 'study' && (!count || count < 5 || count > 500)){ 
-      this.showAlert('dashAlert','Số câu ôn tập phải từ 5 đến 500'); 
-      return; 
-    }
     const selectedBank = S.allBanks.find(b => String(b.id) === String(bankId));
     if(selectedBank && count > Number(selectedBank.count || 0)){
-      this.showAlert('dashAlert',`Bộ đề này hiện có ${selectedBank.count} câu hợp lệ, không đủ để bốc ${count} câu.`);
+      this.showAlert('dashAlert',`Bộ đề này hiện chỉ có ${selectedBank.count} câu hợp lệ, không đủ để tạo bài thi ${count} câu.`);
       return;
     }
 
     this.hideAlert('dashAlert');
     this.showLoading('Đang tạo đề thi...');
     try{
-      const res=await callGAS({action:'generateQuiz', username:S.user.username, bankId:bankId, mode:S.mode, count:count});
+      // Cố định mode: 'exam' vì đã bỏ tính năng ôn tập
+      const res=await callGAS({action:'generateQuiz', username:S.user.username, bankId:bankId, mode:'exam', count:count});
       
       if(!res.ok){ this.showAlert('dashAlert',res.msg||'Không tạo được đề thi'); this.hideLoading(); return; }
       
@@ -1350,19 +1315,16 @@ const App = {
     if(submitBtn){ submitBtn.disabled=false; submitBtn.textContent='📤 NỘP BÀI'; }
     document.getElementById('totalCount').textContent=q.count;
     document.getElementById('answeredCount').textContent=0;
-    if(q.mode === 'exam'){
-      const timeSecs = Number(q.timeLimitSec || q.count * 60);
-      document.getElementById('timerInfo').textContent=`Kiểm tra – ${q.count} câu`;
-      this.startTimer(timeSecs);
-    } else {
-      document.getElementById('timerClock').textContent='∞';
-      document.getElementById('timerInfo').textContent='Ôn tập – Không giới hạn';
-    }
+    
+    // Luôn luôn là Kiểm tra
+    const timeSecs = Number(q.timeLimitSec || q.count * 60);
+    document.getElementById('timerInfo').textContent=`Kiểm tra – ${q.count} câu`;
+    this.startTimer(timeSecs);
     
     // In danh sách các nút điều hướng câu
     document.getElementById('qDots').innerHTML=q.questions.map((_,i)=>`<button class="q-dot" id="dot-${i}" onclick="App.scrollToQ(${i})">${i+1}</button>`).join('');
     
-    // Đổ nội dung câu hỏi (chưa css active)
+    // Đổ nội dung câu hỏi
     document.getElementById('quizBody').innerHTML=q.questions.map((q2,i)=>`
       <div class="qblock" id="qb-${i}">
         <div class="qnum">Câu ${i+1} / ${q.count}</div>
@@ -1382,7 +1344,6 @@ const App = {
     this.showQ(0);
   },
 
-  // === CÁC HÀM XỬ LÝ CHUYỂN CÂU MỚI ===
   showQ(index) {
     if (!S.quizData || index < 0 || index >= S.quizData.count) return;
     S.currentQ = index;
@@ -1404,8 +1365,7 @@ const App = {
 
   nextQ() { this.showQ(S.currentQ + 1); },
   prevQ() { this.showQ(S.currentQ - 1); },
-  scrollToQ(i) { this.showQ(i); }, // Giữ nguyên tên hàm để không lỗi lúc click nút
-  // ===================================
+  scrollToQ(i) { this.showQ(i); },
 
   pickOpt(qi,oi,checked,el){
     if(!S.answers[qi]) S.answers[qi]=[];
@@ -1495,7 +1455,6 @@ const App = {
     const {correctCount, score10, totalQ, detail, lateSubmit} = res;
     S.resultScore10Val = Number(score10).toFixed(2);
     
-    // Gán dữ liệu cho Print Form (Thông tin User)
     const u = S.user;
     const dateStr = new Date().toLocaleString('vi-VN', { hour12: false });
     document.getElementById('printUserInfo').innerHTML = `
@@ -1508,7 +1467,7 @@ const App = {
 
     document.getElementById('resultScore').textContent = Number(score10).toFixed(2) + ' / 10';
     document.getElementById('resultScore10').textContent = `Số câu đúng hoàn toàn: ${correctCount} / ${totalQ}`;
-    document.getElementById('resultMeta').textContent = (S.mode==='exam'?'📝 Kiểm tra':'📖 Ôn tập') + ' | ' + (S.quizData?.headerLines?.d3 || '');
+    document.getElementById('resultMeta').textContent = '📝 Kiểm tra | ' + (S.quizData?.headerLines?.d3 || '');
     
     const pct=Math.round(Number(score10)/10*100);
     const circ=2*Math.PI*38; const dash=(pct/100)*circ;
@@ -1555,10 +1514,10 @@ const App = {
   },
 
   async loadMyStats(){
-    document.getElementById('myHistoryBody').innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text3)">Đang tải...</td></tr>';
+    document.getElementById('myHistoryBody').innerHTML='<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--text3)">Đang tải...</td></tr>';
     try{
       const res=await callGAS({action:'getHistory',username:S.user.username});
-      if(!res.ok||!res.history.length){ document.getElementById('myHistoryBody').innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text3)">Chưa có dữ liệu</td></tr>'; return; }
+      if(!res.ok||!res.history.length){ document.getElementById('myHistoryBody').innerHTML='<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--text3)">Chưa có dữ liệu</td></tr>'; return; }
       const h=res.history;
       const scores=h.map(x=>Number(x.score10)).filter(x=>!isNaN(x));
       const avg=scores.length?scores.reduce((a,b)=>a+b,0)/scores.length:0;
@@ -1571,20 +1530,22 @@ const App = {
       document.getElementById('myHistoryBody').innerHTML=h.map((row,i)=>`<tr>
         <td><span class="rank-badge">${i+1}</span></td>
         <td>${fmtDate(row.time)}</td>
-        <td style="font-size:.75rem;color:var(--text3)">${esc(row.type)}</td>
         <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(row.banks)}</td>
         <td style="text-align:center">${row.count}</td>
         <td style="text-align:center;font-weight:700">${Number(row.score10).toFixed(2)}</td>
         <td>${scorePill(row.score10)}</td></tr>`).join('');
-    }catch(e){ document.getElementById('myHistoryBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--r1);padding:20px">Lỗi kết nối</td></tr>'; }
+    }catch(e){ document.getElementById('myHistoryBody').innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--r1);padding:20px">Lỗi kết nối</td></tr>'; }
   },
 
   async loadUnitStats(){
     if(!canSeeUnit(S.user.role)) return;
-    document.getElementById('unitName').textContent=S.user.role==='truong_don_vi'?(S.user.unit||S.user.role):'Tất cả đơn vị';
+    
+    const isTeamLead = S.user.role === 'lanh_dao_doi';
+    document.getElementById('unitName').textContent = isTeamLead ? (S.user.unit || 'Chưa có đơn vị') : 'Tất cả đơn vị';
+    
     document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text3)">Đang tải...</td></tr>';
     try{
-      const res=await callGAS({action:'getUnitStats',role:S.user.role,unit:S.user.unit||S.user.role});
+      const res=await callGAS({action:'getUnitStats',role:S.user.role,unit:S.user.unit});
       if(!res.ok){ document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--r1);padding:20px">'+esc(res.msg)+'</td></tr>'; return; }
       this.renderUnitTable(res.stats,'unitStatsBody','us-');
     }catch(e){ document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--r1);padding:20px">Lỗi kết nối</td></tr>'; }
@@ -1614,12 +1575,11 @@ const App = {
   async loadAllStats(){
     if(!canSeeAll(S.user.role)) return;
     const unit=document.getElementById('filterUnit').value;
-    const mode=document.getElementById('filterMode').value;
     const from=document.getElementById('filterFrom').value;
     const to=document.getElementById('filterTo').value;
     document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text3)">Đang tải...</td></tr>';
     try{
-      const res=await callGAS({action:'getAllStats',filterUnit:unit,filterMode:mode,filterFrom:from,filterTo:to});
+      const res=await callGAS({action:'getAllStats',filterUnit:unit,filterFrom:from,filterTo:to});
       if(!res.ok){ document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--r1);padding:20px">'+esc(res.msg)+'</td></tr>'; return; }
       if(res.units){
         const sel=document.getElementById('filterUnit');
