@@ -7,606 +7,568 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@700;800&display=swap" rel="stylesheet">
 
-<!-- Fix lỗi docx is not defined bằng CDN chuẩn -->
+<!-- Thư viện cho xuất Word và Excel -->
 <script src="https://cdn.jsdelivr.net/npm/docx@7.8.2/build/index.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
 <style>
-/* ═══════════════ DESIGN TOKENS ════════════════ */
-:root{
-  --c0:#0a1628;--c1:#0f2347;--c2:#163566;--c3:#1d4585;
-  --c4:#2558a8;--c5:#3b72d4;--c6:#6b9fe8;--c7:#aac5f2;--c8:#d6e6fb;--c9:#eef4fd;
-  --gold:#d4a843;--gold2:#f0c96a;--gold3:#fef3d4;
-  --g1:#0f7c4a;--g2:#e6f7ef;
-  --r1:#c0392b;--r2:#fdecea;
-  --o1:#d4600a;--o2:#fff3e0;
-  --bg:#f0f4fa;--surface:#fff;--surface2:#f7f9fc;
-  --border:#e2e8f4;--border2:#c8d5ed;
-  --text:#0f1f3d;--text2:#4a5c7a;--text3:#8496b0;
-  --shadow:0 1px 4px rgba(10,22,40,.06),0 4px 16px rgba(10,22,40,.08);
-  --shadow-lg:0 8px 40px rgba(10,22,40,.14);
-  --r:12px;--r2px:8px;
+/* ═══════════════ TÔNG MÀU HẢI QUAN VIỆT NAM ════════════════ */
+:root {
+  --hq-blue: #1b3670;     /* Xanh đậm logo */
+  --hq-blue-light: #2a5298;
+  --hq-red: #d9252a;      /* Đỏ logo */
+  --hq-gold: #f1c40f;     /* Vàng logo */
+  --hq-gold-dark: #d4ac0d;
+  
+  /* Ghi đè các biến cũ sang tông màu Hải quan */
+  --c0: var(--hq-blue);
+  --c1: var(--hq-blue);
+  --c2: var(--hq-blue-light);
+  --c3: #132752;
+  --c4: var(--hq-blue);
+  --c5: #3b72d4;
+  --c9: #f0f4fa;
+  --gold: var(--hq-gold);
+  --gold2: var(--hq-gold-dark);
+  
+  --g1:#0f7c4a; --g2:#e6f7ef;
+  --r1:var(--hq-red); --r2:#fdecea;
+  --o1:#d4600a; --o2:#fff3e0;
+  
+  --bg:#f4f7f9; --surface:#fff; --surface2:#f9fafc;
+  --border:#e2e8f4; --border2:#c8d5ed;
+  --text:#111827; --text2:#4b5563; --text3:#6b7280;
+  
+  --shadow:0 1px 3px rgba(0,0,0,.1),0 4px 12px rgba(27,54,112,.08);
+  --shadow-lg:0 8px 40px rgba(27,54,112,.15);
+  --r:12px;
   font-size:15px;
 }
+
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
 h1,h2,h3,.lexend{font-family:'Lexend',sans-serif}
 button,input,select{font-family:inherit;font-size:inherit}
 a{color:inherit;text-decoration:none}
-img{display:block;max-width:100%}
 
 /* ═══════════════ SCROLLBAR ════════════════ */
-::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar{width:6px;height:6px}
 ::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:#94a3b8}
 
 /* ═══════════════ SIDEBAR + LAYOUT ════════════════ */
 .layout{display:flex;min-height:100vh}
 
 .sidebar{
-  width:240px;flex-shrink:0;
-  background:var(--c0);
+  width:250px;flex-shrink:0;
+  background:var(--hq-blue);
   display:flex;flex-direction:column;
   position:sticky;top:0;height:100vh;overflow:hidden;
-  transition:width .25s;
-  z-index:300;
+  transition:width .25s; z-index:300;
+  border-right: 1px solid rgba(255,255,255,0.1);
 }
 .sidebar-brand{
   padding:24px 20px 20px;
   border-bottom:1px solid rgba(255,255,255,.07);
 }
 .brand-icon{
-  width:44px;height:44px;background:linear-gradient(135deg,var(--c4),var(--c5));
-  border-radius:10px;display:flex;align-items:center;justify-content:center;
-  font-size:1.3rem;margin-bottom:12px;box-shadow:0 4px 12px rgba(37,88,168,.4);
+  width:48px;height:48px;background:var(--hq-red);
+  border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;margin-bottom:12px;box-shadow:0 4px 12px rgba(217,37,42,.4);
+  color: var(--hq-gold);
 }
-.brand-name{font-size:1.05rem;font-weight:800;color:#fff;line-height:1.2}
-.brand-sub{font-size:.72rem;color:rgba(255,255,255,.45);margin-top:3px}
+.brand-name{font-size:1.1rem;font-weight:800;color:var(--hq-gold);line-height:1.2; text-transform: uppercase; letter-spacing: 0.5px;}
+.brand-sub{font-size:.75rem;color:rgba(255,255,255,.7);margin-top:4px}
 
-.sidebar-nav{flex:1;padding:16px 10px;overflow-y:auto}
+.sidebar-nav{flex:1;padding:16px 12px;overflow-y:auto}
 .nav-section-label{
   font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  color:rgba(255,255,255,.3);padding:8px 10px 4px;
+  color:rgba(255,255,255,.4);padding:8px 10px 6px;
 }
 .nav-item{
-  display:flex;align-items:center;gap:10px;
-  padding:9px 10px;border-radius:8px;margin-bottom:2px;
-  cursor:pointer;transition:background .15s;
-  color:rgba(255,255,255,.6);font-size:.85rem;font-weight:500;
+  display:flex;align-items:center;gap:12px;
+  padding:10px 12px;border-radius:8px;margin-bottom:4px;
+  cursor:pointer;transition:all .2s;
+  color:rgba(255,255,255,.7);font-size:.88rem;font-weight:500;
   border:none;background:none;width:100%;text-align:left;
 }
-.nav-item:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.9)}
-.nav-item.active{background:linear-gradient(135deg,var(--c4),var(--c5));color:#fff;box-shadow:0 3px 10px rgba(37,88,168,.4)}
-.nav-item svg{width:17px;height:17px;flex-shrink:0;opacity:.8}
+.nav-item:hover{background:rgba(255,255,255,.1);color:#fff}
+.nav-item.active{background:var(--hq-red);color:#fff;box-shadow:0 4px 12px rgba(217,37,42,.3)}
+.nav-item svg{width:18px;height:18px;flex-shrink:0;opacity:.9}
 .nav-item.active svg{opacity:1}
-.nav-badge{margin-left:auto;background:var(--gold);color:var(--c0);font-size:.65rem;font-weight:800;padding:2px 7px;border-radius:99px}
+.nav-badge{margin-left:auto;background:var(--hq-gold);color:var(--hq-blue);font-size:.65rem;font-weight:800;padding:2px 7px;border-radius:99px}
 
 .sidebar-footer{
-  padding:14px 10px;
-  border-top:1px solid rgba(255,255,255,.07);
+  padding:14px 12px; border-top:1px solid rgba(255,255,255,.07);
 }
 .user-pill{
-  display:flex;align-items:center;gap:10px;
-  padding:8px 10px;border-radius:8px;
+  display:flex;align-items:center;gap:10px; padding:8px 10px;border-radius:8px;
 }
 .avatar{
-  width:32px;height:32px;border-radius:50%;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  display:flex;align-items:center;justify-content:center;
-  font-size:.8rem;font-weight:800;color:var(--c0);flex-shrink:0;
+  width:36px;height:36px;border-radius:50%;
+  background:var(--hq-gold); display:flex;align-items:center;justify-content:center;
+  font-size:.9rem;font-weight:800;color:var(--hq-blue);flex-shrink:0;
 }
 .user-info{flex:1;min-width:0}
-.user-name{font-size:.82rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.user-role{font-size:.68rem;color:rgba(255,255,255,.4);margin-top:1px}
+.user-name{font-size:.85rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-role{font-size:.7rem;color:rgba(255,255,255,.5);margin-top:2px}
 .btn-logout-sm{
-  background:rgba(255,255,255,.08);border:none;
-  color:rgba(255,255,255,.5);border-radius:6px;
-  padding:5px 7px;cursor:pointer;transition:all .15s;flex-shrink:0;
+  background:rgba(255,255,255,.1);border:none;
+  color:rgba(255,255,255,.7);border-radius:6px;
+  padding:6px 8px;cursor:pointer;transition:all .2s;flex-shrink:0;
 }
-.btn-logout-sm:hover{background:rgba(255,255,255,.15);color:#fff}
+.btn-logout-sm:hover{background:var(--hq-red);color:#fff}
 
 /* ═══════════════ MAIN CONTENT ════════════════ */
 .main{flex:1;min-width:0;display:flex;flex-direction:column}
-
 .topbar{
   background:var(--surface);border-bottom:1px solid var(--border);
-  padding:0 28px;height:58px;
+  padding:0 30px;height:64px;
   display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:200;
+  position:sticky;top:0;z-index:200; box-shadow: 0 1px 2px rgba(0,0,0,0.03);
 }
-.topbar-title{font-size:1rem;font-weight:700;color:var(--text)}
+.topbar-title{font-size:1.05rem;font-weight:700;color:var(--hq-blue)}
 .topbar-right{display:flex;align-items:center;gap:10px}
 .burger{
   display:none;background:none;border:none;
-  color:var(--text2);padding:6px;border-radius:6px;cursor:pointer;
+  color:var(--text2);padding:6px;border-radius:6px;cursor:pointer; margin-right: 10px;
 }
 
-.page-body{padding:24px 28px 48px;flex:1}
-
-/* ═══════════════ SCREENS ════════════════ */
+.page-body{padding:30px 30px 60px;flex:1}
 .screen{display:none}
 .screen.active{display:block}
 
 /* ═══════════════ LOGIN ════════════════ */
 #screen-login{
   position:fixed;inset:0;z-index:999;
-  background:linear-gradient(135deg,var(--c0) 0%,var(--c2) 50%,var(--c1) 100%);
+  background:linear-gradient(135deg, var(--hq-blue) 0%, #112247 100%);
   display:flex;align-items:center;justify-content:center;padding:20px;
 }
 #screen-login.active{display:flex}
-.login-wrap{
-  width:100%;max-width:420px;
-}
+.login-wrap{ width:100%;max-width:400px; }
 .login-logo{text-align:center;margin-bottom:32px}
 .login-emblem{
-  width:72px;height:72px;margin:0 auto 16px;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  border-radius:20px;display:flex;align-items:center;justify-content:center;
-  font-size:2rem;box-shadow:0 8px 32px rgba(212,168,67,.4);
+  width:80px;height:80px;margin:0 auto 16px;
+  background:var(--hq-red); border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.2rem;box-shadow:0 8px 32px rgba(217,37,42,.4); color:var(--hq-gold);
 }
-.login-logo h1{font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:.5px}
-.login-logo p{font-size:.82rem;color:rgba(255,255,255,.5);margin-top:4px}
+.login-logo h1{font-size:1.6rem;font-weight:800;color:var(--hq-gold);letter-spacing:.5px; text-transform: uppercase;}
+.login-logo p{font-size:.85rem;color:rgba(255,255,255,.7);margin-top:6px}
 .login-card{
-  background:rgba(255,255,255,.06);backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,.12);border-radius:16px;
-  padding:32px 28px;
+  background:rgba(255,255,255,.05);backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.1);border-radius:16px;
+  padding:36px 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.2);
 }
-.field-wrap{margin-bottom:16px}
+.field-wrap{margin-bottom:18px}
 .field-wrap label{
   display:block;font-size:.75rem;font-weight:600;letter-spacing:.5px;
-  text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:6px;
+  text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:8px;
 }
 .field-wrap input{
-  width:100%;padding:11px 14px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:8px;color:#fff;font-size:.92rem;outline:none;
+  width:100%;padding:12px 16px;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2);
+  border-radius:8px;color:#fff;font-size:.95rem;outline:none;
   transition:border-color .2s,background .2s;
 }
-.field-wrap input::placeholder{color:rgba(255,255,255,.25)}
-.field-wrap input:focus{border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.12)}
+.field-wrap input:focus{border-color:var(--hq-gold);background:rgba(255,255,255,.12)}
 .btn-login{
-  width:100%;padding:13px;margin-top:4px;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  color:var(--c0);border:none;border-radius:8px;
-  font-size:.95rem;font-weight:800;letter-spacing:.5px;
-  box-shadow:0 4px 20px rgba(212,168,67,.4);
-  cursor:pointer;transition:opacity .2s,transform .1s;
+  width:100%;padding:14px;margin-top:8px;
+  background:var(--hq-gold); color:var(--hq-blue);
+  border:none;border-radius:8px; font-size:1rem;font-weight:800;letter-spacing:.5px;
+  box-shadow:0 4px 15px rgba(241,196,15,.3);
+  cursor:pointer;transition:all .2s;
 }
-.btn-login:hover{opacity:.92;transform:translateY(-1px)}
-.btn-link-white{
-  width:100%;background:none;border:none;
-  color:rgba(255,255,255,.45);font-size:.8rem;
-  cursor:pointer;margin-top:12px;text-align:center;
-  text-decoration:underline;
-}
-.login-alert{
-  padding:9px 13px;border-radius:7px;font-size:.82rem;font-weight:600;
-  margin-bottom:14px;
-}
-.login-alert.err{background:rgba(192,57,43,.2);color:#ff8a80;border:1px solid rgba(192,57,43,.3)}
-.login-alert.info{background:rgba(37,88,168,.3);color:#aac5f2;border:1px solid rgba(37,88,168,.4)}
-.login-alert.hidden{display:none}
+.btn-login:hover{background:#f4d03f; transform:translateY(-1px)}
 
-/* ═══════════════ STAT CARDS ════════════════ */
-.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+/* ═══════════════ COMMON CARDS & STATS ════════════════ */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:24px}
 .stat-card{
   background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
-  padding:20px 22px;display:flex;align-items:center;gap:16px;
+  padding:20px 24px;display:flex;align-items:center;gap:18px; box-shadow: var(--shadow);
 }
 .stat-icon{
-  width:48px;height:48px;border-radius:12px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;font-size:1.3rem;
+  width:50px;height:50px;border-radius:12px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:1.4rem;
 }
-.stat-icon.blue{background:var(--c9);color:var(--c4)}
-.stat-icon.gold{background:var(--gold3);color:var(--o1)}
+.stat-icon.blue{background:var(--c9);color:var(--hq-blue)}
+.stat-icon.gold{background:#fef9e7;color:#d4ac0d}
 .stat-icon.green{background:var(--g2);color:var(--g1)}
-.stat-icon.red{background:var(--r2);color:var(--r1)}
-.stat-value{font-size:1.6rem;font-weight:800;color:var(--text);line-height:1}
-.stat-label{font-size:.75rem;color:var(--text3);margin-top:3px}
-.stat-sub{font-size:.72rem;color:var(--text3);margin-top:2px}
+.stat-icon.red{background:var(--r2);color:var(--hq-red)}
+.stat-value{font-size:1.8rem;font-weight:800;color:var(--hq-blue);line-height:1}
+.stat-label{font-size:.8rem;color:var(--text3);margin-top:5px; font-weight: 500}
 
-/* ═══════════════ CARDS ════════════════ */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px;margin-bottom:20px;box-shadow:var(--shadow)}
-.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-.card-title{font-size:.85rem;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:8px}
-.card-title svg{width:16px;height:16px;color:var(--c4)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;margin-bottom:24px;box-shadow:var(--shadow)}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.card-title{font-size:.95rem;font-weight:700;color:var(--hq-blue);text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:8px}
+.card-title svg{width:18px;height:18px;color:var(--hq-red)}
 
-/* ═══════════════ WELCOME ════════════════ */
 .welcome-hero{
-  background:linear-gradient(135deg,var(--c0) 0%,var(--c2) 100%);
-  border-radius:16px;padding:28px 32px;margin-bottom:24px;
-  display:flex;align-items:center;justify-content:space-between;gap:16px;
-  position:relative;overflow:hidden;
+  background:linear-gradient(135deg, var(--hq-blue) 0%, var(--hq-blue-light) 100%);
+  border-radius:16px;padding:32px 36px;margin-bottom:24px;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  position:relative;overflow:hidden; box-shadow: var(--shadow-lg);
 }
-.welcome-hero::before{
-  content:'';position:absolute;right:-60px;top:-60px;
-  width:200px;height:200px;border-radius:50%;
-  background:rgba(255,255,255,.04);
-}
-.welcome-text h2{font-size:1.3rem;font-weight:800;color:#fff;line-height:1.3}
-.welcome-text p{font-size:.83rem;color:rgba(255,255,255,.55);margin-top:5px}
+.welcome-text h2{font-size:1.5rem;font-weight:800;color:var(--hq-gold);line-height:1.3}
+.welcome-text p{font-size:.9rem;color:rgba(255,255,255,.8);margin-top:6px}
 .welcome-badge{
   background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
-  border-radius:8px;padding:8px 14px;text-align:center;flex-shrink:0;
+  border-radius:12px;padding:12px 20px;text-align:center;flex-shrink:0; backdrop-filter: blur(5px);
 }
-.welcome-badge-val{font-size:1.6rem;font-weight:800;color:var(--gold2);line-height:1}
-.welcome-badge-label{font-size:.7rem;color:rgba(255,255,255,.5);margin-top:2px}
+.welcome-badge-val{font-size:2rem;font-weight:800;color:#fff;line-height:1}
+.welcome-badge-label{font-size:.75rem;color:rgba(255,255,255,.7);margin-top:4px; text-transform: uppercase; font-weight: 600;}
 
-/* ═══════════════ DROPDOWN BỘ ĐỀ MỚI ════════════════ */
+/* ═══════════════ SETUP EXAM ════════════════ */
 .bank-select{
-  width:100%;padding:14px 16px;border:1.5px solid var(--border);border-radius:9px;
+  width:100%;padding:14px 18px;border:2px solid var(--border);border-radius:9px;
   font-size:.95rem;font-weight:600;color:var(--text);background:var(--surface2);
   outline:none;cursor:pointer;appearance:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234a5c7a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 16px center;padding-right:40px;
-  margin-bottom:8px;transition:border-color .2s;
+  background-repeat:no-repeat;background-position:right 18px center;padding-right:45px;
+  margin-bottom:12px;transition:all .2s;
 }
-.bank-select:focus{border-color:var(--c5);background:var(--surface);box-shadow:0 0 0 3px var(--c8)}
+.bank-select:focus{border-color:var(--hq-blue);background:var(--surface);box-shadow:0 0 0 4px rgba(27,54,112,.1)}
 
-/* ═══════════════ MODE BUTTONS ════════════════ */
-.mode-row{display:flex;gap:10px;margin-bottom:16px}
+.mode-row{display:flex;gap:12px;margin-bottom:20px}
 .mode-btn{
-  flex:1;padding:13px 10px;border:1.5px solid var(--border);border-radius:9px;
-  background:var(--surface2);font-size:.85rem;font-weight:600;
-  color:var(--text2);text-align:center;cursor:pointer;transition:all .15s;
+  flex:1;padding:16px 12px;border:2px solid var(--border);border-radius:10px;
+  background:var(--surface2);font-size:.9rem;font-weight:600;
+  color:var(--text2);text-align:center;cursor:pointer;transition:all .2s;
 }
-.mode-btn:hover{border-color:var(--c5)}
-.mode-btn.active{border-color:var(--c4);background:var(--c9);color:var(--c2)}
-.mode-btn small{display:block;font-size:.7rem;font-weight:400;opacity:.7;margin-top:2px}
-
-.count-chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{
-  padding:7px 16px;border-radius:50px;
-  border:1.5px solid var(--border);background:var(--surface2);
-  font-size:.82rem;font-weight:600;cursor:pointer;
-  color:var(--text2);transition:all .15s;
-}
-.chip:hover{border-color:var(--c5)}
-.chip.active{background:var(--c4);border-color:var(--c4);color:#fff}
-.count-input{
-  padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);
-  font-size:.92rem;width:120px;outline:none;background:var(--surface2);
-  color:var(--text);
-}
-.count-input:focus{border-color:var(--c5)}
+.mode-btn:hover{border-color:var(--hq-blue-light); background: #f0f4fa;}
+.mode-btn.active{border-color:var(--hq-blue);background:#f0f4fa;color:var(--hq-blue)}
+.mode-btn small{display:block;font-size:.75rem;font-weight:400;opacity:.7;margin-top:4px}
 
 .btn-start{
-  width:100%;margin-top:18px;padding:13px;
-  background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);
-  color:var(--c0);border:none;border-radius:9px;
-  font-size:.95rem;font-weight:800;letter-spacing:.3px;
-  box-shadow:0 4px 16px rgba(212,168,67,.35);
-  cursor:pointer;transition:opacity .2s,transform .1s;
+  width:100%;margin-top:20px;padding:16px;
+  background:var(--hq-gold); color:var(--hq-blue);
+  border:none;border-radius:10px;
+  font-size:1.05rem;font-weight:800;letter-spacing:.5px; text-transform: uppercase;
+  box-shadow:0 4px 16px rgba(241,196,15,.35);
+  cursor:pointer;transition:all .2s;
 }
-.btn-start:hover{opacity:.9;transform:translateY(-1px)}
-.btn-start:disabled{opacity:.5;cursor:not-allowed}
+.btn-start:hover{background:#f4d03f;transform:translateY(-2px);box-shadow:0 6px 20px rgba(241,196,15,.45)}
 
-/* ═══════════════ ALERT ════════════════ */
-.alert{padding:10px 13px;border-radius:8px;font-size:.83rem;font-weight:600;margin-top:12px}
-.alert-error{background:var(--r2);color:var(--r1)}
-.alert-success{background:var(--g2);color:var(--g1)}
-.alert-info{background:var(--c9);color:var(--c2)}
-.alert-hidden{display:none}
+/* ═══════════════ NEW QUIZ LAYOUT (SPLIT SCREEN) ════════════════ */
+.quiz-layout {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
-/* ═══════════════ HISTORY TABLE ════════════════ */
-.tbl{width:100%;border-collapse:collapse;font-size:.82rem}
-.tbl th{background:var(--surface2);color:var(--text2);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.4px;padding:9px 12px;text-align:left;border-bottom:1px solid var(--border)}
-.tbl td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text)}
-.tbl tr:last-child td{border-bottom:none}
-.tbl tr:hover td{background:var(--surface2)}
-.tbl-wrap{overflow-x:auto}
-.score-pill{display:inline-block;padding:2px 9px;border-radius:50px;font-size:.75rem;font-weight:700}
-.score-high{background:var(--g2);color:var(--g1)}
-.score-mid{background:#fff8e1;color:#e65100}
-.score-low{background:var(--r2);color:var(--r1)}
-.rank-badge{display:inline-block;width:22px;height:22px;border-radius:50%;background:var(--c9);color:var(--c4);font-size:.72rem;font-weight:800;text-align:center;line-height:22px}
-.rank-badge.gold-rank{background:var(--gold3);color:var(--o1)}
-
-/* ═══════════════ QUIZ SCREEN STICKY ════════════════ */
-.sticky-quiz-header {
+/* CỘT TRÁI: BẢNG ĐIỀU KHIỂN & CÂU HỎI */
+.quiz-sidebar-left {
+  width: 320px;
+  flex-shrink: 0;
   position: sticky;
-  top: 58px; /* Dưới thanh topbar */
-  z-index: 100;
-  background: var(--bg);
-  padding-bottom: 12px;
+  top: 84px; /* Dưới thanh topbar */
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.quiz-timer-box {
+  text-align: center;
+  padding-bottom: 20px;
   border-bottom: 1px solid var(--border);
   margin-bottom: 20px;
 }
-.timer-bar{
-  background:var(--surface);border:1px solid var(--border);border-radius: 8px;
-  padding:10px 20px;display:flex;align-items:center;gap:14px;
-  box-shadow:0 2px 8px rgba(0,0,0,.05); margin: 0 20px;
+.timer-clock {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--hq-blue);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
 }
-.timer-clock{font-size:1.5rem;font-weight:800;font-variant-numeric:tabular-nums;color:var(--c1);min-width:90px}
-.timer-clock.warning{color:var(--o1)}
-.timer-clock.danger{color:var(--r1);animation:pulse .6s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.timer-track{flex:1;height:7px;background:var(--border);border-radius:99px;overflow:hidden}
-.timer-fill{height:100%;background:linear-gradient(90deg,var(--c4),var(--c5));border-radius:99px;transition:width 1s linear,background .5s}
-.timer-fill.warning{background:linear-gradient(90deg,var(--o1),#f39c12)}
-.timer-fill.danger{background:linear-gradient(90deg,var(--r1),#e74c3c)}
-.timer-info{font-size:.75rem;color:var(--text3);font-weight:600;white-space:nowrap}
+.timer-clock.warning { color: var(--o1); }
+.timer-clock.danger { color: var(--hq-red); animation: pulse 1s ease-in-out infinite; }
+.timer-label {
+  font-size: .85rem;
+  color: var(--text2);
+  font-weight: 600;
+  margin-top: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
 
-.q-nav-wrap{padding:12px 20px 0}
-.q-nav-meta{font-size:.75rem;color:var(--text3);margin-bottom:6px}
-.q-nav-meta b{color:var(--c4)}
-.q-dots{display:flex;flex-wrap:wrap;gap:4px; max-height: 120px; overflow-y: auto;}
-.q-dot{
-  width:27px;height:27px;border-radius:50%;
-  border:1.5px solid var(--border2);background:var(--surface);
-  font-size:.68rem;font-weight:700;color:var(--text3);
-  cursor:pointer;transition:all .13s;display:flex;align-items:center;justify-content:center;
+.q-nav-meta {
+  font-size: .85rem;
+  color: var(--text2);
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
 }
-.q-dot:hover{border-color:var(--c5);color:var(--c4)}
-.q-dot.answered{background:var(--c4);border-color:var(--c4);color:#fff}
+.q-nav-meta b { color: var(--hq-blue); font-size: 1rem; }
 
-.quiz-body{max-width:960px;margin:0 auto;padding:16px 20px}
-.qblock{
-  background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
-  padding:20px 22px;margin-bottom:14px;
-  border-left:4px solid var(--c5);
-  scroll-margin-top:250px;box-shadow:var(--shadow);
+.q-dots {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  max-height: 40vh; /* Giới hạn chiều cao để scroll nếu quá nhiều câu */
+  overflow-y: auto;
+  padding-right: 5px;
 }
-.qnum{font-size:.72rem;font-weight:700;color:var(--c4);text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px}
-.qtext{font-size:.95rem;font-weight:600;color:var(--text);line-height:1.65;margin-bottom:14px}
-.opt{
-  display:flex;align-items:flex-start;gap:10px;
-  padding:9px 13px;border-radius:8px;border:1.5px solid var(--border);
-  margin-bottom:6px;cursor:pointer;transition:all .13s;
-  font-size:.87rem;font-weight:500;user-select:none;color:var(--text);
+.q-dot {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  border: 2px solid var(--border2);
+  background: var(--surface);
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--text3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .2s;
 }
-.opt:hover{border-color:var(--c5);background:var(--c9)}
-.opt.selected{border-color:var(--c4);background:var(--c9)}
-.opt input[type=checkbox]{width:15px;height:15px;margin-top:2px;flex-shrink:0;accent-color:var(--c4)}
+.q-dot:hover { border-color: var(--hq-blue-light); color: var(--hq-blue); }
+.q-dot.answered { background: var(--hq-blue); border-color: var(--hq-blue); color: #fff; }
+.q-dot.active-q { 
+  border-color: var(--hq-red); 
+  background: var(--r2);
+  color: var(--hq-red);
+  transform: scale(1.05); 
+  box-shadow: 0 2px 8px rgba(217,37,42,.3);
+}
+.q-dot.answered.active-q {
+  background: var(--hq-blue);
+  border-color: var(--hq-red);
+  color: #fff;
+}
 
-.quiz-footer{max-width:960px;margin:0 auto;padding:8px 20px 40px}
-.btn-submit{
-  width:100%;padding:14px;
-  background:linear-gradient(135deg,var(--c1),var(--c3));
-  color:#fff;border:none;border-radius:9px;
-  font-size:.95rem;font-weight:800;letter-spacing:.3px;
-  box-shadow:0 4px 16px rgba(15,35,71,.25);
-  cursor:pointer;transition:opacity .2s;
+.quiz-submit-box {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
 }
-.btn-submit:hover{opacity:.9}
-.btn-submit:disabled{opacity:.5;cursor:not-allowed}
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  background: var(--hq-red);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(217,37,42,.3);
+  cursor: pointer;
+  transition: all .2s;
+}
+.btn-submit:hover { background: #b91d22; transform: translateY(-1px); }
 
-/* ═══════════════ RESULT ════════════════ */
+/* CỘT PHẢI: NỘI DUNG CÂU HỎI */
+.quiz-main-right {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: var(--shadow);
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.quiz-header-title {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--border);
+}
+.quiz-header-title h3 { font-size: 1.1rem; color: var(--text2); font-weight: 600; margin-bottom: 4px; }
+.quiz-header-title h2 { font-size: 1.3rem; color: var(--hq-blue); font-weight: 800; text-transform: uppercase; }
+
+.qblock { display: none; flex: 1; }
+.qblock.active-block { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
+
+.qnum {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--hq-red);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--r2);
+  border-radius: 6px;
+}
+.qtext {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: 10px;
+  border: 2px solid var(--border);
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all .2s;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text2);
+  background: var(--surface2);
+}
+.opt:hover { border-color: var(--hq-blue-light); background: #f0f4fa; color: var(--hq-blue); }
+.opt.selected { 
+  border-color: var(--hq-blue); 
+  background: #f0f4fa; 
+  color: var(--hq-blue);
+  box-shadow: 0 0 0 1px var(--hq-blue);
+}
+.opt input[type=checkbox] {
+  width: 18px; height: 18px; margin-top: 2px; flex-shrink: 0; accent-color: var(--hq-blue);
+  cursor: pointer;
+}
+
+.q-nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.btn-nav {
+  padding: 12px 24px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all .2s;
+}
+.btn-nav:hover:not(:disabled) { background: var(--border); color: var(--text); }
+.btn-nav:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ═══════════════ RESULT SCREEN ════════════════ */
 .result-hero{
-  background:linear-gradient(135deg,var(--c0) 0%,var(--c2) 100%);
-  border-radius:16px;padding:32px 28px;margin-bottom:22px;
-  display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;
+  background:linear-gradient(135deg, var(--hq-blue) 0%, var(--c3) 100%);
+  border-radius:16px;padding:36px 40px;margin-bottom:24px;
+  display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center;
+  box-shadow: var(--shadow-lg);
 }
-.result-score-big{font-size:3.5rem;font-weight:800;color:var(--gold2);line-height:1}
-.result-score-label{font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:4px}
-.result-score10{font-size:1.1rem;font-weight:500;color:rgba(255,255,255,.7);margin-top:6px}
-.result-meta{font-size:.78rem;color:rgba(255,255,255,.5);margin-top:6px}
+.result-score-big{font-size:4rem;font-weight:800;color:var(--hq-gold);line-height:1; margin-bottom: 8px;}
+.result-score-label{font-size:.9rem;color:rgba(255,255,255,.7); text-transform: uppercase; font-weight: 600;}
+.result-score10{font-size:1.1rem;font-weight:500;color:#fff;}
+.result-meta{font-size:.85rem;color:rgba(255,255,255,.6);margin-top:8px}
 .result-donut{text-align:center}
-.donut-ring{width:90px;height:90px;position:relative}
-.donut-ring svg{width:90px;height:90px;transform:rotate(-90deg)}
-.donut-ring .track{fill:none;stroke:rgba(255,255,255,.1);stroke-width:8}
-.donut-ring .prog{fill:none;stroke:var(--gold2);stroke-width:8;stroke-linecap:round;transition:stroke-dasharray .8s ease}
+.donut-ring{width:110px;height:110px;position:relative}
+.donut-ring svg{width:110px;height:110px;transform:rotate(-90deg)}
+.donut-ring .track{fill:none;stroke:rgba(255,255,255,.1);stroke-width:10}
+.donut-ring .prog{fill:none;stroke:var(--hq-gold);stroke-width:10;stroke-linecap:round;transition:stroke-dasharray 1s ease}
 .donut-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.donut-pct{font-size:1.1rem;font-weight:800;color:#fff}
-.donut-sub{font-size:.6rem;color:rgba(255,255,255,.5)}
+.donut-pct{font-size:1.4rem;font-weight:800;color:#fff}
+.donut-sub{font-size:.7rem;color:rgba(255,255,255,.7); text-transform: uppercase;}
 
-.result-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
-.result-stat{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:14px;text-align:center}
-.result-stat-val{font-size:1.3rem;font-weight:800;line-height:1;margin-bottom:3px}
-.result-stat-lbl{font-size:.7rem;color:var(--text3)}
+.result-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.result-stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center; box-shadow: var(--shadow);}
+.result-stat-val{font-size:1.8rem;font-weight:800;line-height:1;margin-bottom:6px}
+.result-stat-lbl{font-size:.8rem;font-weight:600;color:var(--text3); text-transform: uppercase;}
 .val-green{color:var(--g1)}
-.val-red{color:var(--r1)}
-.val-blue{color:var(--c4)}
+.val-blue{color:var(--hq-blue)}
 .val-orange{color:var(--o1)}
+.val-red{color:var(--hq-red)}
 
-.late-banner{background:var(--r1);color:#fff;padding:12px 18px;border-radius:8px;font-size:.83rem;font-weight:700;margin-bottom:16px;display:none}
-
-.rq{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;margin-bottom:10px;border-left:4px solid var(--border)}
+.rq{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:16px;border-left:5px solid var(--border); box-shadow: var(--shadow);}
 .rq.full{border-left-color:var(--g1)}
-.rq.partial{border-left-color:var(--o1)}
-.rq.wrong{border-left-color:var(--r1)}
-.rq-hd{display:flex;align-items:center;gap:8px;margin-bottom:9px}
-.rq-num{font-size:.72rem;font-weight:700;color:var(--text3)}
-.rq-score{margin-left:auto;font-size:.75rem;font-weight:800;padding:2px 9px;border-radius:50px}
+.rq.partial{border-left-color:var(--hq-blue)}
+.rq.wrong{border-left-color:var(--hq-red)}
+.rq-hd{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.rq-num{font-size:.85rem;font-weight:800;color:var(--text2); background: var(--surface2); padding: 4px 10px; border-radius: 6px;}
+.rq-score{margin-left:auto;font-size:.85rem;font-weight:800;padding:4px 12px;border-radius:50px}
 .s-full{background:var(--g2);color:var(--g1)}
-.s-partial{background:#fff3e0;color:var(--o1)}
-.s-zero{background:var(--r2);color:var(--r1)}
-.rq-text{font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:10px;line-height:1.5}
-.ropt{display:flex;align-items:flex-start;gap:7px;padding:6px 10px;border-radius:7px;font-size:.83rem;margin-bottom:4px;border:1px solid var(--border)}
+.s-partial{background:#eef4fd;color:var(--hq-blue)}
+.s-zero{background:var(--r2);color:var(--hq-red)}
+.rq-text{font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:16px;line-height:1.6}
+.ropt{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:8px;font-size:.95rem;font-weight:500;margin-bottom:6px;border:1px solid var(--border); background: var(--surface2);}
 .ropt.ok{border-color:var(--g1);background:var(--g2);color:var(--g1)}
-.ropt.bad{border-color:var(--r1);background:var(--r2);color:var(--r1)}
+.ropt.bad{border-color:var(--hq-red);background:var(--r2);color:var(--hq-red)}
 .ropt.missed{border-color:var(--o1);background:var(--o2);color:var(--o1)}
-.rexplain{margin-top:9px;padding:9px 12px;background:var(--c9);border-radius:7px;font-size:.79rem;color:var(--c2);font-style:italic}
+.rexplain{margin-top:16px;padding:14px 16px;background:#fef9e7;border-left: 4px solid #f1c40f;border-radius:8px;font-size:.9rem;color:#7d6608;font-style:italic; line-height: 1.5;}
 
 .btn-back{
-  width:100%;padding:12px;margin-top:18px;
-  background:var(--surface);border:1.5px solid var(--border2);
-  color:var(--text2);border-radius:9px;
-  font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;
+  width:100%;padding:14px;margin-top:24px;
+  background:var(--surface);border:2px solid var(--border2);
+  color:var(--text2);border-radius:10px;
+  font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;
 }
-.btn-back:hover{border-color:var(--c4);color:var(--c4)}
+.btn-back:hover{border-color:var(--hq-blue);color:var(--hq-blue)}
 
-@media screen {
-  .print-only { display: none; }
-}
+@media screen { .print-only { display: none; } }
 
-/* ═══════════════ STATS SCREEN ════════════════ */
-.filter-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:20px}
-.filter-bar select,.filter-bar input{
-  padding:7px 11px;border:1px solid var(--border);border-radius:7px;
-  font-size:.82rem;background:var(--surface);color:var(--text);outline:none;
-}
-.filter-bar select:focus,.filter-bar input:focus{border-color:var(--c5)}
-.filter-bar .btn-filter{
-  padding:7px 16px;background:var(--c4);color:#fff;
-  border:none;border-radius:7px;font-size:.82rem;font-weight:600;cursor:pointer;
-}
+/* ═══════════════ LỊCH SỬ & THỐNG KÊ ════════════════ */
+.tbl{width:100%;border-collapse:collapse;font-size:.9rem}
+.tbl th{background:var(--hq-blue);color:#fff;font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.5px;padding:12px 16px;text-align:left;}
+.tbl td{padding:12px 16px;border-bottom:1px solid var(--border);color:var(--text)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:var(--surface2)}
 
-.rank-hero{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;
-}
-.rank-card{
-  background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
-  padding:18px 16px;text-align:center;position:relative;overflow:hidden;
-}
-.rank-card.rank-1{border-color:var(--gold);background:linear-gradient(135deg,#fffbf0,#fff8e1)}
-.rank-card.rank-2{border-color:var(--border2);background:linear-gradient(135deg,#f5f7fa,var(--surface))}
-.rank-card.rank-3{border-color:#c8a882;background:linear-gradient(135deg,#fdf6f0,var(--surface))}
-.rank-medal{font-size:1.8rem;margin-bottom:6px}
-.rank-name{font-size:.88rem;font-weight:700;color:var(--text)}
-.rank-unit{font-size:.72rem;color:var(--text3);margin-top:2px}
-.rank-score{font-size:1.5rem;font-weight:800;color:var(--c2);margin-top:6px}
-
-/* ═══════════════ MODAL ════════════════ */
-.modal-ov{position:fixed;inset:0;z-index:800;background:rgba(10,22,40,.5);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px}
+/* ═══════════════ CÁC THÀNH PHẦN KHÁC ════════════════ */
+.modal-ov{position:fixed;inset:0;z-index:800;background:rgba(10,22,40,.6);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;padding:20px}
 .modal-ov.hidden{display:none}
-.modal-box{background:var(--surface);border-radius:14px;box-shadow:var(--shadow-lg);padding:28px 26px;width:100%;max-width:380px}
-.modal-title{font-size:1rem;font-weight:800;color:var(--text);margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
-.modal-close{background:none;border:none;color:var(--text3);font-size:1.2rem;cursor:pointer;line-height:1}
-.form-grp{margin-bottom:14px}
-.form-grp label{display:block;font-size:.75rem;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.3px;margin-bottom:5px}
-.form-grp input{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:8px;font-size:.9rem;color:var(--text);background:var(--surface2);outline:none;transition:border-color .2s}
-.form-grp input:focus{border-color:var(--c5)}
-.btn-primary-sm{
-  width:100%;padding:11px;margin-top:4px;
-  background:linear-gradient(135deg,var(--c2),var(--c4));
-  color:#fff;border:none;border-radius:8px;font-size:.9rem;font-weight:700;
-  cursor:pointer;transition:opacity .2s;
-}
-.btn-primary-sm:hover{opacity:.9}
+.modal-box{background:var(--surface);border-radius:16px;box-shadow:var(--shadow-lg);padding:32px;width:100%;max-width:400px}
 
-/* ═══════════════ LOADING ════════════════ */
-.loading-ov{position:fixed;inset:0;z-index:900;background:rgba(10,22,40,.45);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center}
+.loading-ov{position:fixed;inset:0;z-index:900;background:rgba(27,54,112,.7);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center}
 .loading-ov.hidden{display:none}
-.loading-box{background:var(--surface);border-radius:12px;padding:28px 36px;text-align:center;box-shadow:var(--shadow-lg)}
-.spinner{width:40px;height:40px;border:4px solid var(--border);border-top-color:var(--c4);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 12px}
+.loading-box{background:var(--surface);border-radius:16px;padding:32px 40px;text-align:center;box-shadow:var(--shadow-lg)}
+.spinner{width:48px;height:48px;border:5px solid var(--border);border-top-color:var(--hq-red);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading-box p{font-size:.85rem;color:var(--text2);font-weight:600}
 
 /* ═══════════════ RESPONSIVE ════════════════ */
+@media(max-width:900px){
+  .quiz-layout { flex-direction: column; gap: 16px; }
+  .quiz-sidebar-left { width: 100%; position: relative; top: 0; display: flex; flex-wrap: wrap; gap: 16px; padding: 16px; }
+  .quiz-timer-box { flex: 1; min-width: 150px; border-bottom: none; border-right: 1px solid var(--border); padding-bottom: 0; padding-right: 16px; display: flex; flex-direction: column; justify-content: center; }
+  .quiz-submit-box { flex: 1; min-width: 120px; border-top: none; padding-top: 0; display: flex; align-items: center; }
+  .q-grid-wrap { width: 100%; order: 3; border-top: 1px solid var(--border); padding-top: 16px;}
+  .q-dots { max-height: 150px; grid-template-columns: repeat(8, 1fr); }
+  .quiz-main-right { min-height: auto; padding: 20px; }
+  
+  .result-stats-row { grid-template-columns: 1fr 1fr; }
+}
+
 @media(max-width:768px){
-  .sidebar{
-    position:fixed;
-    inset:0 auto 0 0;
-    transform:translateX(-100%);
-    transition:transform .25s;
-    z-index:400;
-  }
+  .sidebar{ position:fixed; inset:0 auto 0 0; transform:translateX(-100%); z-index:400; }
   .sidebar.open{transform:translateX(0)}
   .burger{display:flex}
   .layout{display:block}
-  .main{min-height:100vh}
   .topbar{padding:0 16px}
-  .page-body{padding:16px 14px 48px}
-  .result-hero{grid-template-columns:1fr;text-align:center}
+  .page-body{padding:16px 12px 60px}
+  .result-hero{grid-template-columns:1fr;text-align:center; padding: 24px;}
   .result-donut{justify-self:center}
-  .result-stats-row{grid-template-columns:1fr 1fr}
-  .rank-hero{grid-template-columns:1fr}
-  .stat-grid{grid-template-columns:1fr 1fr}
-  .welcome-hero{flex-direction:column;text-align:center}
-  .welcome-badge{margin-top:16px}
-  .mode-row{flex-direction:column}
-  .count-chips{justify-content:center}
-  .sticky-quiz-header { top: 0; }
+  .q-dots { grid-template-columns: repeat(6, 1fr); }
 }
 
-@media(max-width:400px){
-  .stat-grid{grid-template-columns:1fr}
-  .result-stats-row{grid-template-columns:1fr}
-}
-
-/* ═══════════════ PRINT STYLES ════════════════ */
+/* ═══════════════ IN ẤN (PRINT) ════════════════ */
 @media print {
-  .sidebar, .topbar, .btn-back, .btn-print, .btn-export-word, .btn-export-excel, .nav-item, .burger {
-    display: none !important;
-  }
-  body {
-    background: white;
-    color: black;
-  }
-  .main {
-    padding: 0;
-    display: block;
-  }
-  .page-body {
-    padding: 20px;
-  }
-  .result-hero, .rq {
-    page-break-inside: avoid;
-  }
-  .result-hero {
-    background: white !important;
-    border: 2px solid #333;
-    color: black !important;
-    padding: 20px;
-    border-radius: 0;
-  }
-  .result-score-big {
-    color: black !important;
-    font-size: 2.5rem;
-  }
-  .result-score10, .donut-pct {
-    color: black !important;
-  }
-  .result-meta {
-    color: #555 !important;
-  }
-  .print-only {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 25px;
-    font-size: 0.9rem;
-    text-align: left;
-    padding: 18px;
-    border: 1px solid #ccc;
-    background: #f9f9f9;
-  }
-  .card {
-    box-shadow: none;
-    border: 1px solid #ddd;
-  }
-  .rq {
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-    padding: 10px;
-  }
-}
-
-/* ═══════════════ BUTTON STYLES ════════════════ */
-.btn-print, .btn-export-word, .btn-export-excel {
-  width: 100%;
-  padding: 12px;
-  margin-top: 12px;
-  border: none;
-  border-radius: 9px;
-  font-size: .88rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: opacity .2s, transform .1s;
-}
-
-.btn-print {
-  background: var(--c4);
-  color: #fff;
-}
-
-.btn-export-word {
-  background: var(--gold);
-  color: var(--c0);
-}
-
-.btn-export-excel {
-  background: var(--g1);
-  color: #fff;
-}
-
-.btn-print:hover, .btn-export-word:hover, .btn-export-excel:hover {
-  opacity: .9;
-  transform: translateY(-1px);
+  .sidebar, .topbar, .btn-back, .btn-print, .btn-export-word, .btn-export-excel, .burger, .q-nav-buttons, .quiz-sidebar-left { display: none !important; }
+  body { background: white; color: black; }
+  .main, .page-body { padding: 0; display: block; }
+  .result-hero { background: white !important; border: 2px solid #000; color: black !important; padding: 20px; border-radius: 0; box-shadow: none; }
+  .result-score-big, .result-score10, .donut-pct { color: black !important; }
+  .result-meta { color: #333 !important; }
+  .print-only { display: grid !important; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; font-size: 1rem; padding: 20px; border: 2px solid #000; background: #fff; }
+  .card, .rq { box-shadow: none; border: 1px solid #000; border-radius: 0; }
+  .rq { page-break-inside: avoid; }
 }
 </style>
 </head>
@@ -616,14 +578,14 @@ img{display:block;max-width:100%}
   <div class="login-wrap">
     <div class="login-logo">
       <div class="login-emblem">🏛️</div>
-      <h1>Hải quan khu vực VIII</h1>
-      <p>Hệ thống đánh giá kiến thức nghiệp vụ</p>
+      <h1>Hải quan Việt Nam</h1>
+      <p style="color: var(--hq-gold); font-weight: 600;">HỆ THỐNG ĐÁNH GIÁ NĂNG LỰC</p>
     </div>
     <div class="login-card">
       <div class="login-alert hidden" id="loginAlert"></div>
       <div class="field-wrap">
-        <label>Mã CC / NLĐ</label>
-        <input type="text" id="loginUsername" placeholder="Nhập mã cán bộ..." autocomplete="username">
+        <label>Mã CB / NLĐ</label>
+        <input type="text" id="loginUsername" placeholder="Nhập mã..." autocomplete="username">
       </div>
       <div class="field-wrap">
         <label>Mật khẩu</label>
@@ -640,8 +602,7 @@ img{display:block;max-width:100%}
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-brand">
       <div class="brand-icon">🏛️</div>
-      <div class="brand-name">Quiz System</div>
-      <div class="brand-sub">Trắc nghiệm nghiệp vụ</div>
+      <div class="brand-name">Hải Quan<br>KV VIII</div>
     </div>
 
     <nav class="sidebar-nav">
@@ -656,7 +617,7 @@ img{display:block;max-width:100%}
       </button>
       <button class="nav-item" onclick="App.goto('my-stats')" id="nav-my-stats">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-        Thống kê của tôi
+        Thống kê cá nhân
       </button>
 
       <div class="nav-section-label" id="adminNavLabel" style="display:none">Quản lý</div>
@@ -679,7 +640,7 @@ img{display:block;max-width:100%}
           <div class="user-role" id="sidebarRole">-</div>
         </div>
         <button class="btn-logout-sm" onclick="App.logout()" title="Đăng xuất">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
         </button>
       </div>
     </div>
@@ -689,12 +650,12 @@ img{display:block;max-width:100%}
     <header class="topbar">
       <div style="display:flex;align-items:center;gap:12px">
         <button class="burger" onclick="App.toggleSidebar()">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
         <span class="topbar-title" id="topbarTitle">Tổng quan</span>
       </div>
       <div class="topbar-right">
-        <button onclick="App.showModal('modal-chpw',true)" style="background:none;border:1px solid var(--border);border-radius:7px;padding:6px 12px;font-size:.75rem;font-weight:600;color:var(--text2);cursor:pointer">🔒 Đổi mật khẩu</button>
+        <button onclick="App.showModal('modal-chpw',true)" style="background:none;border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:.85rem;font-weight:600;color:var(--text2);cursor:pointer">🔒 Đổi mật khẩu</button>
       </div>
     </header>
 
@@ -731,11 +692,8 @@ img{display:block;max-width:100%}
 
       <div class="card">
         <div class="card-header">
-          <span class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            Lịch sử 10 bài gần nhất
-          </span>
-          <button onclick="App.goto('my-stats')" style="font-size:.75rem;color:var(--c4);background:none;border:none;cursor:pointer;font-weight:600">Xem tất cả →</button>
+          <span class="card-title">Lịch sử 10 bài gần nhất</span>
+          <button onclick="App.goto('my-stats')" style="font-size:.85rem;color:var(--hq-blue);background:none;border:none;cursor:pointer;font-weight:700">Xem tất cả →</button>
         </div>
         <div class="tbl-wrap">
           <table class="tbl" id="dashHistoryTable">
@@ -748,24 +706,14 @@ img{display:block;max-width:100%}
 
     <div class="screen page-body" id="screen-quiz-setup">
       <div class="card">
-        <div class="card-header">
-          <span class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            Chọn bộ đề
-          </span>
-        </div>
+        <div class="card-header"><span class="card-title">1. Chọn bộ đề</span></div>
         <select id="bankSelect" class="bank-select">
           <option value="">Đang tải danh sách bộ đề...</option>
         </select>
       </div>
 
       <div class="card">
-        <div class="card-header">
-          <span class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
-            Cấu hình bài thi
-          </span>
-        </div>
+        <div class="card-header"><span class="card-title">2. Cấu hình bài thi</span></div>
         <div class="mode-row">
           <button class="mode-btn active" id="modeStudy" onclick="App.setMode('study')">
             📖 Ôn tập<small>Không giới hạn thời gian</small>
@@ -775,11 +723,11 @@ img{display:block;max-width:100%}
           </button>
         </div>
         <div id="studyCountRow">
-          <div style="font-size:.78rem;font-weight:600;color:var(--text2);margin-bottom:6px">Số câu muốn ôn (5 – 500)</div>
+          <div style="font-size:.85rem;font-weight:600;color:var(--text2);margin-bottom:8px">Số câu muốn ôn (5 – 500)</div>
           <input class="count-input" type="number" id="studyCount" value="30" min="5" max="500">
         </div>
         <div id="examCountRow" style="display:none">
-          <div style="font-size:.78rem;font-weight:600;color:var(--text2);margin-bottom:8px">Số câu kiểm tra</div>
+          <div style="font-size:.85rem;font-weight:600;color:var(--text2);margin-bottom:10px">Số câu kiểm tra</div>
           <div class="count-chips">
             <button class="chip active" onclick="App.setExamCount(30,this)">30 câu / 30 phút</button>
             <button class="chip" onclick="App.setExamCount(60,this)">60 câu / 60 phút</button>
@@ -791,29 +739,49 @@ img{display:block;max-width:100%}
       </div>
     </div>
 
-    <div class="screen" id="screen-quiz">
-      <div class="sticky-quiz-header">
-        <div id="quizHeaderLines" style="text-align:center; margin-bottom:15px; border-bottom:2px solid var(--c4); padding-bottom:10px; padding-top: 20px;">
-          <div id="line1" style="font-weight:700; font-size:1rem; color:var(--text2)"></div>
-          <div id="line2" style="font-weight:800; font-size:1.1rem; color:var(--c1)"></div>
-          <div id="line3" style="font-weight:800; font-size:1.2rem; color:var(--c4); margin-top:5px; text-transform:uppercase;"></div>
-        </div>
-        <div class="timer-bar">
-          <div class="timer-clock" id="timerClock">--:--</div>
-          <div class="timer-track"><div class="timer-fill" id="timerFill" style="width:100%"></div></div>
-          <div class="timer-info" id="timerInfo">Ôn tập</div>
-        </div>
-        <div class="q-nav-wrap">
-          <div class="q-nav-meta">Đã trả lời: <b id="answeredCount">0</b> / <b id="totalCount">0</b> câu</div>
-          <div class="q-dots" id="qDots"></div>
-        </div>
-      </div>
+    <!-- ════════ MÀN HÌNH LÀM BÀI (THIẾT KẾ MỚI CHIA CỘT) ════════ -->
+    <div class="screen page-body" id="screen-quiz">
+      <div class="quiz-layout">
+        
+        <!-- CỘT TRÁI: ĐIỀU KHIỂN -->
+        <div class="quiz-sidebar-left">
+          <div class="quiz-timer-box">
+            <div class="timer-clock" id="timerClock">--:--</div>
+            <div class="timer-label" id="timerInfo">Ôn tập</div>
+          </div>
+          
+          <div class="q-grid-wrap">
+            <div class="q-nav-meta">
+              <span>Đã trả lời: <b id="answeredCount">0</b>/<b id="totalCount">0</b></span>
+            </div>
+            <div class="q-dots" id="qDots"></div>
+          </div>
 
-      <div class="quiz-body" id="quizBody"></div>
-      <div class="quiz-footer">
-        <button class="btn-submit" onclick="App.confirmSubmit()">📤 Nộp bài</button>
+          <div class="quiz-submit-box">
+            <button class="btn-submit" onclick="App.confirmSubmit()">📤 Nộp bài</button>
+          </div>
+        </div>
+
+        <!-- CỘT PHẢI: NỘI DUNG CÂU HỎI -->
+        <div class="quiz-main-right">
+          <div class="quiz-header-title">
+            <h3 id="quizLine1"></h3>
+            <h2 id="quizLine3"></h2>
+          </div>
+          
+          <div id="quizBody">
+            <!-- Câu hỏi sinh ra ở đây -->
+          </div>
+
+          <div class="q-nav-buttons">
+            <button class="btn-nav" id="btnPrev" onclick="App.prevQ()">← Câu trước</button>
+            <button class="btn-nav" id="btnNext" onclick="App.nextQ()">Câu tiếp theo →</button>
+          </div>
+        </div>
+        
       </div>
     </div>
+    <!-- ════════ KẾT THÚC MÀN HÌNH LÀM BÀI ════════ -->
 
     <div class="screen page-body" id="screen-result">
       <div id="printUserInfo" class="print-only"></div>
@@ -821,7 +789,7 @@ img{display:block;max-width:100%}
       <div class="result-hero">
         <div>
           <div class="result-score-label">Điểm bài thi</div>
-          <div class="result-score-big" id="resultScore">0 / 10</div>
+          <div class="result-score-big" id="resultScore">0.00 / 10</div>
           <div class="result-score10" id="resultScore10">Số câu đúng hoàn toàn: 0</div>
           <div class="result-meta" id="resultMeta"></div>
         </div>
@@ -848,15 +816,18 @@ img{display:block;max-width:100%}
         <div class="result-stat"><div class="result-stat-val val-red" id="rs-full-wrong">0</div><div class="result-stat-lbl">Sai hoàn toàn</div></div>
       </div>
 
-      <div style="font-size:.82rem;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Chi tiết từng câu</div>
+      <div style="font-size:1rem;font-weight:800;color:var(--hq-blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px; border-bottom: 2px solid var(--border); padding-bottom: 10px;">Chi tiết từng câu</div>
       <div id="resultDetail"></div>
       
-      <button class="btn-back" onclick="App.goto('dashboard')">← Về trang chủ</button>
-      <button class="btn-print" onclick="window.print()">🖨️ In kết quả</button>
-      <button class="btn-export-word" onclick="App.exportToWord()">📄 Xuất Word</button>
-      <button class="btn-export-excel" onclick="App.exportToExcel()">📊 Xuất Excel</button>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <button class="btn-back" onclick="App.goto('dashboard')">← Về trang chủ</button>
+        <button class="btn-print" onclick="window.print()">🖨️ In kết quả</button>
+        <button class="btn-export-word" onclick="App.exportToWord()">📄 Xuất Word</button>
+        <button class="btn-export-excel" onclick="App.exportToExcel()">📊 Xuất Excel</button>
+      </div>
     </div>
 
+    <!-- CÁC MÀN HÌNH THỐNG KÊ (Giữ nguyên cấu trúc, đổi class màu sắc tự ăn theo biến CSS) -->
     <div class="screen page-body" id="screen-my-stats">
       <div class="stat-grid" id="myStatCards">
         <div class="stat-card"><div class="stat-icon blue">🎯</div><div><div class="stat-value" id="ms-total">—</div><div class="stat-label">Tổng lần thi</div></div></div>
@@ -865,9 +836,7 @@ img{display:block;max-width:100%}
         <div class="stat-card"><div class="stat-icon red">📈</div><div><div class="stat-value" id="ms-pass-rate">—</div><div class="stat-label">Tỷ lệ đạt ≥ 5</div></div></div>
       </div>
       <div class="card">
-        <div class="card-header">
-          <span class="card-title">Lịch sử thi của tôi</span>
-        </div>
+        <div class="card-header"><span class="card-title">Lịch sử thi của tôi</span></div>
         <div class="tbl-wrap">
           <table class="tbl">
             <thead><tr><th>#</th><th>Thời gian</th><th>Loại</th><th>Bộ đề</th><th>Số câu</th><th>Điểm gốc</th><th>HT10</th></tr></thead>
@@ -880,10 +849,10 @@ img{display:block;max-width:100%}
     <div class="screen page-body" id="screen-unit-stats">
       <div class="card">
         <div class="card-header">
-          <span class="card-title">Kết quả đơn vị: <span id="unitName" style="color:var(--c4);text-transform:none">—</span></span>
-          <button class="btn-filter" onclick="App.loadUnitStats()" style="padding:6px 14px;background:var(--c4);color:#fff;border:none;border-radius:7px;font-size:.78rem;font-weight:600;cursor:pointer">↻ Làm mới</button>
+          <span class="card-title">Kết quả đơn vị: <span id="unitName" style="color:var(--hq-red);text-transform:none; margin-left: 8px;">—</span></span>
+          <button class="btn-filter" onclick="App.loadUnitStats()" style="padding:8px 16px;background:var(--hq-blue);color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer">↻ Làm mới</button>
         </div>
-        <div class="stat-grid" id="unitStatCards" style="margin-bottom:16px">
+        <div class="stat-grid" id="unitStatCards" style="margin-bottom:20px">
           <div class="stat-card"><div class="stat-icon blue">👥</div><div><div class="stat-value" id="us-members">—</div><div class="stat-label">Cán bộ trong đơn vị</div></div></div>
           <div class="stat-card"><div class="stat-icon gold">📋</div><div><div class="stat-value" id="us-exams">—</div><div class="stat-label">Tổng lần thi</div></div></div>
           <div class="stat-card"><div class="stat-icon green">📊</div><div><div class="stat-value" id="us-avg">—</div><div class="stat-label">Điểm TB toàn đơn vị</div></div></div>
@@ -911,20 +880,17 @@ img{display:block;max-width:100%}
         <input type="date" id="filterFrom" onchange="App.loadAllStats()">
         <input type="date" id="filterTo" onchange="App.loadAllStats()">
       </div>
-
-      <div class="stat-grid" id="allStatCards" style="margin-bottom:20px">
+      <div class="stat-grid" id="allStatCards" style="margin-bottom:24px">
         <div class="stat-card"><div class="stat-icon blue">🏢</div><div><div class="stat-value" id="as-units">—</div><div class="stat-label">Đơn vị tham gia</div></div></div>
         <div class="stat-card"><div class="stat-icon gold">👥</div><div><div class="stat-value" id="as-people">—</div><div class="stat-label">Cán bộ đã thi</div></div></div>
         <div class="stat-card"><div class="stat-icon green">📋</div><div><div class="stat-value" id="as-exams">—</div><div class="stat-label">Tổng lần thi</div></div></div>
         <div class="stat-card"><div class="stat-icon red">📊</div><div><div class="stat-value" id="as-avg">—</div><div class="stat-label">Điểm TB toàn cơ quan</div></div></div>
       </div>
-
       <div class="rank-hero" id="topRankHero"></div>
-
       <div class="card">
         <div class="card-header">
           <span class="card-title">Bảng xếp hạng toàn chi cục</span>
-          <span style="font-size:.75rem;color:var(--text3)" id="allStatsCount"></span>
+          <span style="font-size:.85rem;font-weight:600;color:var(--text3)" id="allStatsCount"></span>
         </div>
         <div class="tbl-wrap">
           <table class="tbl">
@@ -961,6 +927,8 @@ img{display:block;max-width:100%}
 
 <script>
 // =======================================================
+// NHỚ THAY ĐƯỜNG LINK GAS_URL (TỪ BƯỚC 1) VÀO DƯỚI ĐÂY
+// =======================================================
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbzRS6I51B4qejpdlaKNn6PfERL46ajU_pDiDPKbqUHZUF0lIuOCe8EYM-QNvKhUZOKl/exec';
 
 async function sha256(message) {
@@ -973,40 +941,36 @@ async function sha256(message) {
 async function callGAS(p){
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 15000);
-  
   try {
     const r = await fetch(GAS_URL, {
-      method: 'POST',
-      headers: {'Content-Type': 'text/plain'},
-      body: JSON.stringify(p),
-      signal: controller.signal
+      method: 'POST', headers: {'Content-Type': 'text/plain'},
+      body: JSON.stringify(p), signal: controller.signal
     });
     clearTimeout(timeoutId);
     if (!r.ok) throw new Error('HTTP ' + r.status);
     return await r.json();
   } catch (err) {
     clearTimeout(timeoutId);
-    if (err.name === 'AbortError') {
-      throw new Error('Mạng không ổn định hoặc hệ thống quá tải. Vui lòng thử lại!');
-    }
+    if (err.name === 'AbortError') throw new Error('Mạng không ổn định hoặc hệ thống quá tải. Vui lòng thử lại!');
     throw err;
   }
 }
 
 const S = {
   user: null, allBanks: [], mode: 'study', examCount: 30,
-  quizData: null, answers: {}, timerIv: null, timeLeft: 0, resultScore10Val: 0
+  quizData: null, answers: {}, timerIv: null, timeLeft: 0, 
+  resultScore10Val: 0, currentQ: 0
 };
 
 const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const letter = i => String.fromCharCode(65+i);
-const fmtDate = v => { if(!v) return '—'; const d=new Date(v); return `${d.getDate()}/${d.getMonth()+1} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; };
+const fmtDate = v => { if(!v) return '—'; const d=new Date(v); return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; };
 const scorePill = v => { const n=Number(v); const cls=n>=7?'score-high':n>=5?'score-mid':'score-low'; return `<span class="score-pill ${cls}">${n.toFixed(2)}</span>`; };
 
 const canSeeAll  = r => ['admin','manager'].includes(r);
 const canSeeUnit = r => ['admin','manager','truong_don_vi'].includes(r);
 
-document.title = "Hệ thống Thi Trắc nghiệm - Chi cục Hải quan khu vực VIII";
+document.title = "Đánh giá Năng lực - HQVN";
 
 const App = {
   init(){
@@ -1021,7 +985,7 @@ const App = {
     document.getElementById('screen-'+id).classList.add('active');
     const navEl = document.getElementById('nav-'+id);
     if(navEl) navEl.classList.add('active');
-    const titles = {dashboard:'Tổng quan','quiz-setup':'Làm bài thi',quiz:'Đang thi',result:'Kết quả bài thi','my-stats':'Thống kê của tôi','unit-stats':'Kết quả đơn vị','all-stats':'Toàn chi cục'};
+    const titles = {dashboard:'Tổng quan','quiz-setup':'Làm bài thi',quiz:'Đang thi',result:'Kết quả bài thi','my-stats':'Thống kê cá nhân','unit-stats':'Kết quả đơn vị','all-stats':'Toàn chi cục'};
     document.getElementById('topbarTitle').textContent = titles[id]||'';
     if(id==='dashboard') this.loadDashboard();
     if(id==='my-stats') this.loadMyStats();
@@ -1147,8 +1111,8 @@ const App = {
       document.getElementById('dashHistoryBody').innerHTML=h.slice(0,10).map(row=>`
         <tr>
           <td>${fmtDate(row.time)}</td>
-          <td><span style="font-size:.72rem;color:var(--text3)">${esc(row.type)}</span></td>
-          <td style="max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(row.banks)}</td>
+          <td><span style="font-size:.75rem;color:var(--text3);font-weight:600">${esc(row.type)}</span></td>
+          <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(row.banks)}</td>
           <td style="text-align:center">${row.count}</td>
           <td style="text-align:center;font-weight:700">${Number(row.score10).toFixed(2)}</td>
           <td>${scorePill(row.score10)}</td>
@@ -1168,13 +1132,11 @@ const App = {
   renderBanks(banks){
     const sel = document.getElementById('bankSelect');
     if(!banks.length) {
-      sel.innerHTML = '<option value="">Chưa có bộ đề nào khả dụng</option>';
-      return;
+      sel.innerHTML = '<option value="">Chưa có bộ đề nào khả dụng</option>'; return;
     }
     sel.innerHTML = '<option value="">— Vui lòng chọn một bộ đề —</option>' + banks.map(b => {
       const extra = b.d2 ? ` - ${esc(b.d2)}` : '';
-      const listWarn = (b.listCount && b.listCount !== b.count) ? ` (LIST ghi ${b.listCount})` : '';
-      return `<option value="${esc(b.id)}">${esc(b.name)} [${b.count} câu hợp lệ${listWarn}]${extra}</option>`;
+      return `<option value="${esc(b.id)}">${esc(b.name)} [${b.count} câu hợp lệ]${extra}</option>`;
     }).join('');
   },
 
@@ -1195,36 +1157,31 @@ const App = {
   async startQuiz(){
     const sel = document.getElementById('bankSelect');
     if(!sel || !sel.value) {
-      this.showAlert('dashAlert', 'Vui lòng bấm vào danh sách phía trên để chọn 1 bộ đề!');
-      return;
+      this.showAlert('dashAlert', 'Vui lòng bấm vào danh sách phía trên để chọn 1 bộ đề!'); return;
     }
     
     const bankId = sel.value;
     let count = S.mode === 'study' ? parseInt(document.getElementById('studyCount').value) : S.examCount;
 
     if(S.mode === 'study' && (!count || count < 5 || count > 500)){ 
-      this.showAlert('dashAlert','Số câu ôn tập phải từ 5 đến 500'); 
-      return; 
+      this.showAlert('dashAlert','Số câu ôn tập phải từ 5 đến 500'); return; 
     }
     const selectedBank = S.allBanks.find(b => String(b.id) === String(bankId));
     if(selectedBank && count > Number(selectedBank.count || 0)){
-      this.showAlert('dashAlert',`Bộ đề này hiện có ${selectedBank.count} câu hợp lệ, không đủ để bốc ${count} câu.`);
-      return;
+      this.showAlert('dashAlert',`Bộ đề này hiện có ${selectedBank.count} câu hợp lệ, không đủ để bốc ${count} câu.`); return;
     }
 
     this.hideAlert('dashAlert');
     this.showLoading('Đang tạo đề thi...');
     try{
       const res=await callGAS({action:'generateQuiz', username:S.user.username, bankId:bankId, mode:S.mode, count:count});
-      
       if(!res.ok){ this.showAlert('dashAlert',res.msg||'Không tạo được đề thi'); this.hideLoading(); return; }
       
-      S.quizData=res; S.answers={};
+      S.quizData=res; S.answers={}; S.currentQ = 0;
       
       const h = res.headerLines || {};
-      document.getElementById('line1').textContent = h.d1 || '';
-      document.getElementById('line2').textContent = h.d2 || '';
-      document.getElementById('line3').textContent = h.d3 || res.bankName || '';
+      document.getElementById('quizLine1').textContent = h.d1 || 'BỘ TÀI CHÍNH';
+      document.getElementById('quizLine3').textContent = h.d3 || res.bankName || 'BÀI THI TRẮC NGHIỆM';
 
       this.hideLoading();
       this.renderQuiz(res);
@@ -1233,11 +1190,9 @@ const App = {
 
   renderQuiz(q){
     this.stopTimer();
-    document.querySelectorAll('#quizBody input').forEach(i=>i.disabled=false);
-    const submitBtn = document.querySelector('.btn-submit');
-    if(submitBtn){ submitBtn.disabled=false; submitBtn.textContent='📤 Nộp bài'; }
     document.getElementById('totalCount').textContent=q.count;
     document.getElementById('answeredCount').textContent=0;
+
     if(q.mode === 'exam'){
       const timeSecs = Number(q.timeLimitSec || q.count * 60);
       document.getElementById('timerInfo').textContent=`Kiểm tra – ${q.count} câu`;
@@ -1247,7 +1202,11 @@ const App = {
       document.getElementById('timerFill').style.width='100%';
       document.getElementById('timerInfo').textContent='Ôn tập – Không giới hạn';
     }
-    document.getElementById('qDots').innerHTML=q.questions.map((_,i)=>`<button class="q-dot" id="dot-${i}" onclick="App.scrollToQ(${i})">${i+1}</button>`).join('');
+    
+    // Sinh bảng điều hướng Dots
+    document.getElementById('qDots').innerHTML=q.questions.map((_,i)=>`<button class="q-dot" id="dot-${i}" onclick="App.showQ(${i})">${i+1}</button>`).join('');
+    
+    // Sinh các khối câu hỏi nhưng ẩn đi bằng display:none
     document.getElementById('quizBody').innerHTML=q.questions.map((q2,i)=>`
       <div class="qblock" id="qb-${i}">
         <div class="qnum">Câu ${i+1} / ${q.count}</div>
@@ -1258,29 +1217,43 @@ const App = {
             <span>${letter(o)}. ${esc(opt)}</span>
           </label>`).join('')}
       </div>`).join('');
+      
     this.goto('quiz');
-    document.getElementById('nav-quiz-setup').classList.remove('active');
+    
+    // Khởi tạo hiển thị câu số 1
+    this.showQ(0);
     window.scrollTo(0,0);
   },
+
+  showQ(idx) {
+    if(idx < 0 || idx >= S.quizData.count) return;
+    
+    // Ẩn tất cả, hiện câu hiện tại
+    document.querySelectorAll('.qblock').forEach(el => { el.classList.remove('active-block'); });
+    document.getElementById('qb-'+idx).classList.add('active-block');
+
+    // Cập nhật trạng thái Dot
+    document.querySelectorAll('.q-dot').forEach(el => el.classList.remove('active-q'));
+    document.getElementById('dot-'+idx).classList.add('active-q');
+
+    S.currentQ = idx;
+
+    // Cập nhật nút Trước/Tiếp
+    document.getElementById('btnPrev').disabled = (idx === 0);
+    document.getElementById('btnNext').disabled = (idx === S.quizData.count - 1);
+  },
+
+  nextQ() { this.showQ(S.currentQ + 1); },
+  prevQ() { this.showQ(S.currentQ - 1); },
 
   pickOpt(qi,oi,checked,el){
     if(!S.answers[qi]) S.answers[qi]=[];
     if(checked){ if(!S.answers[qi].includes(oi)) S.answers[qi].push(oi); }
     else { S.answers[qi]=S.answers[qi].filter(x=>x!==oi); }
+    
     el.classList.toggle('selected',checked);
     document.getElementById('dot-'+qi).classList.toggle('answered',S.answers[qi].length>0);
     document.getElementById('answeredCount').textContent=Object.values(S.answers).filter(a=>a.length>0).length;
-  },
-  scrollToQ(i){ 
-    const el = document.getElementById('qb-'+i);
-    if(el) {
-      const offset = 260; 
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = el.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
-    }
   },
 
   startTimer(total){
@@ -1311,7 +1284,7 @@ const App = {
     let el=document.getElementById('timerBanner');
     if(!el){
       el=document.createElement('div'); el.id='timerBanner';
-      el.style.cssText='position:fixed;top:66px;left:50%;transform:translateX(-50%);z-index:600;background:#d4600a;color:#fff;padding:9px 20px;border-radius:8px;font-size:.83rem;font-weight:700;box-shadow:0 4px 16px rgba(0,0,0,.2);white-space:nowrap';
+      el.style.cssText='position:fixed;top:66px;left:50%;transform:translateX(-50%);z-index:600;background:var(--hq-red);color:#fff;padding:12px 24px;border-radius:8px;font-size:.9rem;font-weight:700;box-shadow:0 4px 16px rgba(0,0,0,.2);white-space:nowrap';
       document.body.appendChild(el);
     }
     el.textContent=msg; el.style.display='block';
@@ -1321,13 +1294,13 @@ const App = {
     let ov=document.getElementById('cdOverlay');
     if(!ov){
       ov=document.createElement('div'); ov.id='cdOverlay';
-      ov.style.cssText='position:fixed;inset:0;z-index:900;background:rgba(10,22,40,.8);display:flex;align-items:center;justify-content:center';
-      ov.innerHTML='<div style="background:#fff;border-radius:16px;padding:36px 44px;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,.3)">'+
-        '<div style="font-size:2.8rem;margin-bottom:10px">⏰</div>'+
-        '<h2 style="font-size:1.1rem;font-weight:800;color:#0f1f3d;margin-bottom:8px">Hết giờ làm bài!</h2>'+
-        '<p style="color:#4a5c7a;font-size:.85rem;margin-bottom:16px">Bài thi sẽ tự động nộp sau</p>'+
-        '<div id="cdNum" style="font-size:4rem;font-weight:800;color:#c0392b;line-height:1">3</div>'+
-        '<p style="color:#8496b0;font-size:.75rem;margin-top:4px">giây</p></div>';
+      ov.style.cssText='position:fixed;inset:0;z-index:900;background:rgba(27,54,112,.8);display:flex;align-items:center;justify-content:center';
+      ov.innerHTML='<div style="background:#fff;border-radius:16px;padding:40px 50px;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,.3)">'+
+        '<div style="font-size:3rem;margin-bottom:12px">⏰</div>'+
+        '<h2 style="font-size:1.3rem;font-weight:800;color:var(--hq-blue);margin-bottom:8px">Hết giờ làm bài!</h2>'+
+        '<p style="color:var(--text2);font-size:.9rem;margin-bottom:20px">Bài thi sẽ tự động nộp sau</p>'+
+        '<div id="cdNum" style="font-size:4.5rem;font-weight:800;color:var(--hq-red);line-height:1">3</div>'+
+        '<p style="color:var(--text3);font-size:.8rem;margin-top:6px">giây</p></div>';
       document.body.appendChild(ov);
     }
     ov.style.display='flex';
@@ -1338,7 +1311,7 @@ const App = {
   confirmSubmit(){
     const total=S.quizData.count, ans=Object.values(S.answers).filter(a=>a.length>0).length;
     const left=total-ans;
-    const msg=left>0?`Còn ${left} câu chưa trả lời. Vẫn nộp bài?`:`Đã trả lời đủ ${total} câu. Nộp bài?`;
+    const msg=left>0?`Còn ${left} câu chưa trả lời. Bạn chắc chắn muốn nộp bài?`:`Đã trả lời đủ ${total} câu. Nộp bài?`;
     if(confirm(msg)) this.submitQuiz();
   },
 
@@ -1362,7 +1335,6 @@ const App = {
     const {correctCount, score10, totalQ, detail, lateSubmit} = res;
     S.resultScore10Val = Number(score10).toFixed(2);
     
-    // Gán dữ liệu cho Print Form (Thông tin User)
     const u = S.user;
     const dateStr = new Date().toLocaleString('vi-VN', { hour12: false });
     document.getElementById('printUserInfo').innerHTML = `
@@ -1397,7 +1369,7 @@ const App = {
         if(o.isCorrect&&o.isChosen){c2='ok';ic='✓'; correctChosen++;}
         else if(!o.isCorrect&&o.isChosen){c2='bad';ic='✗'; wrongChosen++;}
         else if(o.isCorrect&&!o.isChosen){c2='missed';ic='!';}
-        return `<div class="ropt ${c2}"><span style="flex-shrink:0;font-size:.78rem">${ic||'·'}</span><span>${letter(oi)}. ${esc(o.text)}</span></div>`;
+        return `<div class="ropt ${c2}"><span style="flex-shrink:0;font-size:.9rem">${ic||'·'}</span><span>${letter(oi)}. ${esc(o.text)}</span></div>`;
       }).join('');
       
       if (correctChosen === totalCorrect && wrongChosen === 0) dungHoanToan++;
@@ -1417,7 +1389,6 @@ const App = {
     document.getElementById('lateBanner').style.display=lateSubmit?'block':'none';
     
     this.goto('result');
-    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
     window.scrollTo(0,0);
   },
 
@@ -1438,12 +1409,12 @@ const App = {
       document.getElementById('myHistoryBody').innerHTML=h.map((row,i)=>`<tr>
         <td><span class="rank-badge">${i+1}</span></td>
         <td>${fmtDate(row.time)}</td>
-        <td style="font-size:.75rem;color:var(--text3)">${esc(row.type)}</td>
-        <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(row.banks)}</td>
+        <td style="font-size:.75rem;color:var(--text3);font-weight:600">${esc(row.type)}</td>
+        <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(row.banks)}</td>
         <td style="text-align:center">${row.count}</td>
         <td style="text-align:center;font-weight:700">${Number(row.score10).toFixed(2)}</td>
         <td>${scorePill(row.score10)}</td></tr>`).join('');
-    }catch(e){ document.getElementById('myHistoryBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--r1);padding:20px">Lỗi kết nối</td></tr>'; }
+    }catch(e){ document.getElementById('myHistoryBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--hq-red);padding:20px">Lỗi kết nối</td></tr>'; }
   },
 
   async loadUnitStats(){
@@ -1452,9 +1423,9 @@ const App = {
     document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text3)">Đang tải...</td></tr>';
     try{
       const res=await callGAS({action:'getUnitStats',role:S.user.role,unit:S.user.unit||S.user.role});
-      if(!res.ok){ document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--r1);padding:20px">'+esc(res.msg)+'</td></tr>'; return; }
+      if(!res.ok){ document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--hq-red);padding:20px">'+esc(res.msg)+'</td></tr>'; return; }
       this.renderUnitTable(res.stats,'unitStatsBody','us-');
-    }catch(e){ document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--r1);padding:20px">Lỗi kết nối</td></tr>'; }
+    }catch(e){ document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--hq-red);padding:20px">Lỗi kết nối</td></tr>'; }
   },
 
   renderUnitTable(stats,tbodyId,pfx){
@@ -1474,7 +1445,7 @@ const App = {
         <td style="text-align:center">${r.count}</td>
         <td>${scorePill(r.avg)}</td>
         <td style="text-align:center;font-weight:700">${Number(r.best).toFixed(2)}</td>
-        <td style="text-align:center;font-size:.82rem">${r.pass}/${r.count}</td></tr>`;
+        <td style="text-align:center;font-size:.85rem">${r.pass}/${r.count}</td></tr>`;
     }).join('');
   },
 
@@ -1487,7 +1458,7 @@ const App = {
     document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--text3)">Đang tải...</td></tr>';
     try{
       const res=await callGAS({action:'getAllStats',filterUnit:unit,filterMode:mode,filterFrom:from,filterTo:to});
-      if(!res.ok){ document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--r1);padding:20px">'+esc(res.msg)+'</td></tr>'; return; }
+      if(!res.ok){ document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--hq-red);padding:20px">'+esc(res.msg)+'</td></tr>'; return; }
       if(res.units){
         const sel=document.getElementById('filterUnit');
         const cur=sel.value;
@@ -1519,8 +1490,8 @@ const App = {
         <td style="text-align:center">${r.count}</td>
         <td>${scorePill(r.avg)}</td>
         <td style="text-align:center;font-weight:700">${Number(r.best).toFixed(2)}</td>
-        <td style="text-align:center;font-size:.82rem">${Math.round(r.pass/r.count*100)}%</td></tr>`).join('');
-    }catch(e){ document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--r1);padding:20px">Lỗi kết nối</td></tr>'; }
+        <td style="text-align:center;font-size:.85rem">${Math.round(r.pass/r.count*100)}%</td></tr>`).join('');
+    }catch(e){ document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--hq-red);padding:20px">Lỗi kết nối</td></tr>'; }
   },
 
   async exportToWord() {
