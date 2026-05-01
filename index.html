@@ -1433,12 +1433,13 @@ const App = {
     }catch(e){ document.getElementById('categorySelect').innerHTML='<option value="">Lỗi kết nối tới Server</option>'; }
   },
 
-  renderCategories(banks){
+ renderCategories(banks){
     const catSel = document.getElementById('categorySelect');
     const bankSel = document.getElementById('bankSelect');
     
     if(!banks || !banks.length) {
-      catSel.innerHTML = '<option value="">Hệ thống chưa có bộ đề nào</option>';
+      // Đã đổi text để anh nhận biết file HTML mới đã nhận
+      catSel.innerHTML = '<option value="">Hệ thống chưa tìm thấy lĩnh vực</option>';
       bankSel.innerHTML = '<option value="">Chưa có bộ đề nào khả dụng</option>';
       return;
     }
