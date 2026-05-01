@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<!-- Lệnh chống Cốc Cốc Dark Mode -->
 <meta name="color-scheme" content="light only">
 <title>Hệ thống Thi Trắc nghiệm - Chi cục Hải quan khu vực VIII</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +13,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
 <style>
-/* ═══════════════ DESIGN TOKENS & ANTI-DARK MODE CỐC CỐC ════════════════ */
 :root {
   color-scheme: light !important; 
   --c0:#0a1628;--c1:#0f2347;--c2:#163566;--c3:#1d4585;
@@ -31,7 +29,6 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 
-/* Dùng background-image linear-gradient để Cốc Cốc không thể đổi màu nền thành đen */
 html, body {
   font-family:'Inter',sans-serif !important;
   background-image: linear-gradient(#f0f4fa, #f0f4fa) !important; 
@@ -44,12 +41,10 @@ button,input,select{font-family:inherit;font-size:inherit}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 
-/* ═══════════════ SCROLLBAR ════════════════ */
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 
-/* ═══════════════ SIDEBAR + LAYOUT ════════════════ */
 .layout{display:flex;min-height:100vh}
 
 .sidebar{
@@ -123,7 +118,6 @@ img{display:block;max-width:100%}
 .user-name{font-size:.82rem;font-weight:600;color:#fff !important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .user-role{font-size:.68rem;color:rgba(255,255,255,.4) !important;margin-top:1px}
 
-/* ═══════════════ MAIN CONTENT ════════════════ */
 .main{flex:1;min-width:0;display:flex;flex-direction:column}
 
 .topbar{
@@ -132,7 +126,6 @@ img{display:block;max-width:100%}
   display:flex;align-items:center;justify-content:space-between;
   position:sticky;top:0;z-index:200;
 }
-.topbar-title{font-size:1rem;font-weight:700;color:#0f1f3d !important;}
 .topbar-right{display:flex;align-items:center;gap:10px}
 .burger{
   display:none;background:none;border:none;
@@ -141,11 +134,17 @@ img{display:block;max-width:100%}
 
 .page-body{padding:24px 28px 48px;flex:1}
 
-/* ═══════════════ SCREENS ════════════════ */
 .screen{display:none}
 .screen.active{display:block}
 
-/* ═══════════════ LOGIN ════════════════ */
+/* Hiển thị Responsive Tiêu đề */
+.title-desktop { display: inline; }
+.title-mobile { display: none; }
+@media (max-width: 768px) {
+  .title-desktop { display: none; }
+  .title-mobile { display: inline; }
+}
+
 #screen-login{
   background:linear-gradient(180deg,#08245a 0%,#0a4aa2 55%,#08245a 100%) !important;
   position:fixed;inset:0;z-index:999;
@@ -249,7 +248,6 @@ img{display:block;max-width:100%}
   .btn-login{padding:10px 11px}
 }
 
-/* ═══════════════ STAT CARDS ════════════════ */
 .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
 .stat-card{
   background-image:linear-gradient(#ffffff,#ffffff) !important;border:1px solid #e2e8f4 !important;border-radius:12px;
@@ -268,13 +266,11 @@ img{display:block;max-width:100%}
 .stat-value{font-size:1.6rem;font-weight:800;color:#0f1f3d !important;line-height:1}
 .stat-label{font-size:.75rem;color:#8496b0 !important;margin-top:3px}
 
-/* ═══════════════ CARDS ════════════════ */
 .card{background-image:linear-gradient(#ffffff,#ffffff) !important;border:1px solid #e2e8f4 !important;border-radius:12px;padding:22px;margin-bottom:20px;box-shadow:0 1px 4px rgba(10,22,40,.06),0 4px 16px rgba(10,22,40,.08) !important;}
 .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
 .card-title{font-size:.85rem;font-weight:700;color:#0f1f3d !important;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:8px}
 .card-title svg{width:16px;height:16px;color:#2558a8 !important;}
 
-/* ═══════════════ WELCOME & DASHBOARD ════════════════ */
 .welcome-hero{
   background:
     radial-gradient(circle at 90% 20%,rgba(240,201,106,.25),transparent 26%),
@@ -298,7 +294,6 @@ img{display:block;max-width:100%}
 .welcome-badge-val{font-size:1.6rem;font-weight:800;color:var(--gold2) !important;line-height:1}
 .welcome-badge-label{font-size:.7rem;color:rgba(255,255,255,.5) !important;margin-top:2px}
 
-/* ═══════════════ DROPDOWN BỘ ĐỀ MỚI ════════════════ */
 .bank-select{
   width:100%;padding:14px 16px;border:1.5px solid #e2e8f4 !important;border-radius:9px;
   font-size:.95rem;font-weight:600;color:#0f1f3d !important;
@@ -311,7 +306,6 @@ img{display:block;max-width:100%}
 .bank-select:focus{border-color:#3b72d4 !important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234a5c7a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"), linear-gradient(#ffffff, #ffffff) !important;box-shadow:0 0 0 3px #d6e6fb}
 .bank-select:disabled{opacity:0.6; cursor:not-allowed;}
 
-/* ═══════════════ COUNT CHIPS ════════════════ */
 .count-chips{display:flex;gap:8px;flex-wrap:wrap}
 .chip{
   padding:8px 18px;border-radius:50px;
@@ -334,14 +328,12 @@ img{display:block;max-width:100%}
 .btn-start:hover{transform:translateY(-2px);box-shadow:0 18px 36px rgba(212,168,67,.36)}
 .btn-start:disabled{opacity:.5;cursor:not-allowed; transform:none; box-shadow:none;}
 
-/* ═══════════════ ALERT ════════════════ */
 .alert{padding:10px 13px;border-radius:8px;font-size:.83rem;font-weight:600;margin-top:12px}
 .alert-error{background-image:linear-gradient(#fdecea,#fdecea) !important;color:#c0392b !important;}
 .alert-success{background-image:linear-gradient(#e6f7ef,#e6f7ef) !important;color:#0f7c4a !important;}
 .alert-info{background-image:linear-gradient(#eef4fd,#eef4fd) !important;color:#163566 !important;}
 .alert-hidden{display:none}
 
-/* ═══════════════ HISTORY TABLE ════════════════ */
 .tbl{width:100%;border-collapse:collapse;font-size:.82rem}
 .tbl th{background-image:linear-gradient(#f3f6fb,#f3f6fb) !important;color:#415575 !important;font-weight:800;font-size:.72rem;text-transform:uppercase;letter-spacing:.4px;padding:9px 12px;text-align:left;border-bottom:1px solid #e2e8f4}
 .tbl td{padding:9px 12px;border-bottom:1px solid #e2e8f4 !important;color:#0f1f3d !important}
@@ -355,7 +347,6 @@ img{display:block;max-width:100%}
 .rank-badge{display:inline-block;width:22px;height:22px;border-radius:50%;background-image:linear-gradient(#eef4fd,#eef4fd) !important;color:#2558a8 !important;font-size:.72rem;font-weight:800;text-align:center;line-height:22px}
 .rank-badge.gold-rank{background-image:linear-gradient(#fef3d4,#fef3d4) !important;color:#d4600a !important}
 
-/* ═══════════════ QUIZ SETUP & SINGLE QUESTION ════════════════ */
 .exam-setup-grid{
   display:grid;
   grid-template-columns:minmax(0,1.3fr) minmax(320px,.7fr);
@@ -389,7 +380,6 @@ img{display:block;max-width:100%}
   align-items: flex-start;
 }
 
-/* Cột trái: Bảng điều hướng */
 .quiz-left-panel {
   width: 340px;
   flex-shrink: 0;
@@ -459,7 +449,6 @@ img{display:block;max-width:100%}
 .timer-clock.danger { color: #c0392b !important; animation: pulse .6s ease-in-out infinite; }
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-/* Cột phải: Khu vực hiển thị 1 câu hỏi */
 .quiz-right-panel {
   flex: 1;
   min-width: 0;
@@ -521,13 +510,11 @@ img{display:block;max-width:100%}
 .btn-submit:hover{opacity:.9}
 .btn-submit:disabled{opacity:.5;cursor:not-allowed}
 
-/* Wrapper thu gọn màn hình kết quả */
 .result-container {
   max-width: 960px;
   margin: 0 auto;
 }
 
-/* ═══════════════ RESULT ════════════════ */
 .result-hero{
   background:linear-gradient(135deg,var(--c0) 0%,var(--c2) 100%) !important;
   border-radius:16px;padding:32px 28px;margin-bottom:22px;
@@ -582,7 +569,6 @@ img{display:block;max-width:100%}
 }
 .btn-back:hover{border-color:#2558a8 !important;color:#2558a8 !important}
 
-/* ═══════════════ STATS SCREEN ════════════════ */
 .filter-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:20px}
 .filter-bar select,.filter-bar input{
   padding:7px 11px;border:1px solid #e2e8f4 !important;border-radius:7px;
@@ -609,7 +595,6 @@ img{display:block;max-width:100%}
 .rank-unit{font-size:.72rem;color:#8496b0 !important;margin-top:2px}
 .rank-score{font-size:1.5rem;font-weight:800;color:#163566 !important;margin-top:6px}
 
-/* ═══════════════ MODAL ════════════════ */
 .modal-ov{position:fixed;inset:0;z-index:800;background:rgba(10,22,40,.5);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px}
 .modal-ov.hidden{display:none}
 .modal-box{background-image:linear-gradient(#ffffff,#ffffff) !important;border-radius:14px;box-shadow:var(--shadow-lg);padding:28px 26px;width:100%;max-width:380px}
@@ -627,7 +612,6 @@ img{display:block;max-width:100%}
 }
 .btn-primary-sm:hover{opacity:.9}
 
-/* ═══════════════ LOADING ════════════════ */
 .loading-ov{position:fixed;inset:0;z-index:900;background:rgba(10,22,40,.45);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center}
 .loading-ov.hidden{display:none}
 .loading-box{background-image:linear-gradient(#ffffff,#ffffff) !important;border-radius:12px;padding:28px 36px;text-align:center;box-shadow:var(--shadow-lg)}
@@ -635,19 +619,16 @@ img{display:block;max-width:100%}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-box p{font-size:.85rem;color:#4a5c7a !important;font-weight:600}
 
-/* ═══════════════ RESPONSIVE (MOBILE) ════════════════ */
 .mobile-bottom-nav{display:none;}
 .mobile-account-box{display:none;}
-.mobile-home-menu{display:none;} /* LUÔN ẨN TRÊN GIAO DIỆN MÁY TÍNH ĐỂ KHÔNG BỊ LỖI THỪA NÚT */
+.mobile-home-menu{display:none;} 
 
 @media(max-width:768px){
   .sidebar{display:none !important;}
   .burger{display:flex;}
   .layout{display:block;}
   .main{width:100%; min-height:100vh; padding-bottom: 70px;}
-  .topbar{height:54px; padding:0 14px; justify-content: center; position: relative; background:rgba(255,255,255,.94);backdrop-filter:blur(12px)}
-  .topbar-title{font-size:.98rem;font-weight:800}
-  .topbar-right{position:absolute; right: 14px; top:50%; transform: translateY(-50%);}
+  .topbar{height:54px; padding:0 14px; justify-content: flex-start; position: relative; background:rgba(255,255,255,.94);backdrop-filter:blur(12px)}
   .page-body{padding:14px 12px 96px;}
   
   .result-hero{grid-template-columns:1fr;text-align:center;}
@@ -681,14 +662,9 @@ img{display:block;max-width:100%}
   }
   .mobile-account-name{font-weight:900;color:#0f1f3d !important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .mobile-account-role{font-size:.75rem;color:#8496b0 !important;}
-  .mobile-account-box button{
-    margin-left:auto;border:none;background-image:linear-gradient(#eef4fd,#eef4fd) !important;color:#2558a8 !important;
-    font-size:.75rem;font-weight:800;border-radius:10px;padding:8px 10px;
-  }
 
-  /* CHỈ BẬT HIỂN THỊ MENU NÀY TRÊN ĐIỆN THOẠI */
   .mobile-home-menu{
-    display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;
+    display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:16px;
   }
   .mobile-menu-card{
     border:1px solid #e2e8f4 !important; background-image:linear-gradient(#ffffff,#ffffff) !important; border-radius:18px;
@@ -700,7 +676,7 @@ img{display:block;max-width:100%}
   .mobile-menu-icon{font-size:1.35rem;line-height:1}
 
   .mobile-bottom-nav{
-    display:grid; grid-template-columns:repeat(4,1fr);
+    display:grid; grid-template-columns:repeat(3,1fr);
     position:fixed; left:0; right:0; bottom:0; z-index:700;
     background-image:linear-gradient(#ffffff,#ffffff) !important; border-top:1px solid #e2e8f4 !important;
     box-shadow:0 -4px 20px rgba(10,22,40,.08);
@@ -726,7 +702,6 @@ img{display:block;max-width:100%}
   .result-stats-row{grid-template-columns:1fr}
 }
 
-/* ═══════════════ PRINT STYLES ════════════════ */
 @media print {
   .sidebar, .topbar, .btn-back, .btn-print, .btn-export-word, .btn-export-excel, .nav-item, .burger, .mobile-bottom-nav, .mobile-account-box, .mobile-home-menu {
     display: none !important;
@@ -744,7 +719,6 @@ img{display:block;max-width:100%}
   .rq { border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; }
 }
 
-/* ═══════════════ BUTTON STYLES ════════════════ */
 .btn-print, .btn-export-word, .btn-export-excel {
   width: 100%; padding: 12px; margin-top: 12px; border: none; border-radius: 9px; font-size: .88rem; font-weight: 700; cursor: pointer; transition: opacity .2s, transform .1s;
 }
@@ -835,6 +809,10 @@ img{display:block;max-width:100%}
           <span class="user-caret">▾</span>
         </button>
         <div class="user-dropdown hidden" id="userDropdown">
+          <div id="userInfoPanel" style="padding: 10px 12px; border-bottom: 1px solid #eee; margin-bottom: 5px;">
+            <div id="userFullnameDrop" style="font-weight: 700; font-size: 0.85rem; color: #0f1f3d;">-</div>
+            <div id="userUnitDrop" style="font-size: 0.72rem; color: #8496b0; margin-top: 2px;">-</div>
+          </div>
           <button onclick="App.showModal('modal-chpw',true)">🔒 Đổi mật khẩu</button>
           <button onclick="App.logout()">↪ Đăng xuất</button>
         </div>
@@ -844,12 +822,14 @@ img{display:block;max-width:100%}
 
   <div class="main">
     <header class="topbar">
-      <div style="display:flex;align-items:center;gap:12px">
-        <span class="topbar-title" id="topbarTitle">Tổng quan</span>
+      <div style="display:flex;align-items:center;gap:10px;max-width:100%;overflow:hidden;">
+        <div style="width:28px;height:28px;background:linear-gradient(135deg,#2558a8,#3b72d4);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:1rem;color:#fff;box-shadow:0 3px 8px rgba(37,88,168,.3);flex-shrink:0;">🏛️</div>
+        <span class="topbar-title" style="font-family:'Lexend',sans-serif; text-transform:uppercase; font-weight:800; color:#163566 !important; letter-spacing:0.3px; font-size: clamp(0.85rem, 2vw, 1.05rem); white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+          <span class="title-desktop">TRẮC NGHIỆM KIẾN THỨC CHI CỤC HẢI QUAN KHU VỰC VIII</span>
+          <span class="title-mobile">TRẮC NGHIỆM HQKV8</span>
+        </span>
       </div>
-      <div class="topbar-right">
-        <button onclick="App.showModal('modal-chpw',true)" style="background:none;border:1px solid #e2e8f4;border-radius:7px;padding:6px 12px;font-size:.75rem;font-weight:600;color:#4a5c7a;cursor:pointer">🔒 Đổi mật khẩu</button>
-      </div>
+      <div class="topbar-right"></div>
     </header>
 
     <div class="screen active page-body" id="screen-dashboard">
@@ -870,25 +850,24 @@ img{display:block;max-width:100%}
           <div class="mobile-account-name" id="mobileUserName">-</div>
           <div class="mobile-account-role" id="mobileUserRole">-</div>
         </div>
-        <button onclick="App.logout()">Đăng xuất</button>
+        <div style="margin-left:auto; display:flex; gap:5px;">
+          <button onclick="App.showModal('modal-chpw',true)" style="background:#eef4fd; color:#2558a8; border:none; padding:8px; border-radius:10px; font-size:0.7rem; font-weight:800;">Mật khẩu</button>
+          <button onclick="App.logout()" style="background:#fdecea; color:#c0392b; border:none; padding:8px; border-radius:10px; font-size:0.7rem; font-weight:800;">Thoát</button>
+        </div>
       </div>
 
-      <div class="mobile-home-menu">
+      <div class="mobile-home-menu" style="grid-template-columns: 1fr 1fr 1fr;">
         <button onclick="App.goto('dashboard')" class="mobile-menu-card">
           <span class="mobile-menu-icon">🏠</span>
           <span>Tổng quan</span>
         </button>
         <button onclick="App.goto('quiz-setup')" class="mobile-menu-card primary">
           <span class="mobile-menu-icon">▶</span>
-          <span>Làm bài thi</span>
+          <span>Làm bài</span>
         </button>
         <button onclick="App.goto('my-stats')" class="mobile-menu-card">
           <span class="mobile-menu-icon">📊</span>
-          <span>Thống kê của tôi</span>
-        </button>
-        <button onclick="App.showModal('modal-chpw',true)" class="mobile-menu-card">
-          <span class="mobile-menu-icon">🔒</span>
-          <span>Đổi mật khẩu</span>
+          <span>Thống kê</span>
         </button>
       </div>
 
@@ -1153,7 +1132,7 @@ img{display:block;max-width:100%}
 </div>
 
 <!-- BOTTOM NAV CHO MOBILE -->
-<nav class="mobile-bottom-nav">
+<nav class="mobile-bottom-nav" style="grid-template-columns: repeat(3, 1fr);">
   <button onclick="App.goto('dashboard')" id="mb-nav-dashboard">
     <span>🏠</span>
     <b>Tổng quan</b>
@@ -1165,10 +1144,6 @@ img{display:block;max-width:100%}
   <button onclick="App.goto('my-stats')" id="mb-nav-my-stats">
     <span>📊</span>
     <b>Thống kê</b>
-  </button>
-  <button onclick="App.showModal('modal-chpw',true)" id="mb-nav-account">
-    <span>🔒</span>
-    <b>Mật khẩu</b>
   </button>
 </nav>
 
@@ -1195,7 +1170,6 @@ img{display:block;max-width:100%}
 </div>
 
 <script>
-// =======================================================
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbzRS6I51B4qejpdlaKNn6PfERL46ajU_pDiDPKbqUHZUF0lIuOCe8EYM-QNvKhUZOKl/exec';
 
 async function sha256(message) {
@@ -1268,9 +1242,6 @@ const App = {
     const userDropdown = document.getElementById('userDropdown');
     if(userDropdown) userDropdown.classList.add('hidden');
     
-    const titles = {dashboard:'Tổng quan','quiz-setup':'Làm bài thi',quiz:'Đang thi',result:'Kết quả bài thi','my-stats':'Thống kê của tôi','unit-stats':'Kết quả đơn vị','all-stats':'Toàn chi cục'};
-    document.getElementById('topbarTitle').textContent = titles[id]||'';
-    
     if(id==='dashboard') this.loadDashboard();
     if(id==='my-stats') this.loadMyStats();
     if(id==='unit-stats') this.loadUnitStats();
@@ -1331,6 +1302,10 @@ const App = {
     document.getElementById('sidebarAvatar').textContent=(u.fullname||u.username).charAt(0).toUpperCase();
     document.getElementById('sidebarName').textContent=u.fullname||u.username;
     document.getElementById('sidebarRole').textContent=this.roleLabel(u.role);
+    
+    document.getElementById('userFullnameDrop').textContent = u.fullname || u.username;
+    document.getElementById('userUnitDrop').textContent = u.unit || '—';
+    document.getElementById('chpwUsername').value = u.username;
     
     const mobileAvatar = document.getElementById('mobileAvatar');
     const mobileUserName = document.getElementById('mobileUserName');
@@ -1433,20 +1408,26 @@ const App = {
     }catch(e){ document.getElementById('categorySelect').innerHTML='<option value="">Lỗi kết nối tới Server</option>'; }
   },
 
- renderCategories(banks){
+  renderCategories(banks){
     const catSel = document.getElementById('categorySelect');
     const bankSel = document.getElementById('bankSelect');
     
     if(!banks || !banks.length) {
-      // Đã đổi text để anh nhận biết file HTML mới đã nhận
       catSel.innerHTML = '<option value="">Hệ thống chưa tìm thấy lĩnh vực</option>';
       bankSel.innerHTML = '<option value="">Chưa có bộ đề nào khả dụng</option>';
       return;
     }
     
-    const uniqueCats = [...new Set(banks.map(b => b.linhVuc || 'Chưa phân loại'))].filter(c => c).sort((a, b) => a.localeCompare(b, 'vi'));
+    const uniqueCats = [...new Set(banks.map(b => b.linhVuc))]
+                        .filter(c => c && c.trim() !== '')
+                        .sort((a, b) => a.localeCompare(b, 'vi'));
 
-    catSel.innerHTML = '<option value="">— Vui lòng chọn một lĩnh vực —</option>' + uniqueCats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
+    if (uniqueCats.length === 0) {
+      catSel.innerHTML = '<option value="">Hệ thống chưa tìm thấy lĩnh vực</option>';
+    } else {
+      catSel.innerHTML = '<option value="">— Vui lòng chọn một lĩnh vực —</option>' + 
+                         uniqueCats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
+    }
 
     bankSel.innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
     bankSel.disabled = true;
