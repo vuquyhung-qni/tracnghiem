@@ -7,10 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@700;800&display=swap" rel="stylesheet">
 
-<!-- Đã đổi thư viện docx sang máy chủ unpkg.com để tránh bị mạng nội bộ chặn -->
 <script src="https://unpkg.com/docx@7.8.2/build/index.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
 <style>
 /* ═══════════════ DESIGN TOKENS ════════════════ */
 :root{
@@ -137,69 +137,117 @@ img{display:block;max-width:100%}
 .screen{display:none}
 .screen.active{display:block}
 
-/* ═══════════════ LOGIN ════════════════ */
+
+/* ═══════════════ LOGIN - CUSTOMS LANDING STYLE ════════════════ */
 #screen-login{
+  background:linear-gradient(180deg,#08245a 0%,#0a4aa2 55%,#08245a 100%) !important;
   position:fixed;inset:0;z-index:999;
-  background:linear-gradient(180deg,#08245a 0%,#0a4aa2 55%,#08245a 100%);
-  display:flex;align-items:center;justify-content:center;padding:20px;
+  display:flex;align-items:stretch;justify-content:center;
+  padding:0;overflow:hidden;
+  color:#fff;
 }
 #screen-login.active{display:flex}
-.login-wrap{
-  width:100%;max-width:380px; position: relative; z-index: 10;
+.login-stage{
+  position:relative;width:100%;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+  padding:22px 24px 28px !important; overflow:hidden;
+  background:radial-gradient(circle at 50% 58%, rgba(54,134,233,.18), transparent 34%), linear-gradient(180deg,#08245a 0%,#0a4aa2 55%,#08245a 100%) !important;
 }
-.login-logo{text-align:center;margin-bottom:24px}
-.login-emblem{
-  width:86px;height:86px;margin:0 auto 16px;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  border-radius:20px;display:flex;align-items:center;justify-content:center;
-  font-size:2.5rem;box-shadow:0 8px 32px rgba(212,168,67,.4);
+.login-stage::after{
+  content:'' !important; position:absolute !important; inset:0 !important; pointer-events:none !important;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 420'%3E%3Cg fill='none' stroke='%2391aef5' stroke-opacity='.18' stroke-width='2'%3E%3Cpath d='M58 16l48 0 24 41-24 41-48 0-24-41z' fill='%238ab0ff' fill-opacity='.06'/%3E%3Cpath d='M4 95l38 0 19 33-19 33-38 0-19-33z' fill='%238ab0ff' fill-opacity='.05'/%3E%3Cpath d='M102 106l30 0 15 26-15 26-30 0-15-26z' fill='%238ab0ff' fill-opacity='.04'/%3E%3Cpath d='M38 182l50 0 25 43-25 43-50 0-25-43z' fill='%238ab0ff' fill-opacity='.05'/%3E%3Cpath d='M100 286l62 0 31 53-31 53-62 0-31-53z' fill='%238ab0ff' fill-opacity='.06'/%3E%3C/g%3E%3C/svg%3E") left top/190px auto no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 420'%3E%3Cg fill='none' stroke='%2391aef5' stroke-opacity='.18' stroke-width='2'%3E%3Cpath d='M214 16l48 0 24 41-24 41-48 0-24-41z' fill='%238ab0ff' fill-opacity='.06'/%3E%3Cpath d='M262 95l38 0 19 33-19 33-38 0-19-33z' fill='%238ab0ff' fill-opacity='.05'/%3E%3Cpath d='M188 106l30 0 15 26-15 26-30 0-15-26z' fill='%238ab0ff' fill-opacity='.04'/%3E%3Cpath d='M226 182l50 0 25 43-25 43-50 0-25-43z' fill='%238ab0ff' fill-opacity='.05'/%3E%3Cpath d='M156 286l62 0 31 53-31 53-62 0-31-53z' fill='%238ab0ff' fill-opacity='.06'/%3E%3C/g%3E%3C/svg%3E") right top/190px auto no-repeat !important;
 }
-.login-logo h1{font-size:1.6rem;font-weight:800;color:#fff;letter-spacing:.5px}
-.login-logo p{font-size:.9rem;color:rgba(255,255,255,.7);margin-top:4px}
+.login-content{
+  position:relative;z-index:1;width:min(1600px,100%) !important; min-height:calc(100vh - 44px) !important;
+  display:flex !important; flex-direction:column !important; align-items:center !important; justify-content:flex-start !important;
+}
+.login-brand-panel{text-align:center;display:flex;flex-direction:column;align-items:center; margin-top:0 !important;}
+.login-page-logo{
+  width:102px !important;height:102px !important;margin:0 auto 14px !important;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.1); border-radius: 50%;
+  font-size: 3rem;
+  filter:drop-shadow(0 14px 28px rgba(0,0,0,.28));
+}
+
+.login-unit{
+  font-family:'Lexend',sans-serif;text-transform:uppercase;
+  color:#ffec8f;font-weight:800;font-size:2rem !important; letter-spacing:.06em !important; line-height:1.08;
+  text-shadow:0 4px 0 rgba(0,0,0,.18),0 12px 24px rgba(0,0,0,.28);
+}
+.login-separator{width:250px !important;height:3px;background:linear-gradient(90deg,transparent,#ffdf76,transparent);margin:14px auto 18px !important;border-radius:99px}
+.login-main-title{
+  font-family:'Lexend',sans-serif;text-transform:uppercase;
+  color:#ffe4aa;font-weight:900;font-size:4rem !important; letter-spacing:.04em !important; white-space:nowrap !important; line-height:1;
+  text-shadow:0 5px 0 #8a4b12,0 11px 24px rgba(0,0,0,.38);
+}
+.login-form-zone{display:flex !important; justify-content:center !important; align-items:start; margin-top:72px !important; width:100% !important;}
+.login-wrap{width:100% !important; max-width:380px !important;}
+.login-logo{display:none}
 .login-card{
-  background:linear-gradient(180deg,rgba(34,71,125,.90),rgba(28,64,118,.92));
-  border:1px solid rgba(122,170,238,.34);
-  border-radius:18px;
-  padding:24px;
-  box-shadow:0 18px 40px rgba(0,0,0,.24);
+  background:linear-gradient(180deg,rgba(34,71,125,.90),rgba(28,64,118,.92)) !important;
+  border:1px solid rgba(122,170,238,.42);
+  border-radius:16px !important;
+  padding:18px 18px 14px !important;
+  box-shadow:0 26px 55px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.08);
   backdrop-filter:blur(10px);
 }
-.field-wrap{margin-bottom:16px}
+.field-wrap{margin-bottom:11px;}
 .field-wrap label{
-  display:block;font-size:.75rem;font-weight:700;letter-spacing:.5px;
-  text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:6px;
+  display:block;font-size:.68rem;font-weight:900;letter-spacing:.08em;
+  text-transform:uppercase;color:rgba(255,255,255,.74);margin-bottom:6px;
 }
 .field-wrap input{
-  width:100%;padding:12px 14px;
-  background:#f6f9ff;
-  border:1px solid rgba(255,255,255,.58);
-  border-radius:10px;color:#10213f;font-size:.95rem;font-weight:600;outline:none;
-  transition:border-color .2s,box-shadow .2s;
+  width:100%;padding:11px 12px;
+  background:#f6f9ff;border:1px solid rgba(255,255,255,.58);
+  border-radius:10px;color:#10213f;font-size:.9rem;font-weight:700;outline:none;
+  transition:border-color .2s,box-shadow .2s,background .2s;
 }
-.field-wrap input::placeholder{color:#8a98ad;font-weight:500;}
-.field-wrap input:focus{border-color:var(--gold2);box-shadow:0 0 0 3px rgba(246,210,96,.22)}
+.field-wrap input::placeholder{color:#8a98ad;font-weight:600}
+.field-wrap input:focus{border-color:#f6d260;background:#fff;box-shadow:0 0 0 3px rgba(246,210,96,.22)}
 .btn-login{
-  width:100%;padding:13px;margin-top:8px;
-  background:linear-gradient(180deg,#f7d76c 0%,#e5b63e 100%);
+  width:100%;padding:11px 12px;margin-top:6px;
+  background:linear-gradient(180deg,#f9d96f 0%,#e7b842 100%);
   color:#221a07;border:none;border-radius:10px;
-  font-size:1rem;font-weight:800;letter-spacing:.5px;
-  box-shadow:0 10px 20px rgba(240,201,106,.20);
-  cursor:pointer;transition:transform .15s ease,filter .15s ease;
+  font-size:.92rem;font-weight:900;letter-spacing:.2px;
+  box-shadow:0 12px 24px rgba(240,201,106,.26);
+  cursor:pointer;transition:transform .15s ease,filter .15s ease,box-shadow .15s ease;
 }
-.btn-login:hover{filter:brightness(1.05);transform:translateY(-1px);}
+.btn-login:hover{filter:brightness(1.04);transform:translateY(-1px);box-shadow:0 14px 28px rgba(240,201,106,.34)}
 .btn-link-white{
-  width:100%;background:none;border:none;
-  color:rgba(255,255,255,.6);font-size:.85rem;
-  cursor:pointer;margin-top:16px;text-align:center;
-  text-decoration:underline;
+  width:100%;background:none;border:none;color:rgba(255,255,255,.76);font-size:.78rem;
+  cursor:pointer;margin-top:9px;text-align:center;text-decoration:underline;text-underline-offset:3px;
 }
-.login-alert{
-  padding:10px 13px;border-radius:8px;font-size:.85rem;font-weight:600;
-  margin-bottom:16px;
-}
-.login-alert.err{background:rgba(192,57,43,.2);color:#ff8a80;border:1px solid rgba(192,57,43,.3)}
-.login-alert.info{background:rgba(37,88,168,.3);color:#aac5f2;border:1px solid rgba(37,88,168,.4)}
+.login-alert{padding:9px 11px;border-radius:10px;font-size:.78rem;font-weight:700;margin-bottom:11px}
+.login-alert.err{background:rgba(192,57,43,.22);color:#ffd5d0;border:1px solid rgba(255,122,108,.35)}
+.login-alert.info{background:rgba(37,88,168,.32);color:#d6e6fb;border:1px solid rgba(170,197,242,.35)}
 .login-alert.hidden{display:none}
+
+.login-vector-strip,.vector-card,.vector-icon,.vector-title,.vector-sub{display:none !important;}
+
+@media(max-width:980px){
+  #screen-login{overflow:auto}
+  .login-stage{min-height:100svh;padding:18px 14px 22px !important;}
+  .login-stage::after{background-size:145px auto,145px auto !important;}
+  .login-content{min-height:calc(100svh - 46px);}
+  .login-page-logo{width:86px !important;height:86px !important;margin-bottom:10px !important; font-size: 2.5rem;}
+  .login-unit{font-size:1.28rem !important;letter-spacing:.045em;line-height:1.2}
+  .login-separator{width:180px !important; height:2px;margin:10px auto 12px !important;}
+  .login-main-title{font-size:2.25rem !important;white-space:normal !important;line-height:1.08 !important;text-shadow:0 3px 0 #8a4b12,0 8px 18px rgba(0,0,0,.35); text-align:center !important;}
+  .login-form-zone{margin-top:36px !important;}
+  .login-wrap{max-width:340px !important;}
+  .login-card{padding:14px;border-radius:16px}
+}
+@media(max-width:430px){
+  .login-page-logo{width:78px !important;height:78px !important; font-size: 2rem;}
+  .login-unit{font-size:1rem !important;}
+  .login-main-title{font-size:1.76rem !important;}
+  .login-form-zone{margin-top:28px !important;}
+  .field-wrap input{padding:10px 11px;font-size:.86rem}
+  .btn-login{padding:10px 11px}
+}
 
 /* ═══════════════ STAT CARDS ════════════════ */
 .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
@@ -228,24 +276,56 @@ img{display:block;max-width:100%}
 
 /* ═══════════════ WELCOME & DASHBOARD ════════════════ */
 .welcome-hero{
-  background:linear-gradient(135deg,var(--c0) 0%,var(--c2) 100%);
-  border-radius:16px;padding:28px 32px;margin-bottom:24px;
+  background:
+    radial-gradient(circle at 90% 20%,rgba(240,201,106,.25),transparent 26%),
+    linear-gradient(135deg,#07152b 0%,#12366c 58%,#1d58a8 100%);
+  border-radius:24px;padding:34px 38px;margin-bottom:24px;
   display:flex;align-items:center;justify-content:space-between;gap:16px;
   position:relative;overflow:hidden;
+  box-shadow:0 18px 45px rgba(10,22,40,.18);
 }
 .welcome-hero::before{
   content:'';position:absolute;right:-60px;top:-60px;
   width:200px;height:200px;border-radius:50%;
   background:rgba(255,255,255,.04);
 }
-.welcome-text h2{font-size:1.3rem;font-weight:800;color:#fff;line-height:1.3}
-.welcome-text p{font-size:.83rem;color:rgba(255,255,255,.55);margin-top:5px}
+.welcome-text h2{font-size:1.55rem;letter-spacing:.2px;font-weight:800;color:#fff;line-height:1.3}
+.welcome-text p{font-size:.9rem;color:rgba(255,255,255,.68);margin-top:5px}
 .welcome-badge{
   background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
   border-radius:8px;padding:8px 14px;text-align:center;flex-shrink:0;
 }
 .welcome-badge-val{font-size:1.6rem;font-weight:800;color:var(--gold2);line-height:1}
 .welcome-badge-label{font-size:.7rem;color:rgba(255,255,255,.5);margin-top:2px}
+
+/* Nút Quick Action giữa màn hình Dashboard */
+.quick-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.qa-btn {
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--c4);
+  cursor: pointer;
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: var(--shadow);
+}
+.qa-btn:hover {
+  border-color: var(--c5);
+  background: var(--c9);
+  transform: translateY(-2px);
+}
 
 /* ═══════════════ DROPDOWN BỘ ĐỀ MỚI ════════════════ */
 .bank-select{
@@ -257,6 +337,7 @@ img{display:block;max-width:100%}
   margin-bottom:8px;transition:border-color .2s;
 }
 .bank-select:focus{border-color:var(--c5);background:var(--surface);box-shadow:0 0 0 3px var(--c8)}
+.bank-select:disabled{opacity:0.6; cursor:not-allowed; background:var(--bg);}
 
 /* ═══════════════ COUNT CHIPS ════════════════ */
 .count-chips{display:flex;gap:8px;flex-wrap:wrap}
@@ -270,15 +351,15 @@ img{display:block;max-width:100%}
 .chip.active{background:var(--c4);border-color:var(--c4);color:#fff}
 
 .btn-start{
-  width:100%;margin-top:18px;padding:14px;
-  background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 100%);
-  color:var(--c0);border:none;border-radius:9px;
-  font-size:1rem;font-weight:800;letter-spacing:.3px;
-  box-shadow:0 4px 16px rgba(212,168,67,.35);
-  cursor:pointer;transition:opacity .2s,transform .1s;
+  width:100%;margin-top:18px;padding:16px;
+  background:linear-gradient(135deg,#d4a843 0%,#f4cf72 55%,#ffe08a 100%);
+  color:var(--c0);border:none;border-radius:16px;
+  font-size:1.02rem;font-weight:800;letter-spacing:.3px;
+  box-shadow:0 14px 28px rgba(212,168,67,.28);
+  cursor:pointer;transition:transform .18s ease,box-shadow .18s ease;
 }
-.btn-start:hover{opacity:.9;transform:translateY(-1px)}
-.btn-start:disabled{opacity:.5;cursor:not-allowed}
+.btn-start:hover{transform:translateY(-2px);box-shadow:0 18px 36px rgba(212,168,67,.36)}
+.btn-start:disabled{opacity:.5;cursor:not-allowed; transform:none; box-shadow:none;}
 
 /* ═══════════════ ALERT ════════════════ */
 .alert{padding:10px 13px;border-radius:8px;font-size:.83rem;font-weight:600;margin-top:12px}
@@ -289,10 +370,10 @@ img{display:block;max-width:100%}
 
 /* ═══════════════ HISTORY TABLE ════════════════ */
 .tbl{width:100%;border-collapse:collapse;font-size:.82rem}
-.tbl th{background:var(--surface2);color:var(--text2);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.4px;padding:9px 12px;text-align:left;border-bottom:1px solid var(--border)}
+.tbl th{background:#f3f6fb;color:#415575;font-weight:800;font-size:.72rem;text-transform:uppercase;letter-spacing:.4px;padding:9px 12px;text-align:left;border-bottom:1px solid var(--border)}
 .tbl td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text)}
 .tbl tr:last-child td{border-bottom:none}
-.tbl tr:hover td{background:var(--surface2)}
+.tbl tr:hover td{background:#f7fbff}
 .tbl-wrap{overflow-x:auto}
 .score-pill{display:inline-block;padding:2px 9px;border-radius:50px;font-size:.75rem;font-weight:700}
 .score-high{background:var(--g2);color:var(--g1)}
@@ -301,20 +382,19 @@ img{display:block;max-width:100%}
 .rank-badge{display:inline-block;width:22px;height:22px;border-radius:50%;background:var(--c9);color:var(--c4);font-size:.72rem;font-weight:800;text-align:center;line-height:22px}
 .rank-badge.gold-rank{background:var(--gold3);color:var(--o1)}
 
-/* ═══════════════ QUIZ SCREEN (SINGLE QUESTION) ════════════════ */
+/* ═══════════════ QUIZ SETUP & SINGLE QUESTION ════════════════ */
 .exam-setup-grid{
   display:grid;
   grid-template-columns:minmax(0,1.3fr) minmax(320px,.7fr);
   gap:20px;
   align-items:start;
 }
-.section-label{
-  font-size:.85rem;
-  font-weight:800;
-  color:var(--text);
-  margin-bottom:12px;
-  text-transform:uppercase;
-  letter-spacing:.35px;
+.form-label {
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+  text-transform: uppercase;
 }
 .exam-guide{
   background:linear-gradient(135deg,#fff8e1,#ffffff);
@@ -590,19 +670,25 @@ img{display:block;max-width:100%}
   .sidebar{display:none !important;}
   .burger{display:flex;}
   .layout{display:block;}
-  .main{min-height:100vh; padding-bottom: 70px;}
-  .topbar{padding:0 16px; justify-content: center; position: relative;}
-  .topbar-right{position:absolute; right: 16px; top:50%; transform: translateY(-50%);}
-  .page-body{padding:16px 14px 48px;}
+  .main{width:100%; min-height:100vh; padding-bottom: 70px;}
+  .topbar{height:54px; padding:0 14px; justify-content: center; position: relative; background:rgba(255,255,255,.94);backdrop-filter:blur(12px)}
+  .topbar-title{font-size:.98rem;font-weight:800}
+  .topbar-right{position:absolute; right: 14px; top:50%; transform: translateY(-50%);}
+  .page-body{padding:14px 12px 96px;}
   
   .result-hero{grid-template-columns:1fr;text-align:center;}
   .result-donut{justify-self:center;}
   .result-stats-row{grid-template-columns:1fr 1fr;}
   .rank-hero{grid-template-columns:1fr;}
-  .stat-grid{grid-template-columns:1fr 1fr;}
-  .welcome-hero{flex-direction:column;text-align:left; align-items:flex-start; padding:24px 20px;}
-  .welcome-badge{margin-top:16px; width: 100%;}
-  .count-chips{justify-content:center;}
+  .stat-grid{grid-template-columns:1fr;gap:12px}
+  
+  .welcome-hero{border-radius:20px; padding:24px 20px; flex-direction:column; align-items:flex-start; text-align:left; margin-bottom:14px;}
+  .welcome-text h2{font-size:1.25rem}
+  .welcome-text p{font-size:.84rem}
+  .welcome-badge{width:100%;margin-top:8px}
+
+  .count-chips{gap:8px; justify-content:center;}
+  .chip{flex:1 1 calc(50% - 8px);text-align:center;padding:10px 8px;font-size:.82rem}
   .exam-setup-grid{grid-template-columns:1fr;}
 
   /* Khu vực làm bài Mobile */
@@ -627,34 +713,47 @@ img{display:block;max-width:100%}
     font-size:.75rem;font-weight:800;border-radius:10px;padding:8px 10px;
   }
 
-  /* Bottom Nav thanh thoát */
+  .mobile-home-menu{
+    display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;
+  }
+  .mobile-menu-card{
+    border:1px solid rgba(226,232,244,.95); background:rgba(255,255,255,.96); border-radius:18px;
+    padding:16px 12px; min-height:86px; box-shadow:0 10px 24px rgba(10,22,40,.07);
+    display:flex; flex-direction:column; justify-content:center; align-items:center; gap:7px;
+    font-weight:800; color:#0f1f3d; cursor:pointer;
+  }
+  .mobile-menu-card.primary{background:linear-gradient(135deg,#2558a8,#3b72d4);color:#fff}
+  .mobile-menu-icon{font-size:1.35rem;line-height:1}
+
   .mobile-bottom-nav{
     display:grid; grid-template-columns:repeat(4,1fr);
-    position:fixed; left:0; right:0; bottom:0; z-index:700;
-    background:var(--surface); border-top:1px solid var(--border);
-    box-shadow:0 -4px 20px rgba(10,22,40,.08);
-    padding-bottom: env(safe-area-inset-bottom);
+    position:fixed; left:10px; right:10px; bottom:10px; z-index:700;
+    background:rgba(255,255,255,.96); backdrop-filter:blur(14px);
+    border:1px solid rgba(226,232,244,.95); border-radius:22px;
+    box-shadow:0 12px 34px rgba(10,22,40,.16); overflow:hidden;
   }
   .mobile-bottom-nav button{
-    border:none; background:transparent; padding:10px 4px;
-    color:var(--text3); font-size:.72rem; font-weight:700; cursor:pointer;
-    display:flex; flex-direction:column; align-items:center; transition: color .2s;
+    border:none; background:transparent; padding:9px 4px;
+    color:#64748b; font-size:.72rem; font-weight:700; cursor:pointer;
   }
-  .mobile-bottom-nav button span{ font-size:1.25rem; margin-bottom:4px; filter: grayscale(100%); opacity:0.6; transition: all .2s;}
-  .mobile-bottom-nav button.active{ color:var(--c4); }
-  .mobile-bottom-nav button.active span{ filter: grayscale(0%); opacity:1; }
+  .mobile-bottom-nav button span{display:block;font-size:1.05rem;margin-bottom:2px}
+  .mobile-bottom-nav button.active{color:#2558a8;background:#eef4fd}
 
   .tbl-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px}
   .tbl{min-width:680px;font-size:.78rem}
+  .tbl th,.tbl td{padding:10px 12px;white-space:nowrap}
+}
+
+@media(min-width:520px) and (max-width:768px){
+  .stat-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:400px){
-  .stat-grid{grid-template-columns:1fr}
   .result-stats-row{grid-template-columns:1fr}
 }
 
 /* ═══════════════ PRINT STYLES ════════════════ */
 @media print {
-  .sidebar, .topbar, .btn-back, .btn-print, .btn-export-word, .btn-export-excel, .nav-item, .burger, .mobile-bottom-nav, .mobile-account-box {
+  .sidebar, .topbar, .btn-back, .btn-print, .btn-export-word, .btn-export-excel, .nav-item, .burger, .mobile-bottom-nav, .mobile-account-box, .mobile-home-menu {
     display: none !important;
   }
   body { background: white; color: black; }
@@ -679,29 +778,69 @@ img{display:block;max-width:100%}
 .btn-export-excel { background: var(--g1); color: #fff; }
 .btn-print:hover, .btn-export-word:hover, .btn-export-excel:hover { opacity: .9; transform: translateY(-1px); }
 
+/* ===== UI REFRESH ===== */
+:root{color-scheme:light}
+html,body{
+  width:100%; max-width:100%; overflow-x:hidden;
+  background: radial-gradient(circle at top right, rgba(59,114,212,.16), transparent 32%), linear-gradient(180deg,#f4f7fb 0%,#eaf0f8 100%) !important;
+}
+.sidebar{
+  width:248px; background:linear-gradient(180deg,#081426 0%,#0d1f3a 55%,#081426 100%);
+  border-right:1px solid rgba(255,255,255,.08); box-shadow:8px 0 30px rgba(8,20,38,.18);
+}
+.brand-icon{
+  width:50px;height:50px;border-radius:16px; background:linear-gradient(135deg,#2f6fd6,#6aa0ff); box-shadow:0 12px 30px rgba(47,111,214,.35);
+}
+.nav-item{padding:11px 12px;border-radius:12px;margin-bottom:6px}
+.nav-item.active{
+  background:linear-gradient(135deg,#2f6fd6,#4f8df7); color:#fff;box-shadow:0 8px 20px rgba(47,111,214,.35)
+}
+.topbar{
+  background:rgba(255,255,255,.90); backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(226,232,244,.9); box-shadow:0 4px 18px rgba(10,22,40,.04);
+}
+.topbar-right{display:none!important}
+.card{
+  background:rgba(255,255,255,.94); border:1px solid rgba(226,232,244,.95);
+  border-radius:22px; padding:24px; box-shadow:0 12px 34px rgba(10,22,40,.08);
+}
+.tbl th{background:#f3f6fb;color:#415575;font-weight:800}
+.tbl td{padding:13px 14px}
+.tbl tr:hover td{background:#f7fbff}
+.quick-actions{display:none !important;}
+
 </style>
 </head>
 <body>
 
 <div id="screen-login" class="screen active">
-  <div class="login-wrap">
-    <div class="login-logo">
-      <div class="login-emblem">🏛️</div>
-      <h1>Hải quan khu vực VIII</h1>
-      <p>Hệ thống đánh giá kiến thức nghiệp vụ</p>
-    </div>
-    <div class="login-card">
-      <div class="login-alert hidden" id="loginAlert"></div>
-      <div class="field-wrap">
-        <label>Mã CC / NLĐ</label>
-        <input type="text" id="loginUsername" placeholder="Nhập mã cán bộ..." autocomplete="username">
+  <div class="login-stage">
+    <div class="login-content">
+      <div class="login-brand-panel">
+        <div class="login-page-logo" style="margin:0 auto 16px;">🏛️</div>
+        <div class="login-unit">CHI CỤC HẢI QUAN KHU VỰC VIII</div>
+        <div class="login-separator"></div>
+        <div class="login-main-title">TRẮC NGHIỆM KIẾN THỨC</div>
       </div>
-      <div class="field-wrap">
-        <label>Mật khẩu</label>
-        <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
+
+      <div class="login-form-zone">
+        <div class="login-wrap">
+          <div class="login-card">
+            <div class="login-alert hidden" id="loginAlert"></div>
+            <div class="field-wrap">
+              <label>Mã CC / NLĐ</label>
+              <input type="text" id="loginUsername" placeholder="Nhập mã cán bộ..." autocomplete="username">
+            </div>
+            <div class="field-wrap">
+              <label>Mật khẩu</label>
+              <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
+            </div>
+            <button class="btn-login" onclick="App.login()">Đăng nhập</button>
+            <button class="btn-link-white" onclick="App.showModal('modal-chpw',true)">Đổi mật khẩu</button>
+          </div>
+        </div>
       </div>
-      <button class="btn-login" onclick="App.login()">Đăng nhập</button>
-      <button class="btn-link-white" onclick="App.showModal('modal-chpw',true)">Đổi mật khẩu</button>
+
     </div>
   </div>
 </div>
@@ -837,17 +976,29 @@ img{display:block;max-width:100%}
             <div class="card-header">
               <span class="card-title">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-                Chọn bộ đề
+                Cấu hình bộ đề thi
               </span>
             </div>
-            <select id="bankSelect" class="bank-select">
-              <option value="">Đang tải danh sách bộ đề...</option>
-            </select>
+
+            <div class="form-grp" style="margin-bottom: 16px;">
+              <label class="form-label" style="font-size:.8rem; color:var(--text2);">1. CHỌN LĨNH VỰC</label>
+              <select id="categorySelect" class="bank-select" onchange="App.filterBanks()">
+                <option value="">Đang tải dữ liệu...</option>
+              </select>
+            </div>
+
+            <div class="form-grp">
+              <label class="form-label" style="font-size:.8rem; color:var(--text2);">2. CHỌN BỘ ĐỀ</label>
+              <select id="bankSelect" class="bank-select" disabled>
+                <option value="">— Vui lòng chọn lĩnh vực trước —</option>
+              </select>
+            </div>
+
           </div>
 
           <div class="card">
             <div id="examCountRow">
-              <div class="section-label">Chọn số câu hỏi</div>
+              <div class="section-label">3. CHỌN SỐ CÂU HỎI</div>
               <div class="count-chips">
                 <button class="chip" onclick="App.setExamCount(5,this)">5 câu</button>
                 <button class="chip" onclick="App.setExamCount(10,this)">10 câu</button>
@@ -866,9 +1017,10 @@ img{display:block;max-width:100%}
         <div class="exam-guide">
           <div class="exam-guide-title">📌 Hướng dẫn nhanh</div>
           <ul>
-            <li>Chọn bộ đề cần làm bài.</li>
-            <li>Chọn số lượng câu hỏi phù hợp.</li>
-            <li>Hệ thống tự tạo câu hỏi ngẫu nhiên từ ngân hàng đề.</li>
+            <li>Chọn lĩnh vực nghiệp vụ.</li>
+            <li>Chọn bộ đề tương ứng trong lĩnh vực.</li>
+            <li>Chọn số lượng câu hỏi phù hợp với thời gian thực tế của bạn.</li>
+            <li>Hệ thống tự tạo câu hỏi ngẫu nhiên.</li>
             <li>Bấm “Nộp bài” để xem điểm và chi tiết đáp án.</li>
           </ul>
         </div>
@@ -881,7 +1033,6 @@ img{display:block;max-width:100%}
         <!-- CỘT TRÁI: ĐIỀU HƯỚNG & NỘP BÀI -->
         <div class="quiz-left-panel">
           
-        <!-- Header cột trái: Tiêu đề & Đồng hồ -->
           <div class="quiz-panel-header">
             <div id="quizHeaderLines" style="margin-bottom:16px;">
               <div id="line1" style="font-weight:600; font-size:.8rem; color:#0D438B;"></div>
@@ -1117,6 +1268,7 @@ async function callGAS(p){
   }
 }
 
+// KHỞI TẠO MẶC ĐỊNH LUÔN LÀ KIỂM TRA (EXAM)
 const S = {
   user: null, allBanks: [], mode: 'exam', examCount: 30,
   quizData: null, answers: {}, timerIv: null, timeLeft: 0, resultScore10Val: 0,
@@ -1309,24 +1461,61 @@ const App = {
   },
 
   async loadBanks(){
-    if(S.allBanks.length){ this.renderBanks(S.allBanks); return; }
+    if(S.allBanks.length){ this.renderCategories(S.allBanks); return; }
     try{
       const res=await callGAS({action:'getBanks'});
-      if(res.ok){ S.allBanks=res.banks; this.renderBanks(res.banks); }
-      else document.getElementById('bankSelect').innerHTML='<option value="">Lỗi: '+esc(res.msg)+'</option>';
-    }catch(e){ document.getElementById('bankSelect').innerHTML='<option value="">Lỗi kết nối tới Server</option>'; }
+      if(res.ok){
+         S.allBanks=res.banks;
+         this.renderCategories(res.banks);
+      }
+      else {
+         document.getElementById('categorySelect').innerHTML='<option value="">Lỗi: '+esc(res.msg)+'</option>';
+      }
+    }catch(e){ document.getElementById('categorySelect').innerHTML='<option value="">Lỗi kết nối tới Server</option>'; }
   },
 
-  renderBanks(banks){
-    const sel = document.getElementById('bankSelect');
+  renderCategories(banks){
+    const catSel = document.getElementById('categorySelect');
     if(!banks.length) {
-      sel.innerHTML = '<option value="">Chưa có bộ đề nào khả dụng</option>';
+      catSel.innerHTML = '<option value="">Chưa có dữ liệu</option>';
       return;
     }
-    sel.innerHTML = '<option value="">— Vui lòng chọn một bộ đề —</option>' + banks.map(b => {
+    // Lấy danh sách lĩnh vực duy nhất (Xử lý các key có thể có do người dùng code ở Backend GS)
+    const uniqueCats = [...new Set(banks.map(b => b.linhVuc || b.LinhVuc || b.category || b.Category || 'Khác'))].filter(c => c).sort((a, b) => a.localeCompare(b, 'vi'));
+
+    catSel.innerHTML = '<option value="">— Vui lòng chọn một lĩnh vực —</option>' + uniqueCats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
+
+    document.getElementById('bankSelect').innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
+    document.getElementById('bankSelect').disabled = true;
+  },
+
+  filterBanks() {
+    const cat = document.getElementById('categorySelect').value;
+    const bankSel = document.getElementById('bankSelect');
+
+    if(!cat) {
+      bankSel.innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
+      bankSel.disabled = true;
+      return;
+    }
+
+    // Lọc theo lĩnh vực đã chọn
+    const filtered = S.allBanks.filter(b => (b.linhVuc || b.LinhVuc || b.category || b.Category || 'Khác') === cat);
+
+    // Sắp xếp theo vần A-Z
+    filtered.sort((a, b) => a.name.localeCompare(b.name, 'vi'));
+
+    if(!filtered.length) {
+        bankSel.innerHTML = '<option value="">Không có bộ đề nào trong lĩnh vực này</option>';
+        bankSel.disabled = true;
+        return;
+    }
+
+    bankSel.innerHTML = '<option value="">— Vui lòng chọn một bộ đề —</option>' + filtered.map(b => {
       const extra = b.d2 ? ` - ${esc(b.d2)}` : '';
       return `<option value="${esc(b.id)}">${esc(b.name)}${extra}</option>`;
     }).join('');
+    bankSel.disabled = false;
   },
 
   setExamCount(n,btn){
@@ -1336,14 +1525,20 @@ const App = {
   },
 
   async startQuiz(){
+    const catSel = document.getElementById('categorySelect');
+    if(!catSel || !catSel.value) {
+      this.showAlert('dashAlert', 'Vui lòng chọn Lĩnh vực trước!');
+      return;
+    }
+
     const sel = document.getElementById('bankSelect');
     if(!sel || !sel.value) {
-      this.showAlert('dashAlert', 'Vui lòng bấm vào danh sách phía trên để chọn 1 bộ đề!');
+      this.showAlert('dashAlert', 'Vui lòng chọn một Bộ đề cụ thể!');
       return;
     }
     
     const bankId = sel.value;
-    let count = S.examCount;
+    let count = S.examCount; // Lấy trực tiếp số câu đã chọn
 
     const selectedBank = S.allBanks.find(b => String(b.id) === String(bankId));
     if(selectedBank && count > Number(selectedBank.count || 0)){
@@ -1354,6 +1549,7 @@ const App = {
     this.hideAlert('dashAlert');
     this.showLoading('Đang tạo đề thi...');
     try{
+      // Cố định mode: 'exam' vì đã bỏ tính năng ôn tập
       const res=await callGAS({action:'generateQuiz', username:S.user.username, bankId:bankId, mode:'exam', count:count});
       
       if(!res.ok){ this.showAlert('dashAlert',res.msg||'Không tạo được đề thi'); this.hideLoading(); return; }
@@ -1378,12 +1574,15 @@ const App = {
     document.getElementById('totalCount').textContent=q.count;
     document.getElementById('answeredCount').textContent=0;
     
+    // Luôn luôn là Kiểm tra
     const timeSecs = Number(q.timeLimitSec || q.count * 60);
     document.getElementById('timerInfo').textContent=`Kiểm tra – ${q.count} câu`;
     this.startTimer(timeSecs);
     
+    // In danh sách các nút điều hướng câu
     document.getElementById('qDots').innerHTML=q.questions.map((_,i)=>`<button class="q-dot" id="dot-${i}" onclick="App.scrollToQ(${i})">${i+1}</button>`).join('');
     
+    // Đổ nội dung câu hỏi
     document.getElementById('quizBody').innerHTML=q.questions.map((q2,i)=>`
       <div class="qblock" id="qb-${i}">
         <div class="qnum">Câu ${i+1} / ${q.count}</div>
@@ -1397,6 +1596,7 @@ const App = {
       
     this.goto('quiz');
     
+    // Hiển thị câu hỏi đầu tiên
     S.currentQ = 0;
     this.showQ(0);
   },
@@ -1405,14 +1605,17 @@ const App = {
     if (!S.quizData || index < 0 || index >= S.quizData.count) return;
     S.currentQ = index;
 
+    // Ẩn tất cả nội dung câu hỏi, chỉ hiện câu đang chọn
     document.querySelectorAll('.qblock').forEach((el, i) => {
       el.classList.toggle('active', i === index);
     });
 
+    // Cập nhật trạng thái viền nút trên bảng lưới
     document.querySelectorAll('.q-dot').forEach((el, i) => {
       el.classList.toggle('active', i === index);
     });
 
+    // Bật/tắt trạng thái nút Tới/Lui
     document.getElementById('btnPrev').disabled = (index === 0);
     document.getElementById('btnNext').disabled = (index === S.quizData.count - 1);
   },
@@ -1430,12 +1633,12 @@ const App = {
     document.getElementById('dot-'+qi).classList.toggle('answered',S.answers[qi].length>0);
     document.getElementById('answeredCount').textContent=Object.values(S.answers).filter(a=>a.length>0).length;
 
-    // Tính năng tự động nhảy trang khi chọn đáp án
+    // Tự động chuyển sang câu tiếp theo sau 3 giây
     if(checked && S.quizData && qi < S.quizData.count - 1){
       clearTimeout(S.autoNextTimer);
       S.autoNextTimer = setTimeout(()=>{
         if(S.currentQ === qi) App.nextQ();
-      }, 400);
+      }, 3000); 
     }
   },
 
@@ -1458,13 +1661,11 @@ const App = {
   },
   
   stopTimer(){ if(S.timerIv){ clearInterval(S.timerIv); S.timerIv=null; } },
-  
   lockQuiz(){
     document.querySelectorAll('#quizBody input').forEach(i=>i.disabled=true);
     const b=document.querySelector('.btn-submit');
     if(b){b.disabled=true;b.textContent='⏰ Đang nộp tự động...';}
   },
-
   showTimerBanner(msg){
     let el=document.getElementById('timerBanner');
     if(!el){
@@ -1475,7 +1676,6 @@ const App = {
     el.textContent=msg; el.style.display='block';
     clearTimeout(el._t); el._t=setTimeout(()=>el.style.display='none',4000);
   },
-
   showCountdown(){
     let ov=document.getElementById('cdOverlay');
     if(!ov){
@@ -1491,7 +1691,7 @@ const App = {
     }
     ov.style.display='flex';
     let n=3;
-    const t=setInterval(()=>{ n--; const el=document.getElementById('cdNum'); if(el) el.textContent=n; if(n<=0){ clearInterval(t); ov.style.display='none'; this.submitQuiz(); }},1000);
+    const t=setInterval(()=>{ n--; const el=document.getElementById('cdNum'); if(el) el.textContent=n; if(n<=0){ clearInterval(t); ov.style.display='none'; this.submitQuiz(false); }},1000);
   },
 
   confirmSubmit(){
@@ -1506,32 +1706,37 @@ const App = {
     this.showLoading(forceSave ? 'Đang lưu kết quả...' : 'Đang chấm bài...');
     try{
       const res = await callGAS({
-        action:'submitQuiz',
-        quizId:S.quizData.quizId,
-        userAnswers:S.answers,
+        action: 'submitQuiz',
+        quizId: S.quizData.quizId,
+        userAnswers: S.answers,
         user: S.user,
-        forceSave: forceSave
+        forceSave: forceSave // Truyền cờ xác nhận lên Server
       });
       
       this.hideLoading();
       if(!res.ok){ alert('Lỗi nộp bài: '+(res.msg||'Không xác định')); return; }
 
-      // Logic Cảnh báo điểm < 5
+      // BẬT POPUP NẾU SERVER TRẢ VỀ CỜ promptSave = true (Điểm < 5)
       if (res.promptSave) {
         const wantToSave = confirm(`Điểm của bạn là: ${Number(res.score10).toFixed(2)} / 10 (Chưa đạt).\nBạn có muốn lưu kết quả trắc nghiệm này vào hệ thống không?`);
+        
         if (wantToSave) {
+          // GỌi lại hàm chính nó nhưng truyền forceSave = true để ép lưu
           return this.submitQuiz(true);
         } else {
+          // Bấm KHÔNG -> Hiển thị kết quả nhưng chuyển cờ isSaved = false
           this.renderResult(res, false);
           return;
         }
       }
 
+      // Trường hợp điểm >= 5 hoặc người dùng đã bấm CÓ ở popup trước đó
       this.renderResult(res, true);
     }catch(e){ this.hideLoading(); alert('Lỗi kết nối khi nộp bài: ' + e.message); }
   },
 
-  renderResult(res, isSaved = true){
+  // Cập nhật hàm render thêm logic hiển thị màu sắc cảnh báo nếu bài chưa lưu
+  renderResult(res, isSaved){
     const {correctCount, score10, totalQ, detail, lateSubmit} = res;
     S.resultScore10Val = Number(score10).toFixed(2);
     
@@ -1549,14 +1754,14 @@ const App = {
     document.getElementById('resultScore10').textContent = `Số câu đúng hoàn toàn: ${correctCount} / ${totalQ}`;
     document.getElementById('resultMeta').textContent = '📝 Kiểm tra | ' + (S.quizData?.headerLines?.d3 || '');
     
-    const pct=Math.round(Number(score10)/10*100);
-    const circ=2*Math.PI*38; const dash=(pct/100)*circ;
+    const pct = Math.round(Number(score10)/10*100);
+    const circ = 2*Math.PI*38; const dash = (pct/100)*circ;
     document.getElementById('donutProg').setAttribute('stroke-dasharray',`${dash} ${circ}`);
-    document.getElementById('donutPct').textContent=pct+'%';
+    document.getElementById('donutPct').textContent = pct+'%';
     
     let dungHoanToan = 0, dungMotPhan = 0, saiMotPhan = 0, saiHoanToan = 0;
 
-    document.getElementById('resultDetail').innerHTML=detail.map((d,i)=>{
+    document.getElementById('resultDetail').innerHTML = detail.map((d,i)=>{
       const sc=d.score; const pctQ=sc/1;
       const cls=pctQ>=0.999?'full':pctQ>0?'partial':'wrong';
       const scCls=pctQ>=0.999?'s-full':pctQ>0?'s-partial':'s-zero';
@@ -1586,17 +1791,14 @@ const App = {
     document.getElementById('rs-partial-wrong').textContent = saiMotPhan;
     document.getElementById('rs-full-wrong').textContent = saiHoanToan;
 
+    // HIỂN THỊ CẢNH BÁO LƯU / CHƯA LƯU / NỘP MUỘN
     const lateBanner = document.getElementById('lateBanner');
     if (!isSaved) {
       lateBanner.innerHTML = '⚠️ Kết quả này <b>KHÔNG</b> được lưu vào hệ thống do chưa đạt điểm và bạn đã chọn từ chối lưu.';
-      lateBanner.style.backgroundColor = 'var(--o1)';
-      lateBanner.style.display = 'block';
-    } else if (lateSubmit) {
-      lateBanner.innerHTML = '⚠️ Bài thi nộp sau giờ quy định — toàn bộ điểm tính bằng 0.';
-      lateBanner.style.backgroundColor = 'var(--r1)';
+      lateBanner.style.backgroundColor = 'var(--o1)'; // Chuyển sang màu Cam
       lateBanner.style.display = 'block';
     } else {
-      lateBanner.style.display = 'none';
+      lateBanner.style.display = 'none'; // Tắt hẳn banner cảnh báo 0 điểm do lateSubmit
     }
     
     this.goto('result');
