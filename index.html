@@ -257,8 +257,6 @@ img{display:block;max-width:100%}
   margin-bottom:8px;transition:border-color .2s;
 }
 .bank-select:focus{border-color:var(--c5);background:var(--surface);box-shadow:0 0 0 3px var(--c8)}
-.bank-select:disabled{background:#eef2f7;color:var(--text3);cursor:not-allowed}
-.select-helper{font-size:.78rem;color:var(--text3);margin-top:6px;line-height:1.45}
 
 /* ═══════════════ COUNT CHIPS ════════════════ */
 .count-chips{display:flex;gap:8px;flex-wrap:wrap}
@@ -839,20 +837,12 @@ img{display:block;max-width:100%}
             <div class="card-header">
               <span class="card-title">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-                Chọn lĩnh vực và bộ đề
+                Chọn bộ đề
               </span>
             </div>
-
-            <div class="section-label">Chọn lĩnh vực</div>
-            <select id="fieldSelect" class="bank-select" onchange="App.onFieldChange(this.value)">
-              <option value="">Đang tải danh sách lĩnh vực...</option>
+            <select id="bankSelect" class="bank-select">
+              <option value="">Đang tải danh sách bộ đề...</option>
             </select>
-
-            <div class="section-label" style="margin-top:16px">Chọn bộ đề</div>
-            <select id="bankSelect" class="bank-select" disabled>
-              <option value="">— Vui lòng chọn lĩnh vực trước —</option>
-            </select>
-            <div class="select-helper" id="bankSelectHint">Bộ đề sẽ được lọc theo lĩnh vực và sắp xếp theo ABC.</div>
           </div>
 
           <div class="card">
@@ -876,9 +866,8 @@ img{display:block;max-width:100%}
         <div class="exam-guide">
           <div class="exam-guide-title">📌 Hướng dẫn nhanh</div>
           <ul>
-            <li>Chọn lĩnh vực nghiệp vụ cần kiểm tra.</li>
-            <li>Chọn bộ đề thuộc lĩnh vực đó; danh sách được sắp xếp theo ABC.</li>
-            <li>Chọn gói số câu hỏi phù hợp.</li>
+            <li>Chọn bộ đề cần làm bài.</li>
+            <li>Chọn số lượng câu hỏi phù hợp.</li>
             <li>Hệ thống tự tạo câu hỏi ngẫu nhiên từ ngân hàng đề.</li>
             <li>Bấm “Nộp bài” để xem điểm và chi tiết đáp án.</li>
           </ul>
@@ -1129,7 +1118,7 @@ async function callGAS(p){
 }
 
 const S = {
-  user: null, allBanks: [], selectedField: '', mode: 'exam', examCount: 30,
+  user: null, allBanks: [], mode: 'exam', examCount: 30,
   quizData: null, answers: {}, timerIv: null, timeLeft: 0, resultScore10Val: 0,
   currentQ: 0, autoNextTimer: null
 };
@@ -1320,109 +1309,24 @@ const App = {
   },
 
   async loadBanks(){
-    const fieldSel = document.getElementById('fieldSelect');
-    const bankSel = document.getElementById('bankSelect');
-
-    if(S.allBanks.length){
-      this.renderFields(S.allBanks);
-      if(S.selectedField) this.renderBanksByField(S.selectedField);
-      return;
-    }
-
-    if(fieldSel) fieldSel.innerHTML='<option value="">Đang tải danh sách lĩnh vực...</option>';
-    if(bankSel){
-      bankSel.disabled=true;
-      bankSel.innerHTML='<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
-    }
-
+    if(S.allBanks.length){ this.renderBanks(S.allBanks); return; }
     try{
       const res=await callGAS({action:'getBanks'});
-      if(res.ok){
-        S.allBanks=(res.banks||[]).map(b=>({ ...b, linhVuc: String(b.linhVuc || 'Khác').trim() || 'Khác' }));
-        this.renderFields(S.allBanks);
-      }
-      else{
-        if(fieldSel) fieldSel.innerHTML='<option value="">Lỗi: '+esc(res.msg)+'</option>';
-        if(bankSel) bankSel.innerHTML='<option value="">Không tải được bộ đề</option>';
-      }
-    }catch(e){
-      if(fieldSel) fieldSel.innerHTML='<option value="">Lỗi kết nối tới Server</option>';
-      if(bankSel) bankSel.innerHTML='<option value="">Lỗi kết nối tới Server</option>';
-    }
-  },
-
-  sortText(a,b){
-    return String(a||'').localeCompare(String(b||''),'vi',{sensitivity:'base',numeric:true});
-  },
-
-  renderFields(banks){
-    const fieldSel = document.getElementById('fieldSelect');
-    const bankSel = document.getElementById('bankSelect');
-    if(!fieldSel || !bankSel) return;
-
-    const fields=[...new Set((banks||[]).map(b=>String(b.linhVuc||'Khác').trim()||'Khác'))]
-      .sort((a,b)=>this.sortText(a,b));
-
-    if(!fields.length){
-      fieldSel.innerHTML='<option value="">Chưa có lĩnh vực khả dụng</option>';
-      bankSel.disabled=true;
-      bankSel.innerHTML='<option value="">Chưa có bộ đề khả dụng</option>';
-      return;
-    }
-
-    const current = fields.includes(S.selectedField) ? S.selectedField : '';
-    fieldSel.innerHTML='<option value="">— Vui lòng chọn lĩnh vực —</option>' + fields.map(f=>`<option value="${esc(f)}" ${f===current?'selected':''}>${esc(f)}</option>`).join('');
-
-    if(current) this.renderBanksByField(current);
-    else{
-      bankSel.disabled=true;
-      bankSel.innerHTML='<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
-      const hint=document.getElementById('bankSelectHint');
-      if(hint) hint.textContent='Bộ đề sẽ được lọc theo lĩnh vực và sắp xếp theo ABC.';
-    }
-  },
-
-  onFieldChange(field){
-    S.selectedField = String(field||'').trim();
-    this.hideAlert('dashAlert');
-    this.renderBanksByField(S.selectedField);
-  },
-
-  renderBanksByField(field){
-    const sel = document.getElementById('bankSelect');
-    const hint = document.getElementById('bankSelectHint');
-    if(!sel) return;
-
-    if(!field){
-      sel.disabled=true;
-      sel.innerHTML='<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
-      if(hint) hint.textContent='Bộ đề sẽ được lọc theo lĩnh vực và sắp xếp theo ABC.';
-      return;
-    }
-
-    const banks=(S.allBanks||[])
-      .filter(b=>String(b.linhVuc||'Khác').trim()===field)
-      .sort((a,b)=>this.sortText(a.name,b.name) || this.sortText(a.id,b.id));
-
-    if(!banks.length){
-      sel.disabled=true;
-      sel.innerHTML='<option value="">Lĩnh vực này chưa có bộ đề khả dụng</option>';
-      if(hint) hint.textContent='Không có bộ đề hợp lệ trong lĩnh vực đã chọn.';
-      return;
-    }
-
-    sel.disabled=false;
-    sel.innerHTML='<option value="">— Vui lòng chọn một bộ đề —</option>' + banks.map(b => {
-      const extra = b.d2 ? ` - ${esc(b.d2)}` : '';
-      const countTxt = b.count ? ` (${Number(b.count)} câu)` : '';
-      return `<option value="${esc(b.id)}">${esc(b.name)}${extra}${countTxt}</option>`;
-    }).join('');
-    if(hint) hint.textContent=`Đang hiển thị ${banks.length} bộ đề thuộc lĩnh vực “${field}”, sắp xếp theo ABC.`;
+      if(res.ok){ S.allBanks=res.banks; this.renderBanks(res.banks); }
+      else document.getElementById('bankSelect').innerHTML='<option value="">Lỗi: '+esc(res.msg)+'</option>';
+    }catch(e){ document.getElementById('bankSelect').innerHTML='<option value="">Lỗi kết nối tới Server</option>'; }
   },
 
   renderBanks(banks){
-    S.allBanks=(banks||[]).map(b=>({ ...b, linhVuc: String(b.linhVuc || 'Khác').trim() || 'Khác' }));
-    this.renderFields(S.allBanks);
+    const sel = document.getElementById('bankSelect');
+    if(!banks.length) {
+      sel.innerHTML = '<option value="">Chưa có bộ đề nào khả dụng</option>';
+      return;
+    }
+    sel.innerHTML = '<option value="">— Vui lòng chọn một bộ đề —</option>' + banks.map(b => {
+      const extra = b.d2 ? ` - ${esc(b.d2)}` : '';
+      return `<option value="${esc(b.id)}">${esc(b.name)}${extra}</option>`;
+    }).join('');
   },
 
   setExamCount(n,btn){
@@ -1432,16 +1336,9 @@ const App = {
   },
 
   async startQuiz(){
-    const fieldSel = document.getElementById('fieldSelect');
     const sel = document.getElementById('bankSelect');
-    const field = fieldSel ? String(fieldSel.value || '').trim() : S.selectedField;
-
-    if(!field) {
-      this.showAlert('dashAlert', 'Vui lòng chọn lĩnh vực trước.');
-      return;
-    }
     if(!sel || !sel.value) {
-      this.showAlert('dashAlert', 'Vui lòng chọn bộ đề thuộc lĩnh vực đã chọn.');
+      this.showAlert('dashAlert', 'Vui lòng bấm vào danh sách phía trên để chọn 1 bộ đề!');
       return;
     }
     
@@ -1449,10 +1346,6 @@ const App = {
     let count = S.examCount;
 
     const selectedBank = S.allBanks.find(b => String(b.id) === String(bankId));
-    if(selectedBank && String(selectedBank.linhVuc || 'Khác').trim() !== field){
-      this.showAlert('dashAlert', 'Bộ đề không thuộc lĩnh vực đang chọn. Vui lòng chọn lại.');
-      return;
-    }
     if(selectedBank && count > Number(selectedBank.count || 0)){
       this.showAlert('dashAlert',`Bộ đề này hiện chỉ có ${selectedBank.count} câu hợp lệ, không đủ để tạo bài thi ${count} câu.`);
       return;
