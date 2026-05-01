@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Hệ thống Thi Trắc nghiệm - Chi cục Hải quan khu vực VIII</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@700;800&display=swap" rel="stylesheet">
@@ -86,10 +86,25 @@ img{display:block;max-width:100%}
   padding:14px 10px;
   border-top:1px solid rgba(255,255,255,.07);
 }
-.user-pill{
-  display:flex;align-items:center;gap:10px;
-  padding:8px 10px;border-radius:8px;
+.user-menu{position:relative}
+.user-menu .user-pill{
+  width:100%; border:none; background:rgba(255,255,255,.06); color:#fff;
+  display:flex; align-items:center; gap:10px; padding:10px; border-radius:14px;
+  cursor:pointer; text-align:left;
 }
+.user-caret{color:rgba(255,255,255,.55);font-weight:900}
+.user-dropdown{
+  position:absolute; left:10px;right:10px;bottom:62px;
+  background:#fff;color:#0f1f3d; border-radius:14px; box-shadow:0 14px 34px rgba(0,0,0,.22);
+  padding:8px; z-index:1100;
+}
+.user-dropdown.hidden{display:none}
+.user-dropdown button{
+  width:100%; border:none; background:transparent; padding:10px 12px;
+  text-align:left; border-radius:10px; font-weight:700; color:#0f1f3d; cursor:pointer;
+}
+.user-dropdown button:hover{background:#eef4fd}
+
 .avatar{
   width:32px;height:32px;border-radius:50%;
   background:linear-gradient(135deg,var(--gold),var(--gold2));
@@ -99,12 +114,6 @@ img{display:block;max-width:100%}
 .user-info{flex:1;min-width:0}
 .user-name{font-size:.82rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .user-role{font-size:.68rem;color:rgba(255,255,255,.4);margin-top:1px}
-.btn-logout-sm{
-  background:rgba(255,255,255,.08);border:none;
-  color:rgba(255,255,255,.5);border-radius:6px;
-  padding:5px 7px;cursor:pointer;transition:all .15s;flex-shrink:0;
-}
-.btn-logout-sm:hover{background:rgba(255,255,255,.15);color:#fff}
 
 /* ═══════════════ MAIN CONTENT ════════════════ */
 .main{flex:1;min-width:0;display:flex;flex-direction:column}
@@ -131,59 +140,62 @@ img{display:block;max-width:100%}
 /* ═══════════════ LOGIN ════════════════ */
 #screen-login{
   position:fixed;inset:0;z-index:999;
-  background:linear-gradient(135deg,var(--c0) 0%,var(--c2) 50%,var(--c1) 100%);
+  background:linear-gradient(180deg,#08245a 0%,#0a4aa2 55%,#08245a 100%);
   display:flex;align-items:center;justify-content:center;padding:20px;
 }
 #screen-login.active{display:flex}
 .login-wrap{
-  width:100%;max-width:420px;
+  width:100%;max-width:380px; position: relative; z-index: 10;
 }
-.login-logo{text-align:center;margin-bottom:32px}
+.login-logo{text-align:center;margin-bottom:24px}
 .login-emblem{
-  width:72px;height:72px;margin:0 auto 16px;
+  width:86px;height:86px;margin:0 auto 16px;
   background:linear-gradient(135deg,var(--gold),var(--gold2));
   border-radius:20px;display:flex;align-items:center;justify-content:center;
-  font-size:2rem;box-shadow:0 8px 32px rgba(212,168,67,.4);
+  font-size:2.5rem;box-shadow:0 8px 32px rgba(212,168,67,.4);
 }
-.login-logo h1{font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:.5px}
-.login-logo p{font-size:.82rem;color:rgba(255,255,255,.5);margin-top:4px}
+.login-logo h1{font-size:1.6rem;font-weight:800;color:#fff;letter-spacing:.5px}
+.login-logo p{font-size:.9rem;color:rgba(255,255,255,.7);margin-top:4px}
 .login-card{
-  background:rgba(255,255,255,.06);backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,.12);border-radius:16px;
-  padding:32px 28px;
+  background:linear-gradient(180deg,rgba(34,71,125,.90),rgba(28,64,118,.92));
+  border:1px solid rgba(122,170,238,.34);
+  border-radius:18px;
+  padding:24px;
+  box-shadow:0 18px 40px rgba(0,0,0,.24);
+  backdrop-filter:blur(10px);
 }
 .field-wrap{margin-bottom:16px}
 .field-wrap label{
-  display:block;font-size:.75rem;font-weight:600;letter-spacing:.5px;
-  text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:6px;
+  display:block;font-size:.75rem;font-weight:700;letter-spacing:.5px;
+  text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:6px;
 }
 .field-wrap input{
-  width:100%;padding:11px 14px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:8px;color:#fff;font-size:.92rem;outline:none;
-  transition:border-color .2s,background .2s;
+  width:100%;padding:12px 14px;
+  background:#f6f9ff;
+  border:1px solid rgba(255,255,255,.58);
+  border-radius:10px;color:#10213f;font-size:.95rem;font-weight:600;outline:none;
+  transition:border-color .2s,box-shadow .2s;
 }
-.field-wrap input::placeholder{color:rgba(255,255,255,.25)}
-.field-wrap input:focus{border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.12)}
+.field-wrap input::placeholder{color:#8a98ad;font-weight:500;}
+.field-wrap input:focus{border-color:var(--gold2);box-shadow:0 0 0 3px rgba(246,210,96,.22)}
 .btn-login{
-  width:100%;padding:13px;margin-top:4px;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  color:var(--c0);border:none;border-radius:8px;
-  font-size:.95rem;font-weight:800;letter-spacing:.5px;
-  box-shadow:0 4px 20px rgba(212,168,67,.4);
-  cursor:pointer;transition:opacity .2s,transform .1s;
+  width:100%;padding:13px;margin-top:8px;
+  background:linear-gradient(180deg,#f7d76c 0%,#e5b63e 100%);
+  color:#221a07;border:none;border-radius:10px;
+  font-size:1rem;font-weight:800;letter-spacing:.5px;
+  box-shadow:0 10px 20px rgba(240,201,106,.20);
+  cursor:pointer;transition:transform .15s ease,filter .15s ease;
 }
-.btn-login:hover{opacity:.92;transform:translateY(-1px)}
+.btn-login:hover{filter:brightness(1.05);transform:translateY(-1px);}
 .btn-link-white{
   width:100%;background:none;border:none;
-  color:rgba(255,255,255,.45);font-size:.8rem;
-  cursor:pointer;margin-top:12px;text-align:center;
+  color:rgba(255,255,255,.6);font-size:.85rem;
+  cursor:pointer;margin-top:16px;text-align:center;
   text-decoration:underline;
 }
 .login-alert{
-  padding:9px 13px;border-radius:7px;font-size:.82rem;font-weight:600;
-  margin-bottom:14px;
+  padding:10px 13px;border-radius:8px;font-size:.85rem;font-weight:600;
+  margin-bottom:16px;
 }
 .login-alert.err{background:rgba(192,57,43,.2);color:#ff8a80;border:1px solid rgba(192,57,43,.3)}
 .login-alert.info{background:rgba(37,88,168,.3);color:#aac5f2;border:1px solid rgba(37,88,168,.4)}
@@ -194,7 +206,9 @@ img{display:block;max-width:100%}
 .stat-card{
   background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
   padding:20px 22px;display:flex;align-items:center;gap:16px;
+  transition:transform .2s, box-shadow .2s;
 }
+.stat-card:hover{transform:translateY(-2px); box-shadow:0 8px 24px rgba(10,22,40,.08);}
 .stat-icon{
   width:48px;height:48px;border-radius:12px;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;font-size:1.3rem;
@@ -205,7 +219,6 @@ img{display:block;max-width:100%}
 .stat-icon.red{background:var(--r2);color:var(--r1)}
 .stat-value{font-size:1.6rem;font-weight:800;color:var(--text);line-height:1}
 .stat-label{font-size:.75rem;color:var(--text3);margin-top:3px}
-.stat-sub{font-size:.72rem;color:var(--text3);margin-top:2px}
 
 /* ═══════════════ CARDS ════════════════ */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px;margin-bottom:20px;box-shadow:var(--shadow)}
@@ -213,7 +226,7 @@ img{display:block;max-width:100%}
 .card-title{font-size:.85rem;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:8px}
 .card-title svg{width:16px;height:16px;color:var(--c4)}
 
-/* ═══════════════ WELCOME ════════════════ */
+/* ═══════════════ WELCOME & DASHBOARD ════════════════ */
 .welcome-hero{
   background:linear-gradient(135deg,var(--c0) 0%,var(--c2) 100%);
   border-radius:16px;padding:28px 32px;margin-bottom:24px;
@@ -289,6 +302,31 @@ img{display:block;max-width:100%}
 .rank-badge.gold-rank{background:var(--gold3);color:var(--o1)}
 
 /* ═══════════════ QUIZ SCREEN (SINGLE QUESTION) ════════════════ */
+.exam-setup-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.3fr) minmax(320px,.7fr);
+  gap:20px;
+  align-items:start;
+}
+.section-label{
+  font-size:.85rem;
+  font-weight:800;
+  color:var(--text);
+  margin-bottom:12px;
+  text-transform:uppercase;
+  letter-spacing:.35px;
+}
+.exam-guide{
+  background:linear-gradient(135deg,#fff8e1,#ffffff);
+  border:1px solid #f0d58a;
+  border-radius:18px;
+  padding:20px 22px;
+  color:#3d2b06;
+  box-shadow:0 10px 28px rgba(212,168,67,.12);
+}
+.exam-guide-title{font-weight:900;margin-bottom:10px}
+.exam-guide ul{padding-left:18px;line-height:1.7;font-size:.9rem}
+
 .quiz-container {
   display: flex;
   gap: 24px;
@@ -491,10 +529,6 @@ img{display:block;max-width:100%}
 }
 .btn-back:hover{border-color:var(--c4);color:var(--c4)}
 
-@media screen {
-  .print-only { display: none; }
-}
-
 /* ═══════════════ STATS SCREEN ════════════════ */
 .filter-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:20px}
 .filter-bar select,.filter-bar input{
@@ -548,35 +582,71 @@ img{display:block;max-width:100%}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-box p{font-size:.85rem;color:var(--text2);font-weight:600}
 
-/* ═══════════════ RESPONSIVE ════════════════ */
-@media(max-width:768px){
-  .sidebar{
-    position:fixed;
-    inset:0 auto 0 0;
-    transform:translateX(-100%);
-    transition:transform .25s;
-    z-index:400;
-  }
-  .sidebar.open{transform:translateX(0)}
-  .burger{display:flex}
-  .layout{display:block}
-  .main{min-height:100vh}
-  .topbar{padding:0 16px}
-  .page-body{padding:16px 14px 48px}
-  .result-hero{grid-template-columns:1fr;text-align:center}
-  .result-donut{justify-self:center}
-  .result-stats-row{grid-template-columns:1fr 1fr}
-  .rank-hero{grid-template-columns:1fr}
-  .stat-grid{grid-template-columns:1fr 1fr}
-  .welcome-hero{flex-direction:column;text-align:center}
-  .welcome-badge{margin-top:16px}
-  .count-chips{justify-content:center}
-  
-  .quiz-container { flex-direction: column-reverse; padding: 12px; }
-  .quiz-left-panel { width: 100%; position: static; max-height: none; }
-  .q-grid-box { grid-template-columns: repeat(6, 1fr); max-height: 250px; }
-}
+/* ═══════════════ RESPONSIVE (MOBILE) ════════════════ */
+.mobile-bottom-nav{display:none;}
+.mobile-account-box{display:none;}
 
+@media(max-width:768px){
+  .sidebar{display:none !important;}
+  .burger{display:flex;}
+  .layout{display:block;}
+  .main{min-height:100vh; padding-bottom: 70px;}
+  .topbar{padding:0 16px; justify-content: center; position: relative;}
+  .topbar-right{position:absolute; right: 16px; top:50%; transform: translateY(-50%);}
+  .page-body{padding:16px 14px 48px;}
+  
+  .result-hero{grid-template-columns:1fr;text-align:center;}
+  .result-donut{justify-self:center;}
+  .result-stats-row{grid-template-columns:1fr 1fr;}
+  .rank-hero{grid-template-columns:1fr;}
+  .stat-grid{grid-template-columns:1fr 1fr;}
+  .welcome-hero{flex-direction:column;text-align:left; align-items:flex-start; padding:24px 20px;}
+  .welcome-badge{margin-top:16px; width: 100%;}
+  .count-chips{justify-content:center;}
+  .exam-setup-grid{grid-template-columns:1fr;}
+
+  /* Khu vực làm bài Mobile */
+  .quiz-container { flex-direction: column-reverse; padding: 12px; }
+  .quiz-left-panel { width: 100%; position: static; max-height: none; border-radius:18px;}
+  .q-grid-box { grid-template-columns: repeat(6, 1fr); max-height: 250px; }
+  .quiz-right-panel{ width:100%; min-height:auto; padding:20px 16px; border-radius:18px; }
+
+  .mobile-account-box{
+    display:flex; align-items:center; gap:10px; background:rgba(255,255,255,.96);
+    border:1px solid rgba(226,232,244,.95); border-radius:18px; padding:12px;
+    margin-bottom:14px; box-shadow:0 10px 24px rgba(10,22,40,.07);
+  }
+  .mobile-account-avatar{
+    width:38px;height:38px;border-radius:50%; background:linear-gradient(135deg,#d4a843,#f0c96a);
+    display:flex;align-items:center;justify-content:center; font-weight:900;color:#0a1628;flex-shrink:0;
+  }
+  .mobile-account-name{font-weight:900;color:#0f1f3d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .mobile-account-role{font-size:.75rem;color:#8496b0;}
+  .mobile-account-box button{
+    margin-left:auto;border:none;background:#eef4fd;color:#2558a8;
+    font-size:.75rem;font-weight:800;border-radius:10px;padding:8px 10px;
+  }
+
+  /* Bottom Nav thanh thoát */
+  .mobile-bottom-nav{
+    display:grid; grid-template-columns:repeat(4,1fr);
+    position:fixed; left:0; right:0; bottom:0; z-index:700;
+    background:var(--surface); border-top:1px solid var(--border);
+    box-shadow:0 -4px 20px rgba(10,22,40,.08);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .mobile-bottom-nav button{
+    border:none; background:transparent; padding:10px 4px;
+    color:var(--text3); font-size:.72rem; font-weight:700; cursor:pointer;
+    display:flex; flex-direction:column; align-items:center; transition: color .2s;
+  }
+  .mobile-bottom-nav button span{ font-size:1.25rem; margin-bottom:4px; filter: grayscale(100%); opacity:0.6; transition: all .2s;}
+  .mobile-bottom-nav button.active{ color:var(--c4); }
+  .mobile-bottom-nav button.active span{ filter: grayscale(0%); opacity:1; }
+
+  .tbl-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px}
+  .tbl{min-width:680px;font-size:.78rem}
+}
 @media(max-width:400px){
   .stat-grid{grid-template-columns:1fr}
   .result-stats-row{grid-template-columns:1fr}
@@ -584,94 +654,31 @@ img{display:block;max-width:100%}
 
 /* ═══════════════ PRINT STYLES ════════════════ */
 @media print {
-  .sidebar, .topbar, .btn-back, .btn-print, .btn-export-word, .btn-export-excel, .nav-item, .burger {
+  .sidebar, .topbar, .btn-back, .btn-print, .btn-export-word, .btn-export-excel, .nav-item, .burger, .mobile-bottom-nav, .mobile-account-box {
     display: none !important;
   }
-  body {
-    background: white;
-    color: black;
-  }
-  .main {
-    padding: 0;
-    display: block;
-  }
-  .page-body {
-    padding: 20px;
-  }
-  .result-hero, .rq {
-    page-break-inside: avoid;
-  }
-  .result-hero {
-    background: white !important;
-    border: 2px solid #333;
-    color: black !important;
-    padding: 20px;
-    border-radius: 0;
-  }
-  .result-score-big {
-    color: black !important;
-    font-size: 2.5rem;
-  }
-  .result-score10, .donut-pct {
-    color: black !important;
-  }
-  .result-meta {
-    color: #555 !important;
-  }
-  .print-only {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 25px;
-    font-size: 0.9rem;
-    text-align: left;
-    padding: 18px;
-    border: 1px solid #ccc;
-    background: #f9f9f9;
-  }
-  .card {
-    box-shadow: none;
-    border: 1px solid #ddd;
-  }
-  .rq {
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-    padding: 10px;
-  }
+  body { background: white; color: black; }
+  .main { padding: 0; display: block; }
+  .page-body { padding: 20px; }
+  .result-hero, .rq { page-break-inside: avoid; }
+  .result-hero { background: white !important; border: 2px solid #333; color: black !important; padding: 20px; border-radius: 0; }
+  .result-score-big { color: black !important; font-size: 2.5rem; }
+  .result-score10, .donut-pct { color: black !important; }
+  .result-meta { color: #555 !important; }
+  .print-only { display: grid !important; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; font-size: 0.9rem; text-align: left; padding: 18px; border: 1px solid #ccc; background: #f9f9f9; }
+  .card { box-shadow: none; border: 1px solid #ddd; }
+  .rq { border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; }
 }
 
 /* ═══════════════ BUTTON STYLES ════════════════ */
 .btn-print, .btn-export-word, .btn-export-excel {
-  width: 100%;
-  padding: 12px;
-  margin-top: 12px;
-  border: none;
-  border-radius: 9px;
-  font-size: .88rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: opacity .2s, transform .1s;
+  width: 100%; padding: 12px; margin-top: 12px; border: none; border-radius: 9px; font-size: .88rem; font-weight: 700; cursor: pointer; transition: opacity .2s, transform .1s;
 }
+.btn-print { background: var(--c4); color: #fff; }
+.btn-export-word { background: var(--gold); color: var(--c0); }
+.btn-export-excel { background: var(--g1); color: #fff; }
+.btn-print:hover, .btn-export-word:hover, .btn-export-excel:hover { opacity: .9; transform: translateY(-1px); }
 
-.btn-print {
-  background: var(--c4);
-  color: #fff;
-}
-
-.btn-export-word {
-  background: var(--gold);
-  color: var(--c0);
-}
-
-.btn-export-excel {
-  background: var(--g1);
-  color: #fff;
-}
-
-.btn-print:hover, .btn-export-word:hover, .btn-export-excel:hover {
-  opacity: .9;
-  transform: translateY(-1px);
-}
 </style>
 </head>
 <body>
@@ -701,6 +708,7 @@ img{display:block;max-width:100%}
 
 <div class="layout" id="appLayout" style="display:none">
 
+  <!-- SIDEBAR DÀNH CHO MÀN HÌNH MÁY TÍNH -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-brand">
       <div class="brand-icon">🏛️</div>
@@ -736,15 +744,19 @@ img{display:block;max-width:100%}
     </nav>
 
     <div class="sidebar-footer">
-      <div class="user-pill">
-        <div class="avatar" id="sidebarAvatar">?</div>
-        <div class="user-info">
-          <div class="user-name" id="sidebarName">-</div>
-          <div class="user-role" id="sidebarRole">-</div>
-        </div>
-        <button class="btn-logout-sm" onclick="App.logout()" title="Đăng xuất">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <div class="user-menu">
+        <button class="user-pill" onclick="App.toggleUserMenu()" type="button">
+          <div class="avatar" id="sidebarAvatar">?</div>
+          <div class="user-info">
+            <div class="user-name" id="sidebarName">-</div>
+            <div class="user-role" id="sidebarRole">-</div>
+          </div>
+          <span class="user-caret">▾</span>
         </button>
+        <div class="user-dropdown hidden" id="userDropdown">
+          <button onclick="App.showModal('modal-chpw',true)">🔒 Đổi mật khẩu</button>
+          <button onclick="App.logout()">↪ Đăng xuất</button>
+        </div>
       </div>
     </div>
   </aside>
@@ -752,12 +764,10 @@ img{display:block;max-width:100%}
   <div class="main">
     <header class="topbar">
       <div style="display:flex;align-items:center;gap:12px">
-        <button class="burger" onclick="App.toggleSidebar()">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        </button>
         <span class="topbar-title" id="topbarTitle">Tổng quan</span>
       </div>
       <div class="topbar-right">
+        <!-- Nút Đổi mật khẩu cho Desktop -->
         <button onclick="App.showModal('modal-chpw',true)" style="background:none;border:1px solid var(--border);border-radius:7px;padding:6px 12px;font-size:.75rem;font-weight:600;color:var(--text2);cursor:pointer">🔒 Đổi mật khẩu</button>
       </div>
     </header>
@@ -772,6 +782,15 @@ img{display:block;max-width:100%}
           <div class="welcome-badge-val" id="badgeTotalExams">0</div>
           <div class="welcome-badge-label">Lần đã thi</div>
         </div>
+      </div>
+
+      <div class="mobile-account-box">
+        <div class="mobile-account-avatar" id="mobileAvatar">?</div>
+        <div style="min-width:0">
+          <div class="mobile-account-name" id="mobileUserName">-</div>
+          <div class="mobile-account-role" id="mobileUserRole">-</div>
+        </div>
+        <button onclick="App.logout()">Đăng xuất</button>
       </div>
 
       <div class="stat-grid" id="dashStats">
@@ -810,52 +829,58 @@ img{display:block;max-width:100%}
       </div>
     </div>
 
+    <!-- MÀN HÌNH CHỌN BỘ ĐỀ -->
     <div class="screen page-body" id="screen-quiz-setup">
-      <div class="card">
-        <div class="card-header">
-          <span class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            Chọn bộ đề
-          </span>
-        </div>
-        <select id="bankSelect" class="bank-select">
-          <option value="">Đang tải danh sách bộ đề...</option>
-        </select>
-      </div>
+      <div class="exam-setup-grid">
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                Chọn bộ đề
+              </span>
+            </div>
+            <select id="bankSelect" class="bank-select">
+              <option value="">Đang tải danh sách bộ đề...</option>
+            </select>
+          </div>
 
-      <div class="card">
-        <div class="card-header">
-          <span class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
-            Cấu hình bài thi
-          </span>
-        </div>
-        
-        <div id="examCountRow">
-          <div style="font-size:.85rem;font-weight:700;color:var(--text);margin-bottom:12px;text-transform:uppercase;">CHỌN SỐ CÂU HỎI</div>
-          <div class="count-chips">
-            <button class="chip" onclick="App.setExamCount(5,this)">5 câu</button>
-            <button class="chip" onclick="App.setExamCount(10,this)">10 câu</button>
-            <button class="chip" onclick="App.setExamCount(20,this)">20 câu</button>
-            <button class="chip active" onclick="App.setExamCount(30,this)">30 câu</button>
-            <button class="chip" onclick="App.setExamCount(50,this)">50 câu</button>
-            <button class="chip" onclick="App.setExamCount(60,this)">60 câu</button>
-            <button class="chip" onclick="App.setExamCount(100,this)">100 câu</button>
+          <div class="card">
+            <div id="examCountRow">
+              <div class="section-label">Chọn số câu hỏi</div>
+              <div class="count-chips">
+                <button class="chip" onclick="App.setExamCount(5,this)">5 câu</button>
+                <button class="chip" onclick="App.setExamCount(10,this)">10 câu</button>
+                <button class="chip" onclick="App.setExamCount(20,this)">20 câu</button>
+                <button class="chip active" onclick="App.setExamCount(30,this)">30 câu</button>
+                <button class="chip" onclick="App.setExamCount(50,this)">50 câu</button>
+                <button class="chip" onclick="App.setExamCount(60,this)">60 câu</button>
+              </div>
+            </div>
+
+            <div class="alert alert-hidden" id="dashAlert"></div>
+            <button class="btn-start" onclick="App.startQuiz()">▶ Tạo bộ đề và làm bài kiểm tra</button>
           </div>
         </div>
-        
-        <div class="alert alert-hidden" id="dashAlert"></div>
-        <button class="btn-start" onclick="App.startQuiz()">▶ Tạo bộ đề và làm bài kiểm tra</button>
+
+        <div class="exam-guide">
+          <div class="exam-guide-title">📌 Hướng dẫn nhanh</div>
+          <ul>
+            <li>Chọn bộ đề cần làm bài.</li>
+            <li>Chọn số lượng câu hỏi phù hợp.</li>
+            <li>Hệ thống tự tạo câu hỏi ngẫu nhiên từ ngân hàng đề.</li>
+            <li>Bấm “Nộp bài” để xem điểm và chi tiết đáp án.</li>
+          </ul>
+        </div>
       </div>
     </div>
 
-    <!-- MÀN HÌNH LÀM BÀI ĐÃ ĐƯỢC LÀM LẠI THEO GIAO DIỆN CHIA CỘT TỪNG CÂU -->
+    <!-- MÀN HÌNH LÀM BÀI -->
     <div class="screen page-body" id="screen-quiz">
       <div class="quiz-container">
         <!-- CỘT TRÁI: ĐIỀU HƯỚNG & NỘP BÀI -->
         <div class="quiz-left-panel">
           
-          <!-- Header cột trái: Tiêu đề & Đồng hồ -->
           <div class="quiz-panel-header">
             <div id="quizHeaderLines" style="margin-bottom:16px;">
               <div id="line1" style="font-weight:600; font-size:.8rem; color:var(--text2)"></div>
@@ -865,7 +890,6 @@ img{display:block;max-width:100%}
             <div class="timer-clock" id="timerClock">--:--</div>
           </div>
 
-          <!-- Body cột trái: Bộ đếm & Lưới câu hỏi -->
           <div class="quiz-panel-body">
             <div class="q-nav-meta" style="text-align:center; margin-bottom:16px; font-size:.85rem; font-weight:600; color:var(--text2);">
               Đã trả lời: <b id="answeredCount" style="color:var(--c4)">0</b> / <b id="totalCount">0</b> câu
@@ -873,7 +897,6 @@ img{display:block;max-width:100%}
             <div class="q-grid-box" id="qDots"></div>
           </div>
           
-          <!-- Footer cột trái: Nút Nộp bài -->
           <div class="quiz-panel-footer">
             <div class="timer-info" id="timerInfo" style="font-size:0.85rem; font-weight:600; color:var(--text3); margin-bottom: 16px;">Kiểm tra</div>
             <button class="btn-submit" onclick="App.confirmSubmit()">📤 NỘP BÀI</button>
@@ -882,11 +905,8 @@ img{display:block;max-width:100%}
 
         <!-- CỘT PHẢI: NỘI DUNG CÂU HỎI -->
         <div class="quiz-right-panel">
-          <div class="quiz-body" id="quizBody">
-            <!-- Các block câu hỏi sẽ đổ vào đây -->
-          </div>
+          <div class="quiz-body" id="quizBody"></div>
           
-          <!-- Nút điều hướng -->
           <div class="quiz-actions">
             <button class="btn-nav" id="btnPrev" onclick="App.prevQ()">⬅ Câu trước</button>
             <button class="btn-nav" id="btnNext" onclick="App.nextQ()">Câu tiếp theo ➡</button>
@@ -895,8 +915,8 @@ img{display:block;max-width:100%}
       </div>
     </div>
 
+    <!-- KẾT QUẢ -->
     <div class="screen page-body" id="screen-result">
-      <!-- Wrapper thu gọn màn hình kết quả -->
       <div class="result-container">
         
         <div id="printUserInfo" class="print-only"></div>
@@ -922,7 +942,7 @@ img{display:block;max-width:100%}
           </div>
         </div>
 
-        <div class="late-banner" id="lateBanner">⚠️ Bài thi nộp sau giờ quy định — toàn bộ điểm tính bằng 0.</div>
+        <div class="late-banner" id="lateBanner"></div>
 
         <div class="result-stats-row">
           <div class="result-stat"><div class="result-stat-val val-green" id="rs-full-correct">0</div><div class="result-stat-lbl">Đúng hoàn toàn</div></div>
@@ -939,9 +959,10 @@ img{display:block;max-width:100%}
         <button class="btn-export-word" onclick="App.exportToWord()">📄 Xuất Word</button>
         <button class="btn-export-excel" onclick="App.exportToExcel()">📊 Xuất Excel</button>
         
-      </div> <!-- Kết thúc result-container -->
+      </div>
     </div>
 
+    <!-- THỐNG KÊ CỦA TÔI -->
     <div class="screen page-body" id="screen-my-stats">
       <div class="stat-grid" id="myStatCards">
         <div class="stat-card"><div class="stat-icon blue">🎯</div><div><div class="stat-value" id="ms-total">—</div><div class="stat-label">Tổng lần thi</div></div></div>
@@ -962,6 +983,7 @@ img{display:block;max-width:100%}
       </div>
     </div>
 
+    <!-- KẾT QUẢ ĐƠN VỊ -->
     <div class="screen page-body" id="screen-unit-stats">
       <div class="card">
         <div class="card-header">
@@ -983,6 +1005,7 @@ img{display:block;max-width:100%}
       </div>
     </div>
 
+    <!-- KẾT QUẢ TOÀN CHI CỤC -->
     <div class="screen page-body" id="screen-all-stats">
       <div class="filter-bar">
         <select id="filterUnit" onchange="App.loadAllStats()">
@@ -1016,6 +1039,26 @@ img{display:block;max-width:100%}
     </div>
   </div>
 </div>
+
+<!-- BOTTOM NAV CHO MOBILE -->
+<nav class="mobile-bottom-nav">
+  <button onclick="App.goto('dashboard')" id="mb-nav-dashboard">
+    <span>🏠</span>
+    <b>Tổng quan</b>
+  </button>
+  <button onclick="App.goto('quiz-setup')" id="mb-nav-quiz-setup">
+    <span>▶</span>
+    <b>Làm bài</b>
+  </button>
+  <button onclick="App.goto('my-stats')" id="mb-nav-my-stats">
+    <span>📊</span>
+    <b>Thống kê</b>
+  </button>
+  <button onclick="App.showModal('modal-chpw',true)" id="mb-nav-account">
+    <span>🔒</span>
+    <b>Mật khẩu</b>
+  </button>
+</nav>
 
 <div class="modal-ov hidden" id="modal-chpw">
   <div class="modal-box">
@@ -1073,11 +1116,10 @@ async function callGAS(p){
   }
 }
 
-// KHỞI TẠO MẶC ĐỊNH LUÔN LÀ KIỂM TRA (EXAM)
 const S = {
   user: null, allBanks: [], mode: 'exam', examCount: 30,
   quizData: null, answers: {}, timerIv: null, timeLeft: 0, resultScore10Val: 0,
-  currentQ: 0 
+  currentQ: 0, autoNextTimer: null
 };
 
 const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -1100,20 +1142,32 @@ const App = {
   goto(id){
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-    document.getElementById('screen-'+id).classList.add('active');
+    document.querySelectorAll('.mobile-bottom-nav button').forEach(n=>n.classList.remove('active'));
+    
+    const screenEl = document.getElementById('screen-'+id);
+    if(screenEl) screenEl.classList.add('active');
+    
     const navEl = document.getElementById('nav-'+id);
     if(navEl) navEl.classList.add('active');
+    
+    const mbNav = document.getElementById('mb-nav-' + id);
+    if(mbNav) mbNav.classList.add('active');
+    
+    const userDropdown = document.getElementById('userDropdown');
+    if(userDropdown) userDropdown.classList.add('hidden');
+    
     const titles = {dashboard:'Tổng quan','quiz-setup':'Làm bài thi',quiz:'Đang thi',result:'Kết quả bài thi','my-stats':'Thống kê của tôi','unit-stats':'Kết quả đơn vị','all-stats':'Toàn chi cục'};
     document.getElementById('topbarTitle').textContent = titles[id]||'';
+    
     if(id==='dashboard') this.loadDashboard();
     if(id==='my-stats') this.loadMyStats();
     if(id==='unit-stats') this.loadUnitStats();
     if(id==='all-stats') this.loadAllStats();
     if(id==='quiz-setup') this.loadBanks();
-    if(window.innerWidth<768) document.getElementById('sidebar').classList.remove('open');
   },
 
   toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); },
+  toggleUserMenu(){ document.getElementById('userDropdown').classList.toggle('hidden'); },
   showModal(id,show){ document.getElementById(id).classList.toggle('hidden',!show); },
   showLoading(msg='Đang xử lý...'){
     document.getElementById('loadingMsg').textContent=msg;
@@ -1165,8 +1219,17 @@ const App = {
     document.getElementById('sidebarAvatar').textContent=(u.fullname||u.username).charAt(0).toUpperCase();
     document.getElementById('sidebarName').textContent=u.fullname||u.username;
     document.getElementById('sidebarRole').textContent=this.roleLabel(u.role);
+    
+    const mobileAvatar = document.getElementById('mobileAvatar');
+    const mobileUserName = document.getElementById('mobileUserName');
+    const mobileUserRole = document.getElementById('mobileUserRole');
+    if(mobileAvatar) mobileAvatar.textContent=(u.fullname||u.username).charAt(0).toUpperCase();
+    if(mobileUserName) mobileUserName.textContent=u.fullname||u.username;
+    if(mobileUserRole) mobileUserRole.textContent=this.roleLabel(u.role);
+    
     document.getElementById('welcomeName').textContent='Xin chào, '+(u.fullname||u.username)+'!';
     document.getElementById('welcomeSub').textContent=u.role==='user'?'Chọn bài thi hoặc xem thống kê của bạn':'Quản lý kết quả và thống kê hệ thống';
+    
     if(canSeeUnit(u.role)){
       document.getElementById('adminNavLabel').style.display='';
       document.getElementById('nav-unit-stats').style.display='';
@@ -1187,7 +1250,7 @@ const App = {
   },
 
   logout(){
-    if(!confirm('Đăng xuất?')) return;
+    if(!confirm('Đăng xuất khỏi hệ thống?')) return;
     S.user=null; localStorage.removeItem('qz_user');
     this.stopTimer();
     document.getElementById('appLayout').style.display='none';
@@ -1259,7 +1322,6 @@ const App = {
       sel.innerHTML = '<option value="">Chưa có bộ đề nào khả dụng</option>';
       return;
     }
-    // Cập nhật giao diện: Chỉ hiện tên bộ đề và thông tin thêm (d2), ẩn số lượng câu hỏi [XX câu hợp lệ]
     sel.innerHTML = '<option value="">— Vui lòng chọn một bộ đề —</option>' + banks.map(b => {
       const extra = b.d2 ? ` - ${esc(b.d2)}` : '';
       return `<option value="${esc(b.id)}">${esc(b.name)}${extra}</option>`;
@@ -1280,7 +1342,7 @@ const App = {
     }
     
     const bankId = sel.value;
-    let count = S.examCount; // Lấy trực tiếp số câu đã chọn (mặc định 30)
+    let count = S.examCount;
 
     const selectedBank = S.allBanks.find(b => String(b.id) === String(bankId));
     if(selectedBank && count > Number(selectedBank.count || 0)){
@@ -1291,7 +1353,6 @@ const App = {
     this.hideAlert('dashAlert');
     this.showLoading('Đang tạo đề thi...');
     try{
-      // Cố định mode: 'exam' vì đã bỏ tính năng ôn tập
       const res=await callGAS({action:'generateQuiz', username:S.user.username, bankId:bankId, mode:'exam', count:count});
       
       if(!res.ok){ this.showAlert('dashAlert',res.msg||'Không tạo được đề thi'); this.hideLoading(); return; }
@@ -1316,15 +1377,12 @@ const App = {
     document.getElementById('totalCount').textContent=q.count;
     document.getElementById('answeredCount').textContent=0;
     
-    // Luôn luôn là Kiểm tra
     const timeSecs = Number(q.timeLimitSec || q.count * 60);
     document.getElementById('timerInfo').textContent=`Kiểm tra – ${q.count} câu`;
     this.startTimer(timeSecs);
     
-    // In danh sách các nút điều hướng câu
     document.getElementById('qDots').innerHTML=q.questions.map((_,i)=>`<button class="q-dot" id="dot-${i}" onclick="App.scrollToQ(${i})">${i+1}</button>`).join('');
     
-    // Đổ nội dung câu hỏi
     document.getElementById('quizBody').innerHTML=q.questions.map((q2,i)=>`
       <div class="qblock" id="qb-${i}">
         <div class="qnum">Câu ${i+1} / ${q.count}</div>
@@ -1337,9 +1395,7 @@ const App = {
       </div>`).join('');
       
     this.goto('quiz');
-    document.getElementById('nav-quiz-setup').classList.remove('active');
     
-    // Hiển thị câu hỏi đầu tiên
     S.currentQ = 0;
     this.showQ(0);
   },
@@ -1348,17 +1404,14 @@ const App = {
     if (!S.quizData || index < 0 || index >= S.quizData.count) return;
     S.currentQ = index;
 
-    // Ẩn tất cả nội dung câu hỏi, chỉ hiện câu đang chọn
     document.querySelectorAll('.qblock').forEach((el, i) => {
       el.classList.toggle('active', i === index);
     });
 
-    // Cập nhật trạng thái viền nút trên bảng lưới
     document.querySelectorAll('.q-dot').forEach((el, i) => {
       el.classList.toggle('active', i === index);
     });
 
-    // Bật/tắt trạng thái nút Tới/Lui
     document.getElementById('btnPrev').disabled = (index === 0);
     document.getElementById('btnNext').disabled = (index === S.quizData.count - 1);
   },
@@ -1371,9 +1424,18 @@ const App = {
     if(!S.answers[qi]) S.answers[qi]=[];
     if(checked){ if(!S.answers[qi].includes(oi)) S.answers[qi].push(oi); }
     else { S.answers[qi]=S.answers[qi].filter(x=>x!==oi); }
+    
     el.classList.toggle('selected',checked);
     document.getElementById('dot-'+qi).classList.toggle('answered',S.answers[qi].length>0);
     document.getElementById('answeredCount').textContent=Object.values(S.answers).filter(a=>a.length>0).length;
+
+    // Tính năng tự động nhảy trang khi chọn đáp án
+    if(checked && S.quizData && qi < S.quizData.count - 1){
+      clearTimeout(S.autoNextTimer);
+      S.autoNextTimer = setTimeout(()=>{
+        if(S.currentQ === qi) App.nextQ();
+      }, 400);
+    }
   },
 
   startTimer(total){
@@ -1395,11 +1457,13 @@ const App = {
   },
   
   stopTimer(){ if(S.timerIv){ clearInterval(S.timerIv); S.timerIv=null; } },
+  
   lockQuiz(){
     document.querySelectorAll('#quizBody input').forEach(i=>i.disabled=true);
     const b=document.querySelector('.btn-submit');
     if(b){b.disabled=true;b.textContent='⏰ Đang nộp tự động...';}
   },
+
   showTimerBanner(msg){
     let el=document.getElementById('timerBanner');
     if(!el){
@@ -1410,6 +1474,7 @@ const App = {
     el.textContent=msg; el.style.display='block';
     clearTimeout(el._t); el._t=setTimeout(()=>el.style.display='none',4000);
   },
+
   showCountdown(){
     let ov=document.getElementById('cdOverlay');
     if(!ov){
@@ -1432,26 +1497,40 @@ const App = {
     const total=S.quizData.count, ans=Object.values(S.answers).filter(a=>a.length>0).length;
     const left=total-ans;
     const msg=left>0?`Còn ${left} câu chưa trả lời. Vẫn nộp bài?`:`Đã trả lời đủ ${total} câu. Nộp bài?`;
-    if(confirm(msg)) this.submitQuiz();
+    if(confirm(msg)) this.submitQuiz(false);
   },
 
-  async submitQuiz(){
+  async submitQuiz(forceSave = false){
     this.stopTimer();
-    this.showLoading('Đang chấm bài...');
+    this.showLoading(forceSave ? 'Đang lưu kết quả...' : 'Đang chấm bài...');
     try{
-      const res=await callGAS({
+      const res = await callGAS({
         action:'submitQuiz',
         quizId:S.quizData.quizId,
         userAnswers:S.answers,
-        user: S.user 
+        user: S.user,
+        forceSave: forceSave
       });
+      
       this.hideLoading();
       if(!res.ok){ alert('Lỗi nộp bài: '+(res.msg||'Không xác định')); return; }
-      this.renderResult(res);
+
+      // Logic Cảnh báo điểm < 5
+      if (res.promptSave) {
+        const wantToSave = confirm(`Điểm của bạn là: ${Number(res.score10).toFixed(2)} / 10 (Chưa đạt).\nBạn có muốn lưu kết quả trắc nghiệm này vào hệ thống không?`);
+        if (wantToSave) {
+          return this.submitQuiz(true);
+        } else {
+          this.renderResult(res, false);
+          return;
+        }
+      }
+
+      this.renderResult(res, true);
     }catch(e){ this.hideLoading(); alert('Lỗi kết nối khi nộp bài: ' + e.message); }
   },
 
-  renderResult(res){
+  renderResult(res, isSaved = true){
     const {correctCount, score10, totalQ, detail, lateSubmit} = res;
     S.resultScore10Val = Number(score10).toFixed(2);
     
@@ -1506,10 +1585,20 @@ const App = {
     document.getElementById('rs-partial-wrong').textContent = saiMotPhan;
     document.getElementById('rs-full-wrong').textContent = saiHoanToan;
 
-    document.getElementById('lateBanner').style.display=lateSubmit?'block':'none';
+    const lateBanner = document.getElementById('lateBanner');
+    if (!isSaved) {
+      lateBanner.innerHTML = '⚠️ Kết quả này <b>KHÔNG</b> được lưu vào hệ thống do chưa đạt điểm và bạn đã chọn từ chối lưu.';
+      lateBanner.style.backgroundColor = 'var(--o1)';
+      lateBanner.style.display = 'block';
+    } else if (lateSubmit) {
+      lateBanner.innerHTML = '⚠️ Bài thi nộp sau giờ quy định — toàn bộ điểm tính bằng 0.';
+      lateBanner.style.backgroundColor = 'var(--r1)';
+      lateBanner.style.display = 'block';
+    } else {
+      lateBanner.style.display = 'none';
+    }
     
     this.goto('result');
-    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
     window.scrollTo(0,0);
   },
 
