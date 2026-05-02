@@ -11,81 +11,7 @@
 <script src="https://unpkg.com/docx@7.8.2/build/index.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-/* ===== SỬA GIAO DIỆN MOBILE + Ô CÂU HỎI + IN KẾT QUẢ ===== */
 
-/* 1. Thanh menu dưới mobile: còn 4 nút sau khi bỏ Mật khẩu */
-.mobile-bottom-nav {
-  grid-template-columns: repeat(4, 1fr) !important;
-}
-
-/* 2. Thu nhỏ ô điều hướng câu hỏi trên desktop */
-.q-grid-box {
-  grid-template-columns: repeat(8, 1fr) !important;
-  gap: 5px !important;
-  max-height: calc(100vh - 310px) !important;
-}
-
-.q-dot {
-  border-radius: 5px !important;
-  border-width: 1px !important;
-  font-size: .72rem !important;
-}
-
-/* 3. Mobile: thu nhỏ thêm để hiện nhiều câu hơn */
-@media(max-width:768px) {
-  .q-grid-box {
-    grid-template-columns: repeat(10, 1fr) !important;
-    gap: 5px !important;
-    max-height: 180px !important;
-  }
-
-  .q-dot {
-    font-size: .68rem !important;
-    border-radius: 5px !important;
-  }
-}
-
-/* 4. Ẩn 3 dòng tiêu đề trong màn hình làm bài */
-#quizHeaderLines {
-  display: none !important;
-}
-
-/* 5. Dòng tiêu đề chỉ dùng khi in */
-.print-header-lines {
-  display: none;
-}
-
-@media print {
-  .print-header-lines {
-    display: block !important;
-    text-align: center;
-    margin-bottom: 18px;
-    border: none !important;
-    background: white !important;
-    padding: 0 !important;
-  }
-
-  .print-line-1 {
-    font-weight: 700;
-    font-size: 13pt;
-    text-transform: uppercase;
-  }
-
-  .print-line-2 {
-    font-weight: 700;
-    font-size: 13pt;
-    text-transform: uppercase;
-    margin-top: 3px;
-  }
-
-  .print-line-3 {
-    font-weight: 800;
-    font-size: 14pt;
-    color: #000 !important;
-    text-transform: uppercase;
-    margin-top: 8px;
-  }
-}
 <style>
 :root {
   color-scheme: light !important; 
@@ -722,15 +648,7 @@ img{display:block;max-width:100%}
 
   .quiz-container { flex-direction: column-reverse; padding: 12px; }
   .quiz-left-panel { width: 100%; position: static; max-height: none; border-radius:18px;}
-  .q-grid-box {
-  grid-template-columns: repeat(10, 1fr);
-  gap: 5px;
-  max-height: 180px;
-}
-.q-dot {
-  font-size: .68rem;
-  border-radius: 5px;
-}
+  .q-grid-box { grid-template-columns: repeat(6, 1fr); max-height: 250px; }
   .quiz-right-panel{ width:100%; min-height:auto; padding:20px 16px; border-radius:18px; }
 
   .mobile-account-box{
@@ -1061,11 +979,10 @@ img{display:block;max-width:100%}
         <div class="quiz-left-panel">
           
           <div class="quiz-panel-header">
-            <div id="quizHeaderLines" style="display:none;">
-  <div id="line1"></div>
-  <div id="line2"></div>
-  <div id="line3"></div>
-</div>
+            <div id="quizHeaderLines" style="margin-bottom:16px;">
+              <div id="line1" style="font-weight:600; font-size:.8rem; color:#0D438B;"></div>
+              <div id="line2" style="font-weight:800; font-size:.95rem; color:#0D438B; margin-top:2px;"></div>
+              <div id="line3" style="font-weight:800; font-size:1rem; color:#C82929; margin-top:6px; text-transform:uppercase;"></div>
             </div>
             <div class="timer-clock" id="timerClock">--:--</div>
           </div>
@@ -1100,7 +1017,7 @@ img{display:block;max-width:100%}
       <div class="result-container">
         
         <div id="printUserInfo" class="print-only"></div>
-<div id="printHeaderLines" class="print-only print-header-lines"></div>
+
         <div class="result-hero">
           <div>
             <div class="result-score-label">Điểm bài thi</div>
