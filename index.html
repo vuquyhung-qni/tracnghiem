@@ -1180,7 +1180,7 @@ img{display:block;max-width:100%}
 </div>
 
 <script>
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzRS6I51B4qejpdlaKNn6PfERL46ajU_pDiDPKbqUHZUF0lIuOCe8EYM-QNvKhUZOKl/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwYwBZmlnOInfCfuuQCMg0-ivTBO3C6zClNer0a6e85psRneLuzvf4hamvhjkBuWJeR/exec';
 
 async function sha256(message) {
   const msgBuffer = new TextEncoder().encode(message);
@@ -1405,70 +1405,93 @@ const App = {
   },
 
   async loadBanks(){
-    if(S.allBanks.length){ this.renderCategories(S.allBanks); return; }
-    try{
-      const res=await callGAS({action:'getBanks'});
-      if(res.ok){
-         S.allBanks=res.banks;
-         this.renderCategories(res.banks);
-      }
-      else {
-         document.getElementById('categorySelect').innerHTML='<option value="">Lỗi: '+esc(res.msg)+'</option>';
-      }
-    }catch(e){ document.getElementById('categorySelect').innerHTML='<option value="">Lỗi kết nối tới Server</option>'; }
-  },
+  const cat = document.getElementById('categorySelect');
+  const bank = document.getElementById('bankSelect');
 
-  renderCategories(banks){
-    const catSel = document.getElementById('categorySelect');
-    const bankSel = document.getElementById('bankSelect');
-    
-    if(!banks || !banks.length) {
-      catSel.innerHTML = '<option value="">Hệ thống chưa tìm thấy lĩnh vực</option>';
-      bankSel.innerHTML = '<option value="">Chưa có bộ đề nào khả dụng</option>';
-      return;
-    }
-    
-    const uniqueCats = [...new Set(banks.map(b => b.linhVuc))]
-                        .filter(c => c && c.trim() !== '')
-                        .sort((a, b) => a.localeCompare(b, 'vi'));
+  cat.innerHTML = '<option value="">Đang tải lĩnh vực...</option>';
+  bank.innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
+  bank.disabled = true;
 
-    if (uniqueCats.length === 0) {
-      catSel.innerHTML = '<option value="">Hệ thống chưa tìm thấy lĩnh vực</option>';
-    } else {
-      catSel.innerHTML = '<option value="">— Vui lòng chọn một lĩnh vực —</option>' + 
-                         uniqueCats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
-    }
+  try{
+    const res = await callGAS({action:'getBanks'});
 
-    bankSel.innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
-    bankSel.disabled = true;
-  },
+    console.log('GET BANKS RESPONSE:', res);
 
-  filterBanks() {
-    const cat = document.getElementById('categorySelect').value;
-    const bankSel = document.getElementById('bankSelect');
-
-    if(!cat) {
-      bankSel.innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
-      bankSel.disabled = true;
+    if(!res || !res.ok){
+      cat.innerHTML = '<option value="">Lỗi tải dữ liệu</option>';
+      this.showAlert('dashAlert', (res && res.msg) ? res.msg : 'Không nhận được dữ liệu từ Apps Script');
       return;
     }
 
-    const filtered = S.allBanks.filter(b => (b.linhVuc || 'Chưa phân loại') === cat);
-    filtered.sort((a, b) => a.name.localeCompare(b.name, 'vi'));
+    S.allBanks = Array.isArray(res.banks) ? res.banks : [];
 
-    if(!filtered.length) {
-        bankSel.innerHTML = '<option value="">Không có bộ đề nào trong lĩnh vực này</option>';
-        bankSel.disabled = true;
-        return;
+    if(!S.allBanks.length){
+      cat.innerHTML = '<option value="">Không có lĩnh vực/bộ đề</option>';
+      this.showAlert('dashAlert', 'Đã kết nối Apps Script nhưng không có dữ liệu bộ đề.');
+      return;
     }
 
-    bankSel.innerHTML = '<option value="">— Vui lòng chọn một bộ đề —</option>' + filtered.map(b => {
-      const extra = b.d2 ? ` - ${esc(b.d2)}` : '';
-      return `<option value="${esc(b.id)}">${esc(b.name)}${extra}</option>`;
-    }).join('');
-    bankSel.disabled = false;
-  },
+    this.renderCategories(S.allBanks);
+    this.hideAlert('dashAlert');
 
+  }catch(e){
+    console.error('LOAD BANKS ERROR:', e);
+    cat.innerHTML = '<option value="">Lỗi kết nối Apps Script</option>';
+    this.showAlert('dashAlert', 'Lỗi tải lĩnh vực: ' + e.message);
+  }
+},
+
+renderCategories(banks){
+  const cat = document.getElementById('categorySelect');
+  const bank = document.getElementById('bankSelect');
+
+  const categories = [...new Set(
+    (banks || [])
+      .map(b => String(b.linhVuc || '').trim())
+      .filter(Boolean)
+  )].sort((a,b) => a.localeCompare(b, 'vi'));
+
+  if(!categories.length){
+    cat.innerHTML = '<option value="">Không tìm thấy lĩnh vực</option>';
+    bank.innerHTML = '<option value="">— Chưa có bộ đề —</option>';
+    bank.disabled = true;
+    return;
+  }
+
+  cat.innerHTML =
+    '<option value="">— Chọn lĩnh vực —</option>' +
+    categories.map(x => `<option value="${esc(x)}">${esc(x)}</option>`).join('');
+
+  bank.innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
+  bank.disabled = true;
+},
+
+filterBanks(){
+  const catVal = document.getElementById('categorySelect').value;
+  const bank = document.getElementById('bankSelect');
+
+  if(!catVal){
+    bank.innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
+    bank.disabled = true;
+    return;
+  }
+
+  const list = (S.allBanks || [])
+    .filter(b => String(b.linhVuc || '').trim() === catVal)
+    .sort((a,b) => String(a.name || '').localeCompare(String(b.name || ''), 'vi'));
+
+  if(!list.length){
+    bank.innerHTML = '<option value="">— Không có bộ đề trong lĩnh vực này —</option>';
+    bank.disabled = true;
+    return;
+  }
+
+  bank.innerHTML =
+    '<option value="">— Chọn bộ đề —</option>' +
+    list.map(b => `<option value="${esc(b.id)}">${esc(b.name)} (${Number(b.count || 0)} câu)</option>`).join('');
+
+  bank.disabled = false;
+},
   setExamCount(n,btn){
     S.examCount=n;
     document.querySelectorAll('.count-chips .chip').forEach(c=>c.classList.remove('active'));
