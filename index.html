@@ -623,69 +623,77 @@ img{display:block;max-width:100%}
 .mobile-account-box{display:none;}
 .mobile-home-menu{display:none;} 
 
-<script>
-// --- PHẦN 1: DỮ LIỆU BỘ ĐỀ (Đồng chí có thể thêm bớt ở đây) ---
-const dataHảiQuan = {
-  "gs-ql": {
-    name: "Kiểm tra Giám sát Hải quan",
-    exams: ["Bộ đề Quy trình thủ tục", "Bộ đề Hàng hóa XNK", "Bộ đề Phương tiện vận tải"]
-  },
-  "thue-xnk": {
-    name: "Thuế Xuất nhập khẩu",
-    exams: ["Bộ đề Trị giá tính thuế", "Bộ đề Phân loại HS", "Bộ đề Xuất xứ C/O"]
-  },
-  "xl-vp": {
-    name: "Xử lý vi phạm & Kiểm soát",
-    exams: ["Bộ đề Xử phạt hành chính", "Bộ đề Nghiệp vụ kiểm soát"]
-  }
-};
-
-// --- PHẦN 2: XỬ LÝ LOGIC (Chạy 1 lần chính xác) ---
-function setupChucNang() {
-    const lvSelect = document.getElementById('linh-vuc-select');
-    const bdSelect = document.getElementById('bo-de-select');
-    
-    if (!lvSelect) return;
-
-    // 1. Nạp danh sách Lĩnh vực
-    let lvHtml = '<option value="">— Chọn lĩnh vực nghiệp vụ —</option>';
-    for (let key in dataHảiQuan) {
-        lvHtml += `<option value="${key}">${dataHảiQuan[key].name}</option>`;
-    }
-    lvSelect.innerHTML = lvHtml;
-
-    // 2. Lắng nghe sự kiện thay đổi Lĩnh vực để nạp Bộ đề
-    lvSelect.addEventListener('change', function() {
-        const selectedKey = this.value;
-        if (!selectedKey) {
-            bdSelect.innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
-            return;
-        }
-
-        let bdHtml = '<option value="">— Chọn bộ đề cụ thể —</option>';
-        dataHảiQuan[selectedKey].exams.forEach(exam => {
-            bdHtml += `<option value="${exam}">${exam}</option>`;
-        });
-        bdSelect.innerHTML = bdHtml;
-    });
-}
-
-// --- PHẦN 3: CẤU HÌNH MOBILE (Thay cho đoạn bị cụt của đồng chí) ---
-// Đồng chí dán đoạn CSS này vào trong thẻ <style> nếu muốn sửa giao diện Mobile
-/*
 @media(max-width:768px){
   .sidebar{display:none !important;}
+  .burger{display:flex;}
   .layout{display:block;}
-  .main{width:100%; padding-bottom: 80px;}
-  .topbar{height:54px; padding:0 14px;}
-  .quiz-container { flex-direction: column; gap: 12px; }
-  .q-grid-box { grid-template-columns: repeat(5, 1fr) !important; max-height: 200px !important; }
-}
-*/
+  .main{width:100%; min-height:100vh; padding-bottom: 70px;}
+  .topbar{height:54px; padding:0 14px; justify-content: flex-start; position: relative; background:rgba(255,255,255,.94);backdrop-filter:blur(12px)}
+  .page-body{padding:14px 12px 96px;}
+  
+  .result-hero{grid-template-columns:1fr;text-align:center;}
+  .result-donut{justify-self:center;}
+  .result-stats-row{grid-template-columns:1fr 1fr;}
+  .rank-hero{grid-template-columns:1fr;}
+  .stat-grid{grid-template-columns:1fr;gap:12px}
+  
+  .welcome-hero{border-radius:20px; padding:24px 20px; flex-direction:column; align-items:flex-start; text-align:left; margin-bottom:14px;}
+  .welcome-text h2{font-size:1.25rem}
+  .welcome-text p{font-size:.84rem}
+  .welcome-badge{width:100%;margin-top:8px}
 
-// Khởi chạy khi trang load xong
-document.addEventListener('DOMContentLoaded', setupChucNang);
-</script>
+  .count-chips{gap:8px; justify-content:center;}
+  .chip{flex:1 1 calc(50% - 8px);text-align:center;padding:10px 8px;font-size:.82rem}
+  .exam-setup-grid{grid-template-columns:1fr;}
+
+  .quiz-container { flex-direction: column-reverse; padding: 12px; }
+  .quiz-left-panel { width: 100%; position: static; max-height: none; border-radius:18px;}
+  .q-grid-box { grid-template-columns: repeat(6, 1fr); max-height: 250px; }
+  .quiz-right-panel{ width:100%; min-height:auto; padding:20px 16px; border-radius:18px; }
+
+  .mobile-account-box{
+    display:flex; align-items:center; gap:10px; background-image:linear-gradient(#ffffff,#ffffff) !important;
+    border:1px solid #e2e8f4 !important; border-radius:18px; padding:12px;
+    margin-bottom:14px; box-shadow:0 10px 24px rgba(10,22,40,.07);
+  }
+  .mobile-account-avatar{
+    width:38px;height:38px;border-radius:50%; background:linear-gradient(135deg,#d4a843,#f0c96a);
+    display:flex;align-items:center;justify-content:center; font-weight:900;color:#0a1628;flex-shrink:0;
+  }
+  .mobile-account-name{font-weight:900;color:#0f1f3d !important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .mobile-account-role{font-size:.75rem;color:#8496b0 !important;}
+
+  .mobile-home-menu{
+    display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:16px;
+  }
+  .mobile-menu-card{
+    border:1px solid #e2e8f4 !important; background-image:linear-gradient(#ffffff,#ffffff) !important; border-radius:18px;
+    padding:16px 12px; min-height:86px; box-shadow:0 10px 24px rgba(10,22,40,.07);
+    display:flex; flex-direction:column; justify-content:center; align-items:center; gap:7px;
+    font-weight:800; color:#0f1f3d !important; cursor:pointer;
+  }
+  .mobile-menu-card.primary{background-image:linear-gradient(135deg,#2558a8,#3b72d4) !important;color:#fff !important}
+  .mobile-menu-icon{font-size:1.35rem;line-height:1}
+
+  .mobile-bottom-nav{
+    display:grid; grid-template-columns:repeat(3,1fr);
+    position:fixed; left:0; right:0; bottom:0; z-index:700;
+    background-image:linear-gradient(#ffffff,#ffffff) !important; border-top:1px solid #e2e8f4 !important;
+    box-shadow:0 -4px 20px rgba(10,22,40,.08);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .mobile-bottom-nav button{
+    border:none; background:transparent; padding:10px 4px;
+    color:#8496b0 !important; font-size:.72rem; font-weight:700; cursor:pointer;
+    display:flex; flex-direction:column; align-items:center; transition: color .2s;
+  }
+  .mobile-bottom-nav button span{ font-size:1.25rem; margin-bottom:4px; filter: grayscale(100%); opacity:0.6; transition: all .2s;}
+  .mobile-bottom-nav button.active{ color:#2558a8 !important; }
+  .mobile-bottom-nav button.active span{ filter: grayscale(0%); opacity:1; }
+
+  .tbl-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px}
+  .tbl{min-width:680px;font-size:.78rem}
+}
 
 @media(min-width:520px) and (max-width:768px){
   .stat-grid{grid-template-columns:1fr 1fr}
@@ -710,6 +718,7 @@ document.addEventListener('DOMContentLoaded', setupChucNang);
   .card { box-shadow: none; border: 1px solid #ddd; }
   .rq { border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; }
 }
+
 .btn-print, .btn-export-word, .btn-export-excel {
   width: 100%; padding: 12px; margin-top: 12px; border: none; border-radius: 9px; font-size: .88rem; font-weight: 700; cursor: pointer; transition: opacity .2s, transform .1s;
 }
@@ -718,107 +727,6 @@ document.addEventListener('DOMContentLoaded', setupChucNang);
 .btn-export-excel { background: #0f7c4a !important; color: #fff !important; }
 .btn-print:hover, .btn-export-word:hover, .btn-export-excel:hover { opacity: .9; transform: translateY(-1px); }
 </style>
-<body>
-<!-- Hiệu ứng Loading -->
-<div id="loading-overlay" class="loading-ov hidden">
-    <div class="loading-box">
-        <div class="spinner"></div>
-        <p>Đang xử lý dữ liệu...</p>
-    </div>
-</div>
-
-<div id="app-layout" class="layout">
-    <!-- Header -->
-    <header class="topbar">
-        <div class="burger" onclick="toggleSidebar()">☰</div>
-        <div style="font-weight:800; color:#2558a8; margin-left:10px;">HẢI QUAN KHU VỰC VIII</div>
-    </header>
-
-    <main class="main">
-        <div class="page-body">
-            <div id="main-content">
-                <!-- Màn hình Dashboard -->
-                <div class="welcome-hero" style="background: linear-gradient(135deg, #2558a8, #3b72d4); color: white; padding: 25px; border-radius: 15px; margin-bottom: 20px;">
-                    <h2>Chào mừng đồng chí!</h2>
-                    <p>Hệ thống hỗ trợ chuyển đổi số nội bộ - Bình dân học vụ số 2026.</p>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <button class="btn-print" onclick="startQuiz()">📝 BẮT ĐẦU THI</button>
-                    <button class="btn-export-excel" onclick="exportData()">📊 XUẤT BÁO CÁO</button>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Điều hướng Mobile -->
-    <nav class="mobile-bottom-nav">
-        <button class="m-nav-item active" onclick="location.reload()"><span>🏠</span>Trang chủ</button>
-        <button class="m-nav-item" onclick="startQuiz()"><span>📝</span>Vào thi</button>
-        <button class="m-nav-item" onclick="alert('Tính năng đang được đồng bộ...')"><span>📂</span>Tài liệu</button>
-    </nav>
-</div>
-
-<script>
-// Hàm điều hướng và hiển thị câu hỏi
-function startQuiz() {
-    const content = document.getElementById('main-content');
-    content.innerHTML = `
-        <div class="quiz-container">
-            <div class="quiz-left-panel" style="background:#fff; padding:15px; border-radius:12px;">
-                <div style="text-align:center; font-weight:bold; color:#2558a8; margin-bottom:10px;">THỜI GIAN CÒN LẠI</div>
-                <div id="timer" style="font-size:24px; text-align:center; font-weight:800; color:#d32f2f;">15:00</div>
-                <hr style="margin:15px 0; border:0; border-top:1px solid #eee;">
-                <div class="q-grid-box" id="nav-grid"></div>
-            </div>
-            <div class="quiz-right-panel" style="background:#fff; border-radius:12px; padding:25px;">
-                <div id="question-area">
-                    <h3 style="color:#1e293b; margin-bottom:20px;">Câu 1: Đồng chí hãy xác định các bước trong quy trình kiểm tra hồ sơ hải quan điện tử?</h3>
-                    <div style="display:flex; flex-direction:column; gap:12px;">
-                        <label style="padding:10px; border:1px solid #e2e8f4; border-radius:8px; cursor:pointer;"><input type="radio" name="q1"> Bước 1: Tiếp nhận hồ sơ...</label>
-                        <label style="padding:10px; border:1px solid #e2e8f4; border-radius:8px; cursor:pointer;"><input type="radio" name="q1"> Bước 2: Kiểm tra chi tiết...</label>
-                    </div>
-                </div>
-                <div style="margin-top:30px; display:flex; gap:10px;">
-                    <button class="btn-print" style="flex:2;" onclick="finishTest()">NỘP BÀI THI</button>
-                    <button class="btn-export-word" style="flex:1;" onclick="location.reload()">HỦY</button>
-                </div>
-            </div>
-        </div>
-    `;
-    generateGrid(20);
-    startTimer(900); // 15 phút
-}
-
-function generateGrid(total) {
-    const grid = document.getElementById('nav-grid');
-    for(let i=1; i<=total; i++) {
-        grid.innerHTML += `<div style="width:35px; height:35px; background:#f1f5f9; display:flex; align-items:center; justify-content:center; border-radius:6px; font-weight:600; font-size:13px; color:#64748b;">${i}</div>`;
-    }
-}
-
-function startTimer(duration) {
-    let timer = duration, minutes, seconds;
-    setInterval(function () {
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
-        document.getElementById('timer').textContent = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
-        if (--timer < 0) timer = 0;
-    }, 1000);
-}
-
-function finishTest() {
-    alert("Chúc mừng đồng chí đã hoàn thành bài thi! Kết quả sẽ được gửi về Hội đồng thi Chi cục.");
-    location.reload();
-}
-
-function toggleSidebar() {
-    // Logic ẩn hiện sidebar cho máy tính nếu cần
-    alert("Menu hệ thống");
-}
-</script>
-</body>
-</html>
 </head>
 <body>
 
@@ -871,11 +779,11 @@ function toggleSidebar() {
       </button>
       <button class="nav-item" onclick="App.goto('quiz-setup')" id="nav-quiz-setup">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-        Làm bài kiểm tra
+        Làm bài thi
       </button>
       <button class="nav-item" onclick="App.goto('my-stats')" id="nav-my-stats">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-        Thống kê
+        Thống kê của tôi
       </button>
 
       <div class="nav-section-label" id="adminNavLabel" style="display:none">Quản lý</div>
@@ -889,13 +797,7 @@ function toggleSidebar() {
         Toàn chi cục
       </button>
     </nav>
-<button class="nav-item" onclick="window.open('https://drive.google.com/drive/folders/1nDn4qEgJ99rRpdn5x-2VEEPA_SkX6rvv', '_blank')">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px">
-    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-  </svg>
-  Thư viện tài liệu
-</button>
+
     <div class="sidebar-footer">
       <div class="user-menu">
         <button class="user-pill" onclick="App.toggleUserMenu()" type="button">
@@ -1230,19 +1132,18 @@ function toggleSidebar() {
 </div>
 
 <!-- BOTTOM NAV CHO MOBILE -->
-<!-- BOTTOM NAV CHO MOBILE (Đã bỏ nút Mật khẩu) -->
-<nav class="mobile-bottom-nav">
+<nav class="mobile-bottom-nav" style="grid-template-columns: repeat(3, 1fr);">
   <button onclick="App.goto('dashboard')" id="mb-nav-dashboard">
-    <span>🏠</span><b>Tổng quan</b>
+    <span>🏠</span>
+    <b>Tổng quan</b>
   </button>
   <button onclick="App.goto('quiz-setup')" id="mb-nav-quiz-setup">
-    <span>▶</span><b>Làm bài</b>
+    <span>▶</span>
+    <b>Làm bài</b>
   </button>
   <button onclick="App.goto('my-stats')" id="mb-nav-my-stats">
-    <span>📊</span><b>Thống kê</b>
-  </button>
-  <button onclick="window.open('https://drive.google.com/drive/folders/1nDn4qEgJ99rRpdn5x-2VEEPA_SkX6rvv', '_blank')">
-    <span>📚</span><b>Thư viện</b>
+    <span>📊</span>
+    <b>Thống kê</b>
   </button>
 </nav>
 
