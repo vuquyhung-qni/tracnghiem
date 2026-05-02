@@ -623,44 +623,69 @@ img{display:block;max-width:100%}
 .mobile-account-box{display:none;}
 .mobile-home-menu{display:none;} 
 
-@media(max-width:768px){
-  /* 1. Thiết lập khung nền tảng cho Mobile */
-  .sidebar{display:none !important;}
-  .burger{display:flex;}
-  .layout{display:block;}
-  .main{width:100%; min-height:100vh; padding-bottom: 80px;} /* Tăng padding để không bị che bởi menu dưới */
-  .topbar{height:54px; padding:0 14px; justify-content: flex-start; position: relative; background:rgba(255,255,255,.94); backdrop-filter:blur(12px); border-bottom:1px solid #e2e8f4;}
-  .page-body{padding:14px 12px 20px;}
-  
-  /* 2. Giao diện làm bài (Quiz) trên Mobile */
-  .quiz-container { flex-direction: column; gap: 12px; }
-  .quiz-left-panel { 
-    width: 100%; position: sticky; top: 54px; z-index: 100;
-    max-height: none; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+<script>
+// --- PHẦN 1: DỮ LIỆU BỘ ĐỀ (Đồng chí có thể thêm bớt ở đây) ---
+const dataHảiQuan = {
+  "gs-ql": {
+    name: "Kiểm tra Giám sát Hải quan",
+    exams: ["Bộ đề Quy trình thủ tục", "Bộ đề Hàng hóa XNK", "Bộ đề Phương tiện vận tải"]
+  },
+  "thue-xnk": {
+    name: "Thuế Xuất nhập khẩu",
+    exams: ["Bộ đề Trị giá tính thuế", "Bộ đề Phân loại HS", "Bộ đề Xuất xứ C/O"]
+  },
+  "xl-vp": {
+    name: "Xử lý vi phạm & Kiểm soát",
+    exams: ["Bộ đề Xử phạt hành chính", "Bộ đề Nghiệp vụ kiểm soát"]
   }
-  .q-grid-box { grid-template-columns: repeat(8, 1fr); max-height: 120px; overflow-y: auto; padding: 10px; }
-  .quiz-right-panel { width: 100%; padding: 20px 15px; border-radius: 12px; min-height: 300px; }
-  .qtext { font-size: 1.1rem; line-height: 1.5; font-weight: 700; color: #1e293b; }
+};
 
-  /* 3. Menu điều hướng phía dưới (Bottom Navigation) */
-  .mobile-bottom-nav {
-    display: flex; position: fixed; bottom: 0; left: 0; right: 0;
-    background: #ffffff; border-top: 1px solid #e2e8f4; height: 65px; z-index: 1000;
-    justify-content: space-around; align-items: center; 
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-  .m-nav-item {
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-    color: #64748b; font-size: 0.7rem; font-weight: 600; text-decoration: none; border: none; background: none;
-  }
-  .m-nav-item.active { color: #2558a8; }
-  .m-nav-item i, .m-nav-item span { font-size: 1.4rem; }
+// --- PHẦN 2: XỬ LÝ LOGIC (Chạy 1 lần chính xác) ---
+function setupChucNang() {
+    const lvSelect = document.getElementById('linh-vuc-select');
+    const bdSelect = document.getElementById('bo-de-select');
+    
+    if (!lvSelect) return;
 
-  /* 4. Các thành phần bổ trợ */
-  .welcome-hero { border-radius: 15px; padding: 20px; margin-bottom: 15px; }
-  .welcome-text h2 { font-size: 1.2rem; }
-  .stat-grid { grid-template-columns: 1fr; gap: 10px; }
+    // 1. Nạp danh sách Lĩnh vực
+    let lvHtml = '<option value="">— Chọn lĩnh vực nghiệp vụ —</option>';
+    for (let key in dataHảiQuan) {
+        lvHtml += `<option value="${key}">${dataHảiQuan[key].name}</option>`;
+    }
+    lvSelect.innerHTML = lvHtml;
+
+    // 2. Lắng nghe sự kiện thay đổi Lĩnh vực để nạp Bộ đề
+    lvSelect.addEventListener('change', function() {
+        const selectedKey = this.value;
+        if (!selectedKey) {
+            bdSelect.innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
+            return;
+        }
+
+        let bdHtml = '<option value="">— Chọn bộ đề cụ thể —</option>';
+        dataHảiQuan[selectedKey].exams.forEach(exam => {
+            bdHtml += `<option value="${exam}">${exam}</option>`;
+        });
+        bdSelect.innerHTML = bdHtml;
+    });
 }
+
+// --- PHẦN 3: CẤU HÌNH MOBILE (Thay cho đoạn bị cụt của đồng chí) ---
+// Đồng chí dán đoạn CSS này vào trong thẻ <style> nếu muốn sửa giao diện Mobile
+/*
+@media(max-width:768px){
+  .sidebar{display:none !important;}
+  .layout{display:block;}
+  .main{width:100%; padding-bottom: 80px;}
+  .topbar{height:54px; padding:0 14px;}
+  .quiz-container { flex-direction: column; gap: 12px; }
+  .q-grid-box { grid-template-columns: repeat(5, 1fr) !important; max-height: 200px !important; }
+}
+*/
+
+// Khởi chạy khi trang load xong
+document.addEventListener('DOMContentLoaded', setupChucNang);
+</script>
 
 @media(min-width:520px) and (max-width:768px){
   .stat-grid{grid-template-columns:1fr 1fr}
