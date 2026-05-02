@@ -779,11 +779,11 @@ img{display:block;max-width:100%}
       </button>
       <button class="nav-item" onclick="App.goto('quiz-setup')" id="nav-quiz-setup">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-        Làm bài thi
+        Làm bài kiểm tra
       </button>
       <button class="nav-item" onclick="App.goto('my-stats')" id="nav-my-stats">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-        Thống kê của tôi
+        Thống kê
       </button>
 
       <div class="nav-section-label" id="adminNavLabel" style="display:none">Quản lý</div>
@@ -797,7 +797,13 @@ img{display:block;max-width:100%}
         Toàn chi cục
       </button>
     </nav>
-
+<button class="nav-item" onclick="window.open('https://drive.google.com/drive/folders/1nDn4qEgJ99rRpdn5x-2VEEPA_SkX6rvv', '_blank')">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px">
+    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+  </svg>
+  Thư viện tài liệu
+</button>
     <div class="sidebar-footer">
       <div class="user-menu">
         <button class="user-pill" onclick="App.toggleUserMenu()" type="button">
@@ -1132,18 +1138,22 @@ img{display:block;max-width:100%}
 </div>
 
 <!-- BOTTOM NAV CHO MOBILE -->
-<nav class="mobile-bottom-nav" style="grid-template-columns: repeat(3, 1fr);">
+<nav class="mobile-bottom-nav">
   <button onclick="App.goto('dashboard')" id="mb-nav-dashboard">
-    <span>🏠</span>
-    <b>Tổng quan</b>
+    <span>🏠</span><b>Tổng quan</b>
   </button>
   <button onclick="App.goto('quiz-setup')" id="mb-nav-quiz-setup">
-    <span>▶</span>
-    <b>Làm bài</b>
+    <span>▶</span><b>Làm bài</b>
   </button>
   <button onclick="App.goto('my-stats')" id="mb-nav-my-stats">
-    <span>📊</span>
-    <b>Thống kê</b>
+    <span>📊</span><b>Thống kê</b>
+  </button>
+  <!-- NÚT THƯ VIỆN MỚI THÊM -->
+  <button onclick="window.open('https://drive.google.com/drive/folders/1nDn4qEgJ99rRpdn5x-2VEEPA_SkX6rvv', '_blank')">
+    <span>📚</span><b>Thư viện</b>
+  </button>
+  <button onclick="App.showModal('modal-chpw',true)" id="mb-nav-account">
+    <span>🔒</span><b>Mật khẩu</b>
   </button>
 </nav>
 
