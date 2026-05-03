@@ -842,15 +842,17 @@ img{display:block;max-width:100%}
         <div class="login-wrap">
           <div class="login-card">
             <div class="login-alert hidden" id="loginAlert"></div>
+            <form action="javascript:void(0)" onsubmit="App.login(); return false;" autocomplete="on" style="margin:0;">
             <div class="field-wrap">
               <label>Mã CC / NLĐ</label>
-              <input type="text" id="loginUsername" placeholder="Nhập mã cán bộ..." autocomplete="username">
+              <input type="text" id="loginUsername" placeholder="Nhập mã cán bộ..." autocomplete="username" enterkeyhint="next" inputmode="text">
             </div>
             <div class="field-wrap">
               <label>Mật khẩu</label>
-              <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
+              <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password" enterkeyhint="done">
             </div>
-            <button class="btn-login" onclick="App.login()">Đăng nhập</button>
+            <button type="submit" class="btn-login">Đăng nhập</button>
+            </form>
             <button class="btn-link-white" onclick="App.showModal('modal-chpw',true)">Đổi mật khẩu</button>
           </div>
         </div>
@@ -1349,7 +1351,8 @@ const App = {
   init(){
     const saved = localStorage.getItem('qz_user');
     if(saved){ S.user=JSON.parse(saved); this.afterLogin(); }
-    document.getElementById('loginPassword').addEventListener('keydown',e=>{ if(e.key==='Enter') this.login(); });
+    document.getElementById('loginUsername').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); document.getElementById('loginPassword').focus(); }});
+    document.getElementById('loginPassword').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); this.login(); }});
   },
 
   goto(id){
