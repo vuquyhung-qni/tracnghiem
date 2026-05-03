@@ -88,640 +88,11 @@
 }
 <style>
 :root {
-  color-scheme: light !important; 
-  --c0:#0a1628;--c1:#0f2347;--c2:#163566;--c3:#1d4585;
-  --c4:#2558a8;--c5:#3b72d4;--c6:#6b9fe8;--c7:#aac5f2;--c8:#d6e6fb;--c9:#eef4fd;
-  --gold:#d4a843;--gold2:#f0c96a;--gold3:#fef3d4;
-  --g1:#0f7c4a;--g2:#e6f7ef;
-  --r1:#c0392b;--r2:#fdecea;
-  --o1:#d4600a;--o2:#fff3e0;
-  --text:#0f1f3d;--text2:#4a5c7a;--text3:#8496b0;
-  --shadow:0 1px 4px rgba(10,22,40,.06),0 4px 16px rgba(10,22,40,.08);
-  --shadow-lg:0 8px 40px rgba(10,22,40,.14);
-  --r:12px;--r2px:8px;
-  font-size:15px;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
+color-scheme: light !important; 
+@@ -722,15 +648,7 @@
 
-html, body {
-  font-family:'Inter',sans-serif !important;
-  background-image: linear-gradient(#f0f4fa, #f0f4fa) !important; 
-  background-color: transparent !important;
-  color: #0f1f3d !important;
-  min-height:100vh;-webkit-font-smoothing:antialiased;
-}
-h1,h2,h3,.lexend{font-family:'Lexend',sans-serif}
-button,input,select{font-family:inherit;font-size:inherit}
-a{color:inherit;text-decoration:none}
-img{display:block;max-width:100%}
-
-::-webkit-scrollbar{width:5px;height:5px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
-
-.layout{display:flex;min-height:100vh}
-
-.sidebar{
-  width:240px;flex-shrink:0;
-  background-image:linear-gradient(180deg,#081426 0%,#0d1f3a 55%,#081426 100%) !important;
-  display:flex;flex-direction:column;
-  position:sticky;top:0;height:100vh;overflow:hidden;
-  transition:width .25s;
-  z-index:300;
-}
-.sidebar-brand{
-  padding:24px 20px 20px;
-  border-bottom:1px solid rgba(255,255,255,.07);
-}
-.brand-icon{
-  width:44px;height:44px;background:linear-gradient(135deg,var(--c4),var(--c5));
-  border-radius:10px;display:flex;align-items:center;justify-content:center;
-  font-size:1.3rem;margin-bottom:12px;box-shadow:0 4px 12px rgba(37,88,168,.4);
-}
-.brand-name{font-size:1.05rem;font-weight:800;color:#fff !important;line-height:1.2}
-.brand-sub{font-size:.72rem;color:rgba(255,255,255,.45) !important;margin-top:3px}
-
-.sidebar-nav{flex:1;padding:16px 10px;overflow-y:auto}
-.nav-section-label{
-  font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  color:rgba(255,255,255,.3) !important;padding:8px 10px 4px;
-}
-.nav-item{
-  display:flex;align-items:center;gap:10px;
-  padding:9px 10px;border-radius:8px;margin-bottom:2px;
-  cursor:pointer;transition:background .15s;
-  color:rgba(255,255,255,.6) !important;font-size:.85rem;font-weight:500;
-  border:none;background:none;width:100%;text-align:left;
-}
-.nav-item:hover{background:rgba(255,255,255,.07);color:rgba(255,255,255,.9) !important;}
-.nav-item.active{background:linear-gradient(135deg,var(--c4),var(--c5));color:#fff !important;box-shadow:0 3px 10px rgba(37,88,168,.4)}
-.nav-item svg{width:17px;height:17px;flex-shrink:0;opacity:.8}
-.nav-item.active svg{opacity:1}
-.nav-badge{margin-left:auto;background:var(--gold);color:var(--c0);font-size:.65rem;font-weight:800;padding:2px 7px;border-radius:99px}
-
-.sidebar-footer{
-  padding:14px 10px;
-  border-top:1px solid rgba(255,255,255,.07);
-}
-.user-menu{position:relative}
-.user-menu .user-pill{
-  width:100%; border:none; background:rgba(255,255,255,.06); color:#fff !important;
-  display:flex; align-items:center; gap:10px; padding:10px; border-radius:14px;
-  cursor:pointer; text-align:left;
-}
-.user-caret{color:rgba(255,255,255,.55);font-weight:900}
-.user-dropdown{
-  position:absolute; left:10px;right:10px;bottom:62px;
-  background-image:linear-gradient(#ffffff,#ffffff) !important;color:#0f1f3d !important; border-radius:14px; box-shadow:0 14px 34px rgba(0,0,0,.22);
-  padding:8px; z-index:1100;
-}
-.user-dropdown.hidden{display:none}
-.user-dropdown button{
-  width:100%; border:none; background:transparent; padding:10px 12px;
-  text-align:left; border-radius:10px; font-weight:700; color:#0f1f3d !important; cursor:pointer;
-}
-.user-dropdown button:hover{background-image:linear-gradient(#eef4fd,#eef4fd) !important;}
-
-.avatar{
-  width:32px;height:32px;border-radius:50%;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  display:flex;align-items:center;justify-content:center;
-  font-size:.8rem;font-weight:800;color:var(--c0);flex-shrink:0;
-}
-.user-info{flex:1;min-width:0}
-.user-name{font-size:.82rem;font-weight:600;color:#fff !important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.user-role{font-size:.68rem;color:rgba(255,255,255,.4) !important;margin-top:1px}
-
-.main{flex:1;min-width:0;display:flex;flex-direction:column}
-
-.topbar{
-  background-image:linear-gradient(#ffffff,#ffffff) !important; border-bottom:1px solid #e2e8f4;
-  padding:0 28px;height:58px;
-  display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:200;
-}
-.topbar-right{display:flex;align-items:center;gap:10px}
-.burger{
-  display:none;background:none;border:none;
-  color:#4a5c7a !important;padding:6px;border-radius:6px;cursor:pointer;
-}
-
-.page-body{padding:24px 28px 48px;flex:1}
-
-.screen{display:none}
-.screen.active{display:block}
-
-/* Hiển thị Responsive Tiêu đề */
-.title-desktop { display: inline; }
-.title-mobile { display: none; }
-@media (max-width: 768px) {
-  .title-desktop { display: none; }
-  .title-mobile { display: inline; }
-}
-
-#screen-login{
-  background:linear-gradient(180deg,#08245a 0%,#0a4aa2 55%,#08245a 100%) !important;
-  position:fixed;inset:0;z-index:999;
-  display:flex;align-items:stretch;justify-content:center;
-  padding:0;overflow:hidden;
-  color:#ffffff !important;
-}
-#screen-login.active{display:flex}
-.login-stage{
-  position:relative;width:100%;min-height:100vh;
-  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
-  padding:22px 24px 28px !important; overflow:hidden;
-  background:radial-gradient(circle at 50% 58%, rgba(54,134,233,.18), transparent 34%), linear-gradient(180deg,#08245a 0%,#0a4aa2 55%,#08245a 100%) !important;
-}
-.login-content{
-  position:relative;z-index:1;width:min(1600px,100%) !important; min-height:calc(100vh - 44px) !important;
-  display:flex !important; flex-direction:column !important; align-items:center !important; justify-content:flex-start !important;
-}
-.login-brand-panel{text-align:center;display:flex;flex-direction:column;align-items:center; margin-top:0 !important;}
-.login-page-logo{
-  width:102px !important;height:102px !important;margin:0 auto 14px !important;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(255,255,255,0.1); border-radius: 50%;
-  font-size: 3rem; color: white !important;
-  filter:drop-shadow(0 14px 28px rgba(0,0,0,.28));
-}
-.login-unit{
-  font-family:'Lexend',sans-serif;text-transform:uppercase;
-  color:#ffec8f !important;font-weight:800;font-size:2rem !important; letter-spacing:.06em !important; line-height:1.08;
-  text-shadow:0 4px 0 rgba(0,0,0,.18),0 12px 24px rgba(0,0,0,.28);
-}
-.login-separator{width:250px !important;height:3px;background:linear-gradient(90deg,transparent,#ffdf76,transparent);margin:14px auto 18px !important;border-radius:99px}
-.login-main-title{
-  font-family:'Lexend',sans-serif;text-transform:uppercase;
-  color:#ffe4aa !important;font-weight:900;font-size:4rem !important; letter-spacing:.04em !important; white-space:nowrap !important; line-height:1;
-  text-shadow:0 5px 0 #8a4b12,0 11px 24px rgba(0,0,0,.38);
-}
-.login-form-zone{display:flex !important; justify-content:center !important; align-items:start; margin-top:72px !important; width:100% !important;}
-.login-wrap{width:100% !important; max-width:380px !important;}
-.login-card{
-  background:linear-gradient(180deg,rgba(34,71,125,.90),rgba(28,64,118,.92)) !important;
-  border:1px solid rgba(122,170,238,.42) !important;
-  border-radius:16px !important;
-  padding:18px 18px 14px !important;
-  box-shadow:0 26px 55px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.08);
-}
-.field-wrap{margin-bottom:11px;}
-.field-wrap label{
-  display:block;font-size:.68rem;font-weight:900;letter-spacing:.08em;
-  text-transform:uppercase;color:rgba(255,255,255,.74) !important;margin-bottom:6px;
-}
-.field-wrap input{
-  width:100%;padding:12px 14px;
-  background-image:linear-gradient(#f6f9ff,#f6f9ff) !important; border:1px solid rgba(255,255,255,.58) !important;
-  border-radius:10px;color:#10213f !important;font-size:.95rem;font-weight:600;outline:none;
-  transition:border-color .2s,box-shadow .2s,background .2s;
-}
-.field-wrap input::placeholder{color:#8a98ad !important;font-weight:500;}
-.field-wrap input:focus{border-color:#f0c96a !important;box-shadow:0 0 0 3px rgba(246,210,96,.22)}
-.btn-login{
-  width:100%;padding:13px;margin-top:8px;
-  background:linear-gradient(180deg,#f7d76c 0%,#e5b63e 100%) !important;
-  color:#221a07 !important;border:none;border-radius:10px;
-  font-size:1rem;font-weight:800;letter-spacing:.5px;
-  box-shadow:0 10px 20px rgba(240,201,106,.20);
-  cursor:pointer;transition:transform .15s ease,filter .15s ease;
-}
-.btn-login:hover{filter:brightness(1.05);transform:translateY(-1px);}
-.btn-link-white{
-  width:100%;background:none;border:none;
-  color:rgba(255,255,255,.6) !important;font-size:.85rem;
-  cursor:pointer;margin-top:16px;text-align:center;
-  text-decoration:underline;
-}
-.login-alert{
-  padding:10px 13px;border-radius:8px;font-size:.85rem;font-weight:600;
-  margin-bottom:16px;
-}
-.login-alert.err{background-image:linear-gradient(rgba(192,57,43,.2),rgba(192,57,43,.2)) !important;color:#ff8a80 !important;border:1px solid rgba(192,57,43,.3) !important;}
-.login-alert.info{background-image:linear-gradient(rgba(37,88,168,.3),rgba(37,88,168,.3)) !important;color:#aac5f2 !important;border:1px solid rgba(37,88,168,.4) !important;}
-.login-alert.hidden{display:none !important;}
-
-@media(max-width:980px){
-  #screen-login{overflow:auto}
-  .login-stage{min-height:100svh;padding:18px 14px 22px !important;}
-  .login-content{min-height:calc(100svh - 46px);}
-  .login-page-logo{width:86px !important;height:86px !important;margin-bottom:10px !important; font-size: 2.5rem;}
-  .login-unit{font-size:1.28rem !important;letter-spacing:.045em;line-height:1.2}
-  .login-separator{width:180px !important; height:2px;margin:10px auto 12px !important;}
-  .login-main-title{font-size:2.25rem !important;white-space:normal !important;line-height:1.08 !important;text-shadow:0 3px 0 #8a4b12,0 8px 18px rgba(0,0,0,.35); text-align:center !important;}
-  .login-form-zone{margin-top:36px !important;}
-  .login-wrap{max-width:340px !important;}
-  .login-card{padding:14px;border-radius:16px}
-}
-@media(max-width:430px){
-  .login-page-logo{width:78px !important;height:78px !important; font-size: 2rem;}
-  .login-unit{font-size:1rem !important;}
-  .login-main-title{font-size:1.76rem !important;}
-  .login-form-zone{margin-top:28px !important;}
-  .field-wrap input{padding:10px 11px;font-size:.86rem}
-  .btn-login{padding:10px 11px}
-}
-
-.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
-.stat-card{
-  background-image:linear-gradient(#ffffff,#ffffff) !important;border:1px solid #e2e8f4 !important;border-radius:12px;
-  padding:20px 22px;display:flex;align-items:center;gap:16px;
-  transition:transform .2s, box-shadow .2s;
-}
-.stat-card:hover{transform:translateY(-2px); box-shadow:0 8px 24px rgba(10,22,40,.08);}
-.stat-icon{
-  width:48px;height:48px;border-radius:12px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;font-size:1.3rem;
-}
-.stat-icon.blue{background-image:linear-gradient(#eef4fd,#eef4fd) !important;color:#2558a8 !important;}
-.stat-icon.gold{background-image:linear-gradient(#fef3d4,#fef3d4) !important;color:#d4600a !important;}
-.stat-icon.green{background-image:linear-gradient(#e6f7ef,#e6f7ef) !important;color:#0f7c4a !important;}
-.stat-icon.red{background-image:linear-gradient(#fdecea,#fdecea) !important;color:#c0392b !important;}
-.stat-value{font-size:1.6rem;font-weight:800;color:#0f1f3d !important;line-height:1}
-.stat-label{font-size:.75rem;color:#8496b0 !important;margin-top:3px}
-
-.card{background-image:linear-gradient(#ffffff,#ffffff) !important;border:1px solid #e2e8f4 !important;border-radius:12px;padding:22px;margin-bottom:20px;box-shadow:0 1px 4px rgba(10,22,40,.06),0 4px 16px rgba(10,22,40,.08) !important;}
-.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-.card-title{font-size:.85rem;font-weight:700;color:#0f1f3d !important;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:8px}
-.card-title svg{width:16px;height:16px;color:#2558a8 !important;}
-
-.welcome-hero{
-  background:
-    radial-gradient(circle at 90% 20%,rgba(240,201,106,.25),transparent 26%),
-    linear-gradient(135deg,#07152b 0%,#12366c 58%,#1d58a8 100%) !important;
-  border-radius:24px;padding:34px 38px;margin-bottom:24px;
-  display:flex;align-items:center;justify-content:space-between;gap:16px;
-  position:relative;overflow:hidden;
-  box-shadow:0 18px 45px rgba(10,22,40,.18);
-}
-.welcome-hero::before{
-  content:'';position:absolute;right:-60px;top:-60px;
-  width:200px;height:200px;border-radius:50%;
-  background:rgba(255,255,255,.04);
-}
-.welcome-text h2{font-size:1.55rem;letter-spacing:.2px;font-weight:800;color:#fff !important;line-height:1.3}
-.welcome-text p{font-size:.9rem;color:rgba(255,255,255,.68) !important;margin-top:5px}
-.welcome-badge{
-  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
-  border-radius:8px;padding:8px 14px;text-align:center;flex-shrink:0;
-}
-.welcome-badge-val{font-size:1.6rem;font-weight:800;color:var(--gold2) !important;line-height:1}
-.welcome-badge-label{font-size:.7rem;color:rgba(255,255,255,.5) !important;margin-top:2px}
-
-.bank-select{
-  width:100%;padding:14px 16px;border:1.5px solid #e2e8f4 !important;border-radius:9px;
-  font-size:.95rem;font-weight:600;color:#0f1f3d !important;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234a5c7a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"), linear-gradient(#f7f9fc, #f7f9fc) !important;
-  background-color: transparent !important;
-  outline:none;cursor:pointer;appearance:none;
-  background-repeat:no-repeat;background-position:right 16px center, 0 0;padding-right:40px;
-  margin-bottom:8px;transition:border-color .2s;
-}
-.bank-select:focus{border-color:#3b72d4 !important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234a5c7a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"), linear-gradient(#ffffff, #ffffff) !important;box-shadow:0 0 0 3px #d6e6fb}
-.bank-select:disabled{opacity:0.6; cursor:not-allowed;}
-
-.count-chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{
-  padding:8px 18px;border-radius:50px;
-  border:1.5px solid #e2e8f4 !important;
-  background-image:linear-gradient(#f7f9fc,#f7f9fc) !important;
-  font-size:.85rem;font-weight:600;cursor:pointer;
-  color:#4a5c7a !important;transition:all .15s;
-}
-.chip:hover{border-color:#3b72d4 !important;}
-.chip.active{background-image:linear-gradient(#2558a8,#2558a8) !important;border-color:#2558a8 !important;color:#fff !important;}
-
-.btn-start{
-  width:100%;margin-top:18px;padding:16px;
-  background:linear-gradient(135deg,#d4a843 0%,#f4cf72 55%,#ffe08a 100%) !important;
-  color:#0a1628 !important;border:none;border-radius:16px;
-  font-size:1.02rem;font-weight:800;letter-spacing:.3px;
-  box-shadow:0 14px 28px rgba(212,168,67,.28);
-  cursor:pointer;transition:transform .18s ease,box-shadow .18s ease;
-}
-.btn-start:hover{transform:translateY(-2px);box-shadow:0 18px 36px rgba(212,168,67,.36)}
-.btn-start:disabled{opacity:.5;cursor:not-allowed; transform:none; box-shadow:none;}
-
-.alert{padding:10px 13px;border-radius:8px;font-size:.83rem;font-weight:600;margin-top:12px}
-.alert-error{background-image:linear-gradient(#fdecea,#fdecea) !important;color:#c0392b !important;}
-.alert-success{background-image:linear-gradient(#e6f7ef,#e6f7ef) !important;color:#0f7c4a !important;}
-.alert-info{background-image:linear-gradient(#eef4fd,#eef4fd) !important;color:#163566 !important;}
-.alert-hidden{display:none}
-
-.tbl{width:100%;border-collapse:collapse;font-size:.82rem}
-.tbl th{background-image:linear-gradient(#f3f6fb,#f3f6fb) !important;color:#415575 !important;font-weight:800;font-size:.72rem;text-transform:uppercase;letter-spacing:.4px;padding:9px 12px;text-align:left;border-bottom:1px solid #e2e8f4}
-.tbl td{padding:9px 12px;border-bottom:1px solid #e2e8f4 !important;color:#0f1f3d !important}
-.tbl tr:last-child td{border-bottom:none}
-.tbl tr:hover td{background-image:linear-gradient(#f7fbff,#f7fbff) !important}
-.tbl-wrap{overflow-x:auto}
-.score-pill{display:inline-block;padding:2px 9px;border-radius:50px;font-size:.75rem;font-weight:700}
-.score-high{background-image:linear-gradient(#e6f7ef,#e6f7ef) !important;color:#0f7c4a !important}
-.score-mid{background-image:linear-gradient(#fff8e1,#fff8e1) !important;color:#e65100 !important}
-.score-low{background-image:linear-gradient(#fdecea,#fdecea) !important;color:#c0392b !important}
-.rank-badge{display:inline-block;width:22px;height:22px;border-radius:50%;background-image:linear-gradient(#eef4fd,#eef4fd) !important;color:#2558a8 !important;font-size:.72rem;font-weight:800;text-align:center;line-height:22px}
-.rank-badge.gold-rank{background-image:linear-gradient(#fef3d4,#fef3d4) !important;color:#d4600a !important}
-
-.exam-setup-grid{
-  display:grid;
-  grid-template-columns:minmax(0,1.3fr) minmax(320px,.7fr);
-  gap:20px;
-  align-items:start;
-}
-.form-label {
-  font-size: .85rem;
-  font-weight: 700;
-  color: #0f1f3d !important;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-}
-.exam-guide{
-  background:linear-gradient(135deg,#fff8e1,#ffffff) !important;
-  border:1px solid #f0d58a !important;
-  border-radius:18px;
-  padding:20px 22px;
-  color:#3d2b06 !important;
-  box-shadow:0 10px 28px rgba(212,168,67,.12);
-}
-.exam-guide-title{font-weight:900;margin-bottom:10px}
-.exam-guide ul{padding-left:18px;line-height:1.7;font-size:.9rem}
-
-.quiz-container {
-  display: flex;
-  gap: 24px;
-  max-width: 1400px;
-  width: 100%;
-  margin: 0 auto;
-  align-items: flex-start;
-}
-
-.quiz-left-panel {
-  width: 340px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  position: sticky;
-  top: 78px; 
-  background-image: linear-gradient(#ffffff,#ffffff) !important;
-  border: 1px solid #e2e8f4 !important;
-  border-radius: 12px;
-  box-shadow: 0 1px 4px rgba(10,22,40,.06),0 4px 16px rgba(10,22,40,.08);
-  padding: 0;
-  overflow: hidden;
-}
-
-.quiz-panel-header {
-  background-image: linear-gradient(#f7f9fc,#f7f9fc) !important;
-  padding: 24px 20px 16px;
-  text-align: center;
-  border-bottom: 1px solid #e2e8f4;
-}
-
-.quiz-panel-body {
-  padding: 20px;
-}
-
-.q-grid-box {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 5px;
-  max-height: calc(100vh - 310px);
-  overflow-y: auto;
-  padding-right: 4px;
-}
-
-.q-dot {
-  width: 100%;
-  aspect-ratio: 1;
-  border-radius: 5px;
-  border: 1px solid #e2e8f4 !important;
-  background-image: linear-gradient(#ffffff,#ffffff) !important;
-  font-size: .72rem;
-  font-weight: 700;
-  color: #4a5c7a !important;
-  cursor: pointer;
-  transition: all .2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.q-dot:hover { border-color: #3b72d4 !important; color: #2558a8 !important; }
-.q-dot.answered { background-image: linear-gradient(#eef4fd,#eef4fd) !important; border-color: #2558a8 !important; color: #2558a8 !important; }
-.q-dot.active { box-shadow: 0 0 0 3px #f0c96a !important; border-color: #d4a843 !important; color: #0f1f3d !important; background-image: linear-gradient(#fef3d4,#fef3d4) !important; }
-
-.quiz-panel-footer {
-  padding: 16px 20px 20px;
-  text-align: center;
-}
-.timer-clock { 
-  font-size: 2.5rem; 
-  font-weight: 800; 
-  font-variant-numeric: tabular-nums; 
-  color: #0f2347 !important; 
-  line-height: 1.1;
-}
-.timer-clock.warning { color: #d4600a !important; }
-.timer-clock.danger { color: #c0392b !important; animation: pulse .6s ease-in-out infinite; }
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-
-.quiz-right-panel {
-  flex: 1;
-  min-width: 0;
-  min-height: 500px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background-image: linear-gradient(#ffffff,#ffffff) !important;
-  border: 1px solid #e2e8f4 !important;
-  border-radius: 12px;
-  box-shadow: 0 1px 4px rgba(10,22,40,.06),0 4px 16px rgba(10,22,40,.08);
-  padding: 32px;
-}
-
-.qblock { display: none; border: none; box-shadow: none; padding: 0; margin: 0; }
-.qblock.active { display: block; animation: fadeIn 0.3s ease; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-.qnum{font-size:.85rem;font-weight:700;color:#4a5c7a !important;text-transform:uppercase;letter-spacing:.4px;margin-bottom:12px}
-.qtext{font-size:1.1rem;font-weight:600;color:#0f1f3d !important;line-height:1.65;margin-bottom:24px}
-.opt{
-  display:flex;align-items:flex-start;gap:12px;
-  padding:14px 18px;border-radius:8px;border:1.5px solid #e2e8f4 !important;
-  margin-bottom:12px;cursor:pointer;transition:all .15s;
-  font-size:1rem;font-weight:500;user-select:none;color:#0f1f3d !important;
-}
-.opt:hover{border-color:#3b72d4 !important;background-image:linear-gradient(#eef4fd,#eef4fd) !important;}
-.opt.selected{border-color:#2558a8 !important;background-image:linear-gradient(#eef4fd,#eef4fd) !important;}
-.opt input[type=checkbox]{width:20px;height:20px;margin-top:2px;flex-shrink:0;accent-color:#2558a8}
-
-.quiz-actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 40px;
-  padding-top: 24px;
-  border-top: 1px solid #e2e8f4;
-}
-.btn-nav {
-  padding: 12px 28px;
-  background-image: linear-gradient(#ffffff,#ffffff) !important;
-  border: 1.5px solid #c8d5ed !important;
-  border-radius: 8px;
-  font-weight: 700;
-  color: #4a5c7a !important;
-  cursor: pointer;
-  transition: all .2s;
-}
-.btn-nav:hover:not(:disabled) { background-image: linear-gradient(#f7f9fc,#f7f9fc) !important; border-color: #0f1f3d !important; color: #0f1f3d !important; }
-.btn-nav:disabled { opacity: 0.4; cursor: not-allowed; }
-
-.btn-submit{
-  width:100%;padding:14px;
-  background:linear-gradient(135deg,#0f2347,#1d4585) !important;
-  color:#fff !important;border:none;border-radius:9px;
-  font-size:1rem;font-weight:800;letter-spacing:.3px;
-  box-shadow:0 4px 16px rgba(15,35,71,.25);
-  cursor:pointer;transition:opacity .2s;
-}
-.btn-submit:hover{opacity:.9}
-.btn-submit:disabled{opacity:.5;cursor:not-allowed}
-
-.result-container {
-  max-width: 960px;
-  margin: 0 auto;
-}
-
-.result-hero{
-  background:linear-gradient(135deg,var(--c0) 0%,var(--c2) 100%) !important;
-  border-radius:16px;padding:32px 28px;margin-bottom:22px;
-  display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;
-}
-.result-score-big{font-size:3.5rem;font-weight:800;color:var(--gold2) !important;line-height:1}
-.result-score-label{font-size:.78rem;color:rgba(255,255,255,.5) !important;margin-bottom:4px}
-.result-score10{font-size:1.1rem;font-weight:500;color:rgba(255,255,255,.7) !important;margin-top:6px}
-.result-meta{font-size:.78rem;color:rgba(255,255,255,.5) !important;margin-top:6px}
-.result-donut{text-align:center}
-.donut-ring{width:90px;height:90px;position:relative}
-.donut-ring svg{width:90px;height:90px;transform:rotate(-90deg)}
-.donut-ring .track{fill:none;stroke:rgba(255,255,255,.1);stroke-width:8}
-.donut-ring .prog{fill:none;stroke:var(--gold2);stroke-width:8;stroke-linecap:round;transition:stroke-dasharray .8s ease}
-.donut-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.donut-pct{font-size:1.1rem;font-weight:800;color:#fff !important}
-.donut-sub{font-size:.6rem;color:rgba(255,255,255,.5) !important}
-
-.result-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
-.result-stat{background-image:linear-gradient(#ffffff,#ffffff) !important;border:1px solid #e2e8f4 !important;border-radius:9px;padding:14px;text-align:center}
-.result-stat-val{font-size:1.3rem;font-weight:800;line-height:1;margin-bottom:3px}
-.result-stat-lbl{font-size:.7rem;color:#8496b0 !important}
-.val-green{color:#0f7c4a !important}
-.val-red{color:#c0392b !important}
-.val-blue{color:#2558a8 !important}
-.val-orange{color:#d4600a !important}
-
-.late-banner{background-image:linear-gradient(#c0392b,#c0392b) !important;color:#fff !important;padding:12px 18px;border-radius:8px;font-size:.83rem;font-weight:700;margin-bottom:16px;display:none}
-
-.rq{background-image:linear-gradient(#ffffff,#ffffff) !important;border:1px solid #e2e8f4 !important;border-radius:12px;padding:18px 20px;margin-bottom:10px;border-left:4px solid #e2e8f4 !important}
-.rq.full{border-left-color:#0f7c4a !important}
-.rq.partial{border-left-color:#d4600a !important}
-.rq.wrong{border-left-color:#c0392b !important}
-.rq-hd{display:flex;align-items:center;gap:8px;margin-bottom:9px}
-.rq-num{font-size:.72rem;font-weight:700;color:#8496b0 !important}
-.rq-score{margin-left:auto;font-size:.75rem;font-weight:800;padding:2px 9px;border-radius:50px}
-.s-full{background-image:linear-gradient(#e6f7ef,#e6f7ef) !important;color:#0f7c4a !important}
-.s-partial{background-image:linear-gradient(#fff3e0,#fff3e0) !important;color:#d4600a !important}
-.s-zero{background-image:linear-gradient(#fdecea,#fdecea) !important;color:#c0392b !important}
-.rq-text{font-size:.88rem;font-weight:600;color:#0f1f3d !important;margin-bottom:10px;line-height:1.5}
-.ropt{display:flex;align-items:flex-start;gap:7px;padding:6px 10px;border-radius:7px;font-size:.83rem;margin-bottom:4px;border:1px solid #e2e8f4 !important}
-.ropt.ok{border-color:#0f7c4a !important;background-image:linear-gradient(#e6f7ef,#e6f7ef) !important;color:#0f7c4a !important}
-.ropt.bad{border-color:#c0392b !important;background-image:linear-gradient(#fdecea,#fdecea) !important;color:#c0392b !important}
-.ropt.missed{border-color:#d4600a !important;background-image:linear-gradient(#fff3e0,#fff3e0) !important;color:#d4600a !important}
-.rexplain{margin-top:9px;padding:9px 12px;background-image:linear-gradient(#eef4fd,#eef4fd) !important;border-radius:7px;font-size:.79rem;color:#163566 !important;font-style:italic}
-
-.btn-back{
-  width:100%;padding:12px;margin-top:18px;
-  background-image:linear-gradient(#ffffff,#ffffff) !important;border:1.5px solid #c8d5ed !important;
-  color:#4a5c7a !important;border-radius:9px;
-  font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;
-}
-.btn-back:hover{border-color:#2558a8 !important;color:#2558a8 !important}
-
-.filter-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:20px}
-.filter-bar select,.filter-bar input{
-  padding:7px 11px;border:1px solid #e2e8f4 !important;border-radius:7px;
-  font-size:.82rem;background-image:linear-gradient(#ffffff,#ffffff) !important;color:#0f1f3d !important;outline:none;
-}
-.filter-bar select:focus,.filter-bar input:focus{border-color:#3b72d4 !important}
-.filter-bar .btn-filter{
-  padding:7px 16px;background-image:linear-gradient(#2558a8,#2558a8) !important;color:#fff !important;
-  border:none;border-radius:7px;font-size:.82rem;font-weight:600;cursor:pointer;
-}
-
-.rank-hero{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;
-}
-.rank-card{
-  background-image:linear-gradient(#ffffff,#ffffff) !important;border:1px solid #e2e8f4 !important;border-radius:12px;
-  padding:18px 16px;text-align:center;position:relative;overflow:hidden;
-}
-.rank-card.rank-1{border-color:#d4a843 !important;background-image:linear-gradient(135deg,#fffbf0,#fff8e1) !important}
-.rank-card.rank-2{border-color:#c8d5ed !important;background-image:linear-gradient(135deg,#f5f7fa,#ffffff) !important}
-.rank-card.rank-3{border-color:#c8a882 !important;background-image:linear-gradient(135deg,#fdf6f0,#ffffff) !important}
-.rank-medal{font-size:1.8rem;margin-bottom:6px}
-.rank-name{font-size:.88rem;font-weight:700;color:#0f1f3d !important}
-.rank-unit{font-size:.72rem;color:#8496b0 !important;margin-top:2px}
-.rank-score{font-size:1.5rem;font-weight:800;color:#163566 !important;margin-top:6px}
-
-.modal-ov{position:fixed;inset:0;z-index:800;background:rgba(10,22,40,.5);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px}
-.modal-ov.hidden{display:none}
-.modal-box{background-image:linear-gradient(#ffffff,#ffffff) !important;border-radius:14px;box-shadow:var(--shadow-lg);padding:28px 26px;width:100%;max-width:380px}
-.modal-title{font-size:1rem;font-weight:800;color:#0f1f3d !important;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
-.modal-close{background:none;border:none;color:#8496b0 !important;font-size:1.2rem;cursor:pointer;line-height:1}
-.form-grp{margin-bottom:14px}
-.form-grp label{display:block;font-size:.75rem;font-weight:600;color:#4a5c7a !important;text-transform:uppercase;letter-spacing:.3px;margin-bottom:5px}
-.form-grp input{width:100%;padding:10px 13px;border:1.5px solid #e2e8f4 !important;border-radius:8px;font-size:.9rem;color:#0f1f3d !important;background-image:linear-gradient(#f7f9fc,#f7f9fc) !important;outline:none;transition:border-color .2s}
-.form-grp input:focus{border-color:#3b72d4 !important}
-.btn-primary-sm{
-  width:100%;padding:11px;margin-top:4px;
-  background:linear-gradient(135deg,#163566,#2558a8) !important;
-  color:#fff !important;border:none;border-radius:8px;font-size:.9rem;font-weight:700;
-  cursor:pointer;transition:opacity .2s;
-}
-.btn-primary-sm:hover{opacity:.9}
-
-.loading-ov{position:fixed;inset:0;z-index:900;background:rgba(10,22,40,.45);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center}
-.loading-ov.hidden{display:none}
-.loading-box{background-image:linear-gradient(#ffffff,#ffffff) !important;border-radius:12px;padding:28px 36px;text-align:center;box-shadow:var(--shadow-lg)}
-.spinner{width:40px;height:40px;border:4px solid #e2e8f4;border-top-color:#2558a8;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 12px}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loading-box p{font-size:.85rem;color:#4a5c7a !important;font-weight:600}
-
-.mobile-bottom-nav{display:none;}
-.mobile-account-box{display:none;}
-.mobile-home-menu{display:none;} 
-
-@media(max-width:768px){
-  .sidebar{display:none !important;}
-  .burger{display:flex;}
-  .layout{display:block;}
-  .main{width:100%; min-height:100vh; padding-bottom: 70px;}
-  .topbar{height:54px; padding:0 14px; justify-content: flex-start; position: relative; background:rgba(255,255,255,.94);backdrop-filter:blur(12px)}
-  .page-body{padding:14px 12px 96px;}
-  
-  .result-hero{grid-template-columns:1fr;text-align:center;}
-  .result-donut{justify-self:center;}
-  .result-stats-row{grid-template-columns:1fr 1fr;}
-  .rank-hero{grid-template-columns:1fr;}
-  .stat-grid{grid-template-columns:1fr;gap:12px}
-  
-  .welcome-hero{border-radius:20px; padding:24px 20px; flex-direction:column; align-items:flex-start; text-align:left; margin-bottom:14px;}
-  .welcome-text h2{font-size:1.25rem}
-  .welcome-text p{font-size:.84rem}
-  .welcome-badge{width:100%;margin-top:8px}
-
-  .count-chips{gap:8px; justify-content:center;}
-  .chip{flex:1 1 calc(50% - 8px);text-align:center;padding:10px 8px;font-size:.82rem}
-  .exam-setup-grid{grid-template-columns:1fr;}
-
-  .quiz-container { flex-direction: column-reverse; padding: 12px; }
-  .quiz-left-panel { width: 100%; position: static; max-height: none; border-radius:18px;}
+.quiz-container { flex-direction: column-reverse; padding: 12px; }
+.quiz-left-panel { width: 100%; position: static; max-height: none; border-radius:18px;}
   .q-grid-box {
   grid-template-columns: repeat(10, 1fr);
   gap: 5px;
@@ -731,571 +102,227 @@ img{display:block;max-width:100%}
   font-size: .68rem;
   border-radius: 5px;
 }
-  .quiz-right-panel{ width:100%; min-height:auto; padding:20px 16px; border-radius:18px; }
+  .q-grid-box { grid-template-columns: repeat(6, 1fr); max-height: 250px; }
+.quiz-right-panel{ width:100%; min-height:auto; padding:20px 16px; border-radius:18px; }
 
-  .mobile-account-box{
-    display:flex; align-items:center; gap:10px; background-image:linear-gradient(#ffffff,#ffffff) !important;
-    border:1px solid #e2e8f4 !important; border-radius:18px; padding:12px;
-    margin-bottom:14px; box-shadow:0 10px 24px rgba(10,22,40,.07);
-  }
-  .mobile-account-avatar{
-    width:38px;height:38px;border-radius:50%; background:linear-gradient(135deg,#d4a843,#f0c96a);
-    display:flex;align-items:center;justify-content:center; font-weight:900;color:#0a1628;flex-shrink:0;
-  }
-  .mobile-account-name{font-weight:900;color:#0f1f3d !important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .mobile-account-role{font-size:.75rem;color:#8496b0 !important;}
+.mobile-account-box{
+@@ -1061,11 +979,10 @@
+<div class="quiz-left-panel">
 
-  .mobile-home-menu{
-    display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:16px;
-  }
-  .mobile-menu-card{
-    border:1px solid #e2e8f4 !important; background-image:linear-gradient(#ffffff,#ffffff) !important; border-radius:18px;
-    padding:16px 12px; min-height:86px; box-shadow:0 10px 24px rgba(10,22,40,.07);
-    display:flex; flex-direction:column; justify-content:center; align-items:center; gap:7px;
-    font-weight:800; color:#0f1f3d !important; cursor:pointer;
-  }
-  .mobile-menu-card.primary{background-image:linear-gradient(135deg,#2558a8,#3b72d4) !important;color:#fff !important}
-  .mobile-menu-icon{font-size:1.35rem;line-height:1}
-
-  .mobile-bottom-nav{
-    display:grid; grid-template-columns:repeat(4,1fr);
-    position:fixed; left:0; right:0; bottom:0; z-index:700;
-    background-image:linear-gradient(#ffffff,#ffffff) !important; border-top:1px solid #e2e8f4 !important;
-    box-shadow:0 -4px 20px rgba(10,22,40,.08);
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-  .mobile-bottom-nav button{
-    border:none; background:transparent; padding:10px 4px;
-    color:#8496b0 !important; font-size:.72rem; font-weight:700; cursor:pointer;
-    display:flex; flex-direction:column; align-items:center; transition: color .2s;
-  }
-  .mobile-bottom-nav button span{ font-size:1.25rem; margin-bottom:4px; filter: grayscale(100%); opacity:0.6; transition: all .2s;}
-  .mobile-bottom-nav button.active{ color:#2558a8 !important; }
-  .mobile-bottom-nav button.active span{ filter: grayscale(0%); opacity:1; }
-
-  .tbl-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px}
-  .tbl{min-width:680px;font-size:.78rem}
-}
-
-@media(min-width:520px) and (max-width:768px){
-  .stat-grid{grid-template-columns:1fr 1fr}
-}
-@media(max-width:400px){
-  .result-stats-row{grid-template-columns:1fr}
-}
-
-@media print {
-  .sidebar, .topbar, .btn-back, .btn-print, .btn-export-word, .btn-export-excel, .nav-item, .burger, .mobile-bottom-nav, .mobile-account-box, .mobile-home-menu {
-    display: none !important;
-  }
-  body { background: white !important; color: black !important; }
-  .main { padding: 0; display: block; }
-  .page-body { padding: 20px; }
-  .result-hero, .rq { page-break-inside: avoid; }
-  .result-hero { background: white !important; border: 2px solid #333; color: black !important; padding: 20px; border-radius: 0; }
-  .result-score-big { color: black !important; font-size: 2.5rem; }
-  .result-score10, .donut-pct { color: black !important; }
-  .result-meta { color: #555 !important; }
-  .print-only { display: grid !important; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; font-size: 0.9rem; text-align: left; padding: 18px; border: 1px solid #ccc; background: #f9f9f9; }
-  .card { box-shadow: none; border: 1px solid #ddd; }
-  .rq { border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; }
-}
-
-.btn-print, .btn-export-word, .btn-export-excel {
-  width: 100%; padding: 12px; margin-top: 12px; border: none; border-radius: 9px; font-size: .88rem; font-weight: 700; cursor: pointer; transition: opacity .2s, transform .1s;
-}
-.btn-print { background: #2558a8 !important; color: #fff !important; }
-.btn-export-word { background: #d4a843 !important; color: #0a1628 !important; }
-.btn-export-excel { background: #0f7c4a !important; color: #fff !important; }
-.btn-print:hover, .btn-export-word:hover, .btn-export-excel:hover { opacity: .9; transform: translateY(-1px); }
-</style>
-</head>
-<body>
-
-<div id="screen-login" class="screen active">
-  <div class="login-stage">
-    <div class="login-content">
-      <div class="login-brand-panel">
-        <div class="login-page-logo">🏛️</div>
-        <div class="login-unit">CHI CỤC HẢI QUAN KHU VỰC VIII</div>
-        <div class="login-separator"></div>
-        <div class="login-main-title">TRẮC NGHIỆM KIẾN THỨC</div>
-      </div>
-
-      <div class="login-form-zone">
-        <div class="login-wrap">
-          <div class="login-card">
-            <div class="login-alert hidden" id="loginAlert"></div>
-            <div class="field-wrap">
-              <label>Mã CC / NLĐ</label>
-              <input type="text" id="loginUsername" placeholder="Nhập mã cán bộ..." autocomplete="username">
-            </div>
-            <div class="field-wrap">
-              <label>Mật khẩu</label>
-              <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
-            </div>
-            <button class="btn-login" onclick="App.login()">Đăng nhập</button>
-            <button class="btn-link-white" onclick="App.showModal('modal-chpw',true)">Đổi mật khẩu</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="layout" id="appLayout" style="display:none">
-
-  <!-- SIDEBAR DÀNH CHO MÀN HÌNH MÁY TÍNH -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-brand">
-      <div class="brand-icon">🏛️</div>
-      <div class="brand-name">Quiz System</div>
-      <div class="brand-sub">Trắc nghiệm nghiệp vụ</div>
-    </div>
-
-    <nav class="sidebar-nav">
-      <div class="nav-section-label">Chính</div>
-      <button class="nav-item active" onclick="App.goto('dashboard')" id="nav-dashboard">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-        Tổng quan
-      </button>
-      <button class="nav-item" onclick="App.goto('quiz-setup')" id="nav-quiz-setup">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-        Làm bài thi
-      </button>
-      <button class="nav-item" onclick="App.goto('my-stats')" id="nav-my-stats">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-        Thống kê của tôi
-      </button>
-<button class="nav-item" onclick="window.open('https://drive.google.com/drive/folders/1nDn4qEgJ99rRpdn5x-2VEEPA_SkX6rvv', '_blank')">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px">
-    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-  </svg>
-  Thư viện tài liệu
-</button>
-      <div class="nav-section-label" id="adminNavLabel" style="display:none">Quản lý</div>
-      <button class="nav-item" onclick="App.goto('unit-stats')" id="nav-unit-stats" style="display:none">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        Kết quả đơn vị
-        <span class="nav-badge" id="navBadgeUnit"></span>
-      </button>
-      <button class="nav-item" onclick="App.goto('all-stats')" id="nav-all-stats" style="display:none">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        Toàn chi cục
-      </button>
-    </nav>
-
-    <div class="sidebar-footer">
-      <div class="user-menu">
-        <button class="user-pill" onclick="App.toggleUserMenu()" type="button">
-          <div class="avatar" id="sidebarAvatar">?</div>
-          <div class="user-info">
-            <div class="user-name" id="sidebarName">-</div>
-            <div class="user-role" id="sidebarRole">-</div>
-          </div>
-          <span class="user-caret">▾</span>
-        </button>
-        <div class="user-dropdown hidden" id="userDropdown">
-          <div id="userInfoPanel" style="padding: 10px 12px; border-bottom: 1px solid #eee; margin-bottom: 5px;">
-            <div id="userFullnameDrop" style="font-weight: 700; font-size: 0.85rem; color: #0f1f3d;">-</div>
-            <div id="userUnitDrop" style="font-size: 0.72rem; color: #8496b0; margin-top: 2px;">-</div>
-          </div>
-          <button onclick="App.showModal('modal-chpw',true)">🔒 Đổi mật khẩu</button>
-          <button onclick="App.logout()">↪ Đăng xuất</button>
-        </div>
-      </div>
-    </div>
-  </aside>
-
-  <div class="main">
-    <header class="topbar">
-      <div style="display:flex;align-items:center;gap:10px;max-width:100%;overflow:hidden;">
-        <div style="width:28px;height:28px;background:linear-gradient(135deg,#2558a8,#3b72d4);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:1rem;color:#fff;box-shadow:0 3px 8px rgba(37,88,168,.3);flex-shrink:0;">🏛️</div>
-        <span class="topbar-title" style="font-family:'Lexend',sans-serif; text-transform:uppercase; font-weight:800; color:#163566 !important; letter-spacing:0.3px; font-size: clamp(0.85rem, 2vw, 1.05rem); white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
-          <span class="title-desktop">TRẮC NGHIỆM KIẾN THỨC CHI CỤC HẢI QUAN KHU VỰC VIII</span>
-          <span class="title-mobile">TRẮC NGHIỆM HQKV8</span>
-        </span>
-      </div>
-      <div class="topbar-right"></div>
-    </header>
-
-    <div class="screen active page-body" id="screen-dashboard">
-      <div class="welcome-hero">
-        <div class="welcome-text">
-          <h2 id="welcomeName">Xin chào!</h2>
-          <p id="welcomeSub">Chọn bài thi hoặc xem thống kê kết quả của bạn</p>
-        </div>
-        <div class="welcome-badge">
-          <div class="welcome-badge-val" id="badgeTotalExams">0</div>
-          <div class="welcome-badge-label">Lần đã thi</div>
-        </div>
-      </div>
-
-      <div class="mobile-account-box">
-        <div class="mobile-account-avatar" id="mobileAvatar">?</div>
-        <div style="min-width:0">
-          <div class="mobile-account-name" id="mobileUserName">-</div>
-          <div class="mobile-account-role" id="mobileUserRole">-</div>
-        </div>
-        <div style="margin-left:auto; display:flex; gap:5px;">
-          <button onclick="App.showModal('modal-chpw',true)" style="background:#eef4fd; color:#2558a8; border:none; padding:8px; border-radius:10px; font-size:0.7rem; font-weight:800;">Mật khẩu</button>
-          <button onclick="App.logout()" style="background:#fdecea; color:#c0392b; border:none; padding:8px; border-radius:10px; font-size:0.7rem; font-weight:800;">Thoát</button>
-        </div>
-      </div>
-
-      <div class="mobile-home-menu" style="grid-template-columns: 1fr 1fr 1fr;">
-        <button onclick="App.goto('dashboard')" class="mobile-menu-card">
-          <span class="mobile-menu-icon">🏠</span>
-          <span>Tổng quan</span>
-        </button>
-        <button onclick="App.goto('quiz-setup')" class="mobile-menu-card primary">
-          <span class="mobile-menu-icon">▶</span>
-          <span>Làm bài</span>
-        </button>
-        <button onclick="App.goto('my-stats')" class="mobile-menu-card">
-          <span class="mobile-menu-icon">📊</span>
-          <span>Thống kê</span>
-        </button>
-      </div>
-
-      <div class="stat-grid" id="dashStats">
-        <div class="stat-card">
-          <div class="stat-icon blue">📊</div>
-          <div><div class="stat-value" id="ds-avg">—</div><div class="stat-label">Điểm TB (hệ 10)</div></div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon gold">🏆</div>
-          <div><div class="stat-value" id="ds-best">—</div><div class="stat-label">Điểm cao nhất</div></div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon green">✅</div>
-          <div><div class="stat-value" id="ds-pass">—</div><div class="stat-label">Lần đạt ≥ 5.0</div></div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon red">📅</div>
-          <div><div class="stat-value" id="ds-last">—</div><div class="stat-label">Lần thi gần nhất</div></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <span class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            Lịch sử 10 bài gần nhất
-          </span>
-          <button onclick="App.goto('my-stats')" style="font-size:.75rem;color:#2558a8;background:none;border:none;cursor:pointer;font-weight:600">Xem tất cả →</button>
-        </div>
-        <div class="tbl-wrap">
-          <table class="tbl" id="dashHistoryTable">
-            <thead><tr><th>Thời gian</th><th>Bộ đề</th><th>Câu</th><th>Điểm</th><th>HT10</th></tr></thead>
-            <tbody id="dashHistoryBody"><tr><td colspan="5" style="text-align:center;color:#8496b0;padding:20px">Chưa có dữ liệu</td></tr></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- MÀN HÌNH CHỌN BỘ ĐỀ -->
-    <div class="screen page-body" id="screen-quiz-setup">
-      <div class="exam-setup-grid">
-        <div>
-          <div class="card">
-            <div class="card-header">
-              <span class="card-title">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-                Cấu hình bộ đề thi
-              </span>
-            </div>
-
-            <div class="form-grp" style="margin-bottom: 16px;">
-              <label class="form-label" style="font-size:.8rem; color:#4a5c7a !important;">1. CHỌN LĨNH VỰC</label>
-              <select id="categorySelect" class="bank-select" onchange="App.filterBanks()">
-                <option value="">Đang tải dữ liệu...</option>
-              </select>
-            </div>
-
-            <div class="form-grp">
-              <label class="form-label" style="font-size:.8rem; color:#4a5c7a !important;">2. CHỌN BỘ ĐỀ</label>
-              <select id="bankSelect" class="bank-select" disabled>
-                <option value="">— Vui lòng chọn lĩnh vực trước —</option>
-              </select>
-            </div>
-
-          </div>
-
-          <div class="card">
-            <div id="examCountRow">
-              <div class="form-label" style="font-size:.8rem; color:#4a5c7a !important; margin-bottom:12px;">3. CHỌN SỐ CÂU HỎI</div>
-              <div class="count-chips">
-                <button class="chip" onclick="App.setExamCount(5,this)">5 câu</button>
-                <button class="chip" onclick="App.setExamCount(10,this)">10 câu</button>
-                <button class="chip" onclick="App.setExamCount(20,this)">20 câu</button>
-                <button class="chip active" onclick="App.setExamCount(30,this)">30 câu</button>
-                <button class="chip" onclick="App.setExamCount(50,this)">50 câu</button>
-                <button class="chip" onclick="App.setExamCount(60,this)">60 câu</button>
-              </div>
-            </div>
-
-            <div class="alert alert-hidden" id="dashAlert"></div>
-            <button class="btn-start" onclick="App.startQuiz()">▶ Tạo bộ đề và làm bài kiểm tra</button>
-          </div>
-        </div>
-
-        <div class="exam-guide">
-          <div class="exam-guide-title">📌 Hướng dẫn nhanh</div>
-          <ul>
-            <li>Chọn lĩnh vực nghiệp vụ.</li>
-            <li>Chọn bộ đề tương ứng trong lĩnh vực.</li>
-            <li>Chọn số lượng câu hỏi phù hợp với thời gian thực tế của bạn.</li>
-            <li>Hệ thống tự tạo câu hỏi ngẫu nhiên.</li>
-            <li>Bấm “Nộp bài” để xem điểm và chi tiết đáp án.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <!-- MÀN HÌNH LÀM BÀI -->
-    <div class="screen page-body" id="screen-quiz">
-      <div class="quiz-container">
-        <!-- CỘT TRÁI: ĐIỀU HƯỚNG & NỘP BÀI -->
-        <div class="quiz-left-panel">
-          
-          <div class="quiz-panel-header">
+<div class="quiz-panel-header">
             <div id="quizHeaderLines" style="display:none;">
   <div id="line1"></div>
   <div id="line2"></div>
   <div id="line3"></div>
 </div>
-            </div>
-            <div class="timer-clock" id="timerClock">--:--</div>
-          </div>
+            <div id="quizHeaderLines" style="margin-bottom:16px;">
+              <div id="line1" style="font-weight:600; font-size:.8rem; color:#0D438B;"></div>
+              <div id="line2" style="font-weight:800; font-size:.95rem; color:#0D438B; margin-top:2px;"></div>
+              <div id="line3" style="font-weight:800; font-size:1rem; color:#C82929; margin-top:6px; text-transform:uppercase;"></div>
+</div>
+<div class="timer-clock" id="timerClock">--:--</div>
+</div>
+@@ -1100,926 +1017,926 @@
+<div class="result-container">
 
-          <div class="quiz-panel-body">
-            <div class="q-nav-meta" style="text-align:center; margin-bottom:16px; font-size:.85rem; font-weight:600; color:#4a5c7a;">
-              Đã trả lời: <b id="answeredCount" style="color:#2558a8">0</b> / <b id="totalCount">0</b> câu
-            </div>
-            <div class="q-grid-box" id="qDots"></div>
-          </div>
-          
-          <div class="quiz-panel-footer">
-            <div class="timer-info" id="timerInfo" style="font-size:0.85rem; font-weight:600; color:#8496b0; margin-bottom: 16px;">Kiểm tra</div>
-            <button class="btn-submit" onclick="App.confirmSubmit()">📤 NỘP BÀI</button>
-          </div>
-        </div>
-
-        <!-- CỘT PHẢI: NỘI DUNG CÂU HỎI -->
-        <div class="quiz-right-panel">
-          <div class="quiz-body" id="quizBody"></div>
-          
-          <div class="quiz-actions">
-            <button class="btn-nav" id="btnPrev" onclick="App.prevQ()">⬅ Câu trước</button>
-            <button class="btn-nav" id="btnNext" onclick="App.nextQ()">Câu tiếp theo ➡</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- KẾT QUẢ -->
-    <div class="screen page-body" id="screen-result">
-      <div class="result-container">
-        
-        <div id="printUserInfo" class="print-only"></div>
+<div id="printUserInfo" class="print-only"></div>
 <div id="printHeaderLines" class="print-only print-header-lines"></div>
-        <div class="result-hero">
-          <div>
-            <div class="result-score-label">Điểm bài thi</div>
-            <div class="result-score-big" id="resultScore">0 / 10</div>
-            <div class="result-score10" id="resultScore10">Số câu đúng hoàn toàn: 0</div>
-            <div class="result-meta" id="resultMeta"></div>
-          </div>
-          <div class="result-donut">
-            <div class="donut-ring" id="donutWrap">
-              <svg viewBox="0 0 90 90">
-                <circle class="track" cx="45" cy="45" r="38"/>
-                <circle class="prog" id="donutProg" cx="45" cy="45" r="38" stroke-dasharray="0 239"/>
-              </svg>
-              <div class="donut-label">
-                <span class="donut-pct" id="donutPct">0%</span>
-                <span class="donut-sub">đúng</span>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="late-banner" id="lateBanner"></div>
+<div class="result-hero">
+<div>
+<div class="result-score-label">Điểm bài thi</div>
+<div class="result-score-big" id="resultScore">0 / 10</div>
+<div class="result-score10" id="resultScore10">Số câu đúng hoàn toàn: 0</div>
+<div class="result-meta" id="resultMeta"></div>
+</div>
+<div class="result-donut">
+<div class="donut-ring" id="donutWrap">
+<svg viewBox="0 0 90 90">
+<circle class="track" cx="45" cy="45" r="38"/>
+<circle class="prog" id="donutProg" cx="45" cy="45" r="38" stroke-dasharray="0 239"/>
+</svg>
+<div class="donut-label">
+<span class="donut-pct" id="donutPct">0%</span>
+<span class="donut-sub">đúng</span>
+</div>
+</div>
+</div>
+</div>
 
-        <div class="result-stats-row">
-          <div class="result-stat"><div class="result-stat-val val-green" id="rs-full-correct">0</div><div class="result-stat-lbl">Đúng hoàn toàn</div></div>
-          <div class="result-stat"><div class="result-stat-val val-blue" id="rs-partial-correct">0</div><div class="result-stat-lbl">Đúng 1 phần</div></div>
-          <div class="result-stat"><div class="result-stat-val val-orange" id="rs-partial-wrong">0</div><div class="result-stat-lbl">Sai 1 phần</div></div>
-          <div class="result-stat"><div class="result-stat-val val-red" id="rs-full-wrong">0</div><div class="result-stat-lbl">Sai hoàn toàn</div></div>
-        </div>
+<div class="late-banner" id="lateBanner"></div>
 
-        <div style="font-size:.82rem;font-weight:700;color:#0f1f3d !important;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Chi tiết từng câu</div>
-        <div id="resultDetail"></div>
-        
-        <button class="btn-back" onclick="App.goto('dashboard')">← Về trang chủ</button>
-        <button class="btn-print" onclick="window.print()">🖨️ In kết quả</button>
-        <button class="btn-export-word" onclick="App.exportToWord()">📄 Xuất Word</button>
-        <button class="btn-export-excel" onclick="App.exportToExcel()">📊 Xuất Excel</button>
-        
-      </div>
-    </div>
+<div class="result-stats-row">
+<div class="result-stat"><div class="result-stat-val val-green" id="rs-full-correct">0</div><div class="result-stat-lbl">Đúng hoàn toàn</div></div>
+<div class="result-stat"><div class="result-stat-val val-blue" id="rs-partial-correct">0</div><div class="result-stat-lbl">Đúng 1 phần</div></div>
+<div class="result-stat"><div class="result-stat-val val-orange" id="rs-partial-wrong">0</div><div class="result-stat-lbl">Sai 1 phần</div></div>
+<div class="result-stat"><div class="result-stat-val val-red" id="rs-full-wrong">0</div><div class="result-stat-lbl">Sai hoàn toàn</div></div>
+</div>
 
-    <!-- THỐNG KÊ CỦA TÔI -->
-    <div class="screen page-body" id="screen-my-stats">
-      <div class="stat-grid" id="myStatCards">
-        <div class="stat-card"><div class="stat-icon blue">🎯</div><div><div class="stat-value" id="ms-total">—</div><div class="stat-label">Tổng lần thi</div></div></div>
-        <div class="stat-card"><div class="stat-icon gold">⭐</div><div><div class="stat-value" id="ms-avg">—</div><div class="stat-label">Điểm TB</div></div></div>
-        <div class="stat-card"><div class="stat-icon green">🏆</div><div><div class="stat-value" id="ms-best">—</div><div class="stat-label">Điểm cao nhất</div></div></div>
-        <div class="stat-card"><div class="stat-icon red">📈</div><div><div class="stat-value" id="ms-pass-rate">—</div><div class="stat-label">Tỷ lệ đạt ≥ 5</div></div></div>
-      </div>
-      <div class="card">
-        <div class="card-header">
-          <span class="card-title">Lịch sử thi của tôi</span>
-        </div>
-        <div class="tbl-wrap">
-          <table class="tbl">
-            <thead><tr><th>#</th><th>Thời gian</th><th>Bộ đề</th><th>Số câu</th><th>Điểm gốc</th><th>HT10</th></tr></thead>
-            <tbody id="myHistoryBody"><tr><td colspan="6" style="text-align:center;color:#8496b0;padding:20px">Đang tải...</td></tr></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+<div style="font-size:.82rem;font-weight:700;color:#0f1f3d !important;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Chi tiết từng câu</div>
+<div id="resultDetail"></div>
 
-    <!-- KẾT QUẢ ĐƠN VỊ -->
-    <div class="screen page-body" id="screen-unit-stats">
-      <div class="card">
-        <div class="card-header">
-          <span class="card-title">Kết quả đơn vị: <span id="unitName" style="color:#2558a8 !important;text-transform:none">—</span></span>
-          <button class="btn-filter" onclick="App.loadUnitStats()" style="padding:6px 14px;background-image:linear-gradient(#2558a8,#2558a8) !important;color:#fff !important;border:none;border-radius:7px;font-size:.78rem;font-weight:600;cursor:pointer">↻ Làm mới</button>
-        </div>
-        <div class="stat-grid" id="unitStatCards" style="margin-bottom:16px">
-          <div class="stat-card"><div class="stat-icon blue">👥</div><div><div class="stat-value" id="us-members">—</div><div class="stat-label">Cán bộ trong đơn vị</div></div></div>
-          <div class="stat-card"><div class="stat-icon gold">📋</div><div><div class="stat-value" id="us-exams">—</div><div class="stat-label">Tổng lần thi</div></div></div>
-          <div class="stat-card"><div class="stat-icon green">📊</div><div><div class="stat-value" id="us-avg">—</div><div class="stat-label">Điểm TB toàn đơn vị</div></div></div>
-          <div class="stat-card"><div class="stat-icon red">✅</div><div><div class="stat-value" id="us-pass">—</div><div class="stat-label">Tỷ lệ đạt</div></div></div>
-        </div>
-        <div class="tbl-wrap">
-          <table class="tbl">
-            <thead><tr><th>Hạng</th><th>Họ và tên</th><th>Mã CC</th><th>Lần thi</th><th>TB</th><th>Cao nhất</th><th>Đạt/Tổng</th></tr></thead>
-            <tbody id="unitStatsBody"><tr><td colspan="7" style="text-align:center;color:#8496b0;padding:20px">Đang tải...</td></tr></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+<button class="btn-back" onclick="App.goto('dashboard')">← Về trang chủ</button>
+<button class="btn-print" onclick="window.print()">🖨️ In kết quả</button>
+<button class="btn-export-word" onclick="App.exportToWord()">📄 Xuất Word</button>
+<button class="btn-export-excel" onclick="App.exportToExcel()">📊 Xuất Excel</button>
 
-    <!-- KẾT QUẢ TOÀN CHI CỤC -->
-    <div class="screen page-body" id="screen-all-stats">
-      <div class="filter-bar">
-        <select id="filterUnit" onchange="App.loadAllStats()">
-          <option value="">— Tất cả đơn vị —</option>
-        </select>
-        <input type="date" id="filterFrom" onchange="App.loadAllStats()">
-        <input type="date" id="filterTo" onchange="App.loadAllStats()">
-      </div>
+</div>
+</div>
 
-      <div class="stat-grid" id="allStatCards" style="margin-bottom:20px">
-        <div class="stat-card"><div class="stat-icon blue">🏢</div><div><div class="stat-value" id="as-units">—</div><div class="stat-label">Đơn vị tham gia</div></div></div>
-        <div class="stat-card"><div class="stat-icon gold">👥</div><div><div class="stat-value" id="as-people">—</div><div class="stat-label">Cán bộ đã thi</div></div></div>
-        <div class="stat-card"><div class="stat-icon green">📋</div><div><div class="stat-value" id="as-exams">—</div><div class="stat-label">Tổng lần thi</div></div></div>
-        <div class="stat-card"><div class="stat-icon red">📊</div><div><div class="stat-value" id="as-avg">—</div><div class="stat-label">Điểm TB toàn cơ quan</div></div></div>
-      </div>
+<!-- THỐNG KÊ CỦA TÔI -->
+<div class="screen page-body" id="screen-my-stats">
+<div class="stat-grid" id="myStatCards">
+<div class="stat-card"><div class="stat-icon blue">🎯</div><div><div class="stat-value" id="ms-total">—</div><div class="stat-label">Tổng lần thi</div></div></div>
+<div class="stat-card"><div class="stat-icon gold">⭐</div><div><div class="stat-value" id="ms-avg">—</div><div class="stat-label">Điểm TB</div></div></div>
+<div class="stat-card"><div class="stat-icon green">🏆</div><div><div class="stat-value" id="ms-best">—</div><div class="stat-label">Điểm cao nhất</div></div></div>
+<div class="stat-card"><div class="stat-icon red">📈</div><div><div class="stat-value" id="ms-pass-rate">—</div><div class="stat-label">Tỷ lệ đạt ≥ 5</div></div></div>
+</div>
+<div class="card">
+<div class="card-header">
+<span class="card-title">Lịch sử thi của tôi</span>
+</div>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>#</th><th>Thời gian</th><th>Bộ đề</th><th>Số câu</th><th>Điểm gốc</th><th>HT10</th></tr></thead>
+<tbody id="myHistoryBody"><tr><td colspan="6" style="text-align:center;color:#8496b0;padding:20px">Đang tải...</td></tr></tbody>
+</table>
+</div>
+</div>
+</div>
 
-      <div class="rank-hero" id="topRankHero"></div>
+<!-- KẾT QUẢ ĐƠN VỊ -->
+<div class="screen page-body" id="screen-unit-stats">
+<div class="card">
+<div class="card-header">
+<span class="card-title">Kết quả đơn vị: <span id="unitName" style="color:#2558a8 !important;text-transform:none">—</span></span>
+<button class="btn-filter" onclick="App.loadUnitStats()" style="padding:6px 14px;background-image:linear-gradient(#2558a8,#2558a8) !important;color:#fff !important;border:none;border-radius:7px;font-size:.78rem;font-weight:600;cursor:pointer">↻ Làm mới</button>
+</div>
+<div class="stat-grid" id="unitStatCards" style="margin-bottom:16px">
+<div class="stat-card"><div class="stat-icon blue">👥</div><div><div class="stat-value" id="us-members">—</div><div class="stat-label">Cán bộ trong đơn vị</div></div></div>
+<div class="stat-card"><div class="stat-icon gold">📋</div><div><div class="stat-value" id="us-exams">—</div><div class="stat-label">Tổng lần thi</div></div></div>
+<div class="stat-card"><div class="stat-icon green">📊</div><div><div class="stat-value" id="us-avg">—</div><div class="stat-label">Điểm TB toàn đơn vị</div></div></div>
+<div class="stat-card"><div class="stat-icon red">✅</div><div><div class="stat-value" id="us-pass">—</div><div class="stat-label">Tỷ lệ đạt</div></div></div>
+</div>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>Hạng</th><th>Họ và tên</th><th>Mã CC</th><th>Lần thi</th><th>TB</th><th>Cao nhất</th><th>Đạt/Tổng</th></tr></thead>
+<tbody id="unitStatsBody"><tr><td colspan="7" style="text-align:center;color:#8496b0;padding:20px">Đang tải...</td></tr></tbody>
+</table>
+</div>
+</div>
+</div>
 
-      <div class="card">
-        <div class="card-header">
-          <span class="card-title">Bảng xếp hạng toàn chi cục</span>
-          <span style="font-size:.75rem;color:#8496b0 !important" id="allStatsCount"></span>
-        </div>
-        <div class="tbl-wrap">
-          <table class="tbl">
-            <thead><tr><th>Hạng</th><th>Họ và tên</th><th>Đơn vị</th><th>Lần thi</th><th>Điểm TB</th><th>Cao nhất</th><th>Tỷ lệ đạt</th></tr></thead>
-            <tbody id="allStatsBody"><tr><td colspan="7" style="text-align:center;color:#8496b0;padding:20px">Đang tải...</td></tr></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- KẾT QUẢ TOÀN CHI CỤC -->
+<div class="screen page-body" id="screen-all-stats">
+<div class="filter-bar">
+<select id="filterUnit" onchange="App.loadAllStats()">
+<option value="">— Tất cả đơn vị —</option>
+</select>
+<input type="date" id="filterFrom" onchange="App.loadAllStats()">
+<input type="date" id="filterTo" onchange="App.loadAllStats()">
+</div>
+
+<div class="stat-grid" id="allStatCards" style="margin-bottom:20px">
+<div class="stat-card"><div class="stat-icon blue">🏢</div><div><div class="stat-value" id="as-units">—</div><div class="stat-label">Đơn vị tham gia</div></div></div>
+<div class="stat-card"><div class="stat-icon gold">👥</div><div><div class="stat-value" id="as-people">—</div><div class="stat-label">Cán bộ đã thi</div></div></div>
+<div class="stat-card"><div class="stat-icon green">📋</div><div><div class="stat-value" id="as-exams">—</div><div class="stat-label">Tổng lần thi</div></div></div>
+<div class="stat-card"><div class="stat-icon red">📊</div><div><div class="stat-value" id="as-avg">—</div><div class="stat-label">Điểm TB toàn cơ quan</div></div></div>
+</div>
+
+<div class="rank-hero" id="topRankHero"></div>
+
+<div class="card">
+<div class="card-header">
+<span class="card-title">Bảng xếp hạng toàn chi cục</span>
+<span style="font-size:.75rem;color:#8496b0 !important" id="allStatsCount"></span>
+</div>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>Hạng</th><th>Họ và tên</th><th>Đơn vị</th><th>Lần thi</th><th>Điểm TB</th><th>Cao nhất</th><th>Tỷ lệ đạt</th></tr></thead>
+<tbody id="allStatsBody"><tr><td colspan="7" style="text-align:center;color:#8496b0;padding:20px">Đang tải...</td></tr></tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
 </div>
 
 <!-- BOTTOM NAV CHO MOBILE -->
 <nav class="mobile-bottom-nav">
-  <button onclick="App.goto('dashboard')" id="mb-nav-dashboard">
-    <span>🏠</span><b>Tổng quan</b>
-  </button>
-  <button onclick="App.goto('quiz-setup')" id="mb-nav-quiz-setup">
-    <span>▶</span><b>Làm bài</b>
-  </button>
-  <button onclick="App.goto('my-stats')" id="mb-nav-my-stats">
-    <span>📊</span><b>Thống kê</b>
-  </button>
-  <!-- NÚT THƯ VIỆN MỚI THÊM -->
-  <button onclick="window.open('https://drive.google.com/drive/folders/1nDn4qEgJ99rRpdn5x-2VEEPA_SkX6rvv', '_blank')">
-    <span>📚</span><b>Thư viện</b>
-  </button>
+<button onclick="App.goto('dashboard')" id="mb-nav-dashboard">
+<span>🏠</span><b>Tổng quan</b>
+</button>
+<button onclick="App.goto('quiz-setup')" id="mb-nav-quiz-setup">
+<span>▶</span><b>Làm bài</b>
+</button>
+<button onclick="App.goto('my-stats')" id="mb-nav-my-stats">
+<span>📊</span><b>Thống kê</b>
+</button>
+<!-- NÚT THƯ VIỆN MỚI THÊM -->
+<button onclick="window.open('https://drive.google.com/drive/folders/1nDn4qEgJ99rRpdn5x-2VEEPA_SkX6rvv', '_blank')">
+<span>📚</span><b>Thư viện</b>
+</button>
 </nav>
 
 <div class="modal-ov hidden" id="modal-chpw">
-  <div class="modal-box">
-    <div class="modal-title">
-      🔒 Đổi mật khẩu
-      <button class="modal-close" onclick="App.showModal('modal-chpw',false)">✕</button>
-    </div>
-    <div class="form-grp"><label>Mã CC / NLĐ</label><input type="text" id="chpwUsername"></div>
-    <div class="form-grp"><label>Mật khẩu hiện tại</label><input type="password" id="chpwOld"></div>
-    <div class="form-grp"><label>Mật khẩu mới (≥ 6 ký tự)</label><input type="password" id="chpwNew"></div>
-    <div class="form-grp"><label>Xác nhận mật khẩu mới</label><input type="password" id="chpwConfirm"></div>
-    <div class="alert alert-hidden" id="chpwAlert"></div>
-    <button class="btn-primary-sm" onclick="App.changePassword()">Đổi mật khẩu</button>
-  </div>
+<div class="modal-box">
+<div class="modal-title">
+🔒 Đổi mật khẩu
+<button class="modal-close" onclick="App.showModal('modal-chpw',false)">✕</button>
+</div>
+<div class="form-grp"><label>Mã CC / NLĐ</label><input type="text" id="chpwUsername"></div>
+<div class="form-grp"><label>Mật khẩu hiện tại</label><input type="password" id="chpwOld"></div>
+<div class="form-grp"><label>Mật khẩu mới (≥ 6 ký tự)</label><input type="password" id="chpwNew"></div>
+<div class="form-grp"><label>Xác nhận mật khẩu mới</label><input type="password" id="chpwConfirm"></div>
+<div class="alert alert-hidden" id="chpwAlert"></div>
+<button class="btn-primary-sm" onclick="App.changePassword()">Đổi mật khẩu</button>
+</div>
 </div>
 
 <div class="loading-ov hidden" id="loadingOv">
-  <div class="loading-box">
-    <div class="spinner"></div>
-    <p id="loadingMsg">Đang xử lý...</p>
-  </div>
+<div class="loading-box">
+<div class="spinner"></div>
+<p id="loadingMsg">Đang xử lý...</p>
+</div>
 </div>
 
 <script>
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwYwBZmlnOInfCfuuQCMg0-ivTBO3C6zClNer0a6e85psRneLuzvf4hamvhjkBuWJeR/exec';
 
 async function sha256(message) {
-  const msgBuffer = new TextEncoder().encode(message);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+const msgBuffer = new TextEncoder().encode(message);
+const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+const hashArray = Array.from(new Uint8Array(hashBuffer));
+return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
 async function callGAS(p){
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 15000);
-  
-  try {
-    const r = await fetch(GAS_URL, {
-      method: 'POST',
-      headers: {'Content-Type': 'text/plain'},
-      body: JSON.stringify(p),
-      signal: controller.signal
-    });
-    clearTimeout(timeoutId);
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    return await r.json();
-  } catch (err) {
-    clearTimeout(timeoutId);
-    if (err.name === 'AbortError') {
-      throw new Error('Mạng không ổn định hoặc hệ thống quá tải. Vui lòng thử lại!');
-    }
-    throw err;
-  }
+const controller = new AbortController();
+const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+try {
+const r = await fetch(GAS_URL, {
+method: 'POST',
+headers: {'Content-Type': 'text/plain'},
+body: JSON.stringify(p),
+signal: controller.signal
+});
+clearTimeout(timeoutId);
+if (!r.ok) throw new Error('HTTP ' + r.status);
+return await r.json();
+} catch (err) {
+clearTimeout(timeoutId);
+if (err.name === 'AbortError') {
+throw new Error('Mạng không ổn định hoặc hệ thống quá tải. Vui lòng thử lại!');
+}
+throw err;
+}
 }
 
 const S = {
-  user: null, allBanks: [], mode: 'exam', examCount: 30,
-  quizData: null, answers: {}, timerIv: null, timeLeft: 0, resultScore10Val: 0,
-  currentQ: 0, autoNextTimer: null
+user: null, allBanks: [], mode: 'exam', examCount: 30,
+quizData: null, answers: {}, timerIv: null, timeLeft: 0, resultScore10Val: 0,
+currentQ: 0, autoNextTimer: null
 };
 
 const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -1309,714 +336,714 @@ const canSeeUnit = r => ['admin','lanh_dao_chi_cuc','lanh_dao_doi'].includes(r);
 document.title = "Hệ thống Thi Trắc nghiệm - Chi cục Hải quan khu vực VIII";
 
 const App = {
-  init(){
-    const saved = localStorage.getItem('qz_user');
-    if(saved){ S.user=JSON.parse(saved); this.afterLogin(); }
-    document.getElementById('loginPassword').addEventListener('keydown',e=>{ if(e.key==='Enter') this.login(); });
-  },
+init(){
+const saved = localStorage.getItem('qz_user');
+if(saved){ S.user=JSON.parse(saved); this.afterLogin(); }
+document.getElementById('loginPassword').addEventListener('keydown',e=>{ if(e.key==='Enter') this.login(); });
+},
 
-  goto(id){
-    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-    document.querySelectorAll('.mobile-bottom-nav button').forEach(n=>n.classList.remove('active'));
-    
-    const screenEl = document.getElementById('screen-'+id);
-    if(screenEl) screenEl.classList.add('active');
-    
-    const navEl = document.getElementById('nav-'+id);
-    if(navEl) navEl.classList.add('active');
-    
-    const mbNav = document.getElementById('mb-nav-' + id);
-    if(mbNav) mbNav.classList.add('active');
-    
-    const userDropdown = document.getElementById('userDropdown');
-    if(userDropdown) userDropdown.classList.add('hidden');
-    
-    if(id==='dashboard') this.loadDashboard();
-    if(id==='my-stats') this.loadMyStats();
-    if(id==='unit-stats') this.loadUnitStats();
-    if(id==='all-stats') this.loadAllStats();
-    if(id==='quiz-setup') this.loadBanks();
-  },
+goto(id){
+document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+document.querySelectorAll('.mobile-bottom-nav button').forEach(n=>n.classList.remove('active'));
 
-  toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); },
-  toggleUserMenu(){ document.getElementById('userDropdown').classList.toggle('hidden'); },
-  showModal(id,show){ document.getElementById(id).classList.toggle('hidden',!show); },
-  showLoading(msg='Đang xử lý...'){
-    document.getElementById('loadingMsg').textContent=msg;
-    document.getElementById('loadingOv').classList.remove('hidden');
-  },
-  hideLoading(){ document.getElementById('loadingOv').classList.add('hidden'); },
-  showAlert(id,msg,type='error'){
-    const el=document.getElementById(id);
-    el.textContent=msg; el.className='alert alert-'+type;
-  },
-  hideAlert(id){ document.getElementById(id).className='alert alert-hidden'; },
+const screenEl = document.getElementById('screen-'+id);
+if(screenEl) screenEl.classList.add('active');
 
-  async login(){
-    const username=document.getElementById('loginUsername').value.trim();
-    const plainPass=document.getElementById('loginPassword').value;
-    if(!username||!plainPass){ this.showLoginAlert('Vui lòng nhập đầy đủ','err'); return; }
-    
-    this.showLoading('Đang đăng nhập...');
-    try{
-      const hashedPass = await sha256(plainPass);
-      const res = await callGAS({ action: 'login', username, password: hashedPass });
-      
-      if(!res.ok){ this.showLoginAlert(res.msg||'Sai tài khoản hoặc mật khẩu','err'); }
-      else{
-        S.user=res.user; localStorage.setItem('qz_user',JSON.stringify(res.user));
-        this.hideLoginAlert();
-        if(res.user.isDefaultPass){
-          document.getElementById('chpwUsername').value=username;
-          this.showModal('modal-chpw',true);
-          this.showAlert('chpwAlert','Vui lòng đổi mật khẩu mặc định','info');
-        }
-        this.afterLogin();
-      }
-    }catch(e){ this.showLoginAlert(e.message || 'Lỗi kết nối', 'err'); }
-    this.hideLoading();
-  },
+const navEl = document.getElementById('nav-'+id);
+if(navEl) navEl.classList.add('active');
 
-  showLoginAlert(msg,type){
-    const el=document.getElementById('loginAlert');
-    el.textContent=msg; el.className='login-alert '+type;
-  },
-  hideLoginAlert(){ document.getElementById('loginAlert').className='login-alert hidden'; },
+const mbNav = document.getElementById('mb-nav-' + id);
+if(mbNav) mbNav.classList.add('active');
 
-  afterLogin(){
-    const u=S.user;
-    document.getElementById('screen-login').classList.remove('active');
-    document.getElementById('screen-login').style.display='none';
-    document.getElementById('appLayout').style.display='flex';
-    document.getElementById('sidebarAvatar').textContent=(u.fullname||u.username).charAt(0).toUpperCase();
-    document.getElementById('sidebarName').textContent=u.fullname||u.username;
-    document.getElementById('sidebarRole').textContent=this.roleLabel(u.role);
-    
-    document.getElementById('userFullnameDrop').textContent = u.fullname || u.username;
-    document.getElementById('userUnitDrop').textContent = u.unit || '—';
-    document.getElementById('chpwUsername').value = u.username;
-    
-    const mobileAvatar = document.getElementById('mobileAvatar');
-    const mobileUserName = document.getElementById('mobileUserName');
-    const mobileUserRole = document.getElementById('mobileUserRole');
-    if(mobileAvatar) mobileAvatar.textContent=(u.fullname||u.username).charAt(0).toUpperCase();
-    if(mobileUserName) mobileUserName.textContent=u.fullname||u.username;
-    if(mobileUserRole) mobileUserRole.textContent=this.roleLabel(u.role);
-    
-    document.getElementById('welcomeName').textContent='Xin chào, '+(u.fullname||u.username)+'!';
-    document.getElementById('welcomeSub').textContent=u.role==='user'?'Chọn bài thi hoặc xem thống kê của bạn':'Quản lý kết quả và thống kê hệ thống';
-    
-    if(canSeeUnit(u.role)){
-      document.getElementById('adminNavLabel').style.display='';
-      document.getElementById('nav-unit-stats').style.display='';
-    }
-    if(canSeeAll(u.role)){
-      document.getElementById('nav-all-stats').style.display='';
-    }
-    this.goto('dashboard');
-  },
+const userDropdown = document.getElementById('userDropdown');
+if(userDropdown) userDropdown.classList.add('hidden');
 
-  roleLabel(r){ 
-    return {
-      'admin': 'Quản trị viên',
-      'lanh_dao_chi_cuc': 'Lãnh đạo Chi cục',
-      'lanh_dao_doi': 'Lãnh đạo Phòng/Đội',
-      'user': 'Cán bộ'
-    }[r] || r; 
-  },
+if(id==='dashboard') this.loadDashboard();
+if(id==='my-stats') this.loadMyStats();
+if(id==='unit-stats') this.loadUnitStats();
+if(id==='all-stats') this.loadAllStats();
+if(id==='quiz-setup') this.loadBanks();
+},
 
-  logout(){
-    if(!confirm('Đăng xuất khỏi hệ thống?')) return;
-    S.user=null; localStorage.removeItem('qz_user');
-    this.stopTimer();
-    document.getElementById('appLayout').style.display='none';
-    document.getElementById('screen-login').style.display='';
-    document.getElementById('screen-login').classList.add('active');
-  },
+toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); },
+toggleUserMenu(){ document.getElementById('userDropdown').classList.toggle('hidden'); },
+showModal(id,show){ document.getElementById(id).classList.toggle('hidden',!show); },
+showLoading(msg='Đang xử lý...'){
+document.getElementById('loadingMsg').textContent=msg;
+document.getElementById('loadingOv').classList.remove('hidden');
+},
+hideLoading(){ document.getElementById('loadingOv').classList.add('hidden'); },
+showAlert(id,msg,type='error'){
+const el=document.getElementById(id);
+el.textContent=msg; el.className='alert alert-'+type;
+},
+hideAlert(id){ document.getElementById(id).className='alert alert-hidden'; },
 
-  async changePassword(){
-    const u=document.getElementById('chpwUsername').value.trim();
-    const o=document.getElementById('chpwOld').value;
-    const n=document.getElementById('chpwNew').value;
-    const c=document.getElementById('chpwConfirm').value;
-    
-    if(n!==c){ this.showAlert('chpwAlert','Mật khẩu xác nhận không khớp'); return; }
-    if(n.length<6){ this.showAlert('chpwAlert','Mật khẩu mới phải ≥ 6 ký tự'); return; }
-    
-    this.showLoading('Đang xử lý...');
-    try{
-      const hashedOld = await sha256(o);
-      const hashedNew = await sha256(n);
-      const res = await callGAS({ action: 'changePassword', username: u, oldPassword: hashedOld, newPassword: hashedNew });
-      
-      if(res.ok){ 
-        this.showAlert('chpwAlert','Đổi mật khẩu thành công!','success'); 
-        setTimeout(()=>this.showModal('modal-chpw',false),1500); 
-      }
-      else this.showAlert('chpwAlert', res.msg||'Thất bại');
-    }catch(e){ this.showAlert('chpwAlert', e.message || 'Lỗi kết nối'); }
-    this.hideLoading();
-  },
+async login(){
+const username=document.getElementById('loginUsername').value.trim();
+const plainPass=document.getElementById('loginPassword').value;
+if(!username||!plainPass){ this.showLoginAlert('Vui lòng nhập đầy đủ','err'); return; }
 
-  async loadDashboard(){
-    try{
-      const res=await callGAS({action:'getHistory',username:S.user.username});
-      if(!res.ok||!res.history.length){ document.getElementById('badgeTotalExams').textContent=0; return; }
-      const h=res.history;
-      document.getElementById('badgeTotalExams').textContent=h.length;
-      const scores=h.map(x=>Number(x.score10)).filter(x=>!isNaN(x));
-      const avg=scores.length?scores.reduce((a,b)=>a+b,0)/scores.length:0;
-      const best=scores.length?Math.max(...scores):0;
-      const pass=scores.filter(x=>x>=5).length;
-      document.getElementById('ds-avg').textContent=avg.toFixed(1);
-      document.getElementById('ds-best').textContent=best.toFixed(1);
-      document.getElementById('ds-pass').textContent=pass;
-      document.getElementById('ds-last').textContent=fmtDate(h[0].time);
-      document.getElementById('dashHistoryBody').innerHTML=h.slice(0,10).map(row=>`
-        <tr>
-          <td>${fmtDate(row.time)}</td>
-          <td style="max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(row.banks)}</td>
-          <td style="text-align:center">${row.count}</td>
-          <td style="text-align:center;font-weight:700">${Number(row.score10).toFixed(2)}</td>
-          <td>${scorePill(row.score10)}</td>
-        </tr>`).join('');
-    }catch(e){}
-  },
+this.showLoading('Đang đăng nhập...');
+try{
+const hashedPass = await sha256(plainPass);
+const res = await callGAS({ action: 'login', username, password: hashedPass });
 
-  async loadBanks(){
-  const cat = document.getElementById('categorySelect');
-  const bank = document.getElementById('bankSelect');
+if(!res.ok){ this.showLoginAlert(res.msg||'Sai tài khoản hoặc mật khẩu','err'); }
+else{
+S.user=res.user; localStorage.setItem('qz_user',JSON.stringify(res.user));
+this.hideLoginAlert();
+if(res.user.isDefaultPass){
+document.getElementById('chpwUsername').value=username;
+this.showModal('modal-chpw',true);
+this.showAlert('chpwAlert','Vui lòng đổi mật khẩu mặc định','info');
+}
+this.afterLogin();
+}
+}catch(e){ this.showLoginAlert(e.message || 'Lỗi kết nối', 'err'); }
+this.hideLoading();
+},
 
-  cat.innerHTML = '<option value="">Đang tải lĩnh vực...</option>';
-  bank.innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
-  bank.disabled = true;
+showLoginAlert(msg,type){
+const el=document.getElementById('loginAlert');
+el.textContent=msg; el.className='login-alert '+type;
+},
+hideLoginAlert(){ document.getElementById('loginAlert').className='login-alert hidden'; },
 
-  try{
-    const res = await callGAS({action:'getBanks'});
+afterLogin(){
+const u=S.user;
+document.getElementById('screen-login').classList.remove('active');
+document.getElementById('screen-login').style.display='none';
+document.getElementById('appLayout').style.display='flex';
+document.getElementById('sidebarAvatar').textContent=(u.fullname||u.username).charAt(0).toUpperCase();
+document.getElementById('sidebarName').textContent=u.fullname||u.username;
+document.getElementById('sidebarRole').textContent=this.roleLabel(u.role);
 
-    console.log('GET BANKS RESPONSE:', res);
+document.getElementById('userFullnameDrop').textContent = u.fullname || u.username;
+document.getElementById('userUnitDrop').textContent = u.unit || '—';
+document.getElementById('chpwUsername').value = u.username;
 
-    if(!res || !res.ok){
-      cat.innerHTML = '<option value="">Lỗi tải dữ liệu</option>';
-      this.showAlert('dashAlert', (res && res.msg) ? res.msg : 'Không nhận được dữ liệu từ Apps Script');
-      return;
-    }
+const mobileAvatar = document.getElementById('mobileAvatar');
+const mobileUserName = document.getElementById('mobileUserName');
+const mobileUserRole = document.getElementById('mobileUserRole');
+if(mobileAvatar) mobileAvatar.textContent=(u.fullname||u.username).charAt(0).toUpperCase();
+if(mobileUserName) mobileUserName.textContent=u.fullname||u.username;
+if(mobileUserRole) mobileUserRole.textContent=this.roleLabel(u.role);
 
-    S.allBanks = Array.isArray(res.banks) ? res.banks : [];
+document.getElementById('welcomeName').textContent='Xin chào, '+(u.fullname||u.username)+'!';
+document.getElementById('welcomeSub').textContent=u.role==='user'?'Chọn bài thi hoặc xem thống kê của bạn':'Quản lý kết quả và thống kê hệ thống';
 
-    if(!S.allBanks.length){
-      cat.innerHTML = '<option value="">Không có lĩnh vực/bộ đề</option>';
-      this.showAlert('dashAlert', 'Đã kết nối Apps Script nhưng không có dữ liệu bộ đề.');
-      return;
-    }
+if(canSeeUnit(u.role)){
+document.getElementById('adminNavLabel').style.display='';
+document.getElementById('nav-unit-stats').style.display='';
+}
+if(canSeeAll(u.role)){
+document.getElementById('nav-all-stats').style.display='';
+}
+this.goto('dashboard');
+},
 
-    this.renderCategories(S.allBanks);
-    this.hideAlert('dashAlert');
+roleLabel(r){ 
+return {
+'admin': 'Quản trị viên',
+'lanh_dao_chi_cuc': 'Lãnh đạo Chi cục',
+'lanh_dao_doi': 'Lãnh đạo Phòng/Đội',
+'user': 'Cán bộ'
+}[r] || r; 
+},
 
-  }catch(e){
-    console.error('LOAD BANKS ERROR:', e);
-    cat.innerHTML = '<option value="">Lỗi kết nối Apps Script</option>';
-    this.showAlert('dashAlert', 'Lỗi tải lĩnh vực: ' + e.message);
-  }
+logout(){
+if(!confirm('Đăng xuất khỏi hệ thống?')) return;
+S.user=null; localStorage.removeItem('qz_user');
+this.stopTimer();
+document.getElementById('appLayout').style.display='none';
+document.getElementById('screen-login').style.display='';
+document.getElementById('screen-login').classList.add('active');
+},
+
+async changePassword(){
+const u=document.getElementById('chpwUsername').value.trim();
+const o=document.getElementById('chpwOld').value;
+const n=document.getElementById('chpwNew').value;
+const c=document.getElementById('chpwConfirm').value;
+
+if(n!==c){ this.showAlert('chpwAlert','Mật khẩu xác nhận không khớp'); return; }
+if(n.length<6){ this.showAlert('chpwAlert','Mật khẩu mới phải ≥ 6 ký tự'); return; }
+
+this.showLoading('Đang xử lý...');
+try{
+const hashedOld = await sha256(o);
+const hashedNew = await sha256(n);
+const res = await callGAS({ action: 'changePassword', username: u, oldPassword: hashedOld, newPassword: hashedNew });
+
+if(res.ok){ 
+this.showAlert('chpwAlert','Đổi mật khẩu thành công!','success'); 
+setTimeout(()=>this.showModal('modal-chpw',false),1500); 
+}
+else this.showAlert('chpwAlert', res.msg||'Thất bại');
+}catch(e){ this.showAlert('chpwAlert', e.message || 'Lỗi kết nối'); }
+this.hideLoading();
+},
+
+async loadDashboard(){
+try{
+const res=await callGAS({action:'getHistory',username:S.user.username});
+if(!res.ok||!res.history.length){ document.getElementById('badgeTotalExams').textContent=0; return; }
+const h=res.history;
+document.getElementById('badgeTotalExams').textContent=h.length;
+const scores=h.map(x=>Number(x.score10)).filter(x=>!isNaN(x));
+const avg=scores.length?scores.reduce((a,b)=>a+b,0)/scores.length:0;
+const best=scores.length?Math.max(...scores):0;
+const pass=scores.filter(x=>x>=5).length;
+document.getElementById('ds-avg').textContent=avg.toFixed(1);
+document.getElementById('ds-best').textContent=best.toFixed(1);
+document.getElementById('ds-pass').textContent=pass;
+document.getElementById('ds-last').textContent=fmtDate(h[0].time);
+document.getElementById('dashHistoryBody').innerHTML=h.slice(0,10).map(row=>`
+       <tr>
+         <td>${fmtDate(row.time)}</td>
+         <td style="max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(row.banks)}</td>
+         <td style="text-align:center">${row.count}</td>
+         <td style="text-align:center;font-weight:700">${Number(row.score10).toFixed(2)}</td>
+         <td>${scorePill(row.score10)}</td>
+       </tr>`).join('');
+}catch(e){}
+},
+
+async loadBanks(){
+const cat = document.getElementById('categorySelect');
+const bank = document.getElementById('bankSelect');
+
+cat.innerHTML = '<option value="">Đang tải lĩnh vực...</option>';
+bank.innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
+bank.disabled = true;
+
+try{
+const res = await callGAS({action:'getBanks'});
+
+console.log('GET BANKS RESPONSE:', res);
+
+if(!res || !res.ok){
+cat.innerHTML = '<option value="">Lỗi tải dữ liệu</option>';
+this.showAlert('dashAlert', (res && res.msg) ? res.msg : 'Không nhận được dữ liệu từ Apps Script');
+return;
+}
+
+S.allBanks = Array.isArray(res.banks) ? res.banks : [];
+
+if(!S.allBanks.length){
+cat.innerHTML = '<option value="">Không có lĩnh vực/bộ đề</option>';
+this.showAlert('dashAlert', 'Đã kết nối Apps Script nhưng không có dữ liệu bộ đề.');
+return;
+}
+
+this.renderCategories(S.allBanks);
+this.hideAlert('dashAlert');
+
+}catch(e){
+console.error('LOAD BANKS ERROR:', e);
+cat.innerHTML = '<option value="">Lỗi kết nối Apps Script</option>';
+this.showAlert('dashAlert', 'Lỗi tải lĩnh vực: ' + e.message);
+}
 },
 
 renderCategories(banks){
-  const cat = document.getElementById('categorySelect');
-  const bank = document.getElementById('bankSelect');
+const cat = document.getElementById('categorySelect');
+const bank = document.getElementById('bankSelect');
 
-  const categories = [...new Set(
-    (banks || [])
-      .map(b => String(b.linhVuc || '').trim())
-      .filter(Boolean)
-  )].sort((a,b) => a.localeCompare(b, 'vi'));
+const categories = [...new Set(
+(banks || [])
+.map(b => String(b.linhVuc || '').trim())
+.filter(Boolean)
+)].sort((a,b) => a.localeCompare(b, 'vi'));
 
-  if(!categories.length){
-    cat.innerHTML = '<option value="">Không tìm thấy lĩnh vực</option>';
-    bank.innerHTML = '<option value="">— Chưa có bộ đề —</option>';
-    bank.disabled = true;
-    return;
-  }
+if(!categories.length){
+cat.innerHTML = '<option value="">Không tìm thấy lĩnh vực</option>';
+bank.innerHTML = '<option value="">— Chưa có bộ đề —</option>';
+bank.disabled = true;
+return;
+}
 
-  cat.innerHTML =
-    '<option value="">— Chọn lĩnh vực —</option>' +
-    categories.map(x => `<option value="${esc(x)}">${esc(x)}</option>`).join('');
+cat.innerHTML =
+'<option value="">— Chọn lĩnh vực —</option>' +
+categories.map(x => `<option value="${esc(x)}">${esc(x)}</option>`).join('');
 
-  bank.innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
-  bank.disabled = true;
+bank.innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
+bank.disabled = true;
 },
 
 filterBanks(){
-  const catVal = document.getElementById('categorySelect').value;
-  const bank = document.getElementById('bankSelect');
+const catVal = document.getElementById('categorySelect').value;
+const bank = document.getElementById('bankSelect');
 
-  if(!catVal){
-    bank.innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
-    bank.disabled = true;
-    return;
-  }
+if(!catVal){
+bank.innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
+bank.disabled = true;
+return;
+}
 
-  const list = (S.allBanks || [])
-    .filter(b => String(b.linhVuc || '').trim() === catVal)
-    .sort((a,b) => String(a.name || '').localeCompare(String(b.name || ''), 'vi'));
+const list = (S.allBanks || [])
+.filter(b => String(b.linhVuc || '').trim() === catVal)
+.sort((a,b) => String(a.name || '').localeCompare(String(b.name || ''), 'vi'));
 
-  if(!list.length){
-    bank.innerHTML = '<option value="">— Không có bộ đề trong lĩnh vực này —</option>';
-    bank.disabled = true;
-    return;
-  }
+if(!list.length){
+bank.innerHTML = '<option value="">— Không có bộ đề trong lĩnh vực này —</option>';
+bank.disabled = true;
+return;
+}
 
-  bank.innerHTML =
-    '<option value="">— Chọn bộ đề —</option>' +
-    list.map(b => `<option value="${esc(b.id)}">${esc(b.name)} (${Number(b.count || 0)} câu)</option>`).join('');
+bank.innerHTML =
+'<option value="">— Chọn bộ đề —</option>' +
+list.map(b => `<option value="${esc(b.id)}">${esc(b.name)} (${Number(b.count || 0)} câu)</option>`).join('');
 
-  bank.disabled = false;
+bank.disabled = false;
 },
-  setExamCount(n,btn){
-    S.examCount=n;
-    document.querySelectorAll('.count-chips .chip').forEach(c=>c.classList.remove('active'));
-    btn.classList.add('active');
-  },
+setExamCount(n,btn){
+S.examCount=n;
+document.querySelectorAll('.count-chips .chip').forEach(c=>c.classList.remove('active'));
+btn.classList.add('active');
+},
 
-  async startQuiz(){
-    const catSel = document.getElementById('categorySelect');
-    if(!catSel || !catSel.value) {
-      this.showAlert('dashAlert', 'Vui lòng chọn Lĩnh vực trước!');
-      return;
-    }
+async startQuiz(){
+const catSel = document.getElementById('categorySelect');
+if(!catSel || !catSel.value) {
+this.showAlert('dashAlert', 'Vui lòng chọn Lĩnh vực trước!');
+return;
+}
 
-    const sel = document.getElementById('bankSelect');
-    if(!sel || !sel.value) {
-      this.showAlert('dashAlert', 'Vui lòng chọn một Bộ đề cụ thể!');
-      return;
-    }
-    
-    const bankId = sel.value;
-    let count = S.examCount;
+const sel = document.getElementById('bankSelect');
+if(!sel || !sel.value) {
+this.showAlert('dashAlert', 'Vui lòng chọn một Bộ đề cụ thể!');
+return;
+}
 
-    const selectedBank = S.allBanks.find(b => String(b.id) === String(bankId));
-    if(selectedBank && count > Number(selectedBank.count || 0)){
-      this.showAlert('dashAlert',`Bộ đề này hiện chỉ có ${selectedBank.count} câu hợp lệ, không đủ để tạo bài thi ${count} câu.`);
-      return;
-    }
+const bankId = sel.value;
+let count = S.examCount;
 
-    this.hideAlert('dashAlert');
-    this.showLoading('Đang tạo đề thi...');
-    try{
-      const res=await callGAS({action:'generateQuiz', username:S.user.username, bankId:bankId, mode:'exam', count:count});
-      
-      if(!res.ok){ this.showAlert('dashAlert',res.msg||'Không tạo được đề thi'); this.hideLoading(); return; }
-      
-      S.quizData=res; S.answers={};
-      
-      const h = res.headerLines || {};
-      document.getElementById('line1').textContent = h.d1 || '';
-      document.getElementById('line2').textContent = h.d2 || '';
-      document.getElementById('line3').textContent = h.d3 || res.bankName || '';
+const selectedBank = S.allBanks.find(b => String(b.id) === String(bankId));
+if(selectedBank && count > Number(selectedBank.count || 0)){
+this.showAlert('dashAlert',`Bộ đề này hiện chỉ có ${selectedBank.count} câu hợp lệ, không đủ để tạo bài thi ${count} câu.`);
+return;
+}
 
-      this.hideLoading();
-      this.renderQuiz(res);
-    }catch(e){ this.showAlert('dashAlert', e.message || 'Lỗi kết nối'); this.hideLoading(); }
-  },
+this.hideAlert('dashAlert');
+this.showLoading('Đang tạo đề thi...');
+try{
+const res=await callGAS({action:'generateQuiz', username:S.user.username, bankId:bankId, mode:'exam', count:count});
 
-  renderQuiz(q){
-    this.stopTimer();
-    document.querySelectorAll('#quizBody input').forEach(i=>i.disabled=false);
-    const submitBtn = document.querySelector('.btn-submit');
-    if(submitBtn){ submitBtn.disabled=false; submitBtn.textContent='📤 NỘP BÀI'; }
-    document.getElementById('totalCount').textContent=q.count;
-    document.getElementById('answeredCount').textContent=0;
-    
-    const timeSecs = Number(q.timeLimitSec || q.count * 60);
-    document.getElementById('timerInfo').textContent=`Kiểm tra – ${q.count} câu`;
-    this.startTimer(timeSecs);
-    
-    document.getElementById('qDots').innerHTML=q.questions.map((_,i)=>`<button class="q-dot" id="dot-${i}" onclick="App.scrollToQ(${i})">${i+1}</button>`).join('');
-    
-    document.getElementById('quizBody').innerHTML=q.questions.map((q2,i)=>`
-      <div class="qblock" id="qb-${i}">
-        <div class="qnum">Câu ${i+1} / ${q.count}</div>
-        <div class="qtext">${esc(q2.question)}</div>
-        ${q2.options.map((opt,o)=>`
-          <label class="opt" id="opt-${i}-${o}">
-            <input type="checkbox" value="${o}" onchange="App.pickOpt(${i},${o},this.checked,this.closest('.opt'))">
-            <span>${letter(o)}. ${esc(opt)}</span>
-          </label>`).join('')}
-      </div>`).join('');
-      
-    this.goto('quiz');
-    
-    S.currentQ = 0;
-    this.showQ(0);
-  },
+if(!res.ok){ this.showAlert('dashAlert',res.msg||'Không tạo được đề thi'); this.hideLoading(); return; }
 
-  showQ(index) {
-    if (!S.quizData || index < 0 || index >= S.quizData.count) return;
-    S.currentQ = index;
+S.quizData=res; S.answers={};
 
-    document.querySelectorAll('.qblock').forEach((el, i) => {
-      el.classList.toggle('active', i === index);
-    });
+const h = res.headerLines || {};
+document.getElementById('line1').textContent = h.d1 || '';
+document.getElementById('line2').textContent = h.d2 || '';
+document.getElementById('line3').textContent = h.d3 || res.bankName || '';
 
-    document.querySelectorAll('.q-dot').forEach((el, i) => {
-      el.classList.toggle('active', i === index);
-    });
+this.hideLoading();
+this.renderQuiz(res);
+}catch(e){ this.showAlert('dashAlert', e.message || 'Lỗi kết nối'); this.hideLoading(); }
+},
 
-    document.getElementById('btnPrev').disabled = (index === 0);
-    document.getElementById('btnNext').disabled = (index === S.quizData.count - 1);
-  },
+renderQuiz(q){
+this.stopTimer();
+document.querySelectorAll('#quizBody input').forEach(i=>i.disabled=false);
+const submitBtn = document.querySelector('.btn-submit');
+if(submitBtn){ submitBtn.disabled=false; submitBtn.textContent='📤 NỘP BÀI'; }
+document.getElementById('totalCount').textContent=q.count;
+document.getElementById('answeredCount').textContent=0;
 
-  nextQ() { this.showQ(S.currentQ + 1); },
-  prevQ() { this.showQ(S.currentQ - 1); },
-  scrollToQ(i) { this.showQ(i); },
+const timeSecs = Number(q.timeLimitSec || q.count * 60);
+document.getElementById('timerInfo').textContent=`Kiểm tra – ${q.count} câu`;
+this.startTimer(timeSecs);
 
-  pickOpt(qi,oi,checked,el){
-    if(!S.answers[qi]) S.answers[qi]=[];
-    if(checked){ if(!S.answers[qi].includes(oi)) S.answers[qi].push(oi); }
-    else { S.answers[qi]=S.answers[qi].filter(x=>x!==oi); }
-    
-    el.classList.toggle('selected',checked);
-    document.getElementById('dot-'+qi).classList.toggle('answered',S.answers[qi].length>0);
-    document.getElementById('answeredCount').textContent=Object.values(S.answers).filter(a=>a.length>0).length;
+document.getElementById('qDots').innerHTML=q.questions.map((_,i)=>`<button class="q-dot" id="dot-${i}" onclick="App.scrollToQ(${i})">${i+1}</button>`).join('');
 
-    if(checked && S.quizData && qi < S.quizData.count - 1){
-      clearTimeout(S.autoNextTimer);
-      S.autoNextTimer = setTimeout(()=>{
-        if(S.currentQ === qi) App.nextQ();
-      }, 10000); 
-    }
-  },
+document.getElementById('quizBody').innerHTML=q.questions.map((q2,i)=>`
+     <div class="qblock" id="qb-${i}">
+       <div class="qnum">Câu ${i+1} / ${q.count}</div>
+       <div class="qtext">${esc(q2.question)}</div>
+       ${q2.options.map((opt,o)=>`
+         <label class="opt" id="opt-${i}-${o}">
+           <input type="checkbox" value="${o}" onchange="App.pickOpt(${i},${o},this.checked,this.closest('.opt'))">
+           <span>${letter(o)}. ${esc(opt)}</span>
+         </label>`).join('')}
+     </div>`).join('');
 
-  startTimer(total){
-    S.timeLeft=total; this.updateTimer(total,total);
-    S.timerIv=setInterval(()=>{
-      S.timeLeft--;
-      this.updateTimer(S.timeLeft,total);
-      if(S.timeLeft===60) this.showTimerBanner('⚠️ Còn 1 phút! Kiểm tra lại bài.');
-      if(S.timeLeft<=0){ this.stopTimer(); this.lockQuiz(); this.showCountdown(); }
-    },1000);
-  },
-  
-  updateTimer(left,total){
-    const m=String(Math.floor(left/60)).padStart(2,'0'),s=String(left%60).padStart(2,'0');
-    const cl=document.getElementById('timerClock');
-    cl.textContent=`${m}:${s}`;
-    const warn=left<=total*.25, danger=left<=60;
-    cl.className='timer-clock'+(danger?' danger':warn?' warning':'');
-  },
-  
-  stopTimer(){ if(S.timerIv){ clearInterval(S.timerIv); S.timerIv=null; } },
-  
-  lockQuiz(){
-    document.querySelectorAll('#quizBody input').forEach(i=>i.disabled=true);
-    const b=document.querySelector('.btn-submit');
-    if(b){b.disabled=true;b.textContent='⏰ Đang nộp tự động...';}
-  },
+this.goto('quiz');
 
-  showTimerBanner(msg){
-    let el=document.getElementById('timerBanner');
-    if(!el){
-      el=document.createElement('div'); el.id='timerBanner';
-      el.style.cssText='position:fixed;top:66px;left:50%;transform:translateX(-50%);z-index:600;background-image:linear-gradient(#d4600a,#d4600a) !important;color:#fff;padding:9px 20px;border-radius:8px;font-size:.83rem;font-weight:700;box-shadow:0 4px 16px rgba(0,0,0,.2);white-space:nowrap';
-      document.body.appendChild(el);
-    }
-    el.textContent=msg; el.style.display='block';
-    clearTimeout(el._t); el._t=setTimeout(()=>el.style.display='none',4000);
-  },
+S.currentQ = 0;
+this.showQ(0);
+},
 
-  showCountdown(){
-    let ov=document.getElementById('cdOverlay');
-    if(!ov){
-      ov=document.createElement('div'); ov.id='cdOverlay';
-      ov.style.cssText='position:fixed;inset:0;z-index:900;background:rgba(10,22,40,.8);display:flex;align-items:center;justify-content:center';
-      ov.innerHTML='<div style="background-image:linear-gradient(#ffffff,#ffffff) !important;border-radius:16px;padding:36px 44px;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,.3)">'+
-        '<div style="font-size:2.8rem;margin-bottom:10px">⏰</div>'+
-        '<h2 style="font-size:1.1rem;font-weight:800;color:#0f1f3d !important;margin-bottom:8px">Hết giờ làm bài!</h2>'+
-        '<p style="color:#4a5c7a !important;font-size:.85rem;margin-bottom:16px">Bài thi sẽ tự động nộp sau</p>'+
-        '<div id="cdNum" style="font-size:4rem;font-weight:800;color:#c0392b !important;line-height:1">3</div>'+
-        '<p style="color:#8496b0 !important;font-size:.75rem;margin-top:4px">giây</p></div>';
-      document.body.appendChild(ov);
-    }
-    ov.style.display='flex';
-    let n=3;
-    const t=setInterval(()=>{ n--; const el=document.getElementById('cdNum'); if(el) el.textContent=n; if(n<=0){ clearInterval(t); ov.style.display='none'; this.submitQuiz(false); }},1000);
-  },
+showQ(index) {
+if (!S.quizData || index < 0 || index >= S.quizData.count) return;
+S.currentQ = index;
 
-  confirmSubmit(){
-    const total=S.quizData.count, ans=Object.values(S.answers).filter(a=>a.length>0).length;
-    const left=total-ans;
-    const msg=left>0?`Còn ${left} câu chưa trả lời. Vẫn nộp bài?`:`Đã trả lời đủ ${total} câu. Nộp bài?`;
-    if(confirm(msg)) this.submitQuiz(false);
-  },
+document.querySelectorAll('.qblock').forEach((el, i) => {
+el.classList.toggle('active', i === index);
+});
 
-  async submitQuiz(forceSave = false){
-    this.stopTimer();
-    this.showLoading(forceSave ? 'Đang lưu kết quả...' : 'Đang chấm bài...');
-    try{
-      const res = await callGAS({
-        action: 'submitQuiz',
-        quizId: S.quizData.quizId,
-        userAnswers: S.answers,
-        user: S.user,
-        forceSave: forceSave 
-      });
-      
-      this.hideLoading();
-      if(!res.ok){ alert('Lỗi nộp bài: '+(res.msg||'Không xác định')); return; }
+document.querySelectorAll('.q-dot').forEach((el, i) => {
+el.classList.toggle('active', i === index);
+});
 
-      if (res.promptSave) {
-        const wantToSave = confirm(`Điểm của bạn là: ${Number(res.score10).toFixed(2)} / 10 (Chưa đạt).\nBạn có muốn lưu kết quả trắc nghiệm này vào hệ thống không?`);
-        
-        if (wantToSave) {
-          return this.submitQuiz(true);
-        } else {
-          this.renderResult(res, false);
-          return;
-        }
-      }
+document.getElementById('btnPrev').disabled = (index === 0);
+document.getElementById('btnNext').disabled = (index === S.quizData.count - 1);
+},
 
-      this.renderResult(res, true);
-    }catch(e){ this.hideLoading(); alert('Lỗi kết nối khi nộp bài: ' + e.message); }
-  },
+nextQ() { this.showQ(S.currentQ + 1); },
+prevQ() { this.showQ(S.currentQ - 1); },
+scrollToQ(i) { this.showQ(i); },
 
-  renderResult(res, isSaved = true){
-    const {correctCount, score10, totalQ, detail, lateSubmit} = res;
-    S.resultScore10Val = Number(score10).toFixed(2);
-    
-    const u = S.user;
-    const dateStr = new Date().toLocaleString('vi-VN', { hour12: false });
-    document.getElementById('printUserInfo').innerHTML = `
-      <div><strong>Họ và tên:</strong> ${u.fullname || u.username}</div>
-      <div><strong>Mã cán bộ:</strong> ${u.username}</div>
-      <div><strong>Đối tượng:</strong> ${u.doi_tuong || '—'}</div>
-      <div><strong>Đơn vị:</strong> ${u.unit || '—'}</div>
-      <div style="grid-column: 1 / -1;"><strong>Thời gian nộp:</strong> ${dateStr}</div>
-    `;
+pickOpt(qi,oi,checked,el){
+if(!S.answers[qi]) S.answers[qi]=[];
+if(checked){ if(!S.answers[qi].includes(oi)) S.answers[qi].push(oi); }
+else { S.answers[qi]=S.answers[qi].filter(x=>x!==oi); }
 
-    document.getElementById('resultScore').textContent = Number(score10).toFixed(2) + ' / 10';
-    document.getElementById('resultScore10').textContent = `Số câu đúng hoàn toàn: ${correctCount} / ${totalQ}`;
-    document.getElementById('resultMeta').textContent = '📝 Kiểm tra | ' + (S.quizData?.headerLines?.d3 || '');
-    
-    const pct = Math.round(Number(score10)/10*100);
-    const circ = 2*Math.PI*38; const dash = (pct/100)*circ;
-    document.getElementById('donutProg').setAttribute('stroke-dasharray',`${dash} ${circ}`);
-    document.getElementById('donutPct').textContent = pct+'%';
-    
-    let dungHoanToan = 0, dungMotPhan = 0, saiMotPhan = 0, saiHoanToan = 0;
+el.classList.toggle('selected',checked);
+document.getElementById('dot-'+qi).classList.toggle('answered',S.answers[qi].length>0);
+document.getElementById('answeredCount').textContent=Object.values(S.answers).filter(a=>a.length>0).length;
 
-    document.getElementById('resultDetail').innerHTML = detail.map((d,i)=>{
-      const sc=d.score; const pctQ=sc/1;
-      const cls=pctQ>=0.999?'full':pctQ>0?'partial':'wrong';
-      const scCls=pctQ>=0.999?'s-full':pctQ>0?'s-partial':'s-zero';
-      
-      let correctChosen = 0, wrongChosen = 0, totalCorrect = 0;
+if(checked && S.quizData && qi < S.quizData.count - 1){
+clearTimeout(S.autoNextTimer);
+S.autoNextTimer = setTimeout(()=>{
+if(S.currentQ === qi) App.nextQ();
+}, 10000); 
+}
+},
 
-      const opts=d.options.map((o,oi)=>{
-        let c2='',ic='';
-        if(o.isCorrect) totalCorrect++;
-        if(o.isCorrect&&o.isChosen){c2='ok';ic='✓'; correctChosen++;}
-        else if(!o.isCorrect&&o.isChosen){c2='bad';ic='✗'; wrongChosen++;}
-        else if(o.isCorrect&&!o.isChosen){c2='missed';ic='!';}
-        return `<div class="ropt ${c2}"><span style="flex-shrink:0;font-size:.78rem">${ic||'·'}</span><span>${letter(oi)}. ${esc(o.text)}</span></div>`;
-      }).join('');
-      
-      if (correctChosen === totalCorrect && wrongChosen === 0) dungHoanToan++;
-      else if (correctChosen === 0) saiHoanToan++;
-      else if (correctChosen > 0 && wrongChosen === 0) dungMotPhan++;
-      else if (correctChosen > 0 && wrongChosen > 0) saiMotPhan++;
+startTimer(total){
+S.timeLeft=total; this.updateTimer(total,total);
+S.timerIv=setInterval(()=>{
+S.timeLeft--;
+this.updateTimer(S.timeLeft,total);
+if(S.timeLeft===60) this.showTimerBanner('⚠️ Còn 1 phút! Kiểm tra lại bài.');
+if(S.timeLeft<=0){ this.stopTimer(); this.lockQuiz(); this.showCountdown(); }
+},1000);
+},
 
-      const expl=d.explain?`<div class="rexplain">💡 ${esc(d.explain)}</div>`:'';
-      return `<div class="rq ${cls}"><div class="rq-hd"><span class="rq-num">Câu ${i+1}</span><span class="rq-score ${scCls}">${d.score.toFixed(3)} điểm</span></div><div class="rq-text">${esc(d.question)}</div>${opts}${expl}</div>`;
-    }).join('');
+updateTimer(left,total){
+const m=String(Math.floor(left/60)).padStart(2,'0'),s=String(left%60).padStart(2,'0');
+const cl=document.getElementById('timerClock');
+cl.textContent=`${m}:${s}`;
+const warn=left<=total*.25, danger=left<=60;
+cl.className='timer-clock'+(danger?' danger':warn?' warning':'');
+},
 
-    document.getElementById('rs-full-correct').textContent = dungHoanToan;
-    document.getElementById('rs-partial-correct').textContent = dungMotPhan;
-    document.getElementById('rs-partial-wrong').textContent = saiMotPhan;
-    document.getElementById('rs-full-wrong').textContent = saiHoanToan;
+stopTimer(){ if(S.timerIv){ clearInterval(S.timerIv); S.timerIv=null; } },
 
-    const lateBanner = document.getElementById('lateBanner');
-    if (!isSaved) {
-      lateBanner.innerHTML = '⚠️ Kết quả này <b>KHÔNG</b> được lưu vào hệ thống do chưa đạt điểm và bạn đã chọn từ chối lưu.';
-      lateBanner.style.backgroundColor = 'var(--o1)';
-      lateBanner.style.display = 'block';
-    } else {
-      lateBanner.style.display = 'none'; 
-    }
-    
-    this.goto('result');
-    window.scrollTo(0,0);
-  },
+lockQuiz(){
+document.querySelectorAll('#quizBody input').forEach(i=>i.disabled=true);
+const b=document.querySelector('.btn-submit');
+if(b){b.disabled=true;b.textContent='⏰ Đang nộp tự động...';}
+},
 
-  async loadMyStats(){
-    document.getElementById('myHistoryBody').innerHTML='<tr><td colspan="6" style="text-align:center;padding:20px;color:#8496b0 !important">Đang tải...</td></tr>';
-    try{
-      const res=await callGAS({action:'getHistory',username:S.user.username});
-      if(!res.ok||!res.history.length){ document.getElementById('myHistoryBody').innerHTML='<tr><td colspan="6" style="text-align:center;padding:20px;color:#8496b0 !important">Chưa có dữ liệu</td></tr>'; return; }
-      const h=res.history;
-      const scores=h.map(x=>Number(x.score10)).filter(x=>!isNaN(x));
-      const avg=scores.length?scores.reduce((a,b)=>a+b,0)/scores.length:0;
-      const best=scores.length?Math.max(...scores):0;
-      const passRate=scores.length?Math.round(scores.filter(x=>x>=5).length/scores.length*100):0;
-      document.getElementById('ms-total').textContent=h.length;
-      document.getElementById('ms-avg').textContent=avg.toFixed(1);
-      document.getElementById('ms-best').textContent=best.toFixed(1);
-      document.getElementById('ms-pass-rate').textContent=passRate+'%';
-      document.getElementById('myHistoryBody').innerHTML=h.map((row,i)=>`<tr>
-        <td><span class="rank-badge">${i+1}</span></td>
-        <td>${fmtDate(row.time)}</td>
-        <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(row.banks)}</td>
-        <td style="text-align:center">${row.count}</td>
-        <td style="text-align:center;font-weight:700">${Number(row.score10).toFixed(2)}</td>
-        <td>${scorePill(row.score10)}</td></tr>`).join('');
-    }catch(e){ document.getElementById('myHistoryBody').innerHTML='<tr><td colspan="6" style="text-align:center;color:#c0392b !important;padding:20px">Lỗi kết nối</td></tr>'; }
-  },
+showTimerBanner(msg){
+let el=document.getElementById('timerBanner');
+if(!el){
+el=document.createElement('div'); el.id='timerBanner';
+el.style.cssText='position:fixed;top:66px;left:50%;transform:translateX(-50%);z-index:600;background-image:linear-gradient(#d4600a,#d4600a) !important;color:#fff;padding:9px 20px;border-radius:8px;font-size:.83rem;font-weight:700;box-shadow:0 4px 16px rgba(0,0,0,.2);white-space:nowrap';
+document.body.appendChild(el);
+}
+el.textContent=msg; el.style.display='block';
+clearTimeout(el._t); el._t=setTimeout(()=>el.style.display='none',4000);
+},
 
-  async loadUnitStats(){
-    if(!canSeeUnit(S.user.role)) return;
-    
-    const isTeamLead = S.user.role === 'lanh_dao_doi';
-    document.getElementById('unitName').textContent = isTeamLead ? (S.user.unit || 'Chưa có đơn vị') : 'Tất cả đơn vị';
-    
-    document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:#8496b0 !important">Đang tải...</td></tr>';
-    try{
-      const res=await callGAS({action:'getUnitStats',role:S.user.role,unit:S.user.unit});
-      if(!res.ok){ document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:#c0392b !important;padding:20px">'+esc(res.msg)+'</td></tr>'; return; }
-      this.renderUnitTable(res.stats,'unitStatsBody','us-');
-    }catch(e){ document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:#c0392b !important;padding:20px">Lỗi kết nối</td></tr>'; }
-  },
+showCountdown(){
+let ov=document.getElementById('cdOverlay');
+if(!ov){
+ov=document.createElement('div'); ov.id='cdOverlay';
+ov.style.cssText='position:fixed;inset:0;z-index:900;background:rgba(10,22,40,.8);display:flex;align-items:center;justify-content:center';
+ov.innerHTML='<div style="background-image:linear-gradient(#ffffff,#ffffff) !important;border-radius:16px;padding:36px 44px;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,.3)">'+
+'<div style="font-size:2.8rem;margin-bottom:10px">⏰</div>'+
+'<h2 style="font-size:1.1rem;font-weight:800;color:#0f1f3d !important;margin-bottom:8px">Hết giờ làm bài!</h2>'+
+'<p style="color:#4a5c7a !important;font-size:.85rem;margin-bottom:16px">Bài thi sẽ tự động nộp sau</p>'+
+'<div id="cdNum" style="font-size:4rem;font-weight:800;color:#c0392b !important;line-height:1">3</div>'+
+'<p style="color:#8496b0 !important;font-size:.75rem;margin-top:4px">giây</p></div>';
+document.body.appendChild(ov);
+}
+ov.style.display='flex';
+let n=3;
+const t=setInterval(()=>{ n--; const el=document.getElementById('cdNum'); if(el) el.textContent=n; if(n<=0){ clearInterval(t); ov.style.display='none'; this.submitQuiz(false); }},1000);
+},
 
-  renderUnitTable(stats,tbodyId,pfx){
-    if(!stats||!stats.length){ document.getElementById(tbodyId).innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:#8496b0 !important">Chưa có dữ liệu</td></tr>'; return; }
-    const totalExams=stats.reduce((a,r)=>a+r.count,0);
-    const totalAvg=stats.reduce((a,r)=>a+r.avg,0)/stats.length;
-    const totalPass=stats.filter(r=>r.avg>=5).length;
-    const members=stats.length;
-    if(pfx){ document.getElementById(pfx+'members').textContent=members; document.getElementById(pfx+'exams').textContent=totalExams; document.getElementById(pfx+'avg').textContent=totalAvg.toFixed(1); document.getElementById(pfx+'pass').textContent=Math.round(totalPass/members*100)+'%'; }
-    document.getElementById(tbodyId).innerHTML=stats.map((r,i)=>{
-      const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
-      const rankCls=i<3?'gold-rank':'';
-      return `<tr>
-        <td><span class="rank-badge ${rankCls}">${i+1}</span> ${medal}</td>
-        <td style="font-weight:600">${esc(r.fullname)}</td>
-        <td style="font-size:.75rem;color:#8496b0 !important">${esc(r.username)}</td>
-        <td style="text-align:center">${r.count}</td>
-        <td>${scorePill(r.avg)}</td>
-        <td style="text-align:center;font-weight:700">${Number(r.best).toFixed(2)}</td>
-        <td style="text-align:center;font-size:.82rem">${r.pass}/${r.count}</td></tr>`;
-    }).join('');
-  },
+confirmSubmit(){
+const total=S.quizData.count, ans=Object.values(S.answers).filter(a=>a.length>0).length;
+const left=total-ans;
+const msg=left>0?`Còn ${left} câu chưa trả lời. Vẫn nộp bài?`:`Đã trả lời đủ ${total} câu. Nộp bài?`;
+if(confirm(msg)) this.submitQuiz(false);
+},
 
-  async loadAllStats(){
-    if(!canSeeAll(S.user.role)) return;
-    const unit=document.getElementById('filterUnit').value;
-    const from=document.getElementById('filterFrom').value;
-    const to=document.getElementById('filterTo').value;
-    document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:#8496b0 !important">Đang tải...</td></tr>';
-    try{
-      const res=await callGAS({action:'getAllStats',filterUnit:unit,filterFrom:from,filterTo:to});
-      if(!res.ok){ document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:#c0392b !important;padding:20px">'+esc(res.msg)+'</td></tr>'; return; }
-      if(res.units){
-        const sel=document.getElementById('filterUnit');
-        const cur=sel.value;
-        sel.innerHTML='<option value="">— Tất cả đơn vị —</option>'+res.units.map(u=>`<option value="${esc(u)}">${esc(u)}</option>`).join('');
-        sel.value=cur;
-      }
-      const stats=res.stats||[];
-      document.getElementById('allStatsCount').textContent=stats.length+' người';
-      const units=new Set(stats.map(r=>r.unit)).size;
-      const people=stats.length;
-      const exams=stats.reduce((a,r)=>a+r.count,0);
-      const avg=people?stats.reduce((a,r)=>a+r.avg,0)/people:0;
-      document.getElementById('as-units').textContent=units;
-      document.getElementById('as-people').textContent=people;
-      document.getElementById('as-exams').textContent=exams;
-      document.getElementById('as-avg').textContent=avg.toFixed(1);
-      const top3=stats.slice(0,3);
-      document.getElementById('topRankHero').innerHTML=top3.map((r,i)=>`
-        <div class="rank-card rank-${i+1}">
-          <div class="rank-medal">${['🥇','🥈','🥉'][i]}</div>
-          <div class="rank-name">${esc(r.fullname)}</div>
-          <div class="rank-unit">${esc(r.unit)}</div>
-          <div class="rank-score">${Number(r.avg).toFixed(1)}<span style="font-size:.7rem;font-weight:400;color:#8496b0 !important"> /10</span></div>
-        </div>`).join('');
-      document.getElementById('allStatsBody').innerHTML=stats.map((r,i)=>`<tr>
-        <td><span class="rank-badge ${i<3?'gold-rank':''}">${i+1}</span></td>
-        <td style="font-weight:600">${esc(r.fullname)}</td>
-        <td style="font-size:.75rem;color:#8496b0 !important">${esc(r.unit||'—')}</td>
-        <td style="text-align:center">${r.count}</td>
-        <td>${scorePill(r.avg)}</td>
-        <td style="text-align:center;font-weight:700">${Number(r.best).toFixed(2)}</td>
-        <td style="text-align:center;font-size:.82rem">${Math.round(r.pass/r.count*100)}%</td></tr>`).join('');
-    }catch(e){ document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:#c0392b !important;padding:20px">Lỗi kết nối</td></tr>'; }
-  },
+async submitQuiz(forceSave = false){
+this.stopTimer();
+this.showLoading(forceSave ? 'Đang lưu kết quả...' : 'Đang chấm bài...');
+try{
+const res = await callGAS({
+action: 'submitQuiz',
+quizId: S.quizData.quizId,
+userAnswers: S.answers,
+user: S.user,
+forceSave: forceSave 
+});
 
-  async exportToWord() {
-    if (!S.quizData || !S.quizData.questions) { alert('Không có dữ liệu để xuất'); return; }
-    if (typeof docx === 'undefined') { alert('Thư viện tạo file Word đang tải hoặc bị chặn, vui lòng thử lại sau vài giây!'); return; }
-    this.showLoading('Đang tạo file Word...');
-    try {
-      const { Document, Paragraph, TextRun, HeadingLevel, AlignmentType } = docx;
-      const doc = new Document({
-        sections: [{
-          properties: {},
-          children: [
-            new Paragraph({ text: S.quizData.headerLines?.d1 || "CHI CỤC HẢI QUAN", heading: HeadingLevel.HEADING_1, alignment: AlignmentType.CENTER }),
-            new Paragraph({ text: S.quizData.headerLines?.d2 || "KẾT QUẢ BÀI THI", heading: HeadingLevel.HEADING_2, alignment: AlignmentType.CENTER }),
-            new Paragraph({ text: S.quizData.headerLines?.d3 || S.quizData.bankName, heading: HeadingLevel.HEADING_3, alignment: AlignmentType.CENTER, spacing: { after: 400 } }),
-            
-            new Paragraph({ children: [new TextRun({ text: "Họ và tên: ", bold: true }), new TextRun(S.user.fullname || S.user.username)], spacing: { after: 100 } }),
-            new Paragraph({ children: [new TextRun({ text: "Mã CB: ", bold: true }), new TextRun(S.user.username)], spacing: { after: 100 } }),
-            new Paragraph({ children: [new TextRun({ text: "Ngày thi: ", bold: true }), new TextRun(new Date().toLocaleDateString('vi-VN'))], spacing: { after: 100 } }),
-            new Paragraph({ children: [new TextRun({ text: "Điểm hệ 10: ", bold: true }), new TextRun(`${S.resultScore10Val} / 10`)], spacing: { after: 400 } }),
-            
-            new Paragraph({ text: "CHI TIẾT TỪNG CÂU", heading: HeadingLevel.HEADING_3, spacing: { before: 400, after: 200 } })
-          ]
-        }]
-      });
+this.hideLoading();
+if(!res.ok){ alert('Lỗi nộp bài: '+(res.msg||'Không xác định')); return; }
 
-      document.querySelectorAll('.rq').forEach((rq, index) => {
-        doc.sections[0].children.push(new Paragraph({ children: [new TextRun({ text: `Câu ${index + 1}: `, bold: true }), new TextRun(rq.querySelector('.rq-text').textContent)], spacing: { before: 200, after: 100 } }));
-        rq.querySelectorAll('.ropt').forEach((opt) => {
-          let prefix = '  ';
-          if (opt.classList.contains('ok')) prefix = '  ✓ ';
-          if (opt.classList.contains('bad')) prefix = '  ✗ ';
-          if (opt.classList.contains('missed')) prefix = '  ! ';
-          doc.sections[0].children.push(new Paragraph({ text: prefix + opt.textContent.trim(), spacing: { after: 50 } }));
-        });
-        doc.sections[0].children.push(new Paragraph({ children: [new TextRun({ text: `Điểm: ${rq.querySelector('.rq-score').textContent}`, bold: true })], spacing: { after: 100 } }));
-      });
-      const blob = await docx.Packer.toBlob(doc);
-      saveAs(blob, `Ket-qua-${S.user.username}-${Date.now()}.docx`);
-      this.hideLoading();
-    } catch (e) { this.hideLoading(); alert('Lỗi xuất Word: ' + e.message); }
-  },
+if (res.promptSave) {
+const wantToSave = confirm(`Điểm của bạn là: ${Number(res.score10).toFixed(2)} / 10 (Chưa đạt).\nBạn có muốn lưu kết quả trắc nghiệm này vào hệ thống không?`);
 
-  exportToExcel() {
-    if (!S.quizData || !S.quizData.questions) { alert('Không có dữ liệu để xuất'); return; }
-    this.showLoading('Đang tạo Excel...');
-    try {
-      const data = [['STT', 'Câu hỏi', 'Đáp án đúng', 'Đáp án của bạn', 'Điểm']];
-      document.querySelectorAll('.rq').forEach((rq, index) => {
-        let correctAnswers = [], userAnswers = [];
-        rq.querySelectorAll('.ropt').forEach((opt) => {
-          const text = opt.textContent.trim();
-          if (opt.classList.contains('ok')) { correctAnswers.push(text); userAnswers.push(text); } 
-          else if (opt.classList.contains('bad')) { userAnswers.push(text); } 
-          else if (opt.classList.contains('missed')) { correctAnswers.push(text); }
-        });
-        data.push([index + 1, rq.querySelector('.rq-text').textContent, correctAnswers.join('; '), userAnswers.join('; '), rq.querySelector('.rq-score').textContent]);
-      });
+if (wantToSave) {
+return this.submitQuiz(true);
+} else {
+this.renderResult(res, false);
+return;
+}
+}
 
-      data.push(['', 'TỔNG CỘNG', '', '', `${S.resultScore10Val} / 10`, '']);
+this.renderResult(res, true);
+}catch(e){ this.hideLoading(); alert('Lỗi kết nối khi nộp bài: ' + e.message); }
+},
 
-      const ws = XLSX.utils.aoa_to_sheet(data);
-      ws['!cols'] = [{ wch: 5 }, { wch: 60 }, { wch: 30 }, { wch: 30 }, { wch: 15 }, { wch: 40 }];
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Kết quả");
-      XLSX.writeFile(wb, `Ket-qua-${S.user.username}-${Date.now()}.xlsx`);
-      this.hideLoading();
-    } catch (e) { this.hideLoading(); alert('Lỗi xuất Excel: ' + e.message); }
-  }
+renderResult(res, isSaved = true){
+const {correctCount, score10, totalQ, detail, lateSubmit} = res;
+S.resultScore10Val = Number(score10).toFixed(2);
+
+const u = S.user;
+const dateStr = new Date().toLocaleString('vi-VN', { hour12: false });
+document.getElementById('printUserInfo').innerHTML = `
+     <div><strong>Họ và tên:</strong> ${u.fullname || u.username}</div>
+     <div><strong>Mã cán bộ:</strong> ${u.username}</div>
+     <div><strong>Đối tượng:</strong> ${u.doi_tuong || '—'}</div>
+     <div><strong>Đơn vị:</strong> ${u.unit || '—'}</div>
+     <div style="grid-column: 1 / -1;"><strong>Thời gian nộp:</strong> ${dateStr}</div>
+   `;
+
+document.getElementById('resultScore').textContent = Number(score10).toFixed(2) + ' / 10';
+document.getElementById('resultScore10').textContent = `Số câu đúng hoàn toàn: ${correctCount} / ${totalQ}`;
+document.getElementById('resultMeta').textContent = '📝 Kiểm tra | ' + (S.quizData?.headerLines?.d3 || '');
+
+const pct = Math.round(Number(score10)/10*100);
+const circ = 2*Math.PI*38; const dash = (pct/100)*circ;
+document.getElementById('donutProg').setAttribute('stroke-dasharray',`${dash} ${circ}`);
+document.getElementById('donutPct').textContent = pct+'%';
+
+let dungHoanToan = 0, dungMotPhan = 0, saiMotPhan = 0, saiHoanToan = 0;
+
+document.getElementById('resultDetail').innerHTML = detail.map((d,i)=>{
+const sc=d.score; const pctQ=sc/1;
+const cls=pctQ>=0.999?'full':pctQ>0?'partial':'wrong';
+const scCls=pctQ>=0.999?'s-full':pctQ>0?'s-partial':'s-zero';
+
+let correctChosen = 0, wrongChosen = 0, totalCorrect = 0;
+
+const opts=d.options.map((o,oi)=>{
+let c2='',ic='';
+if(o.isCorrect) totalCorrect++;
+if(o.isCorrect&&o.isChosen){c2='ok';ic='✓'; correctChosen++;}
+else if(!o.isCorrect&&o.isChosen){c2='bad';ic='✗'; wrongChosen++;}
+else if(o.isCorrect&&!o.isChosen){c2='missed';ic='!';}
+return `<div class="ropt ${c2}"><span style="flex-shrink:0;font-size:.78rem">${ic||'·'}</span><span>${letter(oi)}. ${esc(o.text)}</span></div>`;
+}).join('');
+
+if (correctChosen === totalCorrect && wrongChosen === 0) dungHoanToan++;
+else if (correctChosen === 0) saiHoanToan++;
+else if (correctChosen > 0 && wrongChosen === 0) dungMotPhan++;
+else if (correctChosen > 0 && wrongChosen > 0) saiMotPhan++;
+
+const expl=d.explain?`<div class="rexplain">💡 ${esc(d.explain)}</div>`:'';
+return `<div class="rq ${cls}"><div class="rq-hd"><span class="rq-num">Câu ${i+1}</span><span class="rq-score ${scCls}">${d.score.toFixed(3)} điểm</span></div><div class="rq-text">${esc(d.question)}</div>${opts}${expl}</div>`;
+}).join('');
+
+document.getElementById('rs-full-correct').textContent = dungHoanToan;
+document.getElementById('rs-partial-correct').textContent = dungMotPhan;
+document.getElementById('rs-partial-wrong').textContent = saiMotPhan;
+document.getElementById('rs-full-wrong').textContent = saiHoanToan;
+
+const lateBanner = document.getElementById('lateBanner');
+if (!isSaved) {
+lateBanner.innerHTML = '⚠️ Kết quả này <b>KHÔNG</b> được lưu vào hệ thống do chưa đạt điểm và bạn đã chọn từ chối lưu.';
+lateBanner.style.backgroundColor = 'var(--o1)';
+lateBanner.style.display = 'block';
+} else {
+lateBanner.style.display = 'none'; 
+}
+
+this.goto('result');
+window.scrollTo(0,0);
+},
+
+async loadMyStats(){
+document.getElementById('myHistoryBody').innerHTML='<tr><td colspan="6" style="text-align:center;padding:20px;color:#8496b0 !important">Đang tải...</td></tr>';
+try{
+const res=await callGAS({action:'getHistory',username:S.user.username});
+if(!res.ok||!res.history.length){ document.getElementById('myHistoryBody').innerHTML='<tr><td colspan="6" style="text-align:center;padding:20px;color:#8496b0 !important">Chưa có dữ liệu</td></tr>'; return; }
+const h=res.history;
+const scores=h.map(x=>Number(x.score10)).filter(x=>!isNaN(x));
+const avg=scores.length?scores.reduce((a,b)=>a+b,0)/scores.length:0;
+const best=scores.length?Math.max(...scores):0;
+const passRate=scores.length?Math.round(scores.filter(x=>x>=5).length/scores.length*100):0;
+document.getElementById('ms-total').textContent=h.length;
+document.getElementById('ms-avg').textContent=avg.toFixed(1);
+document.getElementById('ms-best').textContent=best.toFixed(1);
+document.getElementById('ms-pass-rate').textContent=passRate+'%';
+document.getElementById('myHistoryBody').innerHTML=h.map((row,i)=>`<tr>
+       <td><span class="rank-badge">${i+1}</span></td>
+       <td>${fmtDate(row.time)}</td>
+       <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(row.banks)}</td>
+       <td style="text-align:center">${row.count}</td>
+       <td style="text-align:center;font-weight:700">${Number(row.score10).toFixed(2)}</td>
+       <td>${scorePill(row.score10)}</td></tr>`).join('');
+}catch(e){ document.getElementById('myHistoryBody').innerHTML='<tr><td colspan="6" style="text-align:center;color:#c0392b !important;padding:20px">Lỗi kết nối</td></tr>'; }
+},
+
+async loadUnitStats(){
+if(!canSeeUnit(S.user.role)) return;
+
+const isTeamLead = S.user.role === 'lanh_dao_doi';
+document.getElementById('unitName').textContent = isTeamLead ? (S.user.unit || 'Chưa có đơn vị') : 'Tất cả đơn vị';
+
+document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:#8496b0 !important">Đang tải...</td></tr>';
+try{
+const res=await callGAS({action:'getUnitStats',role:S.user.role,unit:S.user.unit});
+if(!res.ok){ document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:#c0392b !important;padding:20px">'+esc(res.msg)+'</td></tr>'; return; }
+this.renderUnitTable(res.stats,'unitStatsBody','us-');
+}catch(e){ document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:#c0392b !important;padding:20px">Lỗi kết nối</td></tr>'; }
+},
+
+renderUnitTable(stats,tbodyId,pfx){
+if(!stats||!stats.length){ document.getElementById(tbodyId).innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:#8496b0 !important">Chưa có dữ liệu</td></tr>'; return; }
+const totalExams=stats.reduce((a,r)=>a+r.count,0);
+const totalAvg=stats.reduce((a,r)=>a+r.avg,0)/stats.length;
+const totalPass=stats.filter(r=>r.avg>=5).length;
+const members=stats.length;
+if(pfx){ document.getElementById(pfx+'members').textContent=members; document.getElementById(pfx+'exams').textContent=totalExams; document.getElementById(pfx+'avg').textContent=totalAvg.toFixed(1); document.getElementById(pfx+'pass').textContent=Math.round(totalPass/members*100)+'%'; }
+document.getElementById(tbodyId).innerHTML=stats.map((r,i)=>{
+const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+const rankCls=i<3?'gold-rank':'';
+return `<tr>
+       <td><span class="rank-badge ${rankCls}">${i+1}</span> ${medal}</td>
+       <td style="font-weight:600">${esc(r.fullname)}</td>
+       <td style="font-size:.75rem;color:#8496b0 !important">${esc(r.username)}</td>
+       <td style="text-align:center">${r.count}</td>
+       <td>${scorePill(r.avg)}</td>
+       <td style="text-align:center;font-weight:700">${Number(r.best).toFixed(2)}</td>
+       <td style="text-align:center;font-size:.82rem">${r.pass}/${r.count}</td></tr>`;
+}).join('');
+},
+
+async loadAllStats(){
+if(!canSeeAll(S.user.role)) return;
+const unit=document.getElementById('filterUnit').value;
+const from=document.getElementById('filterFrom').value;
+const to=document.getElementById('filterTo').value;
+document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:#8496b0 !important">Đang tải...</td></tr>';
+try{
+const res=await callGAS({action:'getAllStats',filterUnit:unit,filterFrom:from,filterTo:to});
+if(!res.ok){ document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:#c0392b !important;padding:20px">'+esc(res.msg)+'</td></tr>'; return; }
+if(res.units){
+const sel=document.getElementById('filterUnit');
+const cur=sel.value;
+sel.innerHTML='<option value="">— Tất cả đơn vị —</option>'+res.units.map(u=>`<option value="${esc(u)}">${esc(u)}</option>`).join('');
+sel.value=cur;
+}
+const stats=res.stats||[];
+document.getElementById('allStatsCount').textContent=stats.length+' người';
+const units=new Set(stats.map(r=>r.unit)).size;
+const people=stats.length;
+const exams=stats.reduce((a,r)=>a+r.count,0);
+const avg=people?stats.reduce((a,r)=>a+r.avg,0)/people:0;
+document.getElementById('as-units').textContent=units;
+document.getElementById('as-people').textContent=people;
+document.getElementById('as-exams').textContent=exams;
+document.getElementById('as-avg').textContent=avg.toFixed(1);
+const top3=stats.slice(0,3);
+document.getElementById('topRankHero').innerHTML=top3.map((r,i)=>`
+       <div class="rank-card rank-${i+1}">
+         <div class="rank-medal">${['🥇','🥈','🥉'][i]}</div>
+         <div class="rank-name">${esc(r.fullname)}</div>
+         <div class="rank-unit">${esc(r.unit)}</div>
+         <div class="rank-score">${Number(r.avg).toFixed(1)}<span style="font-size:.7rem;font-weight:400;color:#8496b0 !important"> /10</span></div>
+       </div>`).join('');
+document.getElementById('allStatsBody').innerHTML=stats.map((r,i)=>`<tr>
+       <td><span class="rank-badge ${i<3?'gold-rank':''}">${i+1}</span></td>
+       <td style="font-weight:600">${esc(r.fullname)}</td>
+       <td style="font-size:.75rem;color:#8496b0 !important">${esc(r.unit||'—')}</td>
+       <td style="text-align:center">${r.count}</td>
+       <td>${scorePill(r.avg)}</td>
+       <td style="text-align:center;font-weight:700">${Number(r.best).toFixed(2)}</td>
+       <td style="text-align:center;font-size:.82rem">${Math.round(r.pass/r.count*100)}%</td></tr>`).join('');
+}catch(e){ document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:#c0392b !important;padding:20px">Lỗi kết nối</td></tr>'; }
+},
+
+async exportToWord() {
+if (!S.quizData || !S.quizData.questions) { alert('Không có dữ liệu để xuất'); return; }
+if (typeof docx === 'undefined') { alert('Thư viện tạo file Word đang tải hoặc bị chặn, vui lòng thử lại sau vài giây!'); return; }
+this.showLoading('Đang tạo file Word...');
+try {
+const { Document, Paragraph, TextRun, HeadingLevel, AlignmentType } = docx;
+const doc = new Document({
+sections: [{
+properties: {},
+children: [
+new Paragraph({ text: S.quizData.headerLines?.d1 || "CHI CỤC HẢI QUAN", heading: HeadingLevel.HEADING_1, alignment: AlignmentType.CENTER }),
+new Paragraph({ text: S.quizData.headerLines?.d2 || "KẾT QUẢ BÀI THI", heading: HeadingLevel.HEADING_2, alignment: AlignmentType.CENTER }),
+new Paragraph({ text: S.quizData.headerLines?.d3 || S.quizData.bankName, heading: HeadingLevel.HEADING_3, alignment: AlignmentType.CENTER, spacing: { after: 400 } }),
+
+new Paragraph({ children: [new TextRun({ text: "Họ và tên: ", bold: true }), new TextRun(S.user.fullname || S.user.username)], spacing: { after: 100 } }),
+new Paragraph({ children: [new TextRun({ text: "Mã CB: ", bold: true }), new TextRun(S.user.username)], spacing: { after: 100 } }),
+new Paragraph({ children: [new TextRun({ text: "Ngày thi: ", bold: true }), new TextRun(new Date().toLocaleDateString('vi-VN'))], spacing: { after: 100 } }),
+new Paragraph({ children: [new TextRun({ text: "Điểm hệ 10: ", bold: true }), new TextRun(`${S.resultScore10Val} / 10`)], spacing: { after: 400 } }),
+
+new Paragraph({ text: "CHI TIẾT TỪNG CÂU", heading: HeadingLevel.HEADING_3, spacing: { before: 400, after: 200 } })
+]
+}]
+});
+
+document.querySelectorAll('.rq').forEach((rq, index) => {
+doc.sections[0].children.push(new Paragraph({ children: [new TextRun({ text: `Câu ${index + 1}: `, bold: true }), new TextRun(rq.querySelector('.rq-text').textContent)], spacing: { before: 200, after: 100 } }));
+rq.querySelectorAll('.ropt').forEach((opt) => {
+let prefix = '  ';
+if (opt.classList.contains('ok')) prefix = '  ✓ ';
+if (opt.classList.contains('bad')) prefix = '  ✗ ';
+if (opt.classList.contains('missed')) prefix = '  ! ';
+doc.sections[0].children.push(new Paragraph({ text: prefix + opt.textContent.trim(), spacing: { after: 50 } }));
+});
+doc.sections[0].children.push(new Paragraph({ children: [new TextRun({ text: `Điểm: ${rq.querySelector('.rq-score').textContent}`, bold: true })], spacing: { after: 100 } }));
+});
+const blob = await docx.Packer.toBlob(doc);
+saveAs(blob, `Ket-qua-${S.user.username}-${Date.now()}.docx`);
+this.hideLoading();
+} catch (e) { this.hideLoading(); alert('Lỗi xuất Word: ' + e.message); }
+},
+
+exportToExcel() {
+if (!S.quizData || !S.quizData.questions) { alert('Không có dữ liệu để xuất'); return; }
+this.showLoading('Đang tạo Excel...');
+try {
+const data = [['STT', 'Câu hỏi', 'Đáp án đúng', 'Đáp án của bạn', 'Điểm']];
+document.querySelectorAll('.rq').forEach((rq, index) => {
+let correctAnswers = [], userAnswers = [];
+rq.querySelectorAll('.ropt').forEach((opt) => {
+const text = opt.textContent.trim();
+if (opt.classList.contains('ok')) { correctAnswers.push(text); userAnswers.push(text); } 
+else if (opt.classList.contains('bad')) { userAnswers.push(text); } 
+else if (opt.classList.contains('missed')) { correctAnswers.push(text); }
+});
+data.push([index + 1, rq.querySelector('.rq-text').textContent, correctAnswers.join('; '), userAnswers.join('; '), rq.querySelector('.rq-score').textContent]);
+});
+
+data.push(['', 'TỔNG CỘNG', '', '', `${S.resultScore10Val} / 10`, '']);
+
+const ws = XLSX.utils.aoa_to_sheet(data);
+ws['!cols'] = [{ wch: 5 }, { wch: 60 }, { wch: 30 }, { wch: 30 }, { wch: 15 }, { wch: 40 }];
+const wb = XLSX.utils.book_new();
+XLSX.utils.book_append_sheet(wb, ws, "Kết quả");
+XLSX.writeFile(wb, `Ket-qua-${S.user.username}-${Date.now()}.xlsx`);
+this.hideLoading();
+} catch (e) { this.hideLoading(); alert('Lỗi xuất Excel: ' + e.message); }
+}
 };
 
 App.init();
