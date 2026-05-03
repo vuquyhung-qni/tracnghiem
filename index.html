@@ -877,7 +877,7 @@ img{display:block;max-width:100%}
       </button>
       <button class="nav-item" onclick="App.goto('quiz-setup')" id="nav-quiz-setup">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-        Làm bài thi
+        Làm bài kiểm tra
       </button>
       <button class="nav-item" onclick="App.goto('my-stats')" id="nav-my-stats">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
@@ -1015,45 +1015,67 @@ img{display:block;max-width:100%}
     <div class="screen page-body" id="screen-quiz-setup">
       <div class="exam-setup-grid">
         <div>
-          <div class="card">
-            <div class="card-header">
-              <span class="card-title">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-                Cấu hình bộ đề thi
-              </span>
-            </div>
-
-            <div class="form-grp" style="margin-bottom: 16px;">
-              <label class="form-label" style="font-size:.8rem; color:#4a5c7a !important;">1. CHỌN LĨNH VỰC</label>
-              <select id="categorySelect" class="bank-select" onchange="App.filterBanks()">
-                <option value="">Đang tải dữ liệu...</option>
-              </select>
-            </div>
-
-            <div class="form-grp">
-              <label class="form-label" style="font-size:.8rem; color:#4a5c7a !important;">2. CHỌN BỘ ĐỀ</label>
-              <select id="bankSelect" class="bank-select" disabled>
-                <option value="">— Vui lòng chọn lĩnh vực trước —</option>
-              </select>
-            </div>
-
-          </div>
-
-          <div class="card">
-            <div id="examCountRow">
-              <div class="form-label" style="font-size:.8rem; color:#4a5c7a !important; margin-bottom:12px;">3. CHỌN SỐ CÂU HỎI</div>
-              <div class="count-chips">
-                <button class="chip" onclick="App.setExamCount(5,this)">5 câu</button>
-                <button class="chip" onclick="App.setExamCount(10,this)">10 câu</button>
-                <button class="chip" onclick="App.setExamCount(20,this)">20 câu</button>
-                <button class="chip active" onclick="App.setExamCount(30,this)">30 câu</button>
-                <button class="chip" onclick="App.setExamCount(50,this)">50 câu</button>
-                <button class="chip" onclick="App.setExamCount(60,this)">60 câu</button>
+          <div class="card" style="padding:0;overflow:hidden;border:1.5px solid #e2e8f4;box-shadow:0 4px 24px rgba(10,22,40,.10);">
+            <!-- Header -->
+            <div style="background:linear-gradient(135deg,#0f2347 0%,#1d4585 100%);padding:18px 24px 16px;display:flex;align-items:center;gap:12px;">
+              <div style="width:36px;height:36px;background:rgba(255,255,255,.12);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#f0c96a" stroke-width="2.2" width="18" height="18"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              </div>
+              <div>
+                <div style="font-size:.68rem;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:1px;">Cấu hình</div>
+                <div style="font-size:.95rem;font-weight:800;color:#fff;letter-spacing:.3px;">THIẾT LẬP BỘ ĐỀ KIỂM TRA</div>
               </div>
             </div>
 
-            <div class="alert alert-hidden" id="dashAlert"></div>
-            <button class="btn-start" onclick="App.startQuiz()">▶ Tạo bộ đề và làm bài kiểm tra</button>
+            <!-- Body -->
+            <div style="padding:24px;">
+              <!-- Step 1 -->
+              <div style="margin-bottom:20px;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                  <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#2558a8,#3b72d4);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:#fff;flex-shrink:0;">1</div>
+                  <label class="form-label" style="font-size:.8rem;font-weight:700;color:#0f1f3d;margin:0;text-transform:uppercase;letter-spacing:.5px;">Chọn lĩnh vực</label>
+                </div>
+                <select id="categorySelect" class="bank-select" onchange="App.filterBanks()">
+                  <option value="">Đang tải dữ liệu...</option>
+                </select>
+              </div>
+
+              <!-- Divider -->
+              <div style="height:1px;background:linear-gradient(90deg,transparent,#e2e8f4,transparent);margin-bottom:20px;"></div>
+
+              <!-- Step 2 -->
+              <div style="margin-bottom:20px;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                  <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#2558a8,#3b72d4);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:#fff;flex-shrink:0;">2</div>
+                  <label class="form-label" style="font-size:.8rem;font-weight:700;color:#0f1f3d;margin:0;text-transform:uppercase;letter-spacing:.5px;">Chọn bộ đề</label>
+                </div>
+                <select id="bankSelect" class="bank-select" disabled>
+                  <option value="">— Vui lòng chọn lĩnh vực trước —</option>
+                </select>
+              </div>
+
+              <!-- Divider -->
+              <div style="height:1px;background:linear-gradient(90deg,transparent,#e2e8f4,transparent);margin-bottom:20px;"></div>
+
+              <!-- Step 3 -->
+              <div id="examCountRow" style="margin-bottom:24px;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                  <div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#2558a8,#3b72d4);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:#fff;flex-shrink:0;">3</div>
+                  <div class="form-label" style="font-size:.8rem;font-weight:700;color:#0f1f3d;margin:0;text-transform:uppercase;letter-spacing:.5px;">Chọn số câu hỏi</div>
+                </div>
+                <div class="count-chips">
+                  <button class="chip" onclick="App.setExamCount(5,this)">5 câu</button>
+                  <button class="chip" onclick="App.setExamCount(10,this)">10 câu</button>
+                  <button class="chip" onclick="App.setExamCount(20,this)">20 câu</button>
+                  <button class="chip active" onclick="App.setExamCount(30,this)">30 câu</button>
+                  <button class="chip" onclick="App.setExamCount(50,this)">50 câu</button>
+                  <button class="chip" onclick="App.setExamCount(60,this)">60 câu</button>
+                </div>
+              </div>
+
+              <div class="alert alert-hidden" id="dashAlert"></div>
+              <button class="btn-start" onclick="App.startQuiz()">▶ Tạo bộ đề và làm bài kiểm tra</button>
+            </div>
           </div>
         </div>
 
@@ -1331,17 +1353,19 @@ const App = {
   },
 
   goto(id){
-    // 1. Kiểm tra nếu đang ở màn hình quiz mà muốn chuyển đi chỗ khác
-    const currentScreen = document.querySelector('.screen.active')?.id;
-    if(currentScreen === 'screen-quiz' && id !== 'quiz' && id !== 'result') {
-      const confirmExit = confirm("Bài thi đang diễn ra. Nếu thoát bây giờ, kết quả của bạn sẽ không được lưu. Bạn có chắc chắn muốn thoát không?");
-      if(!confirmExit) return; // Nếu chọn 'Hủy', dừng việc chuyển màn hình
-      
-      this.stopTimer(); // Dừng bộ đếm giờ nếu đồng ý thoát
-      window.onbeforeunload = null; // Hủy cảnh báo trình duyệt
+    // Chặn thoát bài khi đang làm thi
+    const quizScreen = document.getElementById('screen-quiz');
+    const isInQuiz = quizScreen && quizScreen.classList.contains('active');
+    if(isInQuiz && id !== 'quiz' && id !== 'result'){
+      this._pendingGoto = id;
+      this.showModal('modal-quit-quiz', true);
+      return;
     }
+    this._doGoto(id);
+  },
 
-    // 2. Thực hiện chuyển màn hình như bình thường
+  _doGoto(id){
+    this.showModal('modal-quit-quiz', false);
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
     document.querySelectorAll('.mobile-bottom-nav button').forEach(n=>n.classList.remove('active'));
@@ -1358,12 +1382,17 @@ const App = {
     const userDropdown = document.getElementById('userDropdown');
     if(userDropdown) userDropdown.classList.add('hidden');
     
-    // 3. Gọi các hàm nạp dữ liệu tương ứng
     if(id==='dashboard') this.loadDashboard();
     if(id==='my-stats') this.loadMyStats();
     if(id==='unit-stats') this.loadUnitStats();
     if(id==='all-stats') this.loadAllStats();
     if(id==='quiz-setup') this.loadBanks();
+    
+    // Reset quiz state nếu thoát khỏi quiz
+    if(id !== 'quiz' && id !== 'result'){
+      S.quizData = null;
+      S.answers = {};
+    }
   },
 
   toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); },
@@ -1453,27 +1482,12 @@ const App = {
     }[r] || r; 
   },
 
- logout(){
-    // Kiểm tra nếu đang ở màn hình quiz (đang làm bài)
-    const currentScreen = document.querySelector('.screen.active')?.id;
-    
-    if(currentScreen === 'screen-quiz') {
-      const confirmExit = confirm("Bạn đang trong bài thi. Nếu đăng xuất bây giờ, kết quả sẽ không được lưu. Bạn có chắc chắn muốn thoát?");
-      if(!confirmExit) return; // Nếu chọn 'Hủy', dừng việc đăng xuất
-    } else {
-      // Nếu không phải đang thi, chỉ hỏi đăng xuất bình thường
-      if(!confirm('Đăng xuất khỏi hệ thống?')) return;
-    }
-    
-    // Thực hiện các bước đăng xuất
-    window.onbeforeunload = null; // Hủy bỏ cảnh báo trình duyệt
-    S.user = null; 
-    localStorage.removeItem('qz_user');
-    this.stopTimer(); // Dừng bộ đếm giờ (nếu có)
-    
-    // Quay về màn hình đăng nhập
-    document.getElementById('appLayout').style.display = 'none';
-    document.getElementById('screen-login').style.display = '';
+  logout(){
+    if(!confirm('Đăng xuất khỏi hệ thống?')) return;
+    S.user=null; localStorage.removeItem('qz_user');
+    this.stopTimer();
+    document.getElementById('appLayout').style.display='none';
+    document.getElementById('screen-login').style.display='';
     document.getElementById('screen-login').classList.add('active');
   },
 
@@ -1655,6 +1669,9 @@ filterBanks(){
       document.getElementById('line1').textContent = h.d1 || '';
       document.getElementById('line2').textContent = h.d2 || '';
       document.getElementById('line3').textContent = h.d3 || res.bankName || '';
+      // Màu line3: Công tác Đảng dùng đỏ, còn lại dùng vàng
+      const isParty = (res.category || '').includes('Đảng') || (h.d3 || '').toUpperCase().includes('ĐẢNG') || (h.d3 || '').toUpperCase().includes('DANG') || (res.bankName || '').toLowerCase().includes('đảng');
+      document.getElementById('line3').style.color = isParty ? '#C82929' : '#f0c96a';
 
       this.hideLoading();
       this.renderQuiz(res);
@@ -1662,12 +1679,6 @@ filterBanks(){
   },
 
   renderQuiz(q){
-    // Thêm dòng dưới đây để kích hoạt cảnh báo của trình duyệt khi F5 hoặc đóng Tab
-    window.onbeforeunload = () => "Bạn có chắc chắn muốn thoát? Kết quả thi sẽ mất."; 
-
-    this.stopTimer();
-    document.querySelectorAll('#quizBody input').forEach(i=>i.disabled=false);
-    // ... các dòng code tiếp theo giữ nguyên ...
     this.stopTimer();
     document.querySelectorAll('#quizBody input').forEach(i=>i.disabled=false);
     const submitBtn = document.querySelector('.btn-submit');
@@ -1828,12 +1839,6 @@ filterBanks(){
   },
 
   renderResult(res, isSaved = true){
-    // Thêm dòng dưới đây để hủy cảnh báo khi đã nộp bài thành công
-    window.onbeforeunload = null; 
-
-    const {correctCount, score10, totalQ, detail, lateSubmit} = res;
-    S.resultScore10Val = Number(score10).toFixed(2);
-    // ... các dòng code tiếp theo giữ nguyên ...
     const {correctCount, score10, totalQ, detail, lateSubmit} = res;
     S.resultScore10Val = Number(score10).toFixed(2);
     
@@ -2075,5 +2080,26 @@ filterBanks(){
 
 App.init();
 </script>
+
+<!-- MODAL XÁC NHẬN THOÁT BÀI THI -->
+<div class="modal-ov hidden" id="modal-quit-quiz">
+  <div class="modal-box" style="max-width:420px;text-align:center;">
+    <div style="font-size:2.2rem;margin-bottom:12px;">⚠️</div>
+    <div style="font-size:1.05rem;font-weight:800;color:#0f1f3d;margin-bottom:10px;">Bạn đang làm bài thi!</div>
+    <div style="font-size:.88rem;color:#4a5c7a;line-height:1.6;margin-bottom:22px;">
+      Nếu rời khỏi trang này, <strong>toàn bộ câu trả lời sẽ bị mất</strong> và bài thi không được lưu.<br>
+      Bạn có chắc chắn muốn thoát?
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <button onclick="App.showModal('modal-quit-quiz',false)" style="flex:1;padding:11px 0;border-radius:9px;border:2px solid #d0daea;background:#fff;font-weight:700;font-size:.9rem;color:#4a5c7a;cursor:pointer;">
+        ← Quay lại làm bài
+      </button>
+      <button onclick="App._doGoto(App._pendingGoto)" style="flex:1;padding:11px 0;border-radius:9px;border:none;background:linear-gradient(135deg,#c0392b,#e74c3c);color:#fff;font-weight:700;font-size:.9rem;cursor:pointer;">
+        Thoát bài thi
+      </button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
