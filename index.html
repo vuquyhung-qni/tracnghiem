@@ -1331,6 +1331,17 @@ const App = {
   },
 
   goto(id){
+    // 1. Kiểm tra nếu đang ở màn hình quiz mà muốn chuyển đi chỗ khác
+    const currentScreen = document.querySelector('.screen.active')?.id;
+    if(currentScreen === 'screen-quiz' && id !== 'quiz' && id !== 'result') {
+      const confirmExit = confirm("Bài thi đang diễn ra. Nếu thoát bây giờ, kết quả của bạn sẽ không được lưu. Bạn có chắc chắn muốn thoát không?");
+      if(!confirmExit) return; // Nếu chọn 'Hủy', dừng việc chuyển màn hình
+      
+      this.stopTimer(); // Dừng bộ đếm giờ nếu đồng ý thoát
+      window.onbeforeunload = null; // Hủy cảnh báo trình duyệt
+    }
+
+    // 2. Thực hiện chuyển màn hình như bình thường
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
     document.querySelectorAll('.mobile-bottom-nav button').forEach(n=>n.classList.remove('active'));
@@ -1347,6 +1358,7 @@ const App = {
     const userDropdown = document.getElementById('userDropdown');
     if(userDropdown) userDropdown.classList.add('hidden');
     
+    // 3. Gọi các hàm nạp dữ liệu tương ứng
     if(id==='dashboard') this.loadDashboard();
     if(id==='my-stats') this.loadMyStats();
     if(id==='unit-stats') this.loadUnitStats();
@@ -1441,12 +1453,27 @@ const App = {
     }[r] || r; 
   },
 
-  logout(){
-    if(!confirm('Đăng xuất khỏi hệ thống?')) return;
-    S.user=null; localStorage.removeItem('qz_user');
-    this.stopTimer();
-    document.getElementById('appLayout').style.display='none';
-    document.getElementById('screen-login').style.display='';
+ logout(){
+    // Kiểm tra nếu đang ở màn hình quiz (đang làm bài)
+    const currentScreen = document.querySelector('.screen.active')?.id;
+    
+    if(currentScreen === 'screen-quiz') {
+      const confirmExit = confirm("Bạn đang trong bài thi. Nếu đăng xuất bây giờ, kết quả sẽ không được lưu. Bạn có chắc chắn muốn thoát?");
+      if(!confirmExit) return; // Nếu chọn 'Hủy', dừng việc đăng xuất
+    } else {
+      // Nếu không phải đang thi, chỉ hỏi đăng xuất bình thường
+      if(!confirm('Đăng xuất khỏi hệ thống?')) return;
+    }
+    
+    // Thực hiện các bước đăng xuất
+    window.onbeforeunload = null; // Hủy bỏ cảnh báo trình duyệt
+    S.user = null; 
+    localStorage.removeItem('qz_user');
+    this.stopTimer(); // Dừng bộ đếm giờ (nếu có)
+    
+    // Quay về màn hình đăng nhập
+    document.getElementById('appLayout').style.display = 'none';
+    document.getElementById('screen-login').style.display = '';
     document.getElementById('screen-login').classList.add('active');
   },
 
@@ -1635,6 +1662,12 @@ filterBanks(){
   },
 
   renderQuiz(q){
+    // Thêm dòng dưới đây để kích hoạt cảnh báo của trình duyệt khi F5 hoặc đóng Tab
+    window.onbeforeunload = () => "Bạn có chắc chắn muốn thoát? Kết quả thi sẽ mất."; 
+
+    this.stopTimer();
+    document.querySelectorAll('#quizBody input').forEach(i=>i.disabled=false);
+    // ... các dòng code tiếp theo giữ nguyên ...
     this.stopTimer();
     document.querySelectorAll('#quizBody input').forEach(i=>i.disabled=false);
     const submitBtn = document.querySelector('.btn-submit');
@@ -1795,6 +1828,12 @@ filterBanks(){
   },
 
   renderResult(res, isSaved = true){
+    // Thêm dòng dưới đây để hủy cảnh báo khi đã nộp bài thành công
+    window.onbeforeunload = null; 
+
+    const {correctCount, score10, totalQ, detail, lateSubmit} = res;
+    S.resultScore10Val = Number(score10).toFixed(2);
+    // ... các dòng code tiếp theo giữ nguyên ...
     const {correctCount, score10, totalQ, detail, lateSubmit} = res;
     S.resultScore10Val = Number(score10).toFixed(2);
     
