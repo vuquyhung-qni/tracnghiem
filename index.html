@@ -577,13 +577,13 @@ img{display:block;max-width:100%}
 
 .btn-submit{
   width:100%;padding:14px;
-  background:linear-gradient(135deg,#0f2347,#1d4585) !important;
+  background:linear-gradient(135deg,#c85608,#e87820) !important;
   color:#fff !important;border:none;border-radius:9px;
   font-size:1rem;font-weight:800;letter-spacing:.3px;
-  box-shadow:0 4px 16px rgba(15,35,71,.25);
-  cursor:pointer;transition:opacity .2s;
+  box-shadow:0 4px 18px rgba(200,86,8,.4);
+  cursor:pointer;transition:all .2s;
 }
-.btn-submit:hover{opacity:.9}
+.btn-submit:hover{opacity:.92;box-shadow:0 6px 22px rgba(200,86,8,.5)}
 .btn-submit:disabled{opacity:.5;cursor:not-allowed}
 
 .result-container {
@@ -722,50 +722,18 @@ img{display:block;max-width:100%}
   .chip{flex:1 1 calc(50% - 8px);text-align:center;padding:10px 8px;font-size:.82rem}
   .exam-setup-grid{grid-template-columns:1fr;}
 
-  .quiz-container { flex-direction: column; padding: 12px; gap: 12px; }
-
-  /* Hàng 2: Chỉ hiện đồng hồ, ẩn lưới câu và nút nộp bài khỏi panel trái */
-  .quiz-left-panel { width: 100%; position: static; max-height: none; border-radius:18px; }
-  .quiz-panel-body { display: none; } /* ẩn lưới câu ở panel trái */
-  .quiz-panel-footer { display: none; } /* ẩn nút NỘP BÀI ở panel trái */
-
-  /* Hàng 3: Câu hỏi */
-  .quiz-right-panel{ width:100%; min-height:auto; padding:20px 16px; border-radius:18px; }
-
-  /* Hàng 4: Lưới câu hỏi (hiển thị riêng bên dưới câu hỏi) */
-  .mobile-q-grid {
-    display: block;
-    background:#fff;
-    border-radius:18px;
-    padding: 16px;
-    box-shadow: 0 2px 12px rgba(10,22,40,.07);
-  }
-  .mobile-q-grid .q-nav-meta {
-    text-align:center; margin-bottom:12px; font-size:.85rem; font-weight:600; color:#4a5c7a;
-  }
-  .mobile-q-grid .q-grid-box {
-    grid-template-columns: repeat(10, 1fr);
-    gap: 5px;
-  }
-  .mobile-q-grid .q-dot {
-    font-size: .68rem;
-    border-radius: 5px;
-  }
-
-  /* Hàng 5: Nút NỘP BÀI */
-  .mobile-submit-bar {
-    display: block;
-  }
-
+  .quiz-container { flex-direction: column-reverse; padding: 12px; }
+  .quiz-left-panel { width: 100%; position: static; max-height: none; border-radius:18px;}
   .q-grid-box {
-    grid-template-columns: repeat(10, 1fr);
-    gap: 5px;
-    max-height: 180px;
-  }
-  .q-dot {
-    font-size: .68rem;
-    border-radius: 5px;
-  }
+  grid-template-columns: repeat(10, 1fr);
+  gap: 5px;
+  max-height: 180px;
+}
+.q-dot {
+  font-size: .68rem;
+  border-radius: 5px;
+}
+  .quiz-right-panel{ width:100%; min-height:auto; padding:20px 16px; border-radius:18px; }
 
   .mobile-account-box{
     display:flex; align-items:center; gap:10px; background-image:linear-gradient(#ffffff,#ffffff) !important;
@@ -1125,20 +1093,6 @@ img{display:block;max-width:100%}
             <button class="btn-nav" id="btnPrev" onclick="App.prevQ()">⬅ Câu trước</button>
             <button class="btn-nav" id="btnNext" onclick="App.nextQ()">Câu tiếp theo ➡</button>
           </div>
-        </div>
-
-        <!-- HÀNG 4 (chỉ mobile): Lưới câu hỏi -->
-        <div class="mobile-q-grid" style="display:none;">
-          <div class="q-nav-meta" style="text-align:center;margin-bottom:12px;font-size:.85rem;font-weight:600;color:#4a5c7a;">
-            Đã trả lời: <b id="answeredCount2" style="color:#2558a8">0</b> / <b id="totalCount2">0</b> câu
-          </div>
-          <div class="q-grid-box" id="qDots2"></div>
-        </div>
-
-        <!-- HÀNG 5 (chỉ mobile): Nút NỘP BÀI -->
-        <div class="mobile-submit-bar" style="display:none; padding: 0 4px;">
-          <div style="text-align:center;font-size:.85rem;font-weight:600;color:#8496b0;margin-bottom:10px;" id="timerInfo2"></div>
-          <button class="btn-submit" onclick="App.confirmSubmit()">📤 NỘP BÀI</button>
         </div>
       </div>
     </div>
@@ -1674,20 +1628,12 @@ filterBanks(){
     if(submitBtn){ submitBtn.disabled=false; submitBtn.textContent='📤 NỘP BÀI'; }
     document.getElementById('totalCount').textContent=q.count;
     document.getElementById('answeredCount').textContent=0;
-    // Sync mobile elements
-    const tc2=document.getElementById('totalCount2'); if(tc2) tc2.textContent=q.count;
-    const ac2=document.getElementById('answeredCount2'); if(ac2) ac2.textContent=0;
     
     const timeSecs = Number(q.timeLimitSec || q.count * 60);
     document.getElementById('timerInfo').textContent=`Kiểm tra – ${q.count} câu`;
-    const ti2=document.getElementById('timerInfo2'); if(ti2) ti2.textContent=`Kiểm tra – ${q.count} câu`;
     this.startTimer(timeSecs);
     
-    const dotsHTML=q.questions.map((_,i)=>`<button class="q-dot" id="dot-${i}" onclick="App.scrollToQ(${i})">${i+1}</button>`).join('');
-    document.getElementById('qDots').innerHTML=dotsHTML;
-    const qDots2=document.getElementById('qDots2'); if(qDots2) qDots2.innerHTML=q.questions.map((_,i)=>`<button class="q-dot" id="dot2-${i}" onclick="App.scrollToQ(${i})">${i+1}</button>`).join('');
-    // Show/hide mobile blocks
-    App._applyMobileQuizLayout();
+    document.getElementById('qDots').innerHTML=q.questions.map((_,i)=>`<button class="q-dot" id="dot-${i}" onclick="App.scrollToQ(${i})">${i+1}</button>`).join('');
     
     document.getElementById('quizBody').innerHTML=q.questions.map((q2,i)=>`
       <div class="qblock" id="qb-${i}">
@@ -1733,10 +1679,7 @@ filterBanks(){
     
     el.classList.toggle('selected',checked);
     document.getElementById('dot-'+qi).classList.toggle('answered',S.answers[qi].length>0);
-    const cnt=Object.values(S.answers).filter(a=>a.length>0).length;
-    document.getElementById('answeredCount').textContent=cnt;
-    const ac2=document.getElementById('answeredCount2'); if(ac2) ac2.textContent=cnt;
-    const d2=document.getElementById('dot2-'+qi); if(d2) d2.classList.toggle('answered',S.answers[qi].length>0);
+    document.getElementById('answeredCount').textContent=Object.values(S.answers).filter(a=>a.length>0).length;
 
     if(checked && S.quizData && qi < S.quizData.count - 1){
       clearTimeout(S.autoNextTimer);
@@ -1765,18 +1708,6 @@ filterBanks(){
   },
   
   stopTimer(){ if(S.timerIv){ clearInterval(S.timerIv); S.timerIv=null; } },
-
-  _applyMobileQuizLayout(){
-    const isMobile = window.innerWidth <= 768;
-    const panelBody = document.querySelector('.quiz-panel-body');
-    const panelFooter = document.querySelector('.quiz-panel-footer');
-    const mobileGrid = document.querySelector('.mobile-q-grid');
-    const mobileSubmit = document.querySelector('.mobile-submit-bar');
-    if(panelBody) panelBody.style.display = isMobile ? 'none' : '';
-    if(panelFooter) panelFooter.style.display = isMobile ? 'none' : '';
-    if(mobileGrid) mobileGrid.style.display = isMobile ? 'block' : 'none';
-    if(mobileSubmit) mobileSubmit.style.display = isMobile ? 'block' : 'none';
-  },
   
   lockQuiz(){
     document.querySelectorAll('#quizBody input').forEach(i=>i.disabled=true);
@@ -2091,12 +2022,6 @@ filterBanks(){
 };
 
 App.init();
-
-window.addEventListener('resize', () => {
-  if(document.getElementById('screen-quiz') && document.getElementById('screen-quiz').classList.contains('active')){
-    App._applyMobileQuizLayout();
-  }
-});
 </script>
 </body>
 </html>
