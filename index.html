@@ -2169,36 +2169,81 @@ filterBanks(){
   },
 
   async loadAdminSettings(){
-    // Đảm bảo banks đã được tải
-    if(!S.allBanks || !S.allBanks.length){
-      this.showLoading('Đang tải dữ liệu...');
-      try{ const r = await callGAS({action:'getBanks'}); if(r && r.ok) S.allBanks = r.banks || []; }catch(e){}
-      this.hideLoading();
-    }
+    // Hiển thị trạng thái loading ngay trên form
+    const catSel  = document.getElementById('cfg-linhVuc');
+    const bankSel = document.getElementById('cfg-bankId');
+    const countSel = document.getElementById('cfg-count');
+    const cfgAlert = document.getElementById('cfgAlert');
 
-    // Điền dropdown Lĩnh vực
-    const cats = [...new Set((S.allBanks||[]).map(b=>b.linhVuc).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'vi'));
-    const catSel = document.getElementById('cfg-linhVuc');
-    catSel.innerHTML = '<option value="">— Không đặt mặc định (người dùng tự chọn) —</option>' +
-      cats.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
+    catSel.innerHTML  = '<option value="">⏳ Đang tải danh sách lĩnh vực...</option>';
+    bankSel.innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
+    bankSel.disabled  = true;
+    if(cfgAlert) cfgAlert.className = 'alert alert-hidden';
 
-    // Load current settings từ server
-    this.showLoading('Đang tải cài đặt...');
+    let banks = [], st = {};
+
+    // --- Tải banks (dùng cache nếu có) ---
     try{
-      const res = await callGAS({action:'getSettings'});
-      if(res && res.ok){ S.sysSettings = res.settings || {}; }
-    }catch(e){}
-    this.hideLoading();
+      if(S.allBanks && S.allBanks.length){
+        banks = S.allBanks;
+      } else {
+        const r = await callGAS({ action: 'getBanks' });
+        if(r && r.ok && r.banks && r.banks.length){
+          S.allBanks = r.banks;
+          banks = r.banks;
+        }
+      }
+    } catch(e){ /* tiếp tục với banks rỗng */ }
+
+    // Điền dropdown Lĩnh vực ngay (không đợi settings)
+    const cats = [...new Set(banks.map(b => b.linhVuc).filter(Boolean))]
+      .sort((a, b) => a.localeCompare(b, 'vi'));
+
+    if(cats.length){
+      catSel.innerHTML =
+        '<option value="">— Không đặt mặc định (người dùng tự chọn) —</option>' +
+        cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
+    } else {
+      catSel.innerHTML = '<option value="">— Không có lĩnh vực (kiểm tra sheet QUESTION) —</option>';
+    }
+    bankSel.innerHTML = '<option value="">— Không đặt mặc định (người dùng tự chọn) —</option>';
+    bankSel.disabled = true;
+
+    // --- Tải settings ---
+    try{
+      const res = await callGAS({ action: 'getSettings' });
+      if(res && res.ok){
+        st = res.settings || {};
+        S.sysSettings = st;
+      } else if(res && !res.ok){
+        // GS chưa deploy action mới — vẫn hiện form với giá trị trống
+        if(cfgAlert){
+          cfgAlert.textContent = '⚠️ Lưu ý: Vui lòng deploy lại Apps Script để dùng chức năng lưu cài đặt (action getSettings chưa sẵn sàng).';
+          cfgAlert.className = 'alert alert-info';
+        }
+      }
+    } catch(e){ /* giữ settings rỗng, form vẫn dùng được */ }
 
     // Áp dụng settings vào form
-    const st = S.sysSettings;
-    catSel.value = st.defaultLinhVuc || '';
-    this.cfgOnLinhVucChange(st.defaultBankId || '');
-    const countSel = document.getElementById('cfg-count');
-    if(countSel) countSel.value = st.defaultCount || '';
+    if(st.defaultLinhVuc){
+      catSel.value = st.defaultLinhVuc;
+    }
 
+    const selLinhVuc = catSel.value;
+    if(selLinhVuc && banks.length){
+      const list = banks.filter(b => b.linhVuc === selLinhVuc)
+        .sort((a, b) => a.name.localeCompare(b.name, 'vi'));
+      if(list.length){
+        bankSel.innerHTML =
+          '<option value="">— Không đặt mặc định (người dùng tự chọn) —</option>' +
+          list.map(b => `<option value="${esc(b.id)}">${esc(b.name)} (${b.count} câu)</option>`).join('');
+        bankSel.disabled = false;
+        if(st.defaultBankId) bankSel.value = st.defaultBankId;
+      }
+    }
+
+    if(countSel) countSel.value = st.defaultCount || '';
     this.updateCfgPreview();
-    this.hideAlert('cfgAlert');
   },
 
   cfgOnLinhVucChange(preselectBankId){
