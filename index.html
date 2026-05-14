@@ -853,7 +853,7 @@ img{display:block;max-width:100%}
             </div>
             <button type="submit" class="btn-login">Đăng nhập</button>
             </form>
-            <button class="btn-link-white" onclick="App.showModal('modal-chpw',true)">Đổi mật khẩu</button>
+            <button class="btn-login" style="margin-top:10px;background:linear-gradient(180deg,rgba(255,255,255,0.15) 0%,rgba(255,255,255,0.08) 100%) !important;color:#fff !important;border:1px solid rgba(255,255,255,0.3) !important;font-size:0.88rem;font-weight:700;letter-spacing:.5px;" onclick="App.loginGuest()">👤 ĐĂNG NHẬP KHÁCH (GUEST)</button>
           </div>
         </div>
       </div>
@@ -1437,6 +1437,21 @@ const App = {
     this.hideLoading();
   },
 
+  loginGuest(){
+    // Đăng nhập GUEST không cần mật khẩu - có thể xem đề nhưng không lưu kết quả
+    S.user = {
+      username: 'guest',
+      fullname: 'Khách (Guest)',
+      role: 'user',
+      unit: 'Khách',
+      doi_tuong: 'Khách',
+      isGuest: true
+    };
+    localStorage.removeItem('qz_user'); // Guest không lưu session
+    this.hideLoginAlert();
+    this.afterLogin();
+  },
+
   showLoginAlert(msg,type){
     const el=document.getElementById('loginAlert');
     el.textContent=msg; el.className='login-alert '+type;
@@ -1570,7 +1585,7 @@ const App = {
       return;
     }
 
-    this.renderCategories(S.allBanks);
+    this.renderCategories(S.allBanks, res.defaultLinhVuc, res.defaultBankId);
     this.hideAlert('dashAlert');
 
   }catch(e){
@@ -1580,7 +1595,7 @@ const App = {
   }
 },
 
-renderCategories(banks){
+renderCategories(banks, defaultLinhVuc, defaultBankId){
   const cat = document.getElementById('categorySelect');
   const bank = document.getElementById('bankSelect');
 
@@ -1601,8 +1616,21 @@ renderCategories(banks){
     '<option value="">— Chọn lĩnh vực —</option>' +
     categories.map(x => `<option value="${esc(x)}">${esc(x)}</option>`).join('');
 
-  bank.innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
-  bank.disabled = true;
+  // Tự động chọn lĩnh vực và bộ đề mặc định từ ô DEFAULT trong sheet LIST
+  if(defaultLinhVuc){
+    cat.value = defaultLinhVuc;
+    this.filterBanks();
+    if(defaultBankId){
+      // Đợi filterBanks cập nhật xong rồi set bank
+      setTimeout(()=>{
+        const bankEl = document.getElementById('bankSelect');
+        if(bankEl) bankEl.value = defaultBankId;
+      }, 50);
+    }
+  } else {
+    bank.innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
+    bank.disabled = true;
+  }
 },
 
 filterBanks(){
@@ -1813,6 +1841,24 @@ filterBanks(){
 
   async submitQuiz(forceSave = false){
     this.stopTimer();
+    // Guest: chấm bài nhưng không lưu vào server
+    if(S.user && S.user.isGuest){
+      this.showLoading('Đang chấm bài...');
+      try{
+        const res = await callGAS({
+          action: 'submitQuiz',
+          quizId: S.quizData.quizId,
+          userAnswers: S.answers,
+          user: { username: 'guest', fullname: 'Khách (Guest)', unit: 'Khách' },
+          forceSave: false,
+          guestMode: true
+        });
+        this.hideLoading();
+        if(!res.ok){ alert('Lỗi chấm bài: '+(res.msg||'Không xác định')); return; }
+        this.renderResult(res, false);
+      }catch(e){ this.hideLoading(); alert('Lỗi kết nối khi chấm bài: ' + e.message); }
+      return;
+    }
     this.showLoading(forceSave ? 'Đang lưu kết quả...' : 'Đang chấm bài...');
     try{
       const res = await callGAS({
@@ -1897,7 +1943,11 @@ filterBanks(){
     document.getElementById('rs-full-wrong').textContent = saiHoanToan;
 
     const lateBanner = document.getElementById('lateBanner');
-    if (!isSaved) {
+    if(S.user && S.user.isGuest){
+      lateBanner.innerHTML = '👤 Bạn đang xem kết quả với tư cách <b>Khách (GUEST)</b>. Kết quả <b>KHÔNG</b> được lưu vào hệ thống.';
+      lateBanner.style.backgroundColor = '#2558a8';
+      lateBanner.style.display = 'block';
+    } else if (!isSaved) {
       lateBanner.innerHTML = '⚠️ Kết quả này <b>KHÔNG</b> được lưu vào hệ thống do chưa đạt điểm và bạn đã chọn từ chối lưu.';
       lateBanner.style.backgroundColor = 'var(--o1)';
       lateBanner.style.display = 'block';
