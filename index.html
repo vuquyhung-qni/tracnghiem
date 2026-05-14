@@ -1273,6 +1273,13 @@ img{display:block;max-width:100%}
           <b>⚙️ Thiết lập giá trị mặc định</b> cho trang <i>Làm bài kiểm tra</i> — áp dụng cho <b>tất cả người dùng</b>.<br>
           Người dùng vẫn có thể thay đổi sang lựa chọn khác. Để trống ô nào thì người dùng phải tự chọn ô đó.
         </div>
+        <!-- Loading state - ẩn sau khi JS điền xong -->
+        <div id="cfgLoadingState" style="text-align:center;padding:40px 20px;color:#8496b0;">
+          <div style="width:36px;height:36px;border:3px solid #e2e8f4;border-top-color:#2558a8;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 14px;"></div>
+          <div style="font-size:.85rem;font-weight:600;">Đang tải danh sách lĩnh vực và cài đặt...</div>
+        </div>
+        <!-- Form - ẩn trong khi loading -->
+        <div id="cfgFormBody" style="display:none;">
         <div style="margin-bottom:22px;">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
             <div style="width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#2558a8,#3b72d4);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;color:#fff;flex-shrink:0;">1</div>
@@ -1309,6 +1316,7 @@ img{display:block;max-width:100%}
           </select>
           <div style="font-size:.74rem;color:#8496b0;margin-top:5px;">Để trống → mặc định 30 câu (người dùng vẫn có thể thay đổi).</div>
         </div>
+        </div><!-- end cfgFormBody -->
         <div class="alert alert-hidden" id="cfgAlert"></div>
         <div id="cfgPreview" style="display:none;background:#f0f5ff;border:1px solid #c8d8f8;border-radius:10px;padding:14px 18px;margin-bottom:20px;font-size:.83rem;color:#163566;">
           <b>👁 Xem trước:</b> Khi người dùng vào trang Làm bài, hệ thống sẽ tự chọn:<br>
@@ -2162,89 +2170,107 @@ filterBanks(){
 
   // ── CÀI ĐẶT HỆ THỐNG ──────────────────────────────────────
   async fetchSettings(){
+    // Prefetch cả settings lẫn banks ngay khi login (chạy nền, không block UI)
     try{
-      const res = await callGAS({action:'getSettings'});
-      if(res && res.ok) S.sysSettings = res.settings || {};
-    }catch(e){ /* silent fail */ }
+      const [settRes, bankRes] = await Promise.all([
+        callGAS({action:'getSettings'}),
+        callGAS({action:'getBanks'})
+      ]);
+      if(settRes && settRes.ok) S.sysSettings = settRes.settings || {};
+      if(bankRes && bankRes.ok && bankRes.banks && bankRes.banks.length){
+        S.allBanks = bankRes.banks;
+      }
+    }catch(e){ /* silent fail — không ảnh hưởng UI */ }
   },
 
   async loadAdminSettings(){
-    // Hiển thị trạng thái loading ngay trên form
-    const catSel  = document.getElementById('cfg-linhVuc');
-    const bankSel = document.getElementById('cfg-bankId');
+    const catSel   = document.getElementById('cfg-linhVuc');
+    const bankSel  = document.getElementById('cfg-bankId');
     const countSel = document.getElementById('cfg-count');
     const cfgAlert = document.getElementById('cfgAlert');
-
-    catSel.innerHTML  = '<option value="">⏳ Đang tải danh sách lĩnh vực...</option>';
-    bankSel.innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
-    bankSel.disabled  = true;
     if(cfgAlert) cfgAlert.className = 'alert alert-hidden';
 
-    let banks = [], st = {};
+    // BƯỚC 1: Render form với banks đã có trong cache (tức thì, không chờ mạng)
+    const renderForm = (banks, st) => {
+      const cats = [...new Set(banks.map(b => b.linhVuc).filter(Boolean))]
+        .sort((a,b) => a.localeCompare(b,'vi'));
 
-    // --- Tải banks (dùng cache nếu có) ---
-    try{
-      if(S.allBanks && S.allBanks.length){
-        banks = S.allBanks;
-      } else {
-        const r = await callGAS({ action: 'getBanks' });
-        if(r && r.ok && r.banks && r.banks.length){
-          S.allBanks = r.banks;
-          banks = r.banks;
-        }
-      }
-    } catch(e){ /* tiếp tục với banks rỗng */ }
-
-    // Điền dropdown Lĩnh vực ngay (không đợi settings)
-    const cats = [...new Set(banks.map(b => b.linhVuc).filter(Boolean))]
-      .sort((a, b) => a.localeCompare(b, 'vi'));
-
-    if(cats.length){
-      catSel.innerHTML =
-        '<option value="">— Không đặt mặc định (người dùng tự chọn) —</option>' +
+      catSel.innerHTML = '<option value="">— Không đặt mặc định (người dùng tự chọn) —</option>' +
         cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('');
-    } else {
-      catSel.innerHTML = '<option value="">— Không có lĩnh vực (kiểm tra sheet QUESTION) —</option>';
-    }
-    bankSel.innerHTML = '<option value="">— Không đặt mặc định (người dùng tự chọn) —</option>';
-    bankSel.disabled = true;
 
-    // --- Tải settings ---
-    try{
-      const res = await callGAS({ action: 'getSettings' });
-      if(res && res.ok){
-        st = res.settings || {};
-        S.sysSettings = st;
-      } else if(res && !res.ok){
-        // GS chưa deploy action mới — vẫn hiện form với giá trị trống
-        if(cfgAlert){
-          cfgAlert.textContent = '⚠️ Lưu ý: Vui lòng deploy lại Apps Script để dùng chức năng lưu cài đặt (action getSettings chưa sẵn sàng).';
-          cfgAlert.className = 'alert alert-info';
-        }
-      }
-    } catch(e){ /* giữ settings rỗng, form vẫn dùng được */ }
+      // Áp dụng setting lĩnh vực
+      const defLV = (st && st.defaultLinhVuc) || '';
+      if(defLV) catSel.value = defLV;
 
-    // Áp dụng settings vào form
-    if(st.defaultLinhVuc){
-      catSel.value = st.defaultLinhVuc;
-    }
-
-    const selLinhVuc = catSel.value;
-    if(selLinhVuc && banks.length){
-      const list = banks.filter(b => b.linhVuc === selLinhVuc)
-        .sort((a, b) => a.name.localeCompare(b.name, 'vi'));
-      if(list.length){
-        bankSel.innerHTML =
-          '<option value="">— Không đặt mặc định (người dùng tự chọn) —</option>' +
+      // Điền bộ đề theo lĩnh vực đang chọn
+      const lv = catSel.value;
+      if(lv){
+        const list = banks.filter(b => b.linhVuc === lv)
+          .sort((a,b) => a.name.localeCompare(b.name,'vi'));
+        bankSel.innerHTML = '<option value="">— Không đặt mặc định (người dùng tự chọn) —</option>' +
           list.map(b => `<option value="${esc(b.id)}">${esc(b.name)} (${b.count} câu)</option>`).join('');
         bankSel.disabled = false;
-        if(st.defaultBankId) bankSel.value = st.defaultBankId;
+        if(st && st.defaultBankId) bankSel.value = st.defaultBankId;
+      } else {
+        bankSel.innerHTML = '<option value="">— Không đặt mặc định (người dùng tự chọn) —</option>';
+        bankSel.disabled = true;
       }
+
+      if(countSel) countSel.value = (st && st.defaultCount) || '';
+      this.updateCfgPreview();
+    };
+
+    const loadingEl = document.getElementById('cfgLoadingState');
+    const formBodyEl = document.getElementById('cfgFormBody');
+
+    // Nếu đã có banks trong cache → render ngay, ẩn spinner
+    if(S.allBanks && S.allBanks.length){
+      if(loadingEl) loadingEl.style.display = 'none';
+      if(formBodyEl) formBodyEl.style.display = 'block';
+      renderForm(S.allBanks, S.sysSettings || {});
+    } else {
+      // Chưa có cache → hiện spinner
+      if(loadingEl) loadingEl.style.display = 'block';
+      if(formBodyEl) formBodyEl.style.display = 'none';
     }
 
-    if(countSel) countSel.value = st.defaultCount || '';
-    this.updateCfgPreview();
+    // BƯỚC 2: Fetch song song banks + settings (nền)
+    try{
+      const [banksRes, settingsRes] = await Promise.all([
+        S.allBanks && S.allBanks.length
+          ? Promise.resolve({ok:true, banks:S.allBanks})
+          : callGAS({action:'getBanks'}),
+        callGAS({action:'getSettings'})
+      ]);
+
+      if(banksRes && banksRes.ok && banksRes.banks && banksRes.banks.length){
+        S.allBanks = banksRes.banks;
+      }
+      const st = (settingsRes && settingsRes.ok) ? (settingsRes.settings || {}) : (S.sysSettings || {});
+      if(settingsRes && settingsRes.ok) S.sysSettings = st;
+
+      // Re-render với dữ liệu đầy đủ — ẩn spinner, hiện form
+      if(loadingEl) loadingEl.style.display = 'none';
+      if(formBodyEl) formBodyEl.style.display = 'block';
+      renderForm(S.allBanks || [], st);
+
+      // Cảnh báo nếu GS chưa có action getSettings
+      if(settingsRes && !settingsRes.ok && cfgAlert){
+        cfgAlert.textContent = '⚠️ Chưa deploy GS mới — nhấn Lưu sau khi deploy để kích hoạt tính năng này.';
+        cfgAlert.className = 'alert alert-info';
+      }
+    } catch(err){
+      if(loadingEl) loadingEl.style.display = 'none';
+      if(formBodyEl) formBodyEl.style.display = 'block';
+      // Vẫn render với bất kỳ data nào đang có
+      renderForm(S.allBanks || [], S.sysSettings || {});
+      if(cfgAlert){
+        cfgAlert.textContent = 'Lỗi tải cài đặt: ' + err.message + ' — Vẫn có thể chỉnh form thủ công.';
+        cfgAlert.className = 'alert alert-error';
+      }
+    }
   },
+
 
   cfgOnLinhVucChange(preselectBankId){
     const lv = document.getElementById('cfg-linhVuc').value;
