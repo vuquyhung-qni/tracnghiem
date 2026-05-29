@@ -87,6 +87,27 @@
     margin-top: 8px;
   }
 }
+
+
+/* ===== PORTAL EMBED MODE: chạy trong Lịch công tác/Portal ===== */
+body.embed-mode { background:#f0f4fa !important; min-height:100svh; }
+body.embed-mode #screen-login,
+body.embed-mode .sidebar,
+body.embed-mode .topbar,
+body.embed-mode .mobile-bottom-nav,
+body.embed-mode .mobile-account-box,
+body.embed-mode .mobile-home-menu { display:none !important; }
+body.embed-mode .layout { display:block !important; min-height:100svh; }
+body.embed-mode .main { width:100% !important; min-height:100svh; padding-bottom:0 !important; }
+body.embed-mode .page-body { padding:18px 18px 28px !important; }
+body.embed-mode .card,
+body.embed-mode .welcome-hero { box-shadow:0 1px 8px rgba(10,22,40,.06) !important; }
+body.embed-mode .quiz-container { max-width:100%; }
+body.embed-mode .result-container { max-width:100%; }
+@media(max-width:768px){
+  body.embed-mode .page-body { padding:12px 10px 20px !important; }
+  body.embed-mode .quiz-container { padding:0; }
+}
 </style>
 <style>
 :root {
@@ -873,7 +894,6 @@ img{display:block;max-width:100%}
     </div>
 
     <nav class="sidebar-nav">
-      <div class="nav-section-label">Chính</div>
       <button class="nav-item active" onclick="App.goto('dashboard')" id="nav-dashboard">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
         Tổng quan
@@ -893,7 +913,7 @@ img{display:block;max-width:100%}
   </svg>
   Thư viện tài liệu
 </button>
-      <div class="nav-section-label" id="adminNavLabel" style="display:none">Quản lý</div>
+      <div id="adminNavLabel" style="display:none"></div>
       <button class="nav-item" onclick="App.goto('unit-stats')" id="nav-unit-stats" style="display:none">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         Kết quả đơn vị
@@ -1386,6 +1406,7 @@ img{display:block;max-width:100%}
 
 <script>
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwYwBZmlnOInfCfuuQCMg0-ivTBO3C6zClNer0a6e85psRneLuzvf4hamvhjkBuWJeR/exec';
+const PORTAL_URL = 'https://vuquyhung-qni.github.io/lichkv8/';
 
 async function sha256(message) {
   const msgBuffer = new TextEncoder().encode(message);
@@ -1420,6 +1441,7 @@ async function callGAS(p){
 const S = {
   user: null, allBanks: [], mode: 'exam', examCount: 30,
   quizData: null, answers: {}, timerIv: null, timeLeft: 0, resultScore10Val: 0,
+  portalMode: false,
   currentQ: 0, autoNextTimer: null,
   sysSettings: {} // cài đặt mặc định toàn hệ thống (admin quản lý)
 };
@@ -1432,10 +1454,87 @@ const scorePill = v => { const n=Number(v); const cls=n>=7?'score-high':n>=5?'sc
 const canSeeAll  = r => ['admin','lanh_dao_chi_cuc'].includes(r);
 const canSeeUnit = r => ['admin','lanh_dao_chi_cuc','lanh_dao_doi'].includes(r);
 
+
+function urlParams(){ return new URLSearchParams(window.location.search || ''); }
+function isEmbedMode(){
+  const p=urlParams();
+  return p.get('embed')==='1' || p.get('from')==='lichkv8' || p.has('sso');
+}
+function isStandaloneAllowed(){
+  const p=urlParams();
+  // Chỉ dùng khi cần bảo trì trực tiếp module Trắc nghiệm.
+  return p.get('standalone')==='1';
+}
+function redirectToPortal(){
+  const target = PORTAL_URL + '?next=quiz';
+  try{
+    if(window.top && window.top !== window) window.top.location.href = target;
+    else window.location.href = target;
+  }catch(e){ window.location.href = target; }
+}
+function readPortalBridge(){
+  let raw = '';
+  try{ raw = sessionStorage.getItem('lct_user') || ''; }catch(e){}
+  try{
+    if(!raw && window.parent && window.parent !== window){
+      raw = window.parent.sessionStorage.getItem('lct_user') || '';
+    }
+  }catch(e){}
+  if(raw){
+    try{ return JSON.parse(raw); }catch(e){}
+  }
+  try{
+    const bridgeRaw = localStorage.getItem('hqkv8_portal_bridge') || '';
+    if(bridgeRaw){
+      const bridge = JSON.parse(bridgeRaw);
+      if(bridge && bridge.exp && Date.now() < Number(bridge.exp) && bridge.user) return bridge.user;
+      localStorage.removeItem('hqkv8_portal_bridge');
+    }
+  }catch(e){}
+  return null;
+}
+function mapPortalRoleToQuizRole(role){
+  const r = String(role||'').toLowerCase();
+  if(['superadmin','admin'].includes(r)) return 'admin';
+  if(r.includes('lanhdaocucchi') || r.includes('lanh_dao_chi_cuc') || r.includes('lanhdaochicuc')) return 'lanh_dao_chi_cuc';
+  if(r.includes('lanhdaophong') || r.includes('lanh_dao_doi') || r.includes('lanhdao')) return 'lanh_dao_doi';
+  if(r.includes('thuky')) return 'lanh_dao_doi';
+  return 'user';
+}
+function makeQuizUserFromPortal(portalUser){
+  const u = portalUser || {};
+  return {
+    username: u.username || u.id || '',
+    fullname: u.fullname || u.name || u.username || '',
+    role: mapPortalRoleToQuizRole(u.role),
+    unit: u.donVi || u.unit || u.department || '',
+    doi_tuong: u.chucvu || u.role || '',
+    fromPortal: true
+  };
+}
+
 document.title = "Hệ thống Thi Trắc nghiệm - Chi cục Hải quan khu vực VIII";
 
 const App = {
   init(){
+    S.portalMode = isEmbedMode();
+    if(S.portalMode) document.body.classList.add('embed-mode');
+
+    const portalUser = readPortalBridge();
+    if(portalUser){
+      S.user = makeQuizUserFromPortal(portalUser);
+      localStorage.setItem('qz_user', JSON.stringify(S.user));
+      this.afterLogin();
+      this.fetchSettings();
+      return;
+    }
+
+    // Lựa chọn 1: Trắc nghiệm là module con; mở trực tiếp thì quay về Portal Lịch công tác.
+    if(!isStandaloneAllowed()){
+      redirectToPortal();
+      return;
+    }
+
     const saved = localStorage.getItem('qz_user');
     if(saved){ S.user=JSON.parse(saved); this.afterLogin(); this.fetchSettings(); }
     document.getElementById('loginUsername').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); document.getElementById('loginPassword').focus(); }});
@@ -1551,7 +1650,7 @@ const App = {
     const u=S.user;
     document.getElementById('screen-login').classList.remove('active');
     document.getElementById('screen-login').style.display='none';
-    document.getElementById('appLayout').style.display='flex';
+    document.getElementById('appLayout').style.display = S.portalMode ? 'block' : 'flex';
     document.getElementById('sidebarAvatar').textContent=(u.fullname||u.username).charAt(0).toUpperCase();
     document.getElementById('sidebarName').textContent=u.fullname||u.username;
     document.getElementById('sidebarRole').textContent=this.roleLabel(u.role);
@@ -1593,6 +1692,10 @@ const App = {
   },
 
   logout(){
+    if(S.portalMode){
+      redirectToPortal();
+      return;
+    }
     if(!confirm('Đăng xuất khỏi hệ thống?')) return;
     S.user=null; localStorage.removeItem('qz_user');
     this.stopTimer();
