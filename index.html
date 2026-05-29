@@ -1972,6 +1972,7 @@ const S = {
   user: null, allBanks: [], mode: 'exam', examCount: 30,
   quizData: null, answers: {}, timerIv: null, timeLeft: 0, resultScore10Val: 0,
   portalMode: false,
+  quizAliases: [],
   currentQ: 0, autoNextTimer: null,
   sysSettings: {} // cài đặt mặc định toàn hệ thống (admin quản lý)
 };
@@ -1992,15 +1993,63 @@ function normPersonKey_(v){
     .replace(/[^a-z0-9]+/g, '')
     .trim();
 }
+function readSavedQuizUser_(){
+  try{
+    const raw = localStorage.getItem('qz_user') || '';
+    if(!raw) return null;
+    const u = JSON.parse(raw);
+    return (u && typeof u === 'object') ? u : null;
+  }catch(e){ return null; }
+}
+function pushUnique_(arr, v){
+  const s = String(v || '').trim();
+  if(s && arr.indexOf(s) === -1) arr.push(s);
+}
+function samePerson_(a, b){
+  const x = normPersonKey_(a);
+  const y = normPersonKey_(b);
+  if(!x || !y) return false;
+  return x === y || x.includes(y) || y.includes(x);
+}
+function collectUsernamesForHistory_(u){
+  u = u || {};
+  const names = [];
+  [u.username, u.id, u.userId, u.maCbcc, u.maCBCC, u.code, u.email].forEach(x => pushUnique_(names, x));
+  (S.quizAliases || []).forEach(x => pushUnique_(names, x));
+
+  // Khi chạy trong Portal, ưu tiên giữ lại tài khoản Trắc nghiệm đã đăng nhập độc lập trước đó
+  // nếu cùng họ tên. Điều này tránh trường hợp username Portal khác username module Trắc nghiệm.
+  const saved = readSavedQuizUser_();
+  if(saved && !saved.isGuest){
+    const savedName = saved.fullname || saved.name || '';
+    const curName = u.fullname || u.name || '';
+    if(!saved.fromPortal || samePerson_(savedName, curName) || !curName){
+      [saved.username, saved.id, saved.userId, saved.maCbcc, saved.maCBCC, saved.code].forEach(x => pushUnique_(names, x));
+    }
+  }
+  return names;
+}
+async function resolveQuizUsernameByProfile_(u){
+  u = u || {};
+  const fullName = u.fullname || u.name || '';
+  const fullKey = normPersonKey_(fullName);
+  if(!fullKey) return '';
+  try{
+    const res = await callGAS({action:'getAllStats'});
+    const ranking = (res && res.ok && Array.isArray(res.ranking)) ? res.ranking : [];
+    if(!ranking.length) return '';
+    const hit = ranking.find(r => samePerson_(r.fullname || r.name || '', fullName))
+             || ranking.find(r => samePerson_(r.username || '', u.username || ''));
+    return hit ? String(hit.username || '').trim() : '';
+  }catch(e){ return ''; }
+}
+// V78: Lấy lịch sử cá nhân ổn định trong cả chế độ nhúng Portal và mở độc lập.
+// Ưu tiên username Trắc nghiệm, sau đó tự dò theo họ tên qua bảng thống kê/toàn bộ lịch sử.
 async function getCurrentUserHistory_(){
   const u = S.user || {};
-  const names = [];
-  [u.username, u.id, u.userId].forEach(x => {
-    const s = String(x || '').trim();
-    if(s && names.indexOf(s) === -1) names.push(s);
-  });
+  const names = collectUsernamesForHistory_(u);
 
-  // Ưu tiên gọi đúng username/mã CBCC trước.
+  // 1) Gọi đúng username/mã CBCC trước.
   for(const username of names){
     try{
       const res = await callGAS({action:'getHistory', username});
@@ -2008,21 +2057,34 @@ async function getCurrentUserHistory_(){
     }catch(e){ /* thử fallback bên dưới */ }
   }
 
-  // Fallback: lấy toàn bộ rồi lọc theo username hoặc họ tên.
-  // Cách này xử lý trường hợp tài khoản Portal và tài khoản Trắc nghiệm cùng người nhưng khác mã đăng nhập.
+  // 2) Nếu username Portal khác username Trắc nghiệm, dò USER/RESULT qua getAllStats theo họ tên để lấy username thật.
+  const resolvedUsername = await resolveQuizUsernameByProfile_(u);
+  if(resolvedUsername && names.indexOf(resolvedUsername) === -1){
+    try{
+      const res = await callGAS({action:'getHistory', username: resolvedUsername});
+      if(res && res.ok && Array.isArray(res.history) && res.history.length){
+        pushUnique_(S.quizAliases, resolvedUsername);
+        return res.history;
+      }
+    }catch(e){}
+  }
+
+  // 3) Fallback cuối: lấy toàn bộ lịch sử rồi lọc mềm theo username/họ tên.
   try{
     const resAll = await callGAS({action:'getHistory', username:''});
     const all = (resAll && resAll.ok && Array.isArray(resAll.history)) ? resAll.history : [];
     if(!all.length) return [];
 
     const nameKeys = new Set(names.map(normPersonKey_).filter(Boolean));
-    const fullKey = normPersonKey_(u.fullname || u.name || '');
+    const fullName = u.fullname || u.name || '';
+    const fullKey = normPersonKey_(fullName);
     const filtered = all.filter(r => {
       const rowUser = normPersonKey_(r.username || r.userId || '');
       const rowName = normPersonKey_(r.fullname || r.name || '');
-      return (rowUser && nameKeys.has(rowUser)) || (fullKey && rowName === fullKey);
+      return (rowUser && nameKeys.has(rowUser))
+          || (fullKey && rowName && (rowName === fullKey || rowName.includes(fullKey) || fullKey.includes(rowName)));
     });
-    return filtered.length ? filtered : (names.length ? [] : all);
+    return filtered;
   }catch(e){
     return [];
   }
@@ -2117,15 +2179,21 @@ const App = {
 
     const portalUser = readPortalBridge();
     if(portalUser){
+      const savedQuizUser = readSavedQuizUser_();
       S.user = makeQuizUserFromPortal(portalUser);
-      localStorage.setItem('qz_user', JSON.stringify(S.user));
+      S.quizAliases = collectUsernamesForHistory_(S.user);
+      if(savedQuizUser && !savedQuizUser.isGuest && samePerson_(savedQuizUser.fullname || savedQuizUser.name || '', S.user.fullname || S.user.name || '')){
+        [savedQuizUser.username, savedQuizUser.id, savedQuizUser.userId, savedQuizUser.maCbcc, savedQuizUser.maCBCC, savedQuizUser.code].forEach(x => pushUnique_(S.quizAliases, x));
+      }
+      // Không ghi đè qz_user khi chạy nhúng, để tài khoản Trắc nghiệm độc lập vẫn được giữ nguyên khi mở trực tiếp.
+      try{ localStorage.setItem('qz_portal_user_cache', JSON.stringify(S.user)); }catch(e){}
       this.afterLogin();
       this.fetchSettings();
       return;
     }
 
     const saved = localStorage.getItem('qz_user');
-    if(saved){ S.user=JSON.parse(saved); this.afterLogin(); this.fetchSettings(); }
+    if(saved){ S.user=JSON.parse(saved); S.quizAliases = collectUsernamesForHistory_(S.user); this.afterLogin(); this.fetchSettings(); }
     document.getElementById('loginUsername').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); document.getElementById('loginPassword').focus(); }});
     document.getElementById('loginPassword').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); this.login(); }});
   },
@@ -2200,7 +2268,7 @@ const App = {
       
       if(!res.ok){ this.showLoginAlert(res.msg||'Sai tài khoản hoặc mật khẩu','err'); }
       else{
-        S.user=res.user; localStorage.setItem('qz_user',JSON.stringify(res.user));
+        S.user=res.user; S.quizAliases = collectUsernamesForHistory_(S.user); localStorage.setItem('qz_user',JSON.stringify(res.user));
         this.hideLoginAlert();
         this.fetchSettings(); // tải cài đặt mặc định
         if(res.user.isDefaultPass){
