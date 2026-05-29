@@ -89,22 +89,32 @@
 }
 
 
-/* ===== PORTAL EMBED MODE: chạy trong Lịch công tác/Portal ===== */
-body.embed-mode { background:#f0f4fa !important; min-height:100svh; }
+/* ===== PORTAL EMBED MODE: chạy trong Lịch công tác/Portal =====
+   V70: Khi nhúng trong Lịch công tác, vẫn giữ sidebar nội bộ của Trắc nghiệm
+   để người dùng chuyển nhanh giữa Làm bài / Thống kê / Kết quả. Chỉ ẩn login,
+   topbar trùng lặp và các menu mobile riêng để tránh chồng giao diện Portal. */
+body.embed-mode { background:#f0f4fa !important; min-height:100svh; overflow:hidden; }
 body.embed-mode #screen-login,
-body.embed-mode .sidebar,
 body.embed-mode .topbar,
 body.embed-mode .mobile-bottom-nav,
 body.embed-mode .mobile-account-box,
 body.embed-mode .mobile-home-menu { display:none !important; }
-body.embed-mode .layout { display:block !important; min-height:100svh; }
-body.embed-mode .main { width:100% !important; min-height:100svh; padding-bottom:0 !important; }
-body.embed-mode .page-body { padding:18px 18px 28px !important; }
+body.embed-mode .layout { display:flex !important; min-height:100svh; width:100%; }
+body.embed-mode .sidebar { display:flex !important; width:230px; min-width:230px; height:100svh; position:sticky; top:0; }
+body.embed-mode .main { flex:1 !important; min-width:0 !important; width:auto !important; min-height:100svh; padding-bottom:0 !important; }
+body.embed-mode .page-body { padding:18px 20px 28px !important; }
 body.embed-mode .card,
 body.embed-mode .welcome-hero { box-shadow:0 1px 8px rgba(10,22,40,.06) !important; }
 body.embed-mode .quiz-container { max-width:100%; }
 body.embed-mode .result-container { max-width:100%; }
+body.embed-mode .sidebar-brand { padding:18px 18px 16px; }
+body.embed-mode .brand-name { font-size:.95rem; }
+body.embed-mode .sidebar-footer { padding:10px; }
+body.embed-mode .user-dropdown { bottom:58px; }
 @media(max-width:768px){
+  body.embed-mode { overflow:auto; }
+  body.embed-mode .layout { display:block !important; }
+  body.embed-mode .sidebar { display:none !important; }
   body.embed-mode .page-body { padding:12px 10px 20px !important; }
   body.embed-mode .quiz-container { padding:0; }
 }
@@ -1465,6 +1475,24 @@ function isStandaloneAllowed(){
   // Chỉ dùng khi cần bảo trì trực tiếp module Trắc nghiệm.
   return p.get('standalone')==='1';
 }
+function getInitialScreen(){
+  const p = urlParams();
+  const raw = String(p.get('view') || p.get('screen') || p.get('tab') || '').trim().toLowerCase();
+  const map = {
+    'dashboard': 'dashboard',
+    'home': 'dashboard',
+    'quiz': 'quiz-setup',
+    'quiz-setup': 'quiz-setup',
+    'exam': 'quiz-setup',
+    'lam-bai': 'quiz-setup',
+    'my-stats': 'my-stats',
+    'stats': 'my-stats',
+    'unit-stats': 'unit-stats',
+    'all-stats': 'all-stats',
+    'admin-settings': 'admin-settings'
+  };
+  return map[raw] || 'quiz-setup';
+}
 function redirectToPortal(){
   const target = PORTAL_URL + '?next=quiz';
   try{
@@ -1679,7 +1707,7 @@ const App = {
     if(u.role === 'admin'){
       document.getElementById('nav-admin-settings').style.display='';
     }
-    this.goto('quiz-setup');
+    this.goto(getInitialScreen());
   },
 
   roleLabel(r){ 
