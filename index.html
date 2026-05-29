@@ -90,33 +90,32 @@
 
 
 /* ===== PORTAL EMBED MODE: chạy trong Lịch công tác/Portal =====
-   V70: Khi nhúng trong Lịch công tác, vẫn giữ sidebar nội bộ của Trắc nghiệm
-   để người dùng chuyển nhanh giữa Làm bài / Thống kê / Kết quả. Chỉ ẩn login,
-   topbar trùng lặp và các menu mobile riêng để tránh chồng giao diện Portal. */
-body.embed-mode { background:#f0f4fa !important; min-height:100svh; overflow:hidden; }
+   V71: Khi nhúng trong Lịch công tác, bỏ hẳn sidebar riêng của Trắc nghiệm
+   để chỉ còn sidebar chung của Portal. Module mở vào Tổng quan, thẻ hero là
+   nút LÀM BÀI KIỂM TRA để vào màn hình chọn lĩnh vực/bộ đề. */
+body.embed-mode { background:#f0f4fa !important; min-height:100svh; overflow:auto; }
 body.embed-mode #screen-login,
 body.embed-mode .topbar,
+body.embed-mode .sidebar,
 body.embed-mode .mobile-bottom-nav,
 body.embed-mode .mobile-account-box,
 body.embed-mode .mobile-home-menu { display:none !important; }
-body.embed-mode .layout { display:flex !important; min-height:100svh; width:100%; }
-body.embed-mode .sidebar { display:flex !important; width:230px; min-width:230px; height:100svh; position:sticky; top:0; }
-body.embed-mode .main { flex:1 !important; min-width:0 !important; width:auto !important; min-height:100svh; padding-bottom:0 !important; }
+body.embed-mode .layout { display:block !important; min-height:100svh; width:100%; }
+body.embed-mode .main { display:block !important; width:100% !important; max-width:none !important; min-height:100svh; padding-bottom:0 !important; }
 body.embed-mode .page-body { padding:18px 20px 28px !important; }
 body.embed-mode .card,
 body.embed-mode .welcome-hero { box-shadow:0 1px 8px rgba(10,22,40,.06) !important; }
-body.embed-mode .quiz-container { max-width:100%; }
+body.embed-mode .welcome-hero.quiz-start-hero { cursor:pointer; padding:28px 38px; }
+body.embed-mode .welcome-hero.quiz-start-hero:hover { filter:brightness(1.04); transform:translateY(-1px); transition:all .18s ease; }
+body.embed-mode .welcome-hero.quiz-start-hero .welcome-text h2 { font-size:1.65rem; letter-spacing:.8px; text-transform:uppercase; }
+body.embed-mode .welcome-hero.quiz-start-hero .welcome-text p { display:none !important; }
+body.embed-mode .welcome-hero.quiz-start-hero .welcome-badge { display:none !important; }
+body.embed-mode .quiz-container { max-width:100%; padding:0; }
 body.embed-mode .result-container { max-width:100%; }
-body.embed-mode .sidebar-brand { padding:18px 18px 16px; }
-body.embed-mode .brand-name { font-size:.95rem; }
-body.embed-mode .sidebar-footer { padding:10px; }
-body.embed-mode .user-dropdown { bottom:58px; }
 @media(max-width:768px){
-  body.embed-mode { overflow:auto; }
-  body.embed-mode .layout { display:block !important; }
-  body.embed-mode .sidebar { display:none !important; }
   body.embed-mode .page-body { padding:12px 10px 20px !important; }
-  body.embed-mode .quiz-container { padding:0; }
+  body.embed-mode .welcome-hero.quiz-start-hero { padding:22px 18px; }
+  body.embed-mode .welcome-hero.quiz-start-hero .welcome-text h2 { font-size:1.25rem; }
 }
 </style>
 <style>
@@ -974,7 +973,7 @@ img{display:block;max-width:100%}
     </header>
 
     <div class="screen active page-body" id="screen-dashboard">
-      <div class="welcome-hero">
+      <div class="welcome-hero" id="dashboardHero">
         <div class="welcome-text">
           <h2 id="welcomeName">Xin chào!</h2>
           <p id="welcomeSub">Chọn bài thi hoặc xem thống kê kết quả của bạn</p>
@@ -1491,7 +1490,7 @@ function getInitialScreen(){
     'all-stats': 'all-stats',
     'admin-settings': 'admin-settings'
   };
-  return map[raw] || 'quiz-setup';
+  return map[raw] || 'dashboard';
 }
 function redirectToPortal(){
   const target = PORTAL_URL + '?next=quiz';
@@ -1554,12 +1553,6 @@ const App = {
       localStorage.setItem('qz_user', JSON.stringify(S.user));
       this.afterLogin();
       this.fetchSettings();
-      return;
-    }
-
-    // Lựa chọn 1: Trắc nghiệm là module con; mở trực tiếp thì quay về Portal Lịch công tác.
-    if(!isStandaloneAllowed()){
-      redirectToPortal();
       return;
     }
 
@@ -1678,7 +1671,7 @@ const App = {
     const u=S.user;
     document.getElementById('screen-login').classList.remove('active');
     document.getElementById('screen-login').style.display='none';
-    document.getElementById('appLayout').style.display = S.portalMode ? 'block' : 'flex';
+    document.getElementById('appLayout').style.display = 'flex';
     document.getElementById('sidebarAvatar').textContent=(u.fullname||u.username).charAt(0).toUpperCase();
     document.getElementById('sidebarName').textContent=u.fullname||u.username;
     document.getElementById('sidebarRole').textContent=this.roleLabel(u.role);
@@ -1694,8 +1687,30 @@ const App = {
     if(mobileUserName) mobileUserName.textContent=u.fullname||u.username;
     if(mobileUserRole) mobileUserRole.textContent=this.roleLabel(u.role);
     
-    document.getElementById('welcomeName').textContent='Xin chào, '+(u.fullname||u.username)+'!';
-    document.getElementById('welcomeSub').textContent=u.role==='user'?'Chọn bài thi hoặc xem thống kê của bạn':'Quản lý kết quả và thống kê hệ thống';
+    const hero = document.getElementById('dashboardHero');
+    if(hero){
+      hero.classList.toggle('quiz-start-hero', !!S.portalMode);
+      if(S.portalMode){
+        hero.setAttribute('role','button');
+        hero.setAttribute('tabindex','0');
+        hero.setAttribute('title','Bấm để làm bài kiểm tra');
+        hero.onclick = function(){ App.goto('quiz-setup'); };
+        hero.onkeydown = function(e){ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); App.goto('quiz-setup'); } };
+      }else{
+        hero.removeAttribute('role');
+        hero.removeAttribute('tabindex');
+        hero.removeAttribute('title');
+        hero.onclick = null;
+        hero.onkeydown = null;
+      }
+    }
+    if(S.portalMode){
+      document.getElementById('welcomeName').textContent='LÀM BÀI KIỂM TRA';
+      document.getElementById('welcomeSub').textContent='';
+    }else{
+      document.getElementById('welcomeName').textContent='Xin chào, '+(u.fullname||u.username)+'!';
+      document.getElementById('welcomeSub').textContent=u.role==='user'?'Chọn bài thi hoặc xem thống kê của bạn':'Quản lý kết quả và thống kê hệ thống';
+    }
     
     if(canSeeUnit(u.role)){
       document.getElementById('adminNavLabel').style.display='';
