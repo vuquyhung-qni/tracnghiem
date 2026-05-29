@@ -1460,6 +1460,53 @@ const letter = i => String.fromCharCode(65+i);
 const fmtDate = v => { if(!v) return '—'; const d=new Date(v); return `${d.getDate()}/${d.getMonth()+1} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; };
 const scorePill = v => { const n=Number(v); const cls=n>=7?'score-high':n>=5?'score-mid':'score-low'; return `<span class="score-pill ${cls}">${n.toFixed(2)}</span>`; };
 
+
+// V73: Lấy lịch sử cá nhân ổn định trong cả chế độ nhúng Portal và mở độc lập.
+// Trường hợp username ở Lịch công tác khác mã CBCC trong Trắc nghiệm, tự fallback theo họ tên.
+function normPersonKey_(v){
+  return String(v || '')
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/[^a-z0-9]+/g, '')
+    .trim();
+}
+async function getCurrentUserHistory_(){
+  const u = S.user || {};
+  const names = [];
+  [u.username, u.id, u.userId].forEach(x => {
+    const s = String(x || '').trim();
+    if(s && names.indexOf(s) === -1) names.push(s);
+  });
+
+  // Ưu tiên gọi đúng username/mã CBCC trước.
+  for(const username of names){
+    try{
+      const res = await callGAS({action:'getHistory', username});
+      if(res && res.ok && Array.isArray(res.history) && res.history.length) return res.history;
+    }catch(e){ /* thử fallback bên dưới */ }
+  }
+
+  // Fallback: lấy toàn bộ rồi lọc theo username hoặc họ tên.
+  // Cách này xử lý trường hợp tài khoản Portal và tài khoản Trắc nghiệm cùng người nhưng khác mã đăng nhập.
+  try{
+    const resAll = await callGAS({action:'getHistory', username:''});
+    const all = (resAll && resAll.ok && Array.isArray(resAll.history)) ? resAll.history : [];
+    if(!all.length) return [];
+
+    const nameKeys = new Set(names.map(normPersonKey_).filter(Boolean));
+    const fullKey = normPersonKey_(u.fullname || u.name || '');
+    const filtered = all.filter(r => {
+      const rowUser = normPersonKey_(r.username || r.userId || '');
+      const rowName = normPersonKey_(r.fullname || r.name || '');
+      return (rowUser && nameKeys.has(rowUser)) || (fullKey && rowName === fullKey);
+    });
+    return filtered.length ? filtered : (names.length ? [] : all);
+  }catch(e){
+    return [];
+  }
+}
+
 const canSeeAll  = r => ['admin','lanh_dao_chi_cuc'].includes(r);
 const canSeeUnit = r => ['admin','lanh_dao_chi_cuc','lanh_dao_doi'].includes(r);
 
@@ -1772,11 +1819,20 @@ const App = {
   },
 
   async loadDashboard(){
+    const ids = ['ds-avg','ds-best','ds-pass','ds-last'];
+    ids.forEach(id => { const el=document.getElementById(id); if(el) el.textContent='—'; });
+    const badge=document.getElementById('badgeTotalExams');
+    if(badge) badge.textContent='0';
+    const body=document.getElementById('dashHistoryBody');
+    if(body) body.innerHTML='<tr><td colspan="5" style="text-align:center;color:#8496b0;padding:20px">Đang tải dữ liệu...</td></tr>';
+
     try{
-      const res=await callGAS({action:'getHistory',username:S.user.username});
-      if(!res.ok||!res.history.length){ document.getElementById('badgeTotalExams').textContent=0; return; }
-      const h=res.history;
-      document.getElementById('badgeTotalExams').textContent=h.length;
+      const h = await getCurrentUserHistory_();
+      if(!h.length){
+        if(body) body.innerHTML='<tr><td colspan="5" style="text-align:center;color:#8496b0;padding:20px">Chưa có dữ liệu</td></tr>';
+        return;
+      }
+      if(badge) badge.textContent=h.length;
       const scores=h.map(x=>Number(x.score10)).filter(x=>!isNaN(x));
       const avg=scores.length?scores.reduce((a,b)=>a+b,0)/scores.length:0;
       const best=scores.length?Math.max(...scores):0;
@@ -1785,7 +1841,7 @@ const App = {
       document.getElementById('ds-best').textContent=best.toFixed(1);
       document.getElementById('ds-pass').textContent=pass;
       document.getElementById('ds-last').textContent=fmtDate(h[0].time);
-      document.getElementById('dashHistoryBody').innerHTML=h.slice(0,10).map(row=>`
+      if(body) body.innerHTML=h.slice(0,10).map(row=>`
         <tr>
           <td>${fmtDate(row.time)}</td>
           <td style="max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(row.banks)}</td>
@@ -1793,7 +1849,9 @@ const App = {
           <td style="text-align:center;font-weight:700">${Number(row.score10).toFixed(2)}</td>
           <td>${scorePill(row.score10)}</td>
         </tr>`).join('');
-    }catch(e){}
+    }catch(e){
+      if(body) body.innerHTML='<tr><td colspan="5" style="text-align:center;color:#c0392b;padding:20px">Lỗi tải dữ liệu, vui lòng bấm Tải lại.</td></tr>';
+    }
   },
 
   async loadBanks(){
@@ -2215,9 +2273,8 @@ filterBanks(){
   async loadMyStats(){
     document.getElementById('myHistoryBody').innerHTML='<tr><td colspan="6" style="text-align:center;padding:20px;color:#8496b0 !important">Đang tải...</td></tr>';
     try{
-      const res=await callGAS({action:'getHistory',username:S.user.username});
-      if(!res.ok||!res.history.length){ document.getElementById('myHistoryBody').innerHTML='<tr><td colspan="6" style="text-align:center;padding:20px;color:#8496b0 !important">Chưa có dữ liệu</td></tr>'; return; }
-      const h=res.history;
+      const h = await getCurrentUserHistory_();
+      if(!h.length){ document.getElementById('myHistoryBody').innerHTML='<tr><td colspan="6" style="text-align:center;padding:20px;color:#8496b0 !important">Chưa có dữ liệu</td></tr>'; return; }
       const scores=h.map(x=>Number(x.score10)).filter(x=>!isNaN(x));
       const avg=scores.length?scores.reduce((a,b)=>a+b,0)/scores.length:0;
       const best=scores.length?Math.max(...scores):0;
