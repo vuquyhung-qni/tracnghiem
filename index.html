@@ -2124,36 +2124,27 @@ function isCurrentUserRow_(r, names, aliases){
   if(rowUser && aliasKeys.has(normPersonKey_(rowUser))) return true;
   return (names || []).some(n => samePerson_(rowName, n) || samePerson_(rowUser, n));
 }
-async function getCurrentUserHistoryV79_(){
-  // Giữ logic cũ trước; nếu có dữ liệu thì dùng ngay.
-  try{
-    const h0 = await getCurrentUserHistoryV79_();
-    if(Array.isArray(h0) && h0.length) return h0;
-  }catch(e){}
+async function getCurrentUserHistoryV79_(forceRefresh){
+  // V80: bỏ lỗi đệ quy của V79 và lấy dữ liệu theo thứ tự chắc chắn hơn.
+  // Mục tiêu: màn hình Tổng quan nhúng trong Lịch công tác dùng đúng dữ liệu như màn hình "Xem tất cả".
+  if(!forceRefresh && Array.isArray(S._historyCacheV80)) return S._historyCacheV80;
 
   const u = S.user || {};
   const names = getPortalDisplayNames_();
-  const aliases = collectUsernamesForHistory_(u);
-  const candidateUsers = [];
-  aliases.forEach(x => pushUnique_(candidateUsers, x));
+  [u.fullname, u.name, u.displayName].forEach(x => pushUnique_(names, x));
 
-  // Nếu đã từng đăng nhập trực tiếp Trắc nghiệm, ưu tiên username Trắc nghiệm đã lưu, không phụ thuộc điều kiện cùng họ tên.
+  const candidateUsers = [];
+  collectUsernamesForHistory_(u).forEach(x => pushUnique_(candidateUsers, x));
+
+  // Ưu tiên tài khoản Trắc nghiệm đã từng đăng nhập trực tiếp trên cùng trình duyệt.
+  // Không ràng buộc cùng họ tên nữa vì một số tài khoản lưu thiếu dấu/thiếu tên.
   const saved = readSavedQuizUser_();
   if(saved && !saved.isGuest){
     [saved.username, saved.id, saved.userId, saved.maCbcc, saved.maCBCC, saved.code].forEach(x => pushUnique_(candidateUsers, x));
-    if(saved.fullname || saved.name) pushUnique_(names, saved.fullname || saved.name);
+    [saved.fullname, saved.name, saved.displayName].forEach(x => pushUnique_(names, x));
   }
 
-  // Dò toàn bộ bảng xếp hạng để tìm mọi username có cùng họ tên.
-  try{
-    const res = await callGAS({action:'getAllStats'});
-    const ranking = (res && res.ok && Array.isArray(res.ranking)) ? res.ranking : [];
-    ranking.forEach(r => {
-      if(isCurrentUserRow_(r, names, candidateUsers)) pushUnique_(candidateUsers, r.username);
-    });
-  }catch(e){}
-
-  // Ghép lịch sử của toàn bộ username ứng viên.
+  // Thử lấy lịch sử theo từng username/mã ứng viên và ghép lại.
   const merged = [];
   for(const username of candidateUsers){
     try{
@@ -2163,19 +2154,51 @@ async function getCurrentUserHistoryV79_(){
       }
     }catch(e){}
   }
-  if(merged.length) return uniqHistoryRows_(merged);
+  if(merged.length){
+    S._historyCacheV80 = uniqHistoryRows_(merged);
+    return S._historyCacheV80;
+  }
 
-  // Fallback cuối: lấy toàn bộ lịch sử, lọc theo họ tên hoặc username ứng viên.
+  // Dò bảng thống kê để tìm username thật của Trắc nghiệm theo họ tên/người dùng Portal.
+  try{
+    const res = await callGAS({action:'getAllStats'});
+    const ranking = (res && res.ok && Array.isArray(res.ranking)) ? res.ranking : [];
+    ranking.forEach(r => {
+      if(isCurrentUserRow_(r, names, candidateUsers)){
+        pushUnique_(candidateUsers, r.username);
+        pushUnique_(candidateUsers, r.userId);
+        pushUnique_(names, r.fullname || r.name);
+      }
+    });
+  }catch(e){}
+
+  // Thử lại sau khi đã có username từ ranking.
+  const merged2 = [];
+  for(const username of candidateUsers){
+    try{
+      const res = await callGAS({action:'getHistory', username});
+      if(res && res.ok && Array.isArray(res.history) && res.history.length){
+        merged2.push(...res.history);
+      }
+    }catch(e){}
+  }
+  if(merged2.length){
+    S._historyCacheV80 = uniqHistoryRows_(merged2);
+    return S._historyCacheV80;
+  }
+
+  // Fallback cuối: lấy toàn bộ lịch sử rồi lọc mềm theo username/họ tên.
   try{
     const resAll = await callGAS({action:'getHistory', username:''});
     const all = (resAll && resAll.ok && Array.isArray(resAll.history)) ? resAll.history : [];
     const filtered = all.filter(r => isCurrentUserRow_(r, names, candidateUsers));
-    return uniqHistoryRows_(filtered);
+    S._historyCacheV80 = uniqHistoryRows_(filtered);
+    return S._historyCacheV80;
   }catch(e){
+    S._historyCacheV80 = [];
     return [];
   }
 }
-
 const canSeeAll  = r => ['admin','lanh_dao_chi_cuc'].includes(r);
 const canSeeUnit = r => ['admin','lanh_dao_chi_cuc','lanh_dao_doi'].includes(r);
 
@@ -2502,10 +2525,18 @@ const App = {
     if(body) body.innerHTML='<tr><td colspan="5" style="text-align:center;color:#8496b0;padding:20px">Đang tải dữ liệu...</td></tr>';
 
     try{
-      const h = await getCurrentUserHistoryV79_();
+      let h = await getCurrentUserHistoryV79_(true);
       if(!h.length){
-        if(body) body.innerHTML='<tr><td colspan="5" style="text-align:center;color:#8496b0;padding:20px">Chưa có dữ liệu</td></tr>';
-        return;
+        // Khi nhúng trong Portal, đôi khi dữ liệu localStorage/bridge sẵn sàng chậm hơn iframe một nhịp.
+        // Đợi ngắn rồi gọi lại một lần để Tổng quan không bị trống trong khi màn Xem tất cả có dữ liệu.
+        if(S.portalMode){
+          await new Promise(r => setTimeout(r, 450));
+          h = await getCurrentUserHistoryV79_(true);
+        }
+        if(!h.length){
+          if(body) body.innerHTML='<tr><td colspan="5" style="text-align:center;color:#8496b0;padding:20px">Chưa có dữ liệu</td></tr>';
+          return;
+        }
       }
       if(badge) badge.textContent=h.length;
       const scores=h.map(x=>Number(x.score10)).filter(x=>!isNaN(x));
