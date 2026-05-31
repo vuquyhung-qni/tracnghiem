@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="color-scheme" content="light only">
 <title>Hệ thống Thi Trắc nghiệm - Chi cục Hải quan khu vực VIII</title>
-  <!-- PWA_V86_START -->
+  <!-- PWA_V101_START -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#063a63">
   <meta name="mobile-web-app-capable" content="yes">
@@ -15,7 +15,7 @@
   <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
-  <!-- PWA_V86_END -->
+  <!-- PWA_V101_END -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Lexend:wght@700;800&display=swap" rel="stylesheet">
@@ -1620,6 +1620,95 @@ body.embed-mode .welcome-hero.quiz-start-hero{
 }
 </style>
 
+
+<style id="v101-embed-ui-fix">
+/* ===== V101: Sửa giao diện Trắc nghiệm khi nhúng trong Lịch công tác ===== */
+body.embed-mode{
+  background:#f7f9fc !important;
+  overflow-x:hidden !important;
+}
+body.embed-mode .layout,
+body.embed-mode .main{
+  width:100% !important;
+  max-width:none !important;
+  min-height:100svh !important;
+  background:#f7f9fc !important;
+}
+body.embed-mode .page-body{
+  padding:16px 18px 24px !important;
+  max-width:none !important;
+}
+body.embed-mode #screen-quiz-setup{
+  background:#f7f9fc !important;
+}
+body.embed-mode #screen-quiz-setup .exam-setup-grid{
+  grid-template-columns:1fr !important;
+  gap:16px !important;
+  max-width:1120px !important;
+  margin:0 auto !important;
+  width:100% !important;
+}
+body.embed-mode #screen-quiz-setup .card{
+  border:1px solid #e6eef6 !important;
+  border-radius:14px !important;
+  box-shadow:0 4px 18px rgba(6,58,99,.08) !important;
+  overflow:hidden !important;
+}
+body.embed-mode #screen-quiz-setup .card > div:first-child{
+  background:linear-gradient(90deg,#f7fbff,#fff) !important;
+  border-bottom:1px solid #e6eef6 !important;
+}
+body.embed-mode #screen-quiz-setup .card > div:first-child div{
+  color:#063a63 !important;
+}
+body.embed-mode #screen-quiz-setup .card > div:first-child svg{
+  stroke:#0f4c81 !important;
+}
+body.embed-mode .exam-guide{
+  width:100% !important;
+  margin:0 !important;
+  background:#fff !important;
+  border:1px solid #e6eef6 !important;
+  border-radius:14px !important;
+  box-shadow:0 2px 10px rgba(6,58,99,.06) !important;
+  color:#3d5166 !important;
+  padding:18px 20px !important;
+}
+body.embed-mode .exam-guide-title{
+  color:#063a63 !important;
+  font-weight:900 !important;
+}
+body.embed-mode .exam-guide ul{
+  margin:0 !important;
+  line-height:1.75 !important;
+}
+body.embed-mode .btn-start{
+  background:linear-gradient(135deg,#0f4c81,#0b67b2) !important;
+  color:#fff !important;
+  border-radius:12px !important;
+  box-shadow:0 8px 22px rgba(11,103,178,.18) !important;
+}
+body.embed-mode .chip.active{
+  background:linear-gradient(135deg,#0f4c81,#0b67b2) !important;
+  border-color:#0b67b2 !important;
+  color:#fff !important;
+}
+body.embed-mode .bank-select{
+  min-height:42px !important;
+  border-radius:10px !important;
+}
+body.embed-mode .screen.active{
+  outline:0 !important;
+}
+@media(max-width:768px){
+  body.embed-mode .page-body{padding:10px 10px 18px !important;}
+  body.embed-mode #screen-quiz-setup .card > div:first-child{padding:14px 16px !important;}
+  body.embed-mode #screen-quiz-setup .card > div:nth-child(2){padding:16px !important;}
+  body.embed-mode .exam-guide{display:none !important;}
+  body.embed-mode .count-chips{gap:8px !important;}
+  body.embed-mode .chip{padding:8px 12px !important;}
+}
+</style>
 </head>
 <body>
 
@@ -2579,6 +2668,7 @@ const App = {
   init(){
     S.portalMode = isEmbedMode();
     if(S.portalMode) document.body.classList.add('embed-mode');
+    if(urlParams().get('compact')==='1') document.body.classList.add('compact-embed-mode');
 
     const portalUser = readPortalBridge();
     if(portalUser){

@@ -1,5 +1,5 @@
-// Service Worker PWA v89 - HQKV8
-const CACHE_VERSION = 'hqkv8-pwa-v89';
+// Service Worker PWA v101 - Trắc nghiệm HQKV8
+const CACHE_VERSION = 'hqkv8-tracnghiem-pwa-v101-embed-ui-fix';
 const APP_SHELL = [
   './',
   './index.html',
@@ -18,7 +18,7 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys => Promise.all(
-      keys.filter(key => key !== CACHE_VERSION).map(key => caches.delete(key))
+      keys.filter(key => key !== CACHE_VERSION && /hqkv8|tracnghiem|pwa/i.test(key)).map(key => caches.delete(key))
     )).then(() => self.clients.claim())
   );
 });
@@ -28,25 +28,26 @@ self.addEventListener('fetch', event => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
 
-  // Không cache dữ liệu/API ngoài domain để tránh cũ dữ liệu lịch, trắc nghiệm.
+  // Không cache dữ liệu/API ngoài domain để tránh cũ dữ liệu trắc nghiệm.
   if (url.origin !== self.location.origin) return;
 
-  if (req.mode === 'navigate') {
+  if (req.mode === 'navigate' || (req.headers.get('accept') || '').includes('text/html')) {
     event.respondWith(
-      fetch(req).then(res => {
-        const copy = res.clone();
-        caches.open(CACHE_VERSION).then(cache => cache.put('./', copy));
-        return res;
-      }).catch(() => caches.match('./').then(res => res || caches.match('./index.html')))
+      fetch(req, { cache: 'no-store' }).catch(() => caches.match('./').then(res => res || caches.match('./index.html')))
     );
     return;
   }
 
   event.respondWith(
-    fetch(req).then(res => {
-      const copy = res.clone();
-      caches.open(CACHE_VERSION).then(cache => cache.put(req, copy));
-      return res;
-    }).catch(() => caches.match(req))
+    caches.match(req).then(cached => {
+      const fetchPromise = fetch(req).then(res => {
+        if (res && res.ok) {
+          const copy = res.clone();
+          caches.open(CACHE_VERSION).then(cache => cache.put(req, copy)).catch(() => null);
+        }
+        return res;
+      }).catch(() => cached);
+      return cached || fetchPromise;
+    })
   );
 });
