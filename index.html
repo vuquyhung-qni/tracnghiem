@@ -2288,7 +2288,8 @@ const S = {
   portalMode: false,
   quizAliases: [],
   currentQ: 0, autoNextTimer: null,
-  sysSettings: {} // cài đặt mặc định toàn hệ thống (admin quản lý)
+  sysSettings: {}, // cài đặt mặc định toàn hệ thống (admin quản lý)
+  settingsLoaded: false
 };
 
 const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -2612,8 +2613,10 @@ function getInitialScreen(){
     'all-stats': 'all-stats',
     'admin-settings': 'admin-settings'
   };
+  // V138: trong Lịch công tác HQKV8 luôn ưu tiên vào màn chọn đề.
+  // Trước đây nếu thiếu/mất tham số view do cache/service worker thì fallback về dashboard.
+  if(isEmbedMode() && (!raw || raw === 'dashboard' || raw === 'home')) return 'quiz-setup';
   if(map[raw]) return map[raw];
-  // V136: khi nhúng trong Lịch công tác HQKV8 thì mở thẳng màn hình chọn lĩnh vực/bộ đề/số câu.
   if(isEmbedMode()) return 'quiz-setup';
   return 'dashboard';
 }
@@ -2668,7 +2671,7 @@ function makeQuizUserFromPortal(portalUser){
 document.title = "Hệ thống Thi Trắc nghiệm - Chi cục Hải quan khu vực VIII";
 
 const App = {
-  init(){
+  async init(){
     S.portalMode = isEmbedMode();
     if(S.portalMode) document.body.classList.add('embed-mode');
     if(urlParams().get('compact')==='1') document.body.classList.add('compact-embed-mode');
@@ -2683,13 +2686,13 @@ const App = {
       }
       // Không ghi đè qz_user khi chạy nhúng, để tài khoản Trắc nghiệm độc lập vẫn được giữ nguyên khi mở trực tiếp.
       try{ localStorage.setItem('qz_portal_user_cache', JSON.stringify(S.user)); }catch(e){}
+      await this.fetchSettings();
       this.afterLogin();
-      this.fetchSettings();
       return;
     }
 
     const saved = localStorage.getItem('qz_user');
-    if(saved){ S.user=JSON.parse(saved); S.quizAliases = collectUsernamesForHistory_(S.user); this.afterLogin(); this.fetchSettings(); }
+    if(saved){ S.user=JSON.parse(saved); S.quizAliases = collectUsernamesForHistory_(S.user); await this.fetchSettings(); this.afterLogin(); return; }
     document.getElementById('loginUsername').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); document.getElementById('loginPassword').focus(); }});
     document.getElementById('loginPassword').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); this.login(); }});
   },
@@ -2766,7 +2769,7 @@ const App = {
       else{
         S.user=res.user; S.quizAliases = collectUsernamesForHistory_(S.user); localStorage.setItem('qz_user',JSON.stringify(res.user));
         this.hideLoginAlert();
-        this.fetchSettings(); // tải cài đặt mặc định
+        await this.fetchSettings(); // V138: tải xong cài đặt mặc định trước khi render màn Làm bài
         if(res.user.isDefaultPass){
           document.getElementById('chpwUsername').value=username;
           this.showModal('modal-chpw',true);
@@ -2947,6 +2950,7 @@ const App = {
   },
 
   async loadBanks(){
+  if(!S.settingsLoaded) await this.fetchSettings();
   const cat = document.getElementById('categorySelect');
   const bank = document.getElementById('bankSelect');
 
@@ -2990,11 +2994,10 @@ const App = {
 renderCategories(banks, defaultLinhVuc, defaultBankId, defaultCount){
   const cat = document.getElementById('categorySelect');
   const bank = document.getElementById('bankSelect');
+  banks = banks || [];
 
   const categories = [...new Set(
-    (banks || [])
-      .map(b => String(b.linhVuc || '').trim())
-      .filter(Boolean)
+    banks.map(b => String(b.linhVuc || '').trim()).filter(Boolean)
   )].sort((a,b) => a.localeCompare(b, 'vi'));
 
   if(!categories.length){
@@ -3004,35 +3007,39 @@ renderCategories(banks, defaultLinhVuc, defaultBankId, defaultCount){
     return;
   }
 
+  // V138: nếu SETTINGS chỉ lưu defaultBankId thì tự suy ra lĩnh vực từ bộ đề đó.
+  const defaultBank = defaultBankId ? banks.find(b => String(b.id) === String(defaultBankId)) : null;
+  if(!defaultLinhVuc && defaultBank && defaultBank.linhVuc) defaultLinhVuc = String(defaultBank.linhVuc || '').trim();
+
   cat.innerHTML =
     '<option value="">— Chọn lĩnh vực —</option>' +
     categories.map(x => `<option value="${esc(x)}">${esc(x)}</option>`).join('');
 
-  // Tự động chọn lĩnh vực và bộ đề mặc định từ ô DEFAULT trong sheet LIST
-  if(defaultLinhVuc){
+  if(defaultLinhVuc && categories.includes(defaultLinhVuc)){
     cat.value = defaultLinhVuc;
     this.filterBanks();
     if(defaultBankId){
-      // Đợi filterBanks cập nhật xong rồi set bank và số câu
-      setTimeout(()=>{
-        const bankEl = document.getElementById('bankSelect');
-        if(bankEl) bankEl.value = defaultBankId;
-      }, 50);
+      const bankEl = document.getElementById('bankSelect');
+      if(bankEl && Array.from(bankEl.options).some(o => String(o.value) === String(defaultBankId))){
+        bankEl.value = defaultBankId;
+      }
     }
   } else {
     bank.innerHTML = '<option value="">— Vui lòng chọn lĩnh vực trước —</option>';
     bank.disabled = true;
   }
-  // Áp dụng số câu mặc định nếu có
-  if(defaultCount && defaultCount > 0){
+
+  // Áp dụng số câu mặc định nếu có.
+  const countNum = Number(defaultCount || 0);
+  if(countNum > 0){
     const chips = document.querySelectorAll('.count-chips .chip');
     let matched = false;
     chips.forEach(chip => {
-      const n = parseInt(chip.textContent);
-      if(n === defaultCount){ chip.click(); matched = true; }
+      const n = parseInt(chip.textContent, 10);
+      if(n === countNum){ chip.click(); matched = true; }
       else chip.classList.remove('active');
     });
-    if(!matched){ S.examCount = defaultCount; } // số câu tuỳ chỉnh không có chip
+    if(!matched){ S.examCount = countNum; }
   }
 },
 
@@ -3466,8 +3473,9 @@ filterBanks(){
 
 
   // ── CÀI ĐẶT HỆ THỐNG ──────────────────────────────────────
-  async fetchSettings(){
-    // Prefetch cả settings lẫn banks ngay khi login (chạy nền, không block UI)
+  async fetchSettings(force=false){
+    // V138: phải tải xong SETTINGS trước khi render màn chọn đề, nếu không sẽ rơi về DEFAULT cũ trong LIST.
+    if(S.settingsLoaded && !force) return S.sysSettings || {};
     try{
       const [settRes, bankRes] = await Promise.all([
         callGAS({action:'getSettings'}),
@@ -3477,7 +3485,12 @@ filterBanks(){
       if(bankRes && bankRes.ok && bankRes.banks && bankRes.banks.length){
         S.allBanks = bankRes.banks;
       }
-    }catch(e){ /* silent fail — không ảnh hưởng UI */ }
+    }catch(e){
+      console.warn('FETCH_SETTINGS_V138_FAIL', e);
+    }finally{
+      S.settingsLoaded = true;
+    }
+    return S.sysSettings || {};
   },
 
   async loadAdminSettings(){
@@ -3714,18 +3727,23 @@ filterBanks(){
 };
 
 
-// V136: nhận lệnh điều hướng từ Lịch công tác HQKV8 khi Trắc nghiệm được nhúng iframe.
-window.addEventListener('message', function(ev){
+// V138: nhận lệnh điều hướng từ Lịch công tác HQKV8 khi Trắc nghiệm được nhúng iframe.
+window.addEventListener('message', async function(ev){
   try{
     const d = ev && ev.data;
     if(d && d.type === 'HQKV8_QUIZ_GOTO'){
       const screen = d.screen || d.view || 'quiz-setup';
-      if(window.App && typeof App.goto === 'function') App.goto(screen);
+      if(window.App && typeof App.goto === 'function'){
+        if(screen === 'quiz-setup') await App.fetchSettings(true);
+        App.goto(screen);
+        if(screen === 'quiz-setup') setTimeout(()=>App.loadBanks(), 80);
+      }
     }
-  }catch(e){}
+  }catch(e){ console.warn('HQKV8_QUIZ_GOTO_FAIL', e); }
 });
 
 App.init();
+// HTML_V138_FORCE_QUIZ_SETUP_AND_DEFAULT_SETTINGS
 </script>
 
 <!-- MODAL XÁC NHẬN THOÁT BÀI THI -->
