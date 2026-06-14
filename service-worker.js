@@ -1,5 +1,5 @@
 // Service Worker PWA v101 - Trắc nghiệm HQKV8
-const CACHE_VERSION = 'hqkv8-tracnghiem-pwa-v101-embed-ui-fix';
+const CACHE_VERSION = 'hqkv8-tracnghiem-pwa-v139-results-fix';
 const APP_SHELL = [
   './',
   './index.html',

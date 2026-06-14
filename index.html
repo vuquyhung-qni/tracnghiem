@@ -1844,7 +1844,7 @@ body.embed-mode .screen.active{
       </button>
       <button class="nav-item" onclick="App.goto('my-stats')" id="nav-my-stats">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-        Thống kê của tôi
+        Kết quả của tôi
       </button>
       <div id="adminNavLabel" style="display:none"></div>
       <button class="nav-item" onclick="App.goto('unit-stats')" id="nav-unit-stats" style="display:none">
@@ -1854,7 +1854,7 @@ body.embed-mode .screen.active{
       </button>
       <button class="nav-item" onclick="App.goto('all-stats')" id="nav-all-stats" style="display:none">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        Toàn chi cục
+        Kết quả toàn Chi cục
       </button>
       <!-- HQKV8: menu bổ sung -->
       <button class="nav-item" onclick="App.goto('courses')" id="nav-courses" style="display:none">
@@ -1916,7 +1916,7 @@ body.embed-mode .screen.active{
       <div class="welcome-hero" id="dashboardHero">
         <div class="welcome-text">
           <h2 id="welcomeName">Xin chào!</h2>
-          <p id="welcomeSub">Chọn bài thi hoặc xem thống kê kết quả của bạn</p>
+          <p id="welcomeSub">Chọn bài thi hoặc xem kết quả của bạn</p>
         </div>
         <div class="welcome-badge">
           <div class="welcome-badge-val" id="badgeTotalExams">0</div>
@@ -1947,7 +1947,7 @@ body.embed-mode .screen.active{
         </button>
         <button onclick="App.goto('my-stats')" class="mobile-menu-card">
           <span class="mobile-menu-icon">📊</span>
-          <span>Thống kê</span>
+          <span>Kết quả</span>
         </button>
       </div>
 
@@ -2219,7 +2219,7 @@ body.embed-mode .screen.active{
 
       <div class="card">
         <div class="card-header">
-          <span class="card-title">Bảng xếp hạng toàn chi cục</span>
+          <span class="card-title">Bảng xếp hạng kết quả toàn Chi cục</span>
           <span style="font-size:.75rem;color:#8496b0 !important" id="allStatsCount"></span>
         </div>
         <div class="tbl-wrap">
@@ -2388,7 +2388,7 @@ body.embed-mode .screen.active{
     <span>▶</span><b>Làm bài</b>
   </button>
   <button onclick="App.goto('my-stats')" id="mb-nav-my-stats">
-    <span>📊</span><b>Thống kê</b>
+    <span>📊</span><b>Kết quả</b>
   </button>
 </nav>
 
@@ -3010,7 +3010,7 @@ const App = {
       document.getElementById('welcomeSub').textContent='';
     }else{
       document.getElementById('welcomeName').textContent='Xin chào, '+(u.fullname||u.username)+'!';
-      document.getElementById('welcomeSub').textContent=u.role==='user'?'Chọn bài thi hoặc xem thống kê của bạn':'Quản lý kết quả và thống kê hệ thống';
+      document.getElementById('welcomeSub').textContent=u.role==='user'?'Chọn bài thi hoặc xem kết quả của bạn':'Quản lý kết quả và thống kê hệ thống';
     }
     
     if(canSeeUnit(u.role)){
@@ -3560,36 +3560,68 @@ filterBanks(){
 
   async loadUnitStats(){
     if(!canSeeUnit(S.user.role)) return;
-    
-    const isTeamLead = S.user.role === 'lanh_dao_doi';
-    document.getElementById('unitName').textContent = (S.user.unit || 'Đơn vị của tôi');
-    
+
+    const profile = buildCurrentUserProfileV81_();
+    document.getElementById('unitName').textContent = (profile.unit || S.user.unit || 'Đơn vị của tôi');
     document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:#8496b0 !important">Đang tải...</td></tr>';
+
     try{
-      const res=await callGAS({action:'getUnitStats',role:S.user.role,unit:S.user.unit});
-      if(!res.ok){ document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:#c0392b !important;padding:20px">'+esc(res.msg)+'</td></tr>'; return; }
-      this.renderUnitTable(res.ranking||res.stats,'unitStatsBody','us-');
-    }catch(e){ document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:#c0392b !important;padding:20px">Lỗi kết nối</td></tr>'; }
+      const res = await callGAS(Object.assign({
+        action:'getUnitStats',
+        role:S.user.role,
+        unit:S.user.unit,
+        profile
+      }, profile));
+
+      if(!res || !res.ok){
+        document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:#c0392b !important;padding:20px">'+esc((res && res.msg) || 'Không tải được dữ liệu')+'</td></tr>';
+        this.renderUnitTable([], 'unitStatsBody', 'us-', {members:0, exams:0, avg:0, passRate:0});
+        return;
+      }
+
+      if(res.unit) document.getElementById('unitName').textContent = res.unit;
+      const ranking = Array.isArray(res.ranking) ? res.ranking : [];
+      this.renderUnitTable(ranking, 'unitStatsBody', 'us-', res.stats || {});
+    }catch(e){
+      this.renderUnitTable([], 'unitStatsBody', 'us-', {members:0, exams:0, avg:0, passRate:0});
+      document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:#c0392b !important;padding:20px">Lỗi kết nối: '+esc(e.message || e)+'</td></tr>';
+    }
   },
 
-  renderUnitTable(stats,tbodyId,pfx){
-    if(!stats||!stats.length){ document.getElementById(tbodyId).innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:#8496b0 !important">Chưa có dữ liệu</td></tr>'; return; }
-    const totalExams=stats.reduce((a,r)=>a+(r.exams||r.count||0),0);
-    const totalAvg=stats.reduce((a,r)=>a+r.avg,0)/stats.length;
-    const totalPass=stats.filter(r=>r.avg>=5).length;
-    const members=stats.length;
-    if(pfx){ document.getElementById(pfx+'members').textContent=members; document.getElementById(pfx+'exams').textContent=totalExams; document.getElementById(pfx+'avg').textContent=totalAvg.toFixed(1); document.getElementById(pfx+'pass').textContent=Math.round(totalPass/members*100)+'%'; }
-    document.getElementById(tbodyId).innerHTML=stats.map((r,i)=>{
+  renderUnitTable(stats,tbodyId,pfx,summary){
+    const rows = Array.isArray(stats) ? stats : [];
+    summary = summary || {};
+
+    const totalExams = Number(summary.exams ?? rows.reduce((a,r)=>a+(Number(r.exams||r.count)||0),0)) || 0;
+    const totalAvg = Number(summary.avg ?? (rows.length ? rows.reduce((a,r)=>a+(Number(r.avg)||0),0)/rows.length : 0)) || 0;
+    const passRate = Number(summary.passRate ?? (totalExams ? Math.round(rows.reduce((a,r)=>a+(Number(r.pass)||0),0)/totalExams*100) : 0)) || 0;
+    const members = Number(summary.members ?? rows.length) || 0;
+
+    if(pfx){
+      document.getElementById(pfx+'members').textContent = members;
+      document.getElementById(pfx+'exams').textContent = totalExams;
+      document.getElementById(pfx+'avg').textContent = totalAvg.toFixed(1);
+      document.getElementById(pfx+'pass').textContent = passRate + '%';
+    }
+
+    if(!rows.length){
+      document.getElementById(tbodyId).innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:#8496b0 !important">Chưa có dữ liệu</td></tr>';
+      return;
+    }
+
+    document.getElementById(tbodyId).innerHTML = rows.map((r,i)=>{
+      const exams = Number(r.exams || r.count || 0) || 0;
+      const pass = Number(r.pass || 0) || 0;
       const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
       const rankCls=i<3?'gold-rank':'';
       return `<tr>
         <td><span class="rank-badge ${rankCls}">${i+1}</span> ${medal}</td>
-        <td style="font-weight:600">${esc(r.fullname)}</td>
-        <td style="font-size:.75rem;color:#8496b0 !important">${esc(r.username)}</td>
-        <td style="text-align:center">${r.exams||r.count||0}</td>
-        <td>${scorePill(r.avg)}</td>
-        <td style="text-align:center;font-weight:700">${Number(r.best).toFixed(2)}</td>
-        <td style="text-align:center;font-size:.82rem">${r.pass}/${r.exams||r.count||0}</td></tr>`;
+        <td style="font-weight:600">${esc(r.fullname || r.name || '—')}</td>
+        <td style="font-size:.75rem;color:#8496b0 !important">${esc(r.username || r.employeeId || '—')}</td>
+        <td style="text-align:center">${exams}</td>
+        <td>${scorePill(r.avg || 0)}</td>
+        <td style="text-align:center;font-weight:700">${Number(r.best || 0).toFixed(2)}</td>
+        <td style="text-align:center;font-size:.82rem">${pass}/${exams}</td></tr>`;
     }).join('');
   },
 
@@ -3598,43 +3630,67 @@ filterBanks(){
     const unit=document.getElementById('filterUnit').value;
     const from=document.getElementById('filterFrom').value;
     const to=document.getElementById('filterTo').value;
+
     document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:#8496b0 !important">Đang tải...</td></tr>';
+
     try{
-      const res=await callGAS({action:'getAllStats',filterUnit:unit,filterFrom:from,filterTo:to});
-      if(!res.ok){ document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:#c0392b !important;padding:20px">'+esc(res.msg)+'</td></tr>'; return; }
-      if(res.units){
+      const res = await callGAS({action:'getAllStats', unit, from, to, filterUnit:unit, filterFrom:from, filterTo:to});
+
+      if(!res || !res.ok){
+        document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:#c0392b !important;padding:20px">'+esc((res && res.msg) || 'Không tải được dữ liệu')+'</td></tr>';
+        document.getElementById('allStatsCount').textContent='';
+        return;
+      }
+
+      if(Array.isArray(res.units)){
         const sel=document.getElementById('filterUnit');
         const cur=sel.value;
         sel.innerHTML='<option value="">— Tất cả đơn vị —</option>'+res.units.map(u=>`<option value="${esc(u)}">${esc(u)}</option>`).join('');
         sel.value=cur;
       }
-      const stats=res.ranking||[];
-      document.getElementById('allStatsCount').textContent=stats.length+' người';
-      const units=new Set(stats.map(r=>r.unit)).size;
-      const people=stats.length;
-      const exams=stats.reduce((a,r)=>a+(r.exams||r.count||0),0);
-      const avg=people?stats.reduce((a,r)=>a+r.avg,0)/people:0;
+
+      const stats = Array.isArray(res.ranking) ? res.ranking : [];
+      const sum = res.stats || {};
+      const units = Number(sum.units ?? new Set(stats.map(r=>r.unit).filter(Boolean)).size) || 0;
+      const people = Number(sum.people ?? stats.length) || 0;
+      const exams = Number(sum.exams ?? stats.reduce((a,r)=>a+(Number(r.exams||r.count)||0),0)) || 0;
+      const avg = Number(sum.avg ?? (people ? stats.reduce((a,r)=>a+(Number(r.avg)||0),0)/people : 0)) || 0;
+
+      document.getElementById('allStatsCount').textContent = stats.length + ' người';
       document.getElementById('as-units').textContent=units;
       document.getElementById('as-people').textContent=people;
       document.getElementById('as-exams').textContent=exams;
       document.getElementById('as-avg').textContent=avg.toFixed(1);
+
       const top3=stats.slice(0,3);
       document.getElementById('topRankHero').innerHTML=top3.map((r,i)=>`
         <div class="rank-card rank-${i+1}">
           <div class="rank-medal">${['🥇','🥈','🥉'][i]}</div>
-          <div class="rank-name">${esc(r.fullname)}</div>
-          <div class="rank-unit">${esc(r.unit)}</div>
-          <div class="rank-score">${Number(r.avg).toFixed(1)}<span style="font-size:.7rem;font-weight:400;color:#8496b0 !important"> /10</span></div>
+          <div class="rank-name">${esc(r.fullname || r.name || '—')}</div>
+          <div class="rank-unit">${esc(r.unit || '—')}</div>
+          <div class="rank-score">${Number(r.avg || 0).toFixed(1)}<span style="font-size:.7rem;font-weight:400;color:#8496b0 !important"> /10</span></div>
         </div>`).join('');
-      document.getElementById('allStatsBody').innerHTML=stats.map((r,i)=>`<tr>
+
+      if(!stats.length){
+        document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:#8496b0 !important">Chưa có dữ liệu</td></tr>';
+        return;
+      }
+
+      document.getElementById('allStatsBody').innerHTML=stats.map((r,i)=>{
+        const exams = Number(r.exams || r.count || 0) || 0;
+        const pass = Number(r.pass || 0) || 0;
+        return `<tr>
         <td><span class="rank-badge ${i<3?'gold-rank':''}">${i+1}</span></td>
-        <td style="font-weight:600">${esc(r.fullname)}</td>
+        <td style="font-weight:600">${esc(r.fullname || r.name || '—')}</td>
         <td style="font-size:.75rem;color:#8496b0 !important">${esc(r.unit||'—')}</td>
-        <td style="text-align:center">${r.exams||r.count||0}</td>
-        <td>${scorePill(r.avg)}</td>
-        <td style="text-align:center;font-weight:700">${Number(r.best).toFixed(2)}</td>
-        <td style="text-align:center;font-size:.82rem">${Math.round(r.pass/(r.exams||r.count||1)*100)}%</td></tr>`).join('');
-    }catch(e){ document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:#c0392b !important;padding:20px">Lỗi kết nối</td></tr>'; }
+        <td style="text-align:center">${exams}</td>
+        <td>${scorePill(r.avg || 0)}</td>
+        <td style="text-align:center;font-weight:700">${Number(r.best || 0).toFixed(2)}</td>
+        <td style="text-align:center;font-size:.82rem">${exams ? Math.round(pass/exams*100) : 0}%</td></tr>`;
+      }).join('');
+    }catch(e){
+      document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:#c0392b !important;padding:20px">Lỗi kết nối: '+esc(e.message || e)+'</td></tr>';
+    }
   },
 
 
