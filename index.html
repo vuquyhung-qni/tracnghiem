@@ -1869,6 +1869,9 @@ body.embed-mode .screen.active{
       <button class="nav-item" onclick="App.goto('assign-courses')" id="nav-assign-courses" style="display:none">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Giao khóa học
       </button>
+      <button class="nav-item" onclick="App.goto('manage-courses')" id="nav-manage-courses" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg> Quản lý khóa học
+      </button>
       <button class="nav-item" onclick="App.goto('admin-settings')" id="nav-admin-settings" style="display:none">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         Cài đặt hệ thống
@@ -2284,6 +2287,15 @@ body.embed-mode .screen.active{
   <div id="aiFeatured"></div>
   <div class="nx-card"><div class="nx-ch"><div class="nx-ct">🗄️ Kho kiến thức các ngày trước</div><span class="nx-cs" id="aiOldCount"></span></div><div id="aiArchive"></div></div>
 </div>
+
+    <!-- ===== HQKV8: màn Quản lý khóa học (admin) ===== -->
+    <div class="screen page-body nx" id="screen-manage-courses">
+      <div class="nx-head"><div class="nx-eyebrow">Quản trị</div><h2>Quản lý khóa học</h2><p>Thêm, sửa, xóa khóa học và video trực tiếp trong phần mềm — không cần thao tác trên Google Sheet.</p></div>
+      <div style="display:grid;grid-template-columns:.95fr 1.05fr;gap:18px" id="mcWrap">
+        <div class="nx-card"><div class="nx-ch"><div class="nx-ct">📚 Khóa học</div><button class="nx-btn" onclick="App.mcNewCourse()">＋ Thêm khóa học</button></div><div id="mcCourseForm"></div><div id="mcCourseList"></div></div>
+        <div class="nx-card"><div class="nx-ch"><div class="nx-ct" id="mcVidTitle">🎬 Video</div><button class="nx-btn" id="mcAddVidBtn" onclick="App.mcNewVideo()" style="display:none">＋ Thêm video</button></div><div id="mcVideoForm"></div><div id="mcVideoList"></div></div>
+      </div>
+    </div>
 
     <div class="screen page-body" id="screen-admin-settings">
       <div class="card" style="max-width:680px;margin:0 auto;">
@@ -4117,7 +4129,64 @@ App.init();
       if(!res || !res.ok){ alert('Lỗi: '+(res&&res.msg)); return; }
       this.loadAiDaily();
     },
-    async delAi(id){ if(!confirm('Xóa bài này?')) return; var res=await gas2('deleteAiPost',{id:id}); if(res&&res.ok) this.loadAiDaily(); else alert('Lỗi: '+(res&&res.msg)); }
+    async delAi(id){ if(!confirm('Xóa bài này?')) return; var res=await gas2('deleteAiPost',{id:id}); if(res&&res.ok) this.loadAiDaily(); else alert('Lỗi: '+(res&&res.msg)); },
+
+    // ===== QUẢN LÝ KHÓA HỌC (admin) =====
+    _mcCourses: [], _mcSel: null, _mcVideos: [],
+    async loadManage(){
+      el('mcCourseForm').innerHTML=''; el('mcVideoForm').innerHTML='';
+      el('mcVideoList').innerHTML='<div class="empty" style="padding:24px"><p>Chọn một khóa học bên trái để quản lý video.</p></div>';
+      el('mcVidTitle').textContent='🎬 Video'; el('mcAddVidBtn').style.display='none';
+      var res=await gas2('getCourses'); this._mcCourses=(res&&res.courses)||[]; this.mcRenderCourses();
+    },
+    mcRenderCourses(){
+      var self=this;
+      if(!this._mcCourses.length){ el('mcCourseList').innerHTML='<div class="empty" style="padding:24px"><div class="e">📭</div><p>Chưa có khóa học. Bấm “Thêm khóa học”.</p></div>'; return; }
+      el('mcCourseList').innerHTML=this._mcCourses.map(function(c){
+        var sel=self._mcSel&&self._mcSel.id===c.id;
+        return '<div class="vrow clk" style="border:1px solid '+(sel?'var(--nv4)':'var(--line)')+';border-radius:12px;margin-bottom:9px;'+(sel?'background:#eef4fd':'')+'" onclick="App.mcSelect(\''+c.id+'\')"><div class="vst c">📚</div><div class="vt"><div class="a">'+esc(c.title)+'</div><div class="b">'+esc(c.group)+' · '+c.videoCount+' video</div></div><button class="nx-ghost" onclick="event.stopPropagation();App.mcEditCourse(\''+c.id+'\')">Sửa</button><button class="nx-ghost" style="color:var(--red);border-color:#f3c9c4" onclick="event.stopPropagation();App.mcDelCourse(\''+c.id+'\')">Xóa</button></div>';
+      }).join('');
+    },
+    mcCourseFormHtml(c){
+      c=c||{id:'',group:'',title:'',desc:''};
+      return '<div class="nx-card" style="background:#f7faff;margin-bottom:14px"><div class="nx-ct" style="margin-bottom:10px">'+(c.id?'✏️ Sửa khóa học':'➕ Khóa học mới')+'</div><div class="fld"><label>Nhóm</label><input id="mcG" value="'+esc(c.group)+'" placeholder="VD: Phổ cập AI"></div><div class="fld"><label>Tên khóa học</label><input id="mcT" value="'+esc(c.title)+'"></div><div class="fld"><label>Mô tả</label><input id="mcD" value="'+esc(c.desc)+'"></div><input type="hidden" id="mcId" value="'+esc(c.id)+'"><div style="display:flex;gap:8px"><button class="nx-btn" onclick="App.mcSaveCourse()">💾 Lưu</button><button class="nx-ghost" onclick="App.mcCancelCourse()">Hủy</button></div></div>';
+    },
+    mcNewCourse(){ el('mcCourseForm').innerHTML=this.mcCourseFormHtml(null); },
+    mcEditCourse(id){ var c=this._mcCourses.filter(function(x){return x.id===id;})[0]; el('mcCourseForm').innerHTML=this.mcCourseFormHtml(c); },
+    mcCancelCourse(){ el('mcCourseForm').innerHTML=''; },
+    async mcSaveCourse(){
+      var t=el('mcT').value.trim(); if(!t){ alert('Nhập tên khóa học.'); return; }
+      var res=await gas2('saveCourse',{course:{ id:el('mcId').value, group:el('mcG').value.trim()||'Khác', title:t, desc:el('mcD').value.trim() }});
+      if(!res||!res.ok){ alert('Lỗi: '+(res&&res.msg)); return; }
+      el('mcCourseForm').innerHTML=''; await this.loadManage();
+    },
+    async mcDelCourse(id){ if(!confirm('Ẩn khóa học này? Video thuộc khóa sẽ không còn hiển thị với người học.')) return; var res=await gas2('deleteCourse',{id:id}); if(res&&res.ok){ if(this._mcSel&&this._mcSel.id===id) this._mcSel=null; this.loadManage(); } else alert('Lỗi: '+(res&&res.msg)); },
+    async mcSelect(id){
+      var c=this._mcCourses.filter(function(x){return x.id===id;})[0]; if(!c) return; this._mcSel=c;
+      el('mcVidTitle').textContent='🎬 Video — '+c.title; el('mcAddVidBtn').style.display=''; el('mcVideoForm').innerHTML='';
+      var res=await gas2('getCourseDetail',{courseId:id}); this._mcVideos=(res&&res.videos)||[];
+      this.mcRenderCourses(); this.mcRenderVideos();
+    },
+    mcRenderVideos(){
+      if(!this._mcVideos.length){ el('mcVideoList').innerHTML='<div class="empty" style="padding:24px"><p>Khóa này chưa có video. Bấm “Thêm video”.</p></div>'; return; }
+      el('mcVideoList').innerHTML=this._mcVideos.map(function(v){
+        return '<div class="vrow" style="border:1px solid var(--line);border-radius:12px;margin-bottom:9px"><div class="vst l">'+v.ord+'</div><div class="vt"><div class="a">'+esc(v.title)+'</div><div class="b">'+esc(v.type)+' · '+esc(v.dur||'')+'</div></div><button class="nx-ghost" onclick="App.mcEditVideo(\''+v.id+'\')">Sửa</button><button class="nx-ghost" style="color:var(--red);border-color:#f3c9c4" onclick="App.mcDelVideo(\''+v.id+'\')">Xóa</button></div>';
+      }).join('');
+    },
+    mcVideoFormHtml(v){
+      var nextOrd=this._mcVideos.length+1; v=v||{id:'',ord:nextOrd,title:'',dur:'',link:'',type:'youtube'};
+      return '<div class="nx-card" style="background:#f7faff;margin-bottom:14px"><div class="nx-ct" style="margin-bottom:10px">'+(v.id?'✏️ Sửa video':'➕ Video mới')+'</div><div class="frow"><div class="fld"><label>Thứ tự (ord)</label><input id="mvO" type="number" value="'+(v.ord||nextOrd)+'"></div><div class="fld"><label>Loại</label><select id="mvType"><option value="youtube"'+(v.type==='youtube'?' selected':'')+'>YouTube</option><option value="video"'+(v.type==='video'?' selected':'')+'>Video nhúng (Drive/MP4)</option></select></div></div><div class="fld"><label>Tiêu đề</label><input id="mvT" value="'+esc(v.title)+'"></div><div class="fld"><label>Thời lượng</label><input id="mvD" value="'+esc(v.dur)+'" placeholder="VD: 10:24"></div><div class="fld"><label>Đường link</label><input id="mvL" value="'+esc(v.link)+'" placeholder="https://youtu.be/... hoặc link Google Drive"></div><input type="hidden" id="mvId" value="'+esc(v.id)+'"><div style="display:flex;gap:8px"><button class="nx-btn" onclick="App.mcSaveVideo()">💾 Lưu</button><button class="nx-ghost" onclick="App.mcCancelVideo()">Hủy</button></div></div>';
+    },
+    mcNewVideo(){ if(!this._mcSel){ alert('Chọn khóa học trước.'); return; } el('mcVideoForm').innerHTML=this.mcVideoFormHtml(null); },
+    mcEditVideo(id){ var v=this._mcVideos.filter(function(x){return x.id===id;})[0]; el('mcVideoForm').innerHTML=this.mcVideoFormHtml(v); },
+    mcCancelVideo(){ el('mcVideoForm').innerHTML=''; },
+    async mcSaveVideo(){
+      if(!this._mcSel) return; var t=el('mvT').value.trim(); if(!t){ alert('Nhập tiêu đề video.'); return; }
+      var res=await gas2('saveVideo',{video:{ id:el('mvId').value, courseId:this._mcSel.id, ord:Number(el('mvO').value)||0, title:t, dur:el('mvD').value.trim(), link:el('mvL').value.trim(), type:el('mvType').value }});
+      if(!res||!res.ok){ alert('Lỗi: '+(res&&res.msg)); return; }
+      el('mcVideoForm').innerHTML=''; await this.mcSelect(this._mcSel.id);
+    },
+    async mcDelVideo(id){ if(!confirm('Xóa video này?')) return; var res=await gas2('deleteVideo',{id:id}); if(res&&res.ok){ this.mcSelect(this._mcSel.id); } else alert('Lỗi: '+(res&&res.msg)); }
   });
 
   // ===== Gắn loader vào điều hướng (không sửa hàm gốc) =====
@@ -4128,6 +4197,7 @@ App.init();
     if(id==='course-progress') this.loadCourseProgress();
     if(id==='assign-courses') this.loadAssign();
     if(id==='ai-daily') this.loadAiDaily();
+    if(id==='manage-courses') this.loadManage();
   };
 
   // ===== Hiện menu mới theo phân quyền (chạy sau afterLogin gốc) =====
@@ -4143,6 +4213,7 @@ App.init();
     sh('nav-ai-daily', true);
     sh('nav-course-progress', lead);
     sh('nav-assign-courses', r === 'admin');
+    sh('nav-manage-courses', r === 'admin');
   };
 })();
 </script>
