@@ -1708,6 +1708,91 @@ body.embed-mode .screen.active{
   body.embed-mode .count-chips{gap:8px !important;}
   body.embed-mode .chip{padding:8px 12px !important;}
 }
+
+/* ===== HQKV8: CSS bổ sung (Khóa học/AI) ===== */
+.nx{--nv2:#163566;--nv4:#2558a8;--nv5:#3b72d4;--gold:#d4a843;--gold2:#f0c96a;--gold3:#fef3d4;
+  --green:#0f7c4a;--gbg:#e6f7ef;--red:#c0392b;--rbg:#fdecea;--orange:#d4600a;
+  --tx:#0f1f3d;--tx2:#4a5c7a;--tx3:#8496b0;--line:#e2e8f4}
+.nx .nx-head{margin-bottom:18px}
+.nx .nx-eyebrow{font-size:.68rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--nv4)}
+.nx .nx-head h2{font-family:inherit;font-size:1.4rem;font-weight:800;margin:4px 0 5px;color:var(--tx)}
+.nx .nx-head p{font-size:.85rem;color:var(--tx2);max-width:680px;line-height:1.5;margin:0}
+.nx .nx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px}
+.nx .nx-stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:13px;box-shadow:0 1px 4px rgba(10,22,40,.06)}
+.nx .nx-ic{width:46px;height:46px;border-radius:13px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+.nx .ic-b{background:#eef4fd;color:var(--nv4)}.nx .ic-g{background:var(--gbg);color:var(--green)}
+.nx .ic-y{background:var(--gold3);color:var(--orange)}.nx .ic-r{background:var(--rbg);color:var(--red)}
+.nx .ic-n{background:linear-gradient(135deg,var(--nv2),var(--nv4));color:#fff}
+.nx .nx-val{font-size:1.55rem;font-weight:800;line-height:1;color:var(--tx)}
+.nx .nx-lbl{font-size:.74rem;color:var(--tx3);margin-top:4px}
+.nx .nx-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:18px;box-shadow:0 1px 4px rgba(10,22,40,.06)}
+.nx .nx-ch{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.nx .nx-ct{font-weight:800;font-size:.95rem;color:var(--tx)}
+.nx .nx-cs{font-size:.76rem;color:var(--tx3)}
+.nx .nx-btn{border:none;background:linear-gradient(135deg,var(--nv2),var(--nv4));color:#fff;border-radius:10px;padding:10px 16px;font-size:.82rem;font-weight:700;cursor:pointer}
+.nx .nx-btn:disabled{opacity:.5;cursor:not-allowed}
+.nx .nx-ghost{border:1.5px solid var(--line);background:#fff;color:var(--tx2);border-radius:9px;padding:7px 13px;font-size:.78rem;font-weight:700;cursor:pointer}
+.nx .nx-tw{overflow-x:auto;border-radius:12px;border:1px solid var(--line)}
+.nx table.nx-tbl{width:100%;border-collapse:collapse;font-size:.84rem}
+.nx .nx-tbl th{background:#f3f6fb;color:#415575;font-weight:800;font-size:.7rem;text-transform:uppercase;padding:10px 13px;text-align:left;white-space:nowrap}
+.nx .nx-tbl td{padding:10px 13px;border-top:1px solid var(--line);color:var(--tx)}
+.nx .nx-pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:.72rem;font-weight:700}
+.nx .st-done{background:var(--gbg);color:var(--green)}.nx .st-prog{background:#eef4fd;color:var(--nv4)}
+.nx .st-none{background:#eef2f8;color:var(--tx3)}.nx .st-late{background:var(--rbg);color:var(--red)}.nx .st-soon{background:#fff8e1;color:var(--orange)}
+.nx .nx-bar{display:flex;flex-direction:column;gap:10px}
+.nx .nx-brow{display:grid;grid-template-columns:160px 1fr 52px;align-items:center;gap:11px}
+.nx .nx-brow .bn{font-size:.8rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nx .nx-track{background:#eef2f8;border-radius:99px;height:20px;overflow:hidden}
+.nx .nx-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--nv4),var(--nv5));transition:width .9s}
+.nx .nx-fill.hi{background:linear-gradient(90deg,var(--green),#23a06a)}.nx .nx-fill.mid{background:linear-gradient(90deg,var(--orange),#f0913a)}.nx .nx-fill.lo{background:linear-gradient(90deg,var(--red),#e05a4c)}
+.nx .nx-brow .bv{font-weight:800;font-size:.84rem;text-align:right}
+.nx .prog{height:8px;border-radius:99px;background:#eef2f8;overflow:hidden}
+.nx .prog>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--green),#2bb47b)}
+.nx .prog>i.part{background:linear-gradient(90deg,var(--nv4),var(--nv5))}
+.nx .seg{display:flex;height:14px;border-radius:99px;overflow:hidden;margin:4px 0 12px}.nx .seg>i{height:100%}
+.nx .leg{display:flex;gap:14px;flex-wrap:wrap;font-size:.75rem;color:var(--tx2)}.nx .leg span{display:inline-flex;align-items:center;gap:6px}.nx .leg b{width:11px;height:11px;border-radius:3px;display:inline-block}
+.nx .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.nx .ccard{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 1px 4px rgba(10,22,40,.07);display:flex;flex-direction:column}
+.nx .cctop{padding:16px 18px;background:linear-gradient(135deg,var(--nv2),var(--nv4));color:#fff;position:relative}
+.nx .cctop .tag{position:absolute;top:13px;right:13px;background:rgba(255,255,255,.16);font-size:.64rem;font-weight:700;padding:3px 9px;border-radius:99px}
+.nx .cctop h3{font-size:1.02rem;font-weight:800;line-height:1.3;padding-right:60px;margin:0}
+.nx .cctop p{font-size:.78rem;color:rgba(255,255,255,.78);margin:6px 0 0;line-height:1.45}
+.nx .ccp{padding:11px 18px 4px}.nx .ccp .m{display:flex;justify-content:space-between;font-size:.72rem;font-weight:600;color:var(--tx2);margin-bottom:6px}.nx .ccp .m b{color:var(--green)}
+.nx .vmini{padding:5px 12px 12px}
+.nx .vrow{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px}
+.nx .vrow.clk{cursor:pointer}.nx .vrow.clk:hover{background:#f4f8ff}.nx .vrow.lock{opacity:.5}
+.nx .vst{width:25px;height:25px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:800}
+.nx .vst.d{background:var(--gbg);color:var(--green)}.nx .vst.c{background:linear-gradient(135deg,var(--nv4),var(--nv5));color:#fff}.nx .vst.l{background:#eef2f8;color:var(--tx3)}
+.nx .vrow .vt{flex:1;min-width:0}.nx .vrow .vt .a{font-size:.83rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.nx .vrow .vt .b{font-size:.7rem;color:var(--tx3)}
+.nx .seemore{display:block;width:100%;border:none;border-top:1px dashed var(--line);background:#fbfcfe;color:var(--nv4);font-weight:700;font-size:.8rem;padding:11px;text-align:center;cursor:pointer;margin-top:auto}
+.nx .cdgrid{display:grid;grid-template-columns:1.4fr .9fr;gap:18px;align-items:start}
+.nx .player{aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#07152b;position:relative;border:1px solid var(--line)}
+.nx .player iframe{width:100%;height:100%;border:0}
+.nx .player .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:20px}
+.nx .player .ph code{font-size:.7rem;background:rgba(255,255,255,.1);padding:5px 9px;border-radius:6px;margin-top:10px;color:var(--gold2);word-break:break-all;max-width:90%}
+.nx .vlist{max-height:520px;overflow:auto}.nx .vlist .vrow{border:1px solid var(--line);margin-bottom:8px}.nx .vlist .vrow.active{border-color:var(--nv4);background:#eef4fd}
+.nx .callout{background:linear-gradient(135deg,#eef4fd,#f7fbff);border:1px solid #d6e6fb;border-radius:12px;padding:13px 15px;font-size:.83rem;color:var(--nv2);line-height:1.6}
+.nx .ln{font-size:.74rem;color:var(--orange);font-weight:600;margin-top:8px}
+.nx .fld{margin-bottom:13px}.nx .fld label{display:block;font-size:.74rem;font-weight:800;text-transform:uppercase;color:var(--tx2);margin-bottom:6px}
+.nx .fld input,.nx .fld textarea,.nx .fld select{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.88rem;font-family:inherit;color:var(--tx)}
+.nx .frow{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.nx .empty{text-align:center;padding:42px 20px;color:var(--tx3)}.nx .empty .e{font-size:2.4rem;margin-bottom:10px}.nx .empty h3{color:var(--tx2);font-size:1rem;margin:0 0 6px}.nx .empty p{font-size:.85rem;max-width:380px;margin:0 auto}
+.nx .aifeat{border:1px solid var(--gold);border-radius:18px;overflow:hidden;margin-bottom:18px;background:#fff}
+.nx .aifeat .top{background:linear-gradient(135deg,#07152b,#1d58a8);color:#fff;padding:18px 22px}
+.nx .aifeat .bdg{display:inline-block;background:var(--gold);color:#07152b;font-size:.64rem;font-weight:800;padding:3px 11px;border-radius:99px}
+.nx .aifeat h3{font-size:1.2rem;margin:10px 0 0}.nx .aifeat .mt{font-size:.74rem;color:rgba(255,255,255,.75);margin-top:7px}
+.nx .aibody{padding:20px 22px}
+.nx .aic{font-size:.9rem;line-height:1.7;color:var(--tx)}.nx .aic h4{margin:14px 0 6px;color:var(--nv2)}.nx .aic ul,.nx .aic ol{margin:8px 0 8px 20px}.nx .aic code{background:#eef2f8;padding:2px 6px;border-radius:5px}
+.nx .tchip{display:inline-flex;align-items:center;gap:5px;font-size:.68rem;font-weight:700;padding:3px 9px;border-radius:99px;background:#eef4fd;color:var(--nv4)}
+.nx .aiitem{border:1px solid var(--line);border-radius:12px;margin-bottom:9px;overflow:hidden}
+.nx .aiitem .ih{display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer}.nx .aiitem .ih:hover{background:#f7fbff}
+.nx .aiitem .idt{font-weight:800;font-size:.82rem;color:var(--nv4);width:50px;flex-shrink:0}
+.nx .aiitem .itt{flex:1;min-width:0;font-weight:600;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nx .aiitem .ar{color:var(--tx3);transition:transform .2s}.nx .aiitem.open .ar{transform:rotate(90deg)}
+.nx .aiitem .ib{display:none;padding:14px;border-top:1px solid var(--line);background:#fbfcfe}.nx .aiitem.open .ib{display:block}
+.nx .od{color:var(--red);font-weight:600}
+.nx .embed{aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#07152b;border:1px solid var(--line);margin-bottom:12px;position:relative}.nx .embed iframe{width:100%;height:100%;border:0}.nx .embed .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:18px}
+@media(max-width:900px){.nx .cdgrid{grid-template-columns:1fr}.nx .frow{grid-template-columns:1fr}.nx .nx-brow{grid-template-columns:110px 1fr 44px}}
 </style>
 </head>
 <body>
@@ -1770,6 +1855,19 @@ body.embed-mode .screen.active{
       <button class="nav-item" onclick="App.goto('all-stats')" id="nav-all-stats" style="display:none">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         Toàn chi cục
+      </button>
+      <!-- HQKV8: menu bổ sung -->
+      <button class="nav-item" onclick="App.goto('courses')" id="nav-courses" style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> Khóa học
+      </button>
+      <button class="nav-item" onclick="App.goto('ai-daily')" id="nav-ai-daily" style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg> Phổ cập AI
+      </button>
+      <button class="nav-item" onclick="App.goto('course-progress')" id="nav-course-progress" style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> Tiến độ khóa học
+      </button>
+      <button class="nav-item" onclick="App.goto('assign-courses')" id="nav-assign-courses" style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Giao khóa học
       </button>
       <button class="nav-item" onclick="App.goto('admin-settings')" id="nav-admin-settings" style="display:none">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -2131,6 +2229,62 @@ body.embed-mode .screen.active{
     </div><!-- /screen-all-stats -->
 
     <!-- CÀI ĐẶT HỆ THỐNG - CHỈ ADMIN -->
+    <!-- ===== HQKV8: màn hình bổ sung ===== -->
+<div class="screen page-body nx" id="screen-courses">
+  <div class="nx-head"><div class="nx-eyebrow">Học tập</div><h2>Khóa học video</h2><p>Mỗi khóa gồm nhiều video, học tuần tự. Màn hình hiển thị vài video đầu — bấm “Xem tất cả” để mở toàn khóa.</p></div>
+  <div id="nx-assigned"></div>
+  <div id="nx-courses"></div>
+</div>
+
+<div class="screen page-body nx" id="screen-course-detail">
+  <button class="nx-ghost" onclick="App.goto('courses')" style="margin-bottom:14px">← Tất cả khóa học</button>
+  <div class="nx-head" style="margin-bottom:14px"><div class="nx-eyebrow" id="cdGroup">Khóa học</div><h2 id="cdTitle">—</h2><p id="cdDesc"></p></div>
+  <div class="nx-card" style="padding:15px 18px"><div class="m" style="display:flex;justify-content:space-between;font-size:.78rem;font-weight:600;margin-bottom:7px"><span id="cdProgTxt">Tiến độ</span><b id="cdProgPct" style="color:var(--green)">0%</b></div><div class="prog"><i id="cdProgFill" style="width:0"></i></div></div>
+  <div class="cdgrid">
+    <div><div class="player" id="cdPlayer"></div><div id="cdActions" style="margin-top:14px"></div></div>
+    <div class="nx-card" style="margin:0"><div class="nx-ch" style="margin-bottom:12px"><div class="nx-ct">📋 Danh sách video</div></div><div class="vlist" id="cdList"></div></div>
+  </div>
+  <div class="nx-card" id="cdLearners" style="margin-top:18px;display:none"><div class="nx-ch"><div class="nx-ct">👀 Tiến độ học của cán bộ</div></div><div class="nx-tw"><table class="nx-tbl"><thead><tr><th>Họ và tên</th><th>Đơn vị</th><th>Đã học</th><th style="min-width:150px">Tiến độ</th></tr></thead><tbody id="cdLearnBody"></tbody></table></div></div>
+</div>
+
+<div class="screen page-body nx" id="screen-course-progress">
+  <div class="nx-head"><div class="nx-eyebrow">Học tập</div><h2>Tiến độ hoàn thành khóa học</h2><p id="cpNote">Đánh giá mức độ hoàn thành các khóa học được giao, theo khóa, theo đơn vị và từng cán bộ.</p></div>
+  <div class="nx-grid">
+    <div class="nx-stat"><div class="nx-ic ic-g">✅</div><div><div class="nx-val" id="cp-rate">—</div><div class="nx-lbl">Tỷ lệ hoàn thành chung</div></div></div>
+    <div class="nx-stat"><div class="nx-ic ic-b">🎓</div><div><div class="nx-val" id="cp-done">—</div><div class="nx-lbl">Lượt đã hoàn thành</div></div></div>
+    <div class="nx-stat"><div class="nx-ic ic-y">📚</div><div><div class="nx-val" id="cp-prog">—</div><div class="nx-lbl">Đang học / sắp đến hạn</div></div></div>
+    <div class="nx-stat"><div class="nx-ic ic-r">⏰</div><div><div class="nx-val" id="cp-late">—</div><div class="nx-lbl">Quá hạn chưa xong</div></div></div>
+  </div>
+  <div class="nx-card"><div class="nx-ch"><div class="nx-ct">🧭 Cơ cấu tiến độ</div></div><div class="seg" id="cpSeg"></div><div class="leg" id="cpLeg"></div></div>
+  <div class="nx-card"><div class="nx-ch"><div class="nx-ct">📊 Tỷ lệ hoàn thành theo khóa học</div></div><div class="nx-bar" id="cpByCourse"></div></div>
+  <div class="nx-card"><div class="nx-ch"><div class="nx-ct">🏢 Tỷ lệ hoàn thành theo đơn vị</div></div><div class="nx-bar" id="cpByUnit"></div></div>
+  <div class="nx-card"><div class="nx-ch"><div class="nx-ct">🗂️ Các khóa học đã giao</div></div><div class="nx-tw"><table class="nx-tbl"><thead><tr><th>Khóa học</th><th>Đối tượng</th><th>Hạn</th><th style="text-align:center">Cán bộ</th><th>% hoàn thành</th></tr></thead><tbody id="cpAssign"></tbody></table></div></div>
+  <div class="nx-card"><div class="nx-ch"><div class="nx-ct">👤 Chi tiết theo cán bộ</div><span class="nx-cs" id="cpCount"></span></div><div class="nx-tw"><table class="nx-tbl"><thead><tr><th>Họ và tên</th><th>Đơn vị</th><th>Khóa học</th><th>Hạn</th><th>Tiến độ</th><th>Trạng thái</th></tr></thead><tbody id="cpDetail"></tbody></table></div></div>
+</div>
+
+<div class="screen page-body nx" id="screen-assign-courses">
+  <div class="nx-head"><div class="nx-eyebrow">Quản trị</div><h2>Giao khóa học cho công chức</h2><p>Chọn khóa học, đối tượng và thời hạn. Hệ thống tự đánh giá tiến độ theo hạn đã giao.</p></div>
+  <div style="display:grid;grid-template-columns:.9fr 1.1fr;gap:18px" id="asWrap">
+    <div class="nx-card"><div class="nx-ch"><div class="nx-ct">➕ Giao khóa học mới</div></div>
+      <div class="fld"><label>Khóa học</label><select id="asCourse"></select></div>
+      <div class="fld"><label>Đối tượng phải học</label><select id="asType" onchange="App.asType()"><option value="all">Toàn Chi cục</option><option value="unit">Theo đơn vị</option><option value="person">Cá nhân</option></select></div>
+      <div class="fld" id="asUnitW" style="display:none"><label>Đơn vị</label><select id="asUnit"></select></div>
+      <div class="fld" id="asPersonW" style="display:none"><label>Cán bộ</label><select id="asPerson"></select></div>
+      <div class="fld"><label>Hạn hoàn thành</label><input type="date" id="asDue"></div>
+      <div class="fld"><label>Ghi chú</label><input id="asNote" placeholder="VD: Bồi dưỡng định kỳ quý III/2026"></div>
+      <button class="nx-btn" style="width:100%" onclick="App.addAssign()">📨 Giao khóa học</button>
+    </div>
+    <div class="nx-card"><div class="nx-ch"><div class="nx-ct">📋 Danh sách đã giao</div><span class="nx-cs" id="asCount"></span></div><div id="asList"></div></div>
+  </div>
+</div>
+
+<div class="screen page-body nx" id="screen-ai-daily">
+  <div class="nx-head"><div class="nx-eyebrow">Phổ cập AI</div><h2>Mỗi ngày một kiến thức AI</h2><p>Cập nhật hằng ngày kỹ năng ứng dụng AI. Bài mới nhất hiển thị đầy đủ; các ngày trước bấm để mở.</p></div>
+  <div id="aiAdmin"></div>
+  <div id="aiFeatured"></div>
+  <div class="nx-card"><div class="nx-ch"><div class="nx-ct">🗄️ Kho kiến thức các ngày trước</div><span class="nx-cs" id="aiOldCount"></span></div><div id="aiArchive"></div></div>
+</div>
+
     <div class="screen page-body" id="screen-admin-settings">
       <div class="card" style="max-width:680px;margin:0 auto;">
         <div class="card-header">
@@ -2583,8 +2737,8 @@ async function getCurrentUserHistoryFast_(forceRefresh){
   return S._historyCacheV81;
 }
 
-const canSeeAll  = r => ['admin','lanh_dao_chi_cuc'].includes(r);
-const canSeeUnit = r => ['admin','lanh_dao_chi_cuc','lanh_dao_doi'].includes(r);
+const canSeeAll  = r => ['admin','lanh_dao_chi_cuc','lanh_dao_doi'].includes(r);
+const canSeeUnit = r => true;
 
 
 function urlParams(){ return new URLSearchParams(window.location.search || ''); }
@@ -2692,7 +2846,7 @@ const App = {
     }
 
     const saved = localStorage.getItem('qz_user');
-    if(saved){ S.user=JSON.parse(saved); S.quizAliases = collectUsernamesForHistory_(S.user); await this.fetchSettings(); this.afterLogin(); return; }
+    if(saved){ S.user=JSON.parse(saved); S.token=localStorage.getItem('qz_token')||''; S.quizAliases = collectUsernamesForHistory_(S.user); await this.fetchSettings(); this.afterLogin(); return; }
     document.getElementById('loginUsername').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); document.getElementById('loginPassword').focus(); }});
     document.getElementById('loginPassword').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); this.login(); }});
   },
@@ -2763,11 +2917,11 @@ const App = {
     this.showLoading('Đang đăng nhập...');
     try{
       const hashedPass = await sha256(plainPass);
-      const res = await callGAS({ action: 'login', username, password: hashedPass });
+      const res = await callGAS({ action: 'loginSecure', username, password: hashedPass });
       
       if(!res.ok){ this.showLoginAlert(res.msg||'Sai tài khoản hoặc mật khẩu','err'); }
       else{
-        S.user=res.user; S.quizAliases = collectUsernamesForHistory_(S.user); localStorage.setItem('qz_user',JSON.stringify(res.user));
+        S.user=res.user; S.quizAliases = collectUsernamesForHistory_(S.user); localStorage.setItem('qz_user',JSON.stringify(res.user)); S.token=res.token||''; localStorage.setItem('qz_token',S.token);
         this.hideLoginAlert();
         await this.fetchSettings(); // V138: tải xong cài đặt mặc định trước khi render màn Làm bài
         if(res.user.isDefaultPass){
@@ -3778,5 +3932,220 @@ App.init();
   }
 })();
 </script>
+
+<!-- ===== HQKV8: JS bổ sung (Khóa học/AI/Bảo mật token) ===== -->
+<script>
+(function(){
+  // Helper gọi GAS kèm token đã đăng nhập
+  async function gas2(action, extra){
+    var token = (window.S && S.token) || localStorage.getItem('qz_token') || '';
+    return await callGAS(Object.assign({ action: action, token: token }, extra || {}));
+  }
+  function el(id){ return document.getElementById(id); }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function fmtDate(s){ if(!s) return ''; var d=new Date(s); return d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear(); }
+  function fmtShort(s){ var d=new Date(s); return d.getDate()+'/'+(d.getMonth()+1); }
+  function daysLeft(s){ return Math.round((new Date(s)-new Date())/86400000); }
+  function pctClass(v){ return v>=80?'hi':v>=50?'mid':'lo'; }
+  var STAT={done:['Hoàn thành','st-done'],late:['Quá hạn','st-late'],none:['Chưa bắt đầu','st-none'],soon:['Sắp đến hạn','st-soon'],prog:['Đang học','st-prog']};
+  function driveEmbed(link){ if(!link) return null; var m=link.match(/\/file\/d\/([^/]+)/)||link.match(/[?&]id=([^&]+)/); if(m) return 'https://drive.google.com/file/d/'+m[1]+'/preview'; m=link.match(/\/folders\/([^/?]+)/); if(m) return 'https://drive.google.com/embeddedfolderview?id='+m[1]+'#grid'; return link; }
+  function ytEmbed(u){ var m=(u||'').match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/); return m?'https://www.youtube.com/embed/'+m[1]:null; }
+  function bars(id, rows, fmtVal){ el(id).innerHTML = rows.map(function(r){ return '<div class="nx-brow"><div class="bn" title="'+esc(r.name)+'">'+esc(r.name)+'</div><div class="nx-track"><div class="nx-fill '+pctClass(r.value)+'" style="width:0"></div></div><div class="bv">'+fmtVal(r.value)+'</div></div>'; }).join(''); setTimeout(function(){ var fs=document.querySelectorAll('#'+id+' .nx-fill'); rows.forEach(function(r,i){ if(fs[i]) fs[i].style.width=Math.min(r.value,100)+'%'; }); },30); }
+
+  Object.assign(App, {
+    _courses: [], _curCourse: null, _curVideo: 0, _curVideos: [], _curCompleted: 0,
+
+    // ===== KHÓA HỌC =====
+    async loadCourses(){
+      el('nx-courses').innerHTML = '<div class="empty"><p>Đang tải khóa học…</p></div>';
+      var res = await gas2('getCourses');
+      if(!res || !res.ok){ el('nx-courses').innerHTML='<div class="empty"><p>Lỗi tải khóa học: '+esc(res&&res.msg)+'</p></div>'; return; }
+      this._courses = res.courses || [];
+      // khóa học bắt buộc của tôi
+      var asg = await gas2('getMyAssignments');
+      this.renderAssigned((asg&&asg.assignments)||[]);
+      this.renderCoursesList();
+    },
+    renderAssigned(list){
+      var box = el('nx-assigned');
+      if(!list.length){ box.innerHTML=''; return; }
+      box.innerHTML = '<div class="nx-card" style="border-color:#f0d58a;background:linear-gradient(135deg,#fffdf5,#fff)"><div class="nx-ch"><div class="nx-ct">📌 Khóa học bắt buộc của tôi</div><div class="nx-cs">'+list.length+' khóa được giao</div></div><div style="display:flex;flex-direction:column;gap:10px">'+
+        list.sort(function(a,b){return new Date(a.due)-new Date(b.due);}).map(function(a){
+          var dl=daysLeft(a.due), st=STAT[a.status]||STAT.prog;
+          return '<div class="vrow clk" style="border:1px solid var(--line);border-radius:12px;padding:11px 13px" onclick="App.openCourse(\''+a.courseId+'\')"><div class="vt"><div class="a" style="font-size:.9rem">'+esc(a.title)+'</div><div class="b" style="margin:3px 0 6px">Hạn '+fmtDate(a.due)+' · '+(dl<0?'<span class=\"od\">quá '+(-dl)+' ngày</span>':'còn '+dl+' ngày')+' · '+a.completed+'/'+a.videoCount+' video</div><div class="prog"><i class="'+(a.pct<100?'part':'')+'" style="width:'+a.pct+'%"></i></div></div><span class="nx-pill '+st[1]+'">'+st[0]+'</span></div>';
+        }).join('')+'</div></div>';
+    },
+    renderCoursesList(){
+      var self=this, groups={};
+      this._courses.forEach(function(c){ (groups[c.group]=groups[c.group]||[]).push(c); });
+      if(!this._courses.length){ el('nx-courses').innerHTML='<div class="nx-card"><div class="empty"><div class="e">📭</div><h3>Chưa có khóa học</h3><p>Quản trị viên thêm khóa học trong phần backend (sheet KHOAHOC/VIDEO).</p></div></div>'; return; }
+      el('nx-courses').innerHTML = Object.keys(groups).map(function(k){
+        return '<div style="margin-bottom:8px;font-weight:800;font-size:.95rem;color:var(--nv2);display:flex;align-items:center;gap:8px"><span style="width:6px;height:18px;background:var(--gold);border-radius:3px"></span>'+esc(k)+' <span style="font-size:.72rem;color:var(--tx3);font-weight:600">· '+groups[k].length+' khóa</span></div><div class="cgrid" style="margin-bottom:22px">'+
+          groups[k].map(function(c){
+            var N=c.videoCount, d=c.completed, pct=N?Math.round(d/N*100):0, show=Math.min(3,N);
+            var rows=(c.previewVideos||[]).slice(0,show).map(function(v,i){
+              var st = i<d?'d':(i===d?'c':'l'); var ic= st==='d'?'✓':st==='l'?'🔒':'▶';
+              return '<div class="vrow '+(st==='l'?'lock':'')+'"><div class="vst '+st+'">'+ic+'</div><div class="vt"><div class="a">'+esc(v.title)+'</div><div class="b">'+esc(v.dur)+'</div></div></div>';
+            }).join('');
+            var more = N>show?('+ '+(N-show)+' video khác · Xem tất cả →'):'Mở khóa học →';
+            return '<div class="ccard"><div class="cctop"><span class="tag">'+N+' video</span><h3>'+esc(c.title)+'</h3><p>'+esc(c.desc)+'</p></div><div class="ccp"><div class="m"><span>'+d+'/'+N+' video</span><b>'+pct+'%</b></div><div class="prog"><i class="'+(pct<100?'part':'')+'" style="width:'+pct+'%"></i></div></div><div class="vmini">'+rows+'</div><button class="seemore" onclick="App.openCourse(\''+c.id+'\')">'+more+'</button></div>';
+          }).join('')+'</div>';
+      }).join('');
+    },
+    async openCourse(courseId, startOrd){
+      var res = await gas2('getCourseDetail', { courseId: courseId });
+      if(!res || !res.ok){ alert('Lỗi: '+(res&&res.msg)); return; }
+      this._curCourse = res.course; this._curVideos = res.videos||[]; this._curCompleted = res.completed||0;
+      this._curVideo = (startOrd!=null)? (startOrd-1) : Math.min(this._curCompleted, this._curVideos.length-1);
+      if(this._curVideo<0) this._curVideo=0;
+      el('cdGroup').textContent=res.course.group; el('cdTitle').textContent=res.course.title; el('cdDesc').textContent=res.course.desc;
+      // panel tiến độ cán bộ (lãnh đạo/admin)
+      var r=(S.user&&S.user.role)||'user';
+      if(['admin','lanh_dao_chi_cuc','lanh_dao_doi'].indexOf(r)>=0){
+        var lr = await gas2('getCourseLearners',{courseId:courseId});
+        if(lr&&lr.ok){ el('cdLearners').style.display='block';
+          el('cdLearnBody').innerHTML=(lr.learners||[]).map(function(p){ return '<tr><td style="font-weight:600">'+esc(p.fullname)+'</td><td style="color:var(--tx3);font-size:.78rem">'+esc(p.unit)+'</td><td>'+p.reached+'/'+p.total+' video</td><td><div class="prog"><i class="'+(p.pct<100?'part':'')+'" style="width:'+p.pct+'%"></i></div></td></tr>'; }).join('');
+        }
+      } else { el('cdLearners').style.display='none'; }
+      this.goto('course-detail'); this.renderCourseDetail();
+    },
+    renderCourseDetail(){
+      var vids=this._curVideos, N=vids.length, d=this._curCompleted, pct=N?Math.round(d/N*100):0, cur=this._curVideo;
+      el('cdProgTxt').textContent='Đã hoàn thành '+d+'/'+N+' video'; el('cdProgPct').textContent=pct+'%';
+      el('cdProgFill').style.width=pct+'%'; el('cdProgFill').className=pct<100?'part':'';
+      var v=vids[cur]||{}, demo=/DEMO/.test(v.link||''), box=el('cdPlayer');
+      var embed = v.type==='youtube'?ytEmbed(v.link):driveEmbed(v.link);
+      if(demo || !embed){ box.innerHTML='<div class="ph"><div style="font-size:2.4rem">▶</div><div style="font-weight:700;margin-top:8px">'+esc(v.title||'')+'</div><div style="font-size:.78rem;opacity:.7;margin-top:4px">Video sẽ phát tại đây khi có link thật.</div><code>'+esc(embed||'')+'</code></div>'; }
+      else { box.innerHTML='<iframe src="'+embed+'" allow="autoplay" allowfullscreen></iframe>'; }
+      var act=el('cdActions');
+      if(d>=N){ act.innerHTML='<div class="callout">🎉 Bạn đã hoàn thành toàn bộ '+N+' video của khóa học này!</div>'; }
+      else if(cur<d){ act.innerHTML='<div class="callout">✓ Đã hoàn thành video này. Có thể xem lại hoặc học tiếp video kế.</div>'; }
+      else if(cur===d){ act.innerHTML='<button class="nx-btn" onclick="App.markVideoDone()">✓ Đánh dấu đã học xong'+(cur+1<N?' — Mở video tiếp theo':' — Hoàn thành khóa')+'</button><div class="ln">⚠ Học tuần tự: hoàn thành video này mới mở được video sau.</div>'; }
+      else { act.innerHTML=''; }
+      el('cdList').innerHTML = vids.map(function(vv,i){
+        var st=i<d?'d':(i===d?'c':'l'), ic=st==='d'?'✓':st==='l'?'🔒':'▶', clk=st!=='l', active=i===cur?'active':'';
+        return '<div class="vrow '+(st==='l'?'lock':'')+' '+(clk?'clk':'')+' '+active+'" '+(clk?'onclick="App.selectVideo('+i+')"':'')+'><div class="vst '+st+'">'+ic+'</div><div class="vt"><div class="a">'+esc(vv.title)+'</div><div class="b">'+esc(vv.dur)+'</div></div></div>';
+      }).join('');
+    },
+    selectVideo(i){ if(i>this._curCompleted) return; this._curVideo=i; this.renderCourseDetail(); },
+    async markVideoDone(){
+      var res = await gas2('markVideoDone', { courseId: this._curCourse.id });
+      if(!res || !res.ok){ alert('Lỗi: '+(res&&res.msg)); return; }
+      this._curCompleted = res.completed;
+      if(this._curVideo+1 < this._curVideos.length && this._curVideo < res.completed) this._curVideo++;
+      this.renderCourseDetail();
+    },
+
+    // ===== DASHBOARD TIẾN ĐỘ =====
+    async loadCourseProgress(){
+      var res = await gas2('getCourseCompletion');
+      if(!res || !res.ok){ el('cpDetail').innerHTML='<tr><td colspan="6">Lỗi: '+esc(res&&res.msg)+'</td></tr>'; return; }
+      el('cpNote').textContent = res.scoped ? ('Phạm vi: đơn vị '+res.scopeUnit+'.') : 'Phạm vi: toàn Chi cục.';
+      var total=res.total||1, sc=res.statusCount||{};
+      el('cp-rate').textContent=Math.round((sc.done||0)/total*100)+'%';
+      el('cp-done').textContent=sc.done||0; el('cp-prog').textContent=(sc.prog||0)+(sc.soon||0); el('cp-late').textContent=sc.late||0;
+      var segs=[['done','Hoàn thành','var(--green)'],['prog','Đang học','var(--nv4)'],['soon','Sắp đến hạn','var(--gold)'],['none','Chưa bắt đầu','#cbd4e1'],['late','Quá hạn','var(--red)']];
+      el('cpSeg').innerHTML=segs.map(function(s){ var n=sc[s[0]]||0; return n?'<i style="width:'+(n/total*100)+'%;background:'+s[2]+'"></i>':''; }).join('');
+      el('cpLeg').innerHTML=segs.map(function(s){ return '<span><b style="background:'+s[2]+'"></b>'+s[1]+' · '+(sc[s[0]]||0)+'</span>'; }).join('');
+      bars('cpByCourse', (res.byCourse||[]).map(function(x){return {name:x.name,value:x.pct};}), function(v){return v+'%';});
+      bars('cpByUnit', (res.byUnit||[]).map(function(x){return {name:x.name,value:x.pct};}), function(v){return v+'%';});
+      el('cpAssign').innerHTML=(res.assignments||[]).map(function(a){ var dl=daysLeft(a.due), od=dl<0;
+        return '<tr><td style="font-weight:600">'+esc(a.courseTitle)+'</td><td>'+(a.scopeType==='all'?'Toàn Chi cục':esc(a.scopeValue))+'</td><td>'+fmtDate(a.due)+'<div style="font-size:.7rem;color:'+(od?'var(--red)':'var(--tx3)')+'">'+(od?'quá '+(-dl)+' ngày':'còn '+dl+' ngày')+'</div></td><td style="text-align:center">'+a.people+'</td><td style="min-width:120px"><div class="prog"><i class="'+(a.pct<100?'part':'')+'" style="width:'+a.pct+'%"></i></div><div style="font-size:.72rem;color:var(--tx3);margin-top:3px">'+a.done+'/'+a.people+' xong</div></td></tr>'; }).join('');
+      el('cpCount').textContent=(res.details||[]).length+' lượt giao';
+      el('cpDetail').innerHTML=(res.details||[]).slice().sort(function(a,b){return a.status.localeCompare(b.status);}).map(function(r){ var st=STAT[r.status]||STAT.prog;
+        return '<tr><td style="font-weight:600">'+esc(r.fullname)+'</td><td style="color:var(--tx3);font-size:.78rem">'+esc(r.unit)+'</td><td style="font-size:.82rem">'+esc(r.courseTitle)+'</td><td style="font-size:.8rem">'+fmtDate(r.due)+'</td><td><div class="prog"><i class="'+(r.pct<100?'part':'')+'" style="width:'+r.pct+'%"></i></div></td><td><span class="nx-pill '+st[1]+'">'+st[0]+'</span></td></tr>'; }).join('');
+    },
+
+    // ===== GIAO KHÓA HỌC =====
+    asType(){ var t=el('asType').value; el('asUnitW').style.display=t==='unit'?'block':'none'; el('asPersonW').style.display=t==='person'?'block':'none'; },
+    async loadAssign(){
+      var cs = await gas2('getCourses'); var courses=(cs&&cs.courses)||[];
+      el('asCourse').innerHTML=courses.map(function(c){ return '<option value="'+c.id+'">'+esc(c.title)+' ('+c.videoCount+' video)</option>'; }).join('');
+      var dir = await gas2('getDirectory');
+      if(dir&&dir.ok){
+        el('asUnit').innerHTML=(dir.units||[]).map(function(u){ return '<option>'+esc(u)+'</option>'; }).join('');
+        el('asPerson').innerHTML=(dir.people||[]).map(function(p){ return '<option value="'+esc(p.username)+'">'+esc(p.fullname)+' — '+esc(p.unit)+'</option>'; }).join('');
+      }
+      this.renderAssignList();
+    },
+    async renderAssignList(){
+      var res = await gas2('getCourseCompletion'); // tái dùng để lấy danh sách lượt giao + %
+      var list=(res&&res.assignments)||[];
+      el('asCount').textContent=list.length+' lượt giao';
+      el('asList').innerHTML = list.length ? list.map(function(a){
+        var dl=daysLeft(a.due);
+        return '<div class="vrow" style="border:1px solid var(--line);border-radius:12px;margin-bottom:9px"><div class="vst c">📚</div><div class="vt"><div class="a">'+esc(a.courseTitle)+'</div><div class="b">'+(a.scopeType==='all'?'Toàn Chi cục':esc(a.scopeValue))+' · hạn '+fmtDate(a.due)+' ('+(dl<0?'quá '+(-dl)+'n':'còn '+dl+'n')+') · '+a.pct+'% xong</div></div></div>';
+      }).join('') : '<div class="empty" style="padding:24px"><p>Chưa giao khóa học nào.</p></div>';
+    },
+    async addAssign(){
+      var due=el('asDue').value; if(!due){ alert('Chọn hạn hoàn thành.'); return; }
+      var t=el('asType').value, scopeValue = t==='unit'?el('asUnit').value : (t==='person'?el('asPerson').value:'');
+      var res = await gas2('saveAssignment', { assignment: { courseId: el('asCourse').value, scopeType: t, scopeValue: scopeValue, due: due, note: el('asNote').value } });
+      if(!res || !res.ok){ alert('Lỗi: '+(res&&res.msg)); return; }
+      el('asNote').value=''; this.renderAssignList(); alert('Đã giao khóa học.');
+    },
+
+    // ===== PHỔ CẬP AI =====
+    aiType(){ var t=el('aiType').value; el('aiLinkW').style.display=(t==='youtube'||t==='video')?'block':'none'; el('aiContentW').style.display=(t==='html'||t==='info')?'block':'none'; },
+    aiContentHtml(it){
+      if(it.type==='youtube'){ var demo=/DEMO/.test(it.link||''), e=ytEmbed(it.link); return (e&&!demo)?'<div class="embed"><iframe src="'+e+'" allowfullscreen></iframe></div>':'<div class="embed"><div class="ph"><div style="font-size:2.2rem">▶️</div><div style="font-weight:700;margin-top:6px">Video YouTube</div><div style="font-size:.78rem;opacity:.7">Dán link YouTube thật để phát.</div></div></div>'; }
+      if(it.type==='video'){ var demo2=/DEMO/.test(it.link||''), e2=driveEmbed(it.link); return (e2&&!demo2)?'<div class="embed"><iframe src="'+e2+'" allowfullscreen></iframe></div>':'<div class="embed"><div class="ph"><div style="font-size:2.2rem">🎬</div><div style="font-weight:700;margin-top:6px">Video nhúng</div><div style="font-size:.78rem;opacity:.7">Dán link Drive/MP4 thật để phát.</div></div></div>'; }
+      return '<div class="'+(it.type==='info'?'callout':'aic')+'">'+(it.content||'')+'</div>'; // content đã sanitize ở server
+    },
+    aiMeta(t){ return ({html:['🌐','Nội dung web'],info:['💡','Thông tin'],video:['🎬','Video nhúng'],youtube:['▶️','YouTube']})[t]||['📄','Nội dung']; },
+    async loadAiDaily(){
+      var r=(S.user&&S.user.role)||'user';
+      el('aiAdmin').innerHTML = r==='admin' ? ('<div class="nx-card"><div class="nx-ch"><div class="nx-ct">📝 Đăng kiến thức AI hôm nay</div><span class="nx-cs">Chỉ quản trị</span></div><div class="frow"><div class="fld"><label>Ngày</label><input type="date" id="aiDate"></div><div class="fld"><label>Loại nội dung</label><select id="aiType" onchange="App.aiType()"><option value="html">🌐 Nội dung web (HTML)</option><option value="info">💡 Thông tin ngắn</option><option value="youtube">▶️ Link YouTube</option><option value="video">🎬 Video nhúng (Drive/MP4)</option></select></div></div><div class="fld"><label>Tiêu đề</label><input id="aiTitle" placeholder="VD: Cách dùng AI tóm tắt công văn"></div><div class="fld" id="aiLinkW" style="display:none"><label>Đường link</label><input id="aiLink" placeholder="https://youtu.be/... hoặc link Google Drive"></div><div class="fld" id="aiContentW"><label>Nội dung (dán HTML/đoạn web)</label><textarea id="aiContent" rows="5" placeholder="Hỗ trợ thẻ &lt;h4&gt;,&lt;p&gt;,&lt;ul&gt;,&lt;a&gt;,&lt;code&gt;..."></textarea></div><button class="nx-btn" onclick="App.postAi()">📤 Đăng bài hôm nay</button></div>') : '';
+      if(r==='admin'){ var dt=el('aiDate'); if(dt){ dt.value=new Date().toISOString().slice(0,10); } }
+      var res = await gas2('getAiPosts');
+      var posts=(res&&res.posts)||[]; var self=this;
+      if(!posts.length){ el('aiFeatured').innerHTML='<div class="empty" style="padding:30px"><div class="e">📭</div><h3>Chưa có bài</h3><p>'+(r==='admin'?'Dùng form trên để đăng bài đầu tiên.':'Quản trị viên chưa đăng bài.')+'</p></div>'; el('aiArchive').innerHTML=''; el('aiOldCount').textContent='0 bài'; return; }
+      var feat=posts[0], fm=this.aiMeta(feat.type);
+      el('aiFeatured').innerHTML='<div class="aifeat"><div class="top"><span class="bdg">★ MỚI NHẤT</span><h3>'+esc(feat.title)+'</h3><div class="mt">📅 '+fmtDate(feat.date)+' <span class="tchip" style="background:rgba(255,255,255,.16);color:#fff">'+fm[0]+' '+fm[1]+'</span></div></div><div class="aibody">'+this.aiContentHtml(feat)+(r==='admin'?'<div style="margin-top:14px"><button class="nx-ghost" onclick="App.delAi(\''+feat.id+'\')">🗑 Xóa bài này</button></div>':'')+'</div></div>';
+      var old=posts.slice(1); el('aiOldCount').textContent=old.length+' bài';
+      el('aiArchive').innerHTML = old.length ? old.map(function(it){ var m=self.aiMeta(it.type);
+        return '<div class="aiitem" id="ai-'+it.id+'"><div class="ih" onclick="App.toggleAi(\''+it.id+'\')"><span class="idt">'+fmtShort(it.date)+'</span><span class="itt">'+esc(it.title)+'</span><span class="tchip">'+m[0]+' '+m[1]+'</span><span class="ar">▸</span></div><div class="ib">'+self.aiContentHtml(it)+(r==='admin'?'<div style="margin-top:10px"><button class="nx-ghost" onclick="App.delAi(\''+it.id+'\')">🗑 Xóa</button></div>':'')+'</div></div>';
+      }).join('') : '<div class="empty" style="padding:24px"><p>Chưa có bài của ngày trước.</p></div>';
+    },
+    toggleAi(id){ var e=el('ai-'+id); if(e) e.classList.toggle('open'); },
+    async postAi(){
+      var t=el('aiType').value, title=el('aiTitle').value.trim(); if(!title){ alert('Nhập tiêu đề.'); return; }
+      var post={ date: el('aiDate').value, type: t, title: title };
+      if(t==='youtube'||t==='video'){ post.link=el('aiLink').value.trim(); if(!post.link){ alert('Dán đường link.'); return; } }
+      else { post.content=el('aiContent').value.trim(); if(!post.content){ alert('Nhập nội dung.'); return; } }
+      var res = await gas2('saveAiPost', { post: post });
+      if(!res || !res.ok){ alert('Lỗi: '+(res&&res.msg)); return; }
+      this.loadAiDaily();
+    },
+    async delAi(id){ if(!confirm('Xóa bài này?')) return; var res=await gas2('deleteAiPost',{id:id}); if(res&&res.ok) this.loadAiDaily(); else alert('Lỗi: '+(res&&res.msg)); }
+  });
+
+  // ===== Gắn loader vào điều hướng (không sửa hàm gốc) =====
+  var _doGoto = App._doGoto.bind(App);
+  App._doGoto = function(id){
+    _doGoto(id);
+    if(id==='courses') this.loadCourses();
+    if(id==='course-progress') this.loadCourseProgress();
+    if(id==='assign-courses') this.loadAssign();
+    if(id==='ai-daily') this.loadAiDaily();
+  };
+
+  // ===== Hiện menu mới theo phân quyền (chạy sau afterLogin gốc) =====
+  var _afterLogin = App.afterLogin.bind(App);
+  App.afterLogin = function(){
+    _afterLogin();
+    var r = (S.user && S.user.role) || 'user';
+    var lead = ['admin','lanh_dao_chi_cuc','lanh_dao_doi'].indexOf(r) >= 0;
+    function sh(id,on){ var e=el(id); if(e) e.style.display = on ? '' : 'none'; }
+    sh('nav-unit-stats', true);          // mọi vai trò xem được đơn vị mình
+    sh('nav-all-stats', lead);           // lãnh đạo đội/phòng + chi cục + admin
+    sh('nav-courses', true);
+    sh('nav-ai-daily', true);
+    sh('nav-course-progress', lead);
+    sh('nav-assign-courses', r === 'admin');
+  };
+})();
+</script>
+
 </body>
 </html>
