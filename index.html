@@ -3562,19 +3562,19 @@ filterBanks(){
     if(!canSeeUnit(S.user.role)) return;
     
     const isTeamLead = S.user.role === 'lanh_dao_doi';
-    document.getElementById('unitName').textContent = isTeamLead ? (S.user.unit || 'Chưa có đơn vị') : 'Tất cả đơn vị';
+    document.getElementById('unitName').textContent = (S.user.unit || 'Đơn vị của tôi');
     
     document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:#8496b0 !important">Đang tải...</td></tr>';
     try{
       const res=await callGAS({action:'getUnitStats',role:S.user.role,unit:S.user.unit});
       if(!res.ok){ document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:#c0392b !important;padding:20px">'+esc(res.msg)+'</td></tr>'; return; }
-      this.renderUnitTable(res.stats,'unitStatsBody','us-');
+      this.renderUnitTable(res.ranking||res.stats,'unitStatsBody','us-');
     }catch(e){ document.getElementById('unitStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:#c0392b !important;padding:20px">Lỗi kết nối</td></tr>'; }
   },
 
   renderUnitTable(stats,tbodyId,pfx){
     if(!stats||!stats.length){ document.getElementById(tbodyId).innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:#8496b0 !important">Chưa có dữ liệu</td></tr>'; return; }
-    const totalExams=stats.reduce((a,r)=>a+r.count,0);
+    const totalExams=stats.reduce((a,r)=>a+(r.exams||r.count||0),0);
     const totalAvg=stats.reduce((a,r)=>a+r.avg,0)/stats.length;
     const totalPass=stats.filter(r=>r.avg>=5).length;
     const members=stats.length;
@@ -3586,10 +3586,10 @@ filterBanks(){
         <td><span class="rank-badge ${rankCls}">${i+1}</span> ${medal}</td>
         <td style="font-weight:600">${esc(r.fullname)}</td>
         <td style="font-size:.75rem;color:#8496b0 !important">${esc(r.username)}</td>
-        <td style="text-align:center">${r.count}</td>
+        <td style="text-align:center">${r.exams||r.count||0}</td>
         <td>${scorePill(r.avg)}</td>
         <td style="text-align:center;font-weight:700">${Number(r.best).toFixed(2)}</td>
-        <td style="text-align:center;font-size:.82rem">${r.pass}/${r.count}</td></tr>`;
+        <td style="text-align:center;font-size:.82rem">${r.pass}/${r.exams||r.count||0}</td></tr>`;
     }).join('');
   },
 
@@ -3608,11 +3608,11 @@ filterBanks(){
         sel.innerHTML='<option value="">— Tất cả đơn vị —</option>'+res.units.map(u=>`<option value="${esc(u)}">${esc(u)}</option>`).join('');
         sel.value=cur;
       }
-      const stats=res.stats||[];
+      const stats=res.ranking||[];
       document.getElementById('allStatsCount').textContent=stats.length+' người';
       const units=new Set(stats.map(r=>r.unit)).size;
       const people=stats.length;
-      const exams=stats.reduce((a,r)=>a+r.count,0);
+      const exams=stats.reduce((a,r)=>a+(r.exams||r.count||0),0);
       const avg=people?stats.reduce((a,r)=>a+r.avg,0)/people:0;
       document.getElementById('as-units').textContent=units;
       document.getElementById('as-people').textContent=people;
@@ -3630,10 +3630,10 @@ filterBanks(){
         <td><span class="rank-badge ${i<3?'gold-rank':''}">${i+1}</span></td>
         <td style="font-weight:600">${esc(r.fullname)}</td>
         <td style="font-size:.75rem;color:#8496b0 !important">${esc(r.unit||'—')}</td>
-        <td style="text-align:center">${r.count}</td>
+        <td style="text-align:center">${r.exams||r.count||0}</td>
         <td>${scorePill(r.avg)}</td>
         <td style="text-align:center;font-weight:700">${Number(r.best).toFixed(2)}</td>
-        <td style="text-align:center;font-size:.82rem">${Math.round(r.pass/r.count*100)}%</td></tr>`).join('');
+        <td style="text-align:center;font-size:.82rem">${Math.round(r.pass/(r.exams||r.count||1)*100)}%</td></tr>`).join('');
     }catch(e){ document.getElementById('allStatsBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:#c0392b !important;padding:20px">Lỗi kết nối</td></tr>'; }
   },
 
@@ -3950,8 +3950,9 @@ App.init();
 (function(){
   // Helper gọi GAS kèm token đã đăng nhập
   async function gas2(action, extra){
+    var u = (window.S && S.user) || {};
     var token = (window.S && S.token) || localStorage.getItem('qz_token') || '';
-    return await callGAS(Object.assign({ action: action, token: token }, extra || {}));
+    return await callGAS(Object.assign({ action: action, token: token, username: u.username||'', unit: u.unit||'', role: u.role||'' }, extra || {}));
   }
   function el(id){ return document.getElementById(id); }
   function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
