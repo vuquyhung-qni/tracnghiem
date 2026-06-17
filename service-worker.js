@@ -1,5 +1,5 @@
-// Service Worker PWA v206 - TRẮC NGHIỆM KIẾN THỨC
-const CACHE_VERSION = 'hqkv8-learning-v206';
+// Service Worker PWA v208 - TRẮC NGHIỆM KIẾN THỨC
+const CACHE_VERSION = 'hqkv8-learning-v208';
 const APP_SHELL = [
   './',
   './index.html',

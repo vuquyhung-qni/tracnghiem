@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="color-scheme" content="light">
-<title>Trắc nghiệm kiến thức HQKV8 V206</title>
+<title>Trắc nghiệm kiến thức HQKV8 V208</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#063a63">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,24 +20,20 @@ button,input,select,textarea{font:inherit}
 a{color:inherit}
 .hidden{display:none!important}
 .app{display:flex;min-height:100vh}
-.sidebar{width:278px;background:linear-gradient(180deg,#063a63 0%,#0b4f86 64%,#063a63 100%);color:#fff;padding:16px 14px;position:sticky;top:0;height:100vh;overflow:auto}
-.brand{display:flex;gap:12px;align-items:center;padding:10px 8px 16px;border-bottom:1px solid rgba(255,255,255,.16);margin-bottom:10px}
-.logo{width:46px;height:46px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.18)}
+.sidebar{width:270px;background:linear-gradient(180deg,#063a63,#0b4f86);color:#fff;padding:18px 14px;position:sticky;top:0;height:100vh;overflow:auto}
+.brand{display:flex;gap:12px;align-items:center;padding:12px 10px 18px;border-bottom:1px solid rgba(255,255,255,.18);margin-bottom:14px}
+.logo{width:44px;height:44px;border-radius:13px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden}
 .logo img{width:100%;height:100%;object-fit:contain;border-radius:50%;background:#fff;padding:2px}.topbar-brand{display:flex;align-items:center;gap:10px;min-width:0}.topbar-logo{width:32px;height:32px;object-fit:contain;border-radius:50%;flex-shrink:0}.topbar-tools{display:flex;align-items:center;gap:8px}
-.brand b{font-size:1.02rem;line-height:1.22;font-weight:800;letter-spacing:-.01em}
-.brand span{display:block;font-size:.72rem;color:rgba(255,255,255,.72);margin-top:3px;font-weight:500}
-.nav{padding:2px 0 8px}
-.nav-title{display:flex;align-items:center;gap:8px;margin:16px 8px 8px;padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.075);font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;color:#f6d26a;font-weight:900}
-.nav-title::before{content:'';width:6px;height:6px;border-radius:50%;background:#f0c040;box-shadow:0 0 10px rgba(240,192,64,.8);flex:0 0 6px}
-.nav button{width:100%;border:0;background:transparent;color:rgba(255,255,255,.78);text-align:left;padding:9px 12px;border-radius:12px;cursor:pointer;font-weight:500;margin:2px 0;display:flex;align-items:center;gap:10px;line-height:1.32;font-size:.92rem;transition:background .18s,color .18s,transform .18s}
-.nav button .nav-icon{width:23px;min-width:23px;text-align:center;opacity:.92;font-size:1.03rem;line-height:1}
-.nav button .nav-label{flex:1;min-width:0}
-.nav button:hover{background:rgba(255,255,255,.10);color:#fff;transform:translateX(1px)}
-.nav button.active{background:rgba(255,255,255,.15);color:#fff;box-shadow:inset 3px 0 0 var(--gold);font-weight:600}
-.userbox{margin-top:16px;padding:12px;border-radius:18px;background:rgba(255,255,255,.105);font-size:.82rem;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
-.userbox b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:800}
-.userbox small{display:block;color:rgba(255,255,255,.72);margin-top:4px;line-height:1.35}
-.userbox button{margin-top:9px;width:100%;border:0;border-radius:11px;padding:8.5px;background:#fff;color:var(--navy);font-weight:700;cursor:pointer}
+.brand b{font-size:1rem;line-height:1.25}
+.brand span{display:block;font-size:.72rem;color:rgba(255,255,255,.72);margin-top:2px}
+.nav-title{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.55);padding:12px 10px 6px}
+.nav button{width:100%;border:0;background:transparent;color:rgba(255,255,255,.78);text-align:left;padding:11px 12px;border-radius:12px;cursor:pointer;font-weight:700;margin:2px 0}
+.nav button:hover,.nav button.active{background:rgba(255,255,255,.14);color:#fff}
+.nav button.active{box-shadow:inset 3px 0 0 var(--gold)}
+.userbox{margin-top:18px;padding:12px;border-radius:16px;background:rgba(255,255,255,.1);font-size:.82rem}
+.userbox b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.userbox small{display:block;color:rgba(255,255,255,.72);margin-top:4px}
+.userbox button{margin-top:10px;width:100%;border:0;border-radius:10px;padding:9px;background:#fff;color:var(--navy);font-weight:800;cursor:pointer}
 .main{flex:1;min-width:0}
 .topbar{height:64px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:20}
 .topbar h1{font-size:1.05rem;margin:0;color:var(--navy);text-transform:uppercase;letter-spacing:.02em}
@@ -155,6 +151,38 @@ th{background:#eef4fd;color:var(--navy);font-size:.76rem;text-transform:uppercas
 .stats-filterbar{display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:10px;align-items:end;margin-bottom:16px}
 .stats-filterbar .field{margin-bottom:0}
 .stats-filterbar .btn{height:44px;justify-content:center}
+
+/* ===== V208: user menu gọn + kết quả cá nhân chi tiết ===== */
+.userbox-dropdown{position:relative;cursor:pointer;transition:background .18s, box-shadow .18s}
+.userbox-dropdown:hover{background:rgba(255,255,255,.15);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.userbox-main{display:flex;align-items:center;gap:10px}
+.userbox-text{min-width:0;flex:1}
+.userbox-caret{font-weight:900;color:rgba(255,255,255,.74);transition:transform .18s}
+.userbox-dropdown.open .userbox-caret{transform:rotate(180deg)}
+.side-user-actions{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.14);display:grid;gap:8px}
+.side-user-actions.hidden{display:none!important}
+.side-user-actions button{margin-top:0;width:100%;border:0;border-radius:12px;padding:10px 12px;background:#fff;color:var(--navy);font-weight:800;cursor:pointer}
+.side-user-actions button.logout{background:rgba(255,255,255,.92);color:#8b1d1d}
+.topbar{justify-content:flex-start;gap:12px}
+.topbar-brand{flex:1}
+.my-stats-hero{background:linear-gradient(135deg,#063a63 0%,#0b67b2 72%,#2b8dd5 100%);position:relative;overflow:hidden}
+.my-stats-hero:after{content:'';position:absolute;right:-42px;bottom:-62px;width:210px;height:210px;border-radius:50%;background:rgba(255,255,255,.08)}
+.my-stat-grid{display:grid;grid-template-columns:repeat(6,minmax(140px,1fr));gap:12px;margin-bottom:16px}
+.my-stat-card{background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);padding:16px 14px;position:relative;overflow:hidden}
+.my-stat-card:before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--blue),#37a2d8)}
+.my-stat-card b{font-size:1.55rem;color:var(--navy);display:block;line-height:1.1}
+.my-stat-card span{font-size:.78rem;color:var(--muted);font-weight:700}
+.my-stats-filterbar{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:10px;align-items:end;margin-bottom:14px}
+.my-insight{background:linear-gradient(90deg,#f7fbff,#fff);border:1px solid var(--border);border-left:4px solid var(--blue);border-radius:14px;padding:13px 14px;color:var(--text);margin:12px 0 16px}
+.my-insight b{color:var(--navy)}
+.bank-summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:12px 0 16px}
+.bank-mini-card{border:1px solid var(--border);border-radius:14px;padding:13px;background:#fff;box-shadow:0 4px 14px rgba(6,58,99,.05)}
+.bank-mini-card h4{margin:0 0 8px;color:var(--navy);font-size:.92rem}
+.bank-mini-card .mini-row{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:.82rem;margin-top:5px}
+.bank-mini-card .mini-row b{color:var(--navy)}
+@media(max-width:1100px){.my-stat-grid{grid-template-columns:repeat(3,1fr)}.my-stats-filterbar{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.my-stat-grid{grid-template-columns:1fr 1fr}.my-stats-filterbar{grid-template-columns:1fr}.topbar{justify-content:flex-start}.side-user-actions{display:grid}}
+
 @media(max-width:900px){.stats-filterbar{grid-template-columns:1fr}.stats-filterbar .btn{width:100%}}
 .admin-json{font-family:ui-monospace,Consolas,monospace;min-height:330px}
 .loading{position:fixed;inset:0;background:rgba(6,58,99,.35);display:flex;align-items:center;justify-content:center;z-index:200}
@@ -307,6 +335,17 @@ th{background:#eef4fd;color:var(--navy);font-size:.76rem;text-transform:uppercas
 @media(max-width:900px){.exam-setup-grid{grid-template-columns:1fr}.quiz-container{flex-direction:column-reverse;padding:0}.quiz-left-panel{width:100%;position:static;max-height:none;border-radius:18px}.quiz-right-panel{width:100%;min-height:auto;padding:20px 16px;border-radius:18px}.q-grid-box{grid-template-columns:repeat(10,1fr);gap:5px;max-height:180px}.q-dot{font-size:.68rem;border-radius:5px}.result-hero{grid-template-columns:1fr;text-align:center}.result-stats-row,.dashboard-quiz-summary{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.result-stats-row,.dashboard-quiz-summary{grid-template-columns:1fr}.count-chips .chip{flex:1 1 calc(50% - 8px);text-align:center}}
 
+
+.my-course-summary{margin-top:16px !important;border-left:4px solid #0b67b2 !important;background:linear-gradient(180deg,#fff,#f7fbff) !important}
+.course-progress-row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px}
+.course-progress-row b{display:block;color:var(--navy);font-size:1.35rem;font-weight:900}
+.course-progress-row span{display:block;color:var(--muted);font-size:.9rem;margin-top:2px}
+.course-progress-percent{font-size:1.8rem;font-weight:900;color:#0b67b2;white-space:nowrap}
+.course-status-mini{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;color:var(--muted);font-size:.85rem}
+.course-status-mini span{background:#eef4fd;border:1px solid #dbe6f3;border-radius:999px;padding:6px 10px}
+.course-status-mini b{color:var(--navy)}
+.my-stat-card.course-assigned{border-left:4px solid #0b67b2}
+.my-stat-card.course-done{border-left:4px solid #0f7c4a}
 </style>
 </head>
 <body>
@@ -335,33 +374,39 @@ th{background:#eef4fd;color:var(--navy);font-size:.76rem;text-transform:uppercas
     <div class="brand"><div class="logo"><img src="logo-hq.png" alt="Logo Hải quan"></div><div><b>Trắc nghiệm kiến thức</b><span>Chi cục Hải quan khu vực VIII</span></div></div>
     <div class="nav">
       <div class="nav-title">Học tập</div>
-      <button data-screen="dashboard" onclick="App.goto('dashboard')"><span class="nav-icon">🏠</span><span class="nav-label">Tổng quan</span></button>
-      <button data-screen="ai-daily" onclick="App.goto('ai-daily')"><span class="nav-icon">☀️</span><span class="nav-label">Phổ cập AI</span></button>
-      <button data-screen="courses" onclick="App.goto('courses')"><span class="nav-icon">📚</span><span class="nav-label">Khóa học</span></button>
-      <button data-screen="assignments" onclick="App.goto('assignments')"><span class="nav-icon">📌</span><span class="nav-label">Nhiệm vụ học tập</span></button>
-      <button data-screen="practice" onclick="App.goto('practice')"><span class="nav-icon">📝</span><span class="nav-label">Bài tập thực hành</span></button>
+      <button data-screen="dashboard" onclick="App.goto('dashboard')">🏠 Tổng quan</button>
+      <button data-screen="courses" onclick="App.goto('courses')">📚 Khóa học</button>
+      <button data-screen="ai-daily" onclick="App.goto('ai-daily')">☀️ Phổ cập AI</button>
+      <button data-screen="assignments" onclick="App.goto('assignments')">📌 Khóa học được giao</button>
+      <button data-screen="course-progress" class="leader-only" onclick="App.goto('course-progress')">📈 Tiến độ khóa học</button>
+      <button data-screen="practice" onclick="App.goto('practice')">📝 Bài tập thực hành</button>
       <div class="nav-title">Trắc nghiệm</div>
-      <button data-screen="quiz-setup" onclick="App.goto('quiz-setup')"><span class="nav-icon">▶️</span><span class="nav-label">Làm bài trắc nghiệm</span></button>
-      <button data-screen="my-stats" onclick="App.goto('my-stats')"><span class="nav-icon">📊</span><span class="nav-label">Kết quả của tôi</span></button>
-      <button data-screen="unit-stats" class="leader-only" onclick="App.goto('unit-stats')"><span class="nav-icon">👥</span><span class="nav-label">Kết quả đơn vị</span></button>
-      <button data-screen="all-stats" class="hq-all-only" onclick="App.goto('all-stats')"><span class="nav-icon">🏆</span><span class="nav-label">Kết quả toàn Chi cục</span></button>
+      <button data-screen="quiz-setup" onclick="App.goto('quiz-setup')">▶ Làm bài trắc nghiệm</button>
+      <button data-screen="my-stats" onclick="App.goto('my-stats')">📊 Kết quả của tôi</button>
+      <button data-screen="unit-stats" class="leader-only" onclick="App.goto('unit-stats')">👥 Kết quả đơn vị</button>
+      <button data-screen="all-stats" class="admin-only" onclick="App.goto('all-stats')">🏆 Kết quả toàn Chi cục</button>
       <div class="nav-title admin-only">Quản trị</div>
-      <button data-screen="assign-courses" class="admin-only" onclick="App.goto('assign-courses')"><span class="nav-icon">📤</span><span class="nav-label">Giao khóa học</span></button>
-      <button data-screen="course-progress" class="leader-only" onclick="App.goto('course-progress')"><span class="nav-icon">📈</span><span class="nav-label">Tiến độ học tập</span></button>
-      <button data-screen="manage-courses" class="admin-only" onclick="App.goto('manage-courses')"><span class="nav-icon">✏️</span><span class="nav-label">Quản lý khóa học</span></button>
-      <button data-screen="admin-import" class="admin-only" onclick="App.goto('admin-import')"><span class="nav-icon">⬆️</span><span class="nav-label">Nhập khóa học JSON</span></button>
-      <button data-screen="admin-settings" class="admin-only" onclick="App.goto('admin-settings')"><span class="nav-icon">⚙️</span><span class="nav-label">Cài đặt hệ thống</span></button>
+      <button data-screen="assign-courses" class="admin-only" onclick="App.goto('assign-courses')">📄 Giao khóa học</button>
+      <button data-screen="manage-courses" class="admin-only" onclick="App.goto('manage-courses')">✏️ Quản lý khóa học</button>
+      <button data-screen="admin-import" class="admin-only" onclick="App.goto('admin-import')">⬆ Nhập khóa học JSON</button>
+      <button data-screen="admin-settings" class="admin-only" onclick="App.goto('admin-settings')">⚙️ Cài đặt hệ thống</button>
     </div>
-    <div class="userbox">
-      <b id="sideUser">—</b><small id="sideUnit">—</small>
-      <button onclick="App.openPasswordModal()">Đổi mật khẩu</button><button onclick="App.logout()">Đăng xuất</button>
+    <div class="userbox userbox-dropdown" onclick="App.toggleUserMenu(event)">
+      <div class="userbox-main">
+        <div class="userbox-text"><b id="sideUser">—</b><small id="sideUnit">—</small></div>
+        <span class="userbox-caret">⌄</span>
+      </div>
+      <div id="sideUserMenu" class="side-user-actions hidden">
+        <button onclick="event.stopPropagation();App.closeUserMenu();App.openPasswordModal()">Đổi mật khẩu</button>
+        <button class="logout" onclick="event.stopPropagation();App.closeUserMenu();App.logout()">Đăng xuất</button>
+      </div>
     </div>
   </aside>
   <main class="main">
     <div class="topbar">
       <button class="mobile-menu" onclick="App.toggleMenu()">☰</button>
       <div class="topbar-brand"><img class="topbar-logo" src="logo-hq.png" alt="Logo Hải quan"><h1 id="pageTitle">Tổng quan</h1></div>
-      <div class="topbar-tools"><button class="btn secondary" onclick="App.openPasswordModal()">Đổi mật khẩu</button><button class="btn secondary" onclick="App.reload()">Làm mới</button></div>
+
     </div>
     <div class="content">
       <section id="screen-dashboard" class="screen active"></section>
@@ -458,15 +503,25 @@ const App={
     localStorage.removeItem('hqkv8_lms_user'); location.reload();
   },
   toggleMenu(){document.getElementById('sidebar').classList.toggle('show')},
+  toggleUserMenu(e){
+    if(e) e.stopPropagation();
+    const box=document.querySelector('.userbox-dropdown');
+    const menu=document.getElementById('sideUserMenu');
+    if(!menu) return;
+    const willOpen=menu.classList.contains('hidden');
+    menu.classList.toggle('hidden',!willOpen);
+    if(box) box.classList.toggle('open',willOpen);
+  },
+  closeUserMenu(){
+    const box=document.querySelector('.userbox-dropdown');
+    const menu=document.getElementById('sideUserMenu');
+    if(menu) menu.classList.add('hidden');
+    if(box) box.classList.remove('open');
+  },
   setAdminVisible(){
-    const rawRole=(S.user&&S.user.role)||'';
-    const role=String(rawRole).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[\s._-]+/g,'');
-    const isAdmin=role.includes('admin')||role.includes('superadmin')||role.includes('quantri')||role.includes('quanly');
-    const isChiCucLeader=isAdmin||role.includes('lanhdaochicuc')||role.includes('lanhdaocuc')||role.includes('cuctruong')||role.includes('phocuctruong');
-    const isLeader=isChiCucLeader||role.includes('lanhdao')||role.includes('truongphong')||role.includes('phophong')||role.includes('doitruong')||role.includes('phodoitruong');
-    document.querySelectorAll('.admin-only').forEach(el=>el.style.display=isAdmin?'flex':'none');
-    document.querySelectorAll('.leader-only').forEach(el=>el.style.display=isLeader?'flex':'none');
-    document.querySelectorAll('.hq-all-only').forEach(el=>el.style.display=isChiCucLeader?'flex':'none');
+    const role=(S.user&&S.user.role)||'';
+    document.querySelectorAll('.admin-only').forEach(el=>el.style.display=(role==='admin')?'block':'none');
+    document.querySelectorAll('.leader-only').forEach(el=>el.style.display=(role==='admin'||role==='lanh_dao_chi_cuc'||role==='lanh_dao_doi')?'block':'none');
   },
   title(t){document.getElementById('pageTitle').textContent=t},
   goto(screen){
@@ -474,7 +529,8 @@ const App={
     document.getElementById('screen-'+screen).classList.add('active');
     document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.screen===screen));
     document.getElementById('sidebar').classList.remove('show');
-    const map={dashboard:'Tổng quan',courses:'Khóa học','ai-daily':'Phổ cập AI',assignments:'Nhiệm vụ học tập','course-progress':'Tiến độ học tập',practice:'Bài tập thực hành','quiz-setup':'Làm bài trắc nghiệm','my-stats':'Kết quả của tôi','unit-stats':'Kết quả đơn vị','all-stats':'Kết quả toàn Chi cục','assign-courses':'Giao khóa học','manage-courses':'Quản lý khóa học','admin-import':'Nhập khóa học JSON','admin-settings':'Cài đặt hệ thống'};
+    this.closeUserMenu();
+    const map={dashboard:'Tổng quan',courses:'Khóa học','ai-daily':'Phổ cập AI',assignments:'Khóa học được giao','course-progress':'Tiến độ khóa học',practice:'Bài tập thực hành','quiz-setup':'Làm bài trắc nghiệm','my-stats':'Kết quả của tôi','unit-stats':'Kết quả đơn vị','all-stats':'Kết quả toàn Chi cục','assign-courses':'Giao khóa học','manage-courses':'Quản lý khóa học','admin-import':'Nhập khóa học JSON','admin-settings':'Cài đặt hệ thống'};
     this.title(map[screen]||'');
     if(screen==='dashboard') this.renderDashboard();
     if(screen==='courses') this.loadCourses();
@@ -643,7 +699,7 @@ const App={
       const res=await callGAS({action:'getMyAssignments',token:S.token});
       if(!res.ok) throw new Error(res.msg);
       const rows=res.assignments||[];
-      el.innerHTML=`<div class="card"><h3>Nhiệm vụ học tập được giao</h3><p style="color:var(--muted);margin-top:-4px;margin-bottom:12px">Các khóa học bắt buộc được giao theo đơn vị/cá nhân, có hạn hoàn thành và theo dõi tiến độ.</p><div class="table-wrap"><table><thead><tr><th>Khóa học</th><th>Hạn</th><th>Tiến độ</th><th>Trạng thái</th><th></th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.courseTitle)}<br><small>${esc(r.note||'')}</small></td><td>${esc(r.due||'—')}</td><td><div class="progress"><div style="width:${r.pct}%"></div></div>${r.completed}/${r.total} bài (${r.pct}%)</td><td>${esc(r.status)}</td><td><button class="btn secondary" onclick="App.openCourse('${esc(r.courseId)}')">Vào học</button></td></tr>`).join('')}</tbody></table></div></div>`;
+      el.innerHTML=`<div class="card"><h3>Khóa học được giao</h3><div class="table-wrap"><table><thead><tr><th>Khóa học</th><th>Hạn</th><th>Tiến độ</th><th>Trạng thái</th><th></th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.courseTitle)}<br><small>${esc(r.note||'')}</small></td><td>${esc(r.due||'—')}</td><td><div class="progress"><div style="width:${r.pct}%"></div></div>${r.completed}/${r.total} bài (${r.pct}%)</td><td>${esc(r.status)}</td><td><button class="btn secondary" onclick="App.openCourse('${esc(r.courseId)}')">Vào học</button></td></tr>`).join('')}</tbody></table></div></div>`;
     }catch(e){el.innerHTML=`<div class="alert err">${esc(e.message)}</div>`}
   },
 
@@ -896,13 +952,106 @@ Bạn có muốn lưu kết quả trắc nghiệm này vào hệ thống không?
     const el=document.getElementById('screen-my-stats');
     el.innerHTML='<div class="card">Đang tải kết quả...</div>';
     try{
-      const res=await callGAS({action:'getHistory',token:S.token,user:S.user,username:S.user.username,limit:300});
+      const calls=[callGAS({action:'getHistory',token:S.token,user:S.user,username:S.user.username,limit:500})];
+      if(!(S.user&&S.user.isGuest)) calls.push(callGAS({action:'getMyAssignments',token:S.token,user:S.user}));
+      const out=await Promise.all(calls);
+      const res=out[0];
       if(!res.ok) throw new Error(res.msg);
-      el.innerHTML=`<div class="card"><h3>Kết quả của tôi</h3>${this.resultsTable(res.rows||[])}</div>`;
+      S.myStatsRows=res.rows||[];
+      const assigns=(out[1]&&out[1].ok)?(out[1].assignments||[]):[];
+      S.myCourseAssignmentStats={
+        assigned: assigns.length,
+        completed: assigns.filter(a=>Number(a.pct||0)>=100 || a.status==='done').length,
+        inProgress: assigns.filter(a=>Number(a.pct||0)>0 && Number(a.pct||0)<100).length,
+        notStarted: assigns.filter(a=>Number(a.pct||0)<=0).length,
+        overdue: assigns.filter(a=>String(a.status||'').includes('late')).length
+      };
+      if(!S.myStatsFilters) S.myStatsFilters={bankId:'',timeRange:'all',scoreRange:'all'};
+      this.renderMyStatsFromCache();
     }catch(e){el.innerHTML=`<div class="alert err">${esc(e.message)}</div>`}
   },
+  getPeriodStart(range){
+    const r=String(range||'all');
+    if(r==='all') return null;
+    const d=new Date(); d.setHours(0,0,0,0);
+    if(r==='week'){ const day=d.getDay(); const diff=day===0?6:day-1; d.setDate(d.getDate()-diff); return d; }
+    if(r==='month'){ d.setDate(1); return d; }
+    if(r==='quarter'){ d.setMonth(Math.floor(d.getMonth()/3)*3,1); return d; }
+    if(r==='year'){ d.setMonth(0,1); return d; }
+    return null;
+  },
+  filterMyStatsRows(){
+    const f=S.myStatsFilters||{bankId:'',timeRange:'all',scoreRange:'all'};
+    const start=this.getPeriodStart(f.timeRange);
+    return (S.myStatsRows||[]).filter(r=>{
+      if(f.bankId && r.bankId!==f.bankId) return false;
+      if(start){ const d=new Date(r.time); if(isNaN(d)||d<start) return false; }
+      const sc=Number(r.score10)||0;
+      if(f.scoreRange==='pass' && sc<5) return false;
+      if(f.scoreRange==='fail' && sc>=5) return false;
+      if(f.scoreRange==='high' && sc<8) return false;
+      if(f.scoreRange==='perfect' && sc<10) return false;
+      return true;
+    });
+  },
+  renderMyStatsFromCache(){
+    const el=document.getElementById('screen-my-stats');
+    const allRows=S.myStatsRows||[];
+    const f=S.myStatsFilters||{bankId:'',timeRange:'all',scoreRange:'all'};
+    const banks=[]; const bankSeen={};
+    allRows.forEach(r=>{ if(r.bankId&&!bankSeen[r.bankId]){bankSeen[r.bankId]=true;banks.push({id:r.bankId,name:r.banks||r.bankId});} });
+    const rows=this.filterMyStatsRows();
+    const scores=rows.map(r=>Number(r.score10)).filter(x=>!isNaN(x));
+    const exams=rows.length;
+    const avg=exams?scores.reduce((a,b)=>a+b,0)/exams:0;
+    const best=exams?Math.max(...scores):0;
+    const passRate=exams?Math.round(scores.filter(x=>x>=5).length/exams*100):0;
+    const uniqueBanks=new Set(rows.map(r=>r.bankId||r.banks).filter(Boolean)).size;
+    const latest=rows[0]?.time||'';
+    const courseStats=S.myCourseAssignmentStats||{assigned:0,completed:0,inProgress:0,notStarted:0,overdue:0};
+    const coursePct=courseStats.assigned?Math.round(courseStats.completed/courseStats.assigned*100):0;
+    const insight=exams===0?'Chưa có dữ liệu trong phạm vi lọc hiện tại.':avg>=8?'Kết quả hiện ở mức tốt. Anh có thể ưu tiên làm thêm các bộ đề chưa thi hoặc các phần có điểm thấp để duy trì chất lượng.':avg>=5?'Kết quả cơ bản đạt yêu cầu. Nên xem lại các bộ đề dưới 8 điểm để nâng chất lượng.':'Cần ôn tập lại các nội dung trọng tâm và làm lại các bộ đề chưa đạt.';
+    const courseInsight=courseStats.assigned===0?'Chưa có khóa học được giao.':courseStats.completed>=courseStats.assigned?'Đã hoàn thành toàn bộ khóa học được giao.':`Đã hoàn thành ${courseStats.completed}/${courseStats.assigned} khóa học được giao (${coursePct}%).`;
+    const bankMap={};
+    rows.forEach(r=>{ const key=r.bankId||r.banks||'Khác'; if(!bankMap[key]) bankMap[key]={name:r.banks||key,exams:0,total:0,best:0,last:r.time}; const x=bankMap[key]; const sc=Number(r.score10)||0; x.exams++; x.total+=sc; x.best=Math.max(x.best,sc); if(new Date(r.time)>new Date(x.last)) x.last=r.time; });
+    const bankRows=Object.values(bankMap).map(x=>Object.assign(x,{avg:x.exams?x.total/x.exams:0})).sort((a,b)=>b.exams-a.exams||b.avg-a.avg).slice(0,6);
+    const bankOptions='<option value="">Tất cả bài thi</option>'+banks.map(b=>`<option value="${esc(b.id)}" ${f.bankId===b.id?'selected':''}>${esc(b.name)}</option>`).join('');
+    const timeOptions=[['all','Toàn bộ'],['week','Tuần này'],['month','Tháng này'],['quarter','Quý này'],['year','Năm này']].map(x=>`<option value="${x[0]}" ${f.timeRange===x[0]?'selected':''}>${x[1]}</option>`).join('');
+    const scoreOptions=[['all','Tất cả điểm'],['pass','Đạt từ 5 điểm'],['fail','Dưới 5 điểm'],['high','Từ 8 điểm'],['perfect','10 điểm']].map(x=>`<option value="${x[0]}" ${f.scoreRange===x[0]?'selected':''}>${x[1]}</option>`).join('');
+    el.innerHTML=`<div class="hero my-stats-hero"><div><h2>Kết quả của tôi</h2><p>Hồ sơ kết quả trắc nghiệm cá nhân, gồm tổng hợp điểm, bộ đề đã làm và lịch sử chi tiết.</p></div><div class="badge"><b>${avg.toFixed(2)}</b><span>điểm trung bình</span></div></div>
+    <div class="my-stat-grid">
+      <div class="my-stat-card"><b>${exams}</b><span>Lượt làm bài</span></div>
+      <div class="my-stat-card"><b>${avg.toFixed(2)}</b><span>Điểm trung bình</span></div>
+      <div class="my-stat-card"><b>${best.toFixed(2)}</b><span>Điểm cao nhất</span></div>
+      <div class="my-stat-card"><b>${passRate}%</b><span>Tỷ lệ đạt</span></div>
+      <div class="my-stat-card"><b>${uniqueBanks}</b><span>Bộ đề đã làm</span></div>
+      <div class="my-stat-card"><b style="font-size:1rem">${latest?fmtDate(latest):'—'}</b><span>Lần gần nhất</span></div>
+      <div class="my-stat-card course-assigned"><b>${courseStats.assigned}</b><span>Khóa học được giao</span></div>
+      <div class="my-stat-card course-done"><b>${courseStats.completed}</b><span>Khóa học đã hoàn thành</span></div>
+    </div>
+    <div class="card my-course-summary">
+      <h3>Tình hình khóa học được giao</h3>
+      <div class="course-progress-row"><div><b>${courseStats.completed}/${courseStats.assigned}</b><span>${esc(courseInsight)}</span></div><div class="course-progress-percent">${coursePct}%</div></div>
+      <div class="progress"><div style="width:${coursePct}%"></div></div>
+      <div class="course-status-mini"><span>Đang học: <b>${courseStats.inProgress}</b></span><span>Chưa học: <b>${courseStats.notStarted}</b></span><span>Quá hạn: <b>${courseStats.overdue}</b></span></div>
+    </div>
+    <div class="card">
+      <h3>Bộ lọc kết quả</h3>
+      <div class="my-stats-filterbar">
+        <div class="field"><label>Bài thi</label><select id="myStatBank">${bankOptions}</select></div>
+        <div class="field"><label>Thời gian</label><select id="myStatTime">${timeOptions}</select></div>
+        <div class="field"><label>Mức điểm</label><select id="myStatScore">${scoreOptions}</select></div>
+        <button class="btn secondary" onclick="App.resetMyStatsFilters()">Xóa lọc</button>
+      </div>
+      <div class="my-insight"><b>Nhận xét:</b> ${esc(insight)}</div>
+    </div>
+    <div class="card"><h3>Tổng hợp theo bài thi</h3><div class="bank-summary-grid">${bankRows.map(b=>`<div class="bank-mini-card"><h4>${esc(b.name)}</h4><div class="mini-row"><span>Lượt làm</span><b>${b.exams}</b></div><div class="mini-row"><span>Điểm TB</span><b>${b.avg.toFixed(2)}</b></div><div class="mini-row"><span>Cao nhất</span><b>${b.best.toFixed(2)}</b></div><div class="mini-row"><span>Gần nhất</span><b>${fmtDate(b.last)}</b></div></div>`).join('')||'<p class="muted">Chưa có dữ liệu.</p>'}</div></div>
+    <div class="card"><h3>Lịch sử chi tiết</h3>${this.resultsTable(rows)}</div>`;
+    ['myStatBank','myStatTime','myStatScore'].forEach(id=>{ const node=document.getElementById(id); if(node) node.onchange=()=>{S.myStatsFilters={bankId:document.getElementById('myStatBank').value,timeRange:document.getElementById('myStatTime').value,scoreRange:document.getElementById('myStatScore').value};this.renderMyStatsFromCache();}; });
+  },
+  resetMyStatsFilters(){ S.myStatsFilters={bankId:'',timeRange:'all',scoreRange:'all'}; this.renderMyStatsFromCache(); },
   resultsTable(rows){
-    return `<div class="table-wrap"><table><thead><tr><th>Thời gian</th><th>Bộ đề</th><th>Loại</th><th>Điểm</th><th>Khóa/Bài</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${fmtDate(r.time)}</td><td>${esc(r.banks)}</td><td>${esc(r.mode)}</td><td>${scorePill(r.score10)}</td><td>${esc(r.courseId||'')} ${r.lessonId?'/ '+esc(r.lessonId):''}</td></tr>`).join('')}</tbody></table></div>`;
+    return `<div class="table-wrap"><table><thead><tr><th>Thời gian</th><th>Bộ đề</th><th>Số câu</th><th>Loại</th><th>Điểm</th><th>Khóa/Bài</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${fmtDate(r.time)}</td><td>${esc(r.banks)}</td><td>${r.count||''}</td><td>${esc(r.mode)}</td><td>${scorePill(r.score10)}</td><td>${esc(r.courseId||'')} ${r.lessonId?'/ '+esc(r.lessonId):''}</td></tr>`).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:18px">Chưa có dữ liệu.</td></tr>'}</tbody></table></div>`;
   },
   collectAllStatsFilters(){
     const get=id=>document.getElementById(id)?.value||'';
@@ -1068,6 +1217,7 @@ Bạn có muốn lưu kết quả trắc nghiệm này vào hệ thống không?
     }catch(e){this.showLoading(false);alert(e.message)}
   }
 };
+document.addEventListener('click',e=>{ if(!e.target.closest('.userbox-dropdown')) App.closeUserMenu(); });
 App.init();
 </script>
 </body>
