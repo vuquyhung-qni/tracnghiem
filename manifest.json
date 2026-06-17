@@ -1,6 +1,6 @@
 {
-  "name": "HQKV8 Learning + Trắc nghiệm",
-  "short_name": "HQKV8 Learning",
+  "name": "TRẮC NGHIỆM KIẾN THỨC",
+  "short_name": "Trắc nghiệm",
   "description": "Học bài giảng, làm trắc nghiệm và lưu tiến độ/kết quả Chi cục Hải quan khu vực VIII.",
   "start_url": "./?source=pwa",
   "scope": "./",

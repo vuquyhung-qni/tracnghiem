@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="color-scheme" content="light">
-<title>HQKV8 Learning + Trắc nghiệm</title>
+<title>HQKV8 Learning + Trắc nghiệm V201</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#063a63">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,10 +64,49 @@ a{color:inherit}
 .field label{font-weight:800;color:var(--navy);font-size:.82rem;text-transform:uppercase;display:block;margin-bottom:6px}
 .field input,.field select,.field textarea{width:100%;border:1px solid var(--border);border-radius:12px;padding:11px 12px;background:#fff;color:var(--text)}
 .field textarea{min-height:120px;resize:vertical}
-.login-screen{position:fixed;inset:0;background:linear-gradient(180deg,#063a63,#0b67b2);display:flex;align-items:center;justify-content:center;padding:18px;z-index:99}
-.login-card{width:min(440px,100%);background:#fff;border-radius:24px;padding:28px;box-shadow:0 30px 70px rgba(0,0,0,.22)}
+/* ===== LOGIN - đồng bộ mẫu giao diện Lịch công tác HQKV8 ===== */
+.login-screen{
+  position:fixed;inset:0;z-index:99;
+  min-height:100svh;display:grid;place-items:center;padding:20px;
+  background:linear-gradient(145deg,#031d38 0%,#063a63 45%,#0f6fb0 80%,#063a63 100%);
+  overflow:hidden;
+}
+.login-screen::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 70% 30%,rgba(45,120,239,.22) 0%,transparent 70%),
+             radial-gradient(ellipse 40% 60% at 10% 80%,rgba(212,160,23,.12) 0%,transparent 60%);
+  pointer-events:none;
+}
+.login-screen::after{
+  content:'';position:absolute;width:500px;height:500px;border:1px solid rgba(255,255,255,.06);
+  border-radius:50%;top:-100px;right:-100px;pointer-events:none;
+}
+.login-card{
+  width:min(420px,100%);background:rgba(255,255,255,.97);border-radius:22px;
+  box-shadow:0 32px 80px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.15);
+  overflow:hidden;position:relative;z-index:1;animation:fadeUp .45s ease;padding:0;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.login-banner{
+  padding:30px 28px 22px;background:linear-gradient(135deg,#063a63 0%,#0b67b2 100%);
+  text-align:center;position:relative;overflow:hidden;color:#fff;
+}
+.login-banner::after{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.05);top:-60px;right:-40px}
+.login-logo{
+  width:82px;height:82px;margin:0 auto 14px;border-radius:22px;
+  display:grid;place-items:center;font-size:42px;background:rgba(255,255,255,.14);
+  box-shadow:0 4px 14px rgba(0,0,0,.22);position:relative;z-index:1;
+}
+.login-banner .line1{font-size:.82rem;font-weight:600;color:rgba(255,255,255,.85);text-transform:uppercase;letter-spacing:.8px;margin:0 0 3px;position:relative;z-index:1}
+.login-banner .line2{font-size:.82rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.5px;margin:0 0 12px;position:relative;z-index:1;line-height:1.35}
+.login-line-divider{width:66.666%;max-width:240px;min-width:160px;height:2px;margin:0 auto 18px;background:linear-gradient(90deg,transparent 0%,#f0c040 18%,#f0c040 82%,transparent 100%);border-radius:999px;position:relative;z-index:1}
+.login-banner .line3{font-size:1.23rem;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.6px;line-height:1.45;position:relative;z-index:1;margin:0;text-shadow:0 2px 10px rgba(0,0,0,.3)}
+.login-divider{height:3px;background:linear-gradient(90deg,#c89a00 0%,#f0c040 50%,#c89a00 100%)}
+.login-body{padding:24px 28px 30px}
 .login-card h2{margin:0 0 6px;color:var(--navy)}
 .login-card p{margin:0 0 20px;color:var(--muted)}
+.login-card .btn{width:100%;justify-content:center;font-weight:800}
+.login-card .btn.secondary{margin-top:10px;background:#eef4fb;color:var(--navy)}
 .alert{padding:11px 13px;border-radius:12px;margin:12px 0;font-weight:700;font-size:.88rem}
 .alert.err{background:#fdecea;color:var(--red)}
 .alert.ok{background:#e6f7ef;color:var(--green)}
@@ -107,6 +146,11 @@ a{color:inherit}
 table{width:100%;border-collapse:collapse;background:#fff}
 th,td{border-bottom:1px solid var(--border);padding:10px;text-align:left;font-size:.88rem;vertical-align:top}
 th{background:#eef4fd;color:var(--navy);font-size:.76rem;text-transform:uppercase}
+
+.stats-filterbar{display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:10px;align-items:end;margin-bottom:16px}
+.stats-filterbar .field{margin-bottom:0}
+.stats-filterbar .btn{height:44px;justify-content:center}
+@media(max-width:900px){.stats-filterbar{grid-template-columns:1fr}.stats-filterbar .btn{width:100%}}
 .admin-json{font-family:ui-monospace,Consolas,monospace;min-height:330px}
 .loading{position:fixed;inset:0;background:rgba(6,58,99,.35);display:flex;align-items:center;justify-content:center;z-index:200}
 .loading-box{background:#fff;padding:22px 30px;border-radius:18px;box-shadow:var(--shadow);font-weight:800;color:var(--navy)}
@@ -122,19 +166,27 @@ th{background:#eef4fd;color:var(--navy);font-size:.76rem;text-transform:uppercas
 <body>
 <div id="login" class="login-screen">
   <div class="login-card">
-    <h2>HQKV8 Learning</h2>
-    <p>Đăng nhập để học bài giảng, làm trắc nghiệm và lưu tiến độ.</p>
-    <div id="loginAlert" class="alert err hidden"></div>
-    <div class="field"><label>Tài khoản/Mã CBCC</label><input id="loginUser" autocomplete="username"></div>
-    <div class="field"><label>Mật khẩu</label><input id="loginPass" type="password" autocomplete="current-password"></div>
-    <button class="btn" style="width:100%" onclick="App.login()">Đăng nhập</button>
-    <button class="btn secondary" style="width:100%;margin-top:10px" onclick="App.guest()">Dùng thử không lưu kết quả</button>
+    <div class="login-banner">
+      <div class="login-logo">🎓</div>
+      <p class="line1">CỤC HẢI QUAN</p>
+      <p class="line2">CHI CỤC HẢI QUAN KHU VỰC VIII</p>
+      <div class="login-line-divider"></div>
+      <p class="line3">TRẮC NGHIỆM KIẾN THỨC</p>
+    </div>
+    <div class="login-divider"></div>
+    <div class="login-body">
+      <div id="loginAlert" class="alert err hidden"></div>
+      <div class="field"><label>ID-CBCC hoặc USER</label><input id="loginUser" autocomplete="username" placeholder="Nhập ID-CBCC hoặc USER"></div>
+      <div class="field"><label>Mật khẩu</label><input id="loginPass" type="password" autocomplete="current-password"></div>
+      <button class="btn" onclick="App.login()">Đăng nhập</button>
+      <button class="btn secondary" onclick="App.guest()">Dùng thử không lưu kết quả</button>
+    </div>
   </div>
 </div>
 
 <div class="app">
   <aside id="sidebar" class="sidebar">
-    <div class="brand"><div class="logo">🎓</div><div><b>HQKV8 Learning</b><span>Học tập · Trắc nghiệm · Lưu kết quả</span></div></div>
+    <div class="brand"><div class="logo">🎓</div><div><b>Trắc nghiệm kiến thức</b><span>Học tập · Trắc nghiệm · Lưu kết quả</span></div></div>
     <div class="nav">
       <div class="nav-title">Học tập</div>
       <button data-screen="dashboard" onclick="App.goto('dashboard')">🏠 Tổng quan</button>
@@ -144,7 +196,7 @@ th{background:#eef4fd;color:var(--navy);font-size:.76rem;text-transform:uppercas
       <div class="nav-title">Trắc nghiệm</div>
       <button data-screen="quiz-setup" onclick="App.goto('quiz-setup')">▶ Làm bài trắc nghiệm</button>
       <button data-screen="my-stats" onclick="App.goto('my-stats')">📊 Kết quả của tôi</button>
-      <button data-screen="all-stats" class="admin-only" onclick="App.goto('all-stats')">🏆 Kết quả toàn đơn vị</button>
+      <button data-screen="all-stats" class="admin-only" onclick="App.goto('all-stats')">🏆 Kết quả toàn Chi cục</button>
       <div class="nav-title admin-only">Quản trị</div>
       <button data-screen="admin-import" class="admin-only" onclick="App.goto('admin-import')">⬆ Nhập khóa học JSON</button>
     </div>
@@ -194,7 +246,7 @@ const fmtDate=v=>{ if(!v) return '—'; const d=new Date(v); return isNaN(d)?esc
 const S={
   user:null, token:'', courses:[], currentCourse:null, currentLesson:null,
   banks:[], quiz:null, answers:{}, currentQ:0, timer:null, timeLeft:0,
-  coursePracticeId:''
+  coursePracticeId:'', allStatsFilters:{bankId:'',timeRange:'all',unit:''}
 };
 
 const App={
@@ -246,7 +298,7 @@ const App={
     document.getElementById('screen-'+screen).classList.add('active');
     document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.screen===screen));
     document.getElementById('sidebar').classList.remove('show');
-    const map={dashboard:'Tổng quan',courses:'Khóa học',assignments:'Khóa học được giao',practice:'Bài tập thực hành','quiz-setup':'Làm bài trắc nghiệm','my-stats':'Kết quả của tôi','all-stats':'Kết quả toàn đơn vị','admin-import':'Nhập khóa học JSON'};
+    const map={dashboard:'Tổng quan',courses:'Khóa học',assignments:'Khóa học được giao',practice:'Bài tập thực hành','quiz-setup':'Làm bài trắc nghiệm','my-stats':'Kết quả của tôi','all-stats':'Kết quả toàn Chi cục','admin-import':'Nhập khóa học JSON'};
     this.title(map[screen]||'');
     if(screen==='dashboard') this.renderDashboard();
     if(screen==='courses') this.loadCourses();
@@ -523,16 +575,51 @@ const App={
   resultsTable(rows){
     return `<div class="table-wrap"><table><thead><tr><th>Thời gian</th><th>Bộ đề</th><th>Loại</th><th>Điểm</th><th>Khóa/Bài</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${fmtDate(r.time)}</td><td>${esc(r.banks)}</td><td>${esc(r.mode)}</td><td>${scorePill(r.score10)}</td><td>${esc(r.courseId||'')} ${r.lessonId?'/ '+esc(r.lessonId):''}</td></tr>`).join('')}</tbody></table></div>`;
   },
+  collectAllStatsFilters(){
+    const get=id=>document.getElementById(id)?.value||'';
+    return {
+      bankId:get('statBank') || (S.allStatsFilters&&S.allStatsFilters.bankId) || '',
+      timeRange:get('statTime') || (S.allStatsFilters&&S.allStatsFilters.timeRange) || 'all',
+      unit:get('statUnit') || (S.allStatsFilters&&S.allStatsFilters.unit) || ''
+    };
+  },
+
   async loadAllStats(){
     const el=document.getElementById('screen-all-stats');
+    const filters=this.collectAllStatsFilters();
+    S.allStatsFilters=filters;
     el.innerHTML='<div class="card">Đang tải báo cáo...</div>';
     try{
-      const [quiz,course]=await Promise.all([callGAS({action:'getAllStats',token:S.token}),callGAS({action:'getCourseReport',token:S.token})]);
+      const [quiz,course,banksRes]=await Promise.all([
+        callGAS({action:'getAllStats',token:S.token,bankId:filters.bankId,timeRange:filters.timeRange,unit:filters.unit}),
+        callGAS({action:'getCourseReport',token:S.token,unit:filters.unit}),
+        callGAS({action:'getBanks'})
+      ]);
       if(!quiz.ok) throw new Error(quiz.msg);
-      el.innerHTML=`<div class="grid stats"><div class="card stat"><i>👥</i><div><b>${quiz.stats.members||0}</b><span>Người dùng</span></div></div><div class="card stat"><i>🧠</i><div><b>${quiz.stats.exams||0}</b><span>Lượt thi</span></div></div><div class="card stat"><i>📈</i><div><b>${Number(quiz.stats.avg||0).toFixed(2)}</b><span>Điểm TB</span></div></div><div class="card stat"><i>✅</i><div><b>${quiz.stats.passRate||0}%</b><span>Tỷ lệ đạt</span></div></div></div>
-      <div class="card"><h3>Xếp hạng trắc nghiệm</h3><div class="table-wrap"><table><thead><tr><th>Họ tên</th><th>Đơn vị</th><th>Lượt thi</th><th>Điểm cao nhất</th><th>Điểm TB</th></tr></thead><tbody>${(quiz.ranking||[]).map(r=>`<tr><td>${esc(r.fullname||r.username)}</td><td>${esc(r.unit)}</td><td>${r.exams}</td><td>${scorePill(r.best)}</td><td>${scorePill(r.avg)}</td></tr>`).join('')}</tbody></table></div></div>
-      <div class="card"><h3>Tiến độ khóa học</h3><div class="table-wrap"><table><thead><tr><th>Họ tên</th><th>Đơn vị</th><th>Khóa học</th><th>Tiến độ</th></tr></thead><tbody>${(course.rows||[]).map(r=>`<tr><td>${esc(r.fullname)}</td><td>${esc(r.unit)}</td><td>${esc(r.courseTitle)}</td><td>${r.completed}/${r.total} (${r.pct}%)<div class="progress"><div style="width:${r.pct}%"></div></div></td></tr>`).join('')}</tbody></table></div></div>`;
+      const banks=(banksRes&&banksRes.ok)?(banksRes.banks||[]):[];
+      const units=quiz.units||[];
+      const timeOptions=[['all','Toàn bộ'],['week','Tuần này'],['month','Tháng này'],['quarter','Quý này'],['year','Năm này']];
+      const bankOptions=`<option value="">Tất cả bài thi</option>`+banks.map(b=>`<option value="${esc(b.id)}" ${filters.bankId===b.id?'selected':''}>${esc(b.name)} (${esc(b.id)})</option>`).join('');
+      const unitOptions=`<option value="">Tất cả đơn vị</option>`+units.map(u=>`<option value="${esc(u)}" ${filters.unit===u?'selected':''}>${esc(u)}</option>`).join('');
+      const timeSelect=timeOptions.map(x=>`<option value="${x[0]}" ${filters.timeRange===x[0]?'selected':''}>${x[1]}</option>`).join('');
+      el.innerHTML=`<div class="hero"><div><h2>Kết quả toàn Chi cục</h2><p>Lọc kết quả theo bài thi, thời gian thi và đơn vị Phòng/Đội.</p></div></div>
+      <div class="card">
+        <div class="stats-filterbar">
+          <div class="field"><label>Bài thi</label><select id="statBank" onchange="App.loadAllStats()">${bankOptions}</select></div>
+          <div class="field"><label>Thời gian thi</label><select id="statTime" onchange="App.loadAllStats()">${timeSelect}</select></div>
+          <div class="field"><label>Đơn vị</label><select id="statUnit" onchange="App.loadAllStats()">${unitOptions}</select></div>
+          <button class="btn secondary" onclick="App.resetAllStatsFilters()">Xóa lọc</button>
+        </div>
+      </div>
+      <div class="grid stats"><div class="card stat"><i>👥</i><div><b>${quiz.stats.members||0}</b><span>Người dùng</span></div></div><div class="card stat"><i>🧠</i><div><b>${quiz.stats.exams||0}</b><span>Lượt thi</span></div></div><div class="card stat"><i>📈</i><div><b>${Number(quiz.stats.avg||0).toFixed(2)}</b><span>Điểm TB</span></div></div><div class="card stat"><i>✅</i><div><b>${quiz.stats.passRate||0}%</b><span>Tỷ lệ đạt</span></div></div></div>
+      <div class="card"><h3>Xếp hạng trắc nghiệm</h3><div class="table-wrap"><table><thead><tr><th>Họ tên</th><th>Đơn vị</th><th>Lượt thi</th><th>Điểm cao nhất</th><th>Điểm TB</th></tr></thead><tbody>${(quiz.ranking||[]).map(r=>`<tr><td>${esc(r.fullname||r.username)}</td><td>${esc(r.unit)}</td><td>${r.exams}</td><td>${scorePill(r.best)}</td><td>${scorePill(r.avg)}</td></tr>`).join('')||'<tr><td colspan="5">Không có dữ liệu phù hợp bộ lọc.</td></tr>'}</tbody></table></div></div>
+      <div class="card"><h3>Chi tiết lượt thi</h3><div class="table-wrap"><table><thead><tr><th>Thời gian</th><th>Họ tên</th><th>Đơn vị</th><th>Bài thi</th><th>Điểm</th><th>Loại</th></tr></thead><tbody>${(quiz.rows||[]).map(r=>`<tr><td>${fmtDate(r.time)}</td><td>${esc(r.fullname||r.username)}</td><td>${esc(r.unit)}</td><td>${esc(r.banks)}</td><td>${scorePill(r.score10)}</td><td>${esc(r.mode)}</td></tr>`).join('')||'<tr><td colspan="6">Không có lượt thi phù hợp bộ lọc.</td></tr>'}</tbody></table></div></div>
+      <div class="card"><h3>Tiến độ khóa học</h3><div class="table-wrap"><table><thead><tr><th>Họ tên</th><th>Đơn vị</th><th>Khóa học</th><th>Tiến độ</th></tr></thead><tbody>${(course.rows||[]).map(r=>`<tr><td>${esc(r.fullname)}</td><td>${esc(r.unit)}</td><td>${esc(r.courseTitle)}</td><td>${r.completed}/${r.total} (${r.pct}%)<div class="progress"><div style="width:${r.pct}%"></div></div></td></tr>`).join('')||'<tr><td colspan="4">Không có dữ liệu tiến độ phù hợp bộ lọc.</td></tr>'}</tbody></table></div></div>`;
     }catch(e){el.innerHTML=`<div class="alert err">${esc(e.message)}</div>`}
+  },
+  resetAllStatsFilters(){
+    S.allStatsFilters={bankId:'',timeRange:'all',unit:''};
+    this.loadAllStats();
   },
 
   renderAdminImport(){
