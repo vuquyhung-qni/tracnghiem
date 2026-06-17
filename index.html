@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="color-scheme" content="light">
-<title>Trắc nghiệm kiến thức HQKV8 V205</title>
+<title>Trắc nghiệm kiến thức HQKV8 V206</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#063a63">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,20 +20,24 @@ button,input,select,textarea{font:inherit}
 a{color:inherit}
 .hidden{display:none!important}
 .app{display:flex;min-height:100vh}
-.sidebar{width:270px;background:linear-gradient(180deg,#063a63,#0b4f86);color:#fff;padding:18px 14px;position:sticky;top:0;height:100vh;overflow:auto}
-.brand{display:flex;gap:12px;align-items:center;padding:12px 10px 18px;border-bottom:1px solid rgba(255,255,255,.18);margin-bottom:14px}
-.logo{width:44px;height:44px;border-radius:13px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden}
+.sidebar{width:278px;background:linear-gradient(180deg,#063a63 0%,#0b4f86 64%,#063a63 100%);color:#fff;padding:16px 14px;position:sticky;top:0;height:100vh;overflow:auto}
+.brand{display:flex;gap:12px;align-items:center;padding:10px 8px 16px;border-bottom:1px solid rgba(255,255,255,.16);margin-bottom:10px}
+.logo{width:46px;height:46px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.18)}
 .logo img{width:100%;height:100%;object-fit:contain;border-radius:50%;background:#fff;padding:2px}.topbar-brand{display:flex;align-items:center;gap:10px;min-width:0}.topbar-logo{width:32px;height:32px;object-fit:contain;border-radius:50%;flex-shrink:0}.topbar-tools{display:flex;align-items:center;gap:8px}
-.brand b{font-size:1rem;line-height:1.25}
-.brand span{display:block;font-size:.72rem;color:rgba(255,255,255,.72);margin-top:2px}
-.nav-title{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.55);padding:12px 10px 6px}
-.nav button{width:100%;border:0;background:transparent;color:rgba(255,255,255,.78);text-align:left;padding:11px 12px;border-radius:12px;cursor:pointer;font-weight:700;margin:2px 0}
-.nav button:hover,.nav button.active{background:rgba(255,255,255,.14);color:#fff}
-.nav button.active{box-shadow:inset 3px 0 0 var(--gold)}
-.userbox{margin-top:18px;padding:12px;border-radius:16px;background:rgba(255,255,255,.1);font-size:.82rem}
-.userbox b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.userbox small{display:block;color:rgba(255,255,255,.72);margin-top:4px}
-.userbox button{margin-top:10px;width:100%;border:0;border-radius:10px;padding:9px;background:#fff;color:var(--navy);font-weight:800;cursor:pointer}
+.brand b{font-size:1.02rem;line-height:1.22;font-weight:800;letter-spacing:-.01em}
+.brand span{display:block;font-size:.72rem;color:rgba(255,255,255,.72);margin-top:3px;font-weight:500}
+.nav{padding:2px 0 8px}
+.nav-title{display:flex;align-items:center;gap:8px;margin:16px 8px 8px;padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.075);font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;color:#f6d26a;font-weight:900}
+.nav-title::before{content:'';width:6px;height:6px;border-radius:50%;background:#f0c040;box-shadow:0 0 10px rgba(240,192,64,.8);flex:0 0 6px}
+.nav button{width:100%;border:0;background:transparent;color:rgba(255,255,255,.78);text-align:left;padding:9px 12px;border-radius:12px;cursor:pointer;font-weight:500;margin:2px 0;display:flex;align-items:center;gap:10px;line-height:1.32;font-size:.92rem;transition:background .18s,color .18s,transform .18s}
+.nav button .nav-icon{width:23px;min-width:23px;text-align:center;opacity:.92;font-size:1.03rem;line-height:1}
+.nav button .nav-label{flex:1;min-width:0}
+.nav button:hover{background:rgba(255,255,255,.10);color:#fff;transform:translateX(1px)}
+.nav button.active{background:rgba(255,255,255,.15);color:#fff;box-shadow:inset 3px 0 0 var(--gold);font-weight:600}
+.userbox{margin-top:16px;padding:12px;border-radius:18px;background:rgba(255,255,255,.105);font-size:.82rem;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.userbox b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:800}
+.userbox small{display:block;color:rgba(255,255,255,.72);margin-top:4px;line-height:1.35}
+.userbox button{margin-top:9px;width:100%;border:0;border-radius:11px;padding:8.5px;background:#fff;color:var(--navy);font-weight:700;cursor:pointer}
 .main{flex:1;min-width:0}
 .topbar{height:64px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:20}
 .topbar h1{font-size:1.05rem;margin:0;color:var(--navy);text-transform:uppercase;letter-spacing:.02em}
@@ -331,22 +335,22 @@ th{background:#eef4fd;color:var(--navy);font-size:.76rem;text-transform:uppercas
     <div class="brand"><div class="logo"><img src="logo-hq.png" alt="Logo Hải quan"></div><div><b>Trắc nghiệm kiến thức</b><span>Chi cục Hải quan khu vực VIII</span></div></div>
     <div class="nav">
       <div class="nav-title">Học tập</div>
-      <button data-screen="dashboard" onclick="App.goto('dashboard')">🏠 Tổng quan</button>
-      <button data-screen="courses" onclick="App.goto('courses')">📚 Khóa học</button>
-      <button data-screen="ai-daily" onclick="App.goto('ai-daily')">☀️ Phổ cập AI</button>
-      <button data-screen="assignments" onclick="App.goto('assignments')">📌 Khóa học được giao</button>
-      <button data-screen="course-progress" class="leader-only" onclick="App.goto('course-progress')">📈 Tiến độ khóa học</button>
-      <button data-screen="practice" onclick="App.goto('practice')">📝 Bài tập thực hành</button>
+      <button data-screen="dashboard" onclick="App.goto('dashboard')"><span class="nav-icon">🏠</span><span class="nav-label">Tổng quan</span></button>
+      <button data-screen="ai-daily" onclick="App.goto('ai-daily')"><span class="nav-icon">☀️</span><span class="nav-label">Phổ cập AI</span></button>
+      <button data-screen="courses" onclick="App.goto('courses')"><span class="nav-icon">📚</span><span class="nav-label">Khóa học</span></button>
+      <button data-screen="assignments" onclick="App.goto('assignments')"><span class="nav-icon">📌</span><span class="nav-label">Nhiệm vụ học tập</span></button>
+      <button data-screen="practice" onclick="App.goto('practice')"><span class="nav-icon">📝</span><span class="nav-label">Bài tập thực hành</span></button>
       <div class="nav-title">Trắc nghiệm</div>
-      <button data-screen="quiz-setup" onclick="App.goto('quiz-setup')">▶ Làm bài trắc nghiệm</button>
-      <button data-screen="my-stats" onclick="App.goto('my-stats')">📊 Kết quả của tôi</button>
-      <button data-screen="unit-stats" class="leader-only" onclick="App.goto('unit-stats')">👥 Kết quả đơn vị</button>
-      <button data-screen="all-stats" class="admin-only" onclick="App.goto('all-stats')">🏆 Kết quả toàn Chi cục</button>
+      <button data-screen="quiz-setup" onclick="App.goto('quiz-setup')"><span class="nav-icon">▶️</span><span class="nav-label">Làm bài trắc nghiệm</span></button>
+      <button data-screen="my-stats" onclick="App.goto('my-stats')"><span class="nav-icon">📊</span><span class="nav-label">Kết quả của tôi</span></button>
+      <button data-screen="unit-stats" class="leader-only" onclick="App.goto('unit-stats')"><span class="nav-icon">👥</span><span class="nav-label">Kết quả đơn vị</span></button>
+      <button data-screen="all-stats" class="hq-all-only" onclick="App.goto('all-stats')"><span class="nav-icon">🏆</span><span class="nav-label">Kết quả toàn Chi cục</span></button>
       <div class="nav-title admin-only">Quản trị</div>
-      <button data-screen="assign-courses" class="admin-only" onclick="App.goto('assign-courses')">📄 Giao khóa học</button>
-      <button data-screen="manage-courses" class="admin-only" onclick="App.goto('manage-courses')">✏️ Quản lý khóa học</button>
-      <button data-screen="admin-import" class="admin-only" onclick="App.goto('admin-import')">⬆ Nhập khóa học JSON</button>
-      <button data-screen="admin-settings" class="admin-only" onclick="App.goto('admin-settings')">⚙️ Cài đặt hệ thống</button>
+      <button data-screen="assign-courses" class="admin-only" onclick="App.goto('assign-courses')"><span class="nav-icon">📤</span><span class="nav-label">Giao khóa học</span></button>
+      <button data-screen="course-progress" class="leader-only" onclick="App.goto('course-progress')"><span class="nav-icon">📈</span><span class="nav-label">Tiến độ học tập</span></button>
+      <button data-screen="manage-courses" class="admin-only" onclick="App.goto('manage-courses')"><span class="nav-icon">✏️</span><span class="nav-label">Quản lý khóa học</span></button>
+      <button data-screen="admin-import" class="admin-only" onclick="App.goto('admin-import')"><span class="nav-icon">⬆️</span><span class="nav-label">Nhập khóa học JSON</span></button>
+      <button data-screen="admin-settings" class="admin-only" onclick="App.goto('admin-settings')"><span class="nav-icon">⚙️</span><span class="nav-label">Cài đặt hệ thống</span></button>
     </div>
     <div class="userbox">
       <b id="sideUser">—</b><small id="sideUnit">—</small>
@@ -455,9 +459,14 @@ const App={
   },
   toggleMenu(){document.getElementById('sidebar').classList.toggle('show')},
   setAdminVisible(){
-    const role=(S.user&&S.user.role)||'';
-    document.querySelectorAll('.admin-only').forEach(el=>el.style.display=(role==='admin')?'block':'none');
-    document.querySelectorAll('.leader-only').forEach(el=>el.style.display=(role==='admin'||role==='lanh_dao_chi_cuc'||role==='lanh_dao_doi')?'block':'none');
+    const rawRole=(S.user&&S.user.role)||'';
+    const role=String(rawRole).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[\s._-]+/g,'');
+    const isAdmin=role.includes('admin')||role.includes('superadmin')||role.includes('quantri')||role.includes('quanly');
+    const isChiCucLeader=isAdmin||role.includes('lanhdaochicuc')||role.includes('lanhdaocuc')||role.includes('cuctruong')||role.includes('phocuctruong');
+    const isLeader=isChiCucLeader||role.includes('lanhdao')||role.includes('truongphong')||role.includes('phophong')||role.includes('doitruong')||role.includes('phodoitruong');
+    document.querySelectorAll('.admin-only').forEach(el=>el.style.display=isAdmin?'flex':'none');
+    document.querySelectorAll('.leader-only').forEach(el=>el.style.display=isLeader?'flex':'none');
+    document.querySelectorAll('.hq-all-only').forEach(el=>el.style.display=isChiCucLeader?'flex':'none');
   },
   title(t){document.getElementById('pageTitle').textContent=t},
   goto(screen){
@@ -465,7 +474,7 @@ const App={
     document.getElementById('screen-'+screen).classList.add('active');
     document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.screen===screen));
     document.getElementById('sidebar').classList.remove('show');
-    const map={dashboard:'Tổng quan',courses:'Khóa học','ai-daily':'Phổ cập AI',assignments:'Khóa học được giao','course-progress':'Tiến độ khóa học',practice:'Bài tập thực hành','quiz-setup':'Làm bài trắc nghiệm','my-stats':'Kết quả của tôi','unit-stats':'Kết quả đơn vị','all-stats':'Kết quả toàn Chi cục','assign-courses':'Giao khóa học','manage-courses':'Quản lý khóa học','admin-import':'Nhập khóa học JSON','admin-settings':'Cài đặt hệ thống'};
+    const map={dashboard:'Tổng quan',courses:'Khóa học','ai-daily':'Phổ cập AI',assignments:'Nhiệm vụ học tập','course-progress':'Tiến độ học tập',practice:'Bài tập thực hành','quiz-setup':'Làm bài trắc nghiệm','my-stats':'Kết quả của tôi','unit-stats':'Kết quả đơn vị','all-stats':'Kết quả toàn Chi cục','assign-courses':'Giao khóa học','manage-courses':'Quản lý khóa học','admin-import':'Nhập khóa học JSON','admin-settings':'Cài đặt hệ thống'};
     this.title(map[screen]||'');
     if(screen==='dashboard') this.renderDashboard();
     if(screen==='courses') this.loadCourses();
@@ -634,7 +643,7 @@ const App={
       const res=await callGAS({action:'getMyAssignments',token:S.token});
       if(!res.ok) throw new Error(res.msg);
       const rows=res.assignments||[];
-      el.innerHTML=`<div class="card"><h3>Khóa học được giao</h3><div class="table-wrap"><table><thead><tr><th>Khóa học</th><th>Hạn</th><th>Tiến độ</th><th>Trạng thái</th><th></th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.courseTitle)}<br><small>${esc(r.note||'')}</small></td><td>${esc(r.due||'—')}</td><td><div class="progress"><div style="width:${r.pct}%"></div></div>${r.completed}/${r.total} bài (${r.pct}%)</td><td>${esc(r.status)}</td><td><button class="btn secondary" onclick="App.openCourse('${esc(r.courseId)}')">Vào học</button></td></tr>`).join('')}</tbody></table></div></div>`;
+      el.innerHTML=`<div class="card"><h3>Nhiệm vụ học tập được giao</h3><p style="color:var(--muted);margin-top:-4px;margin-bottom:12px">Các khóa học bắt buộc được giao theo đơn vị/cá nhân, có hạn hoàn thành và theo dõi tiến độ.</p><div class="table-wrap"><table><thead><tr><th>Khóa học</th><th>Hạn</th><th>Tiến độ</th><th>Trạng thái</th><th></th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.courseTitle)}<br><small>${esc(r.note||'')}</small></td><td>${esc(r.due||'—')}</td><td><div class="progress"><div style="width:${r.pct}%"></div></div>${r.completed}/${r.total} bài (${r.pct}%)</td><td>${esc(r.status)}</td><td><button class="btn secondary" onclick="App.openCourse('${esc(r.courseId)}')">Vào học</button></td></tr>`).join('')}</tbody></table></div></div>`;
     }catch(e){el.innerHTML=`<div class="alert err">${esc(e.message)}</div>`}
   },
 
