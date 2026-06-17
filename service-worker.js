@@ -1,5 +1,5 @@
-// Service Worker PWA v101 - Trắc nghiệm HQKV8
-const CACHE_VERSION = 'hqkv8-tracnghiem-pwa-v139-results-fix';
+// Service Worker PWA v200 - HQKV8 Learning + Trắc nghiệm
+const CACHE_VERSION = 'hqkv8-learning-v200';
 const APP_SHELL = [
   './',
   './index.html',
@@ -10,15 +10,13 @@ const APP_SHELL = [
 
 self.addEventListener('install', event => {
   self.skipWaiting();
-  event.waitUntil(
-    caches.open(CACHE_VERSION).then(cache => cache.addAll(APP_SHELL).catch(() => null))
-  );
+  event.waitUntil(caches.open(CACHE_VERSION).then(cache => cache.addAll(APP_SHELL).catch(() => null)));
 });
 
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys => Promise.all(
-      keys.filter(key => key !== CACHE_VERSION && /hqkv8|tracnghiem|pwa/i.test(key)).map(key => caches.delete(key))
+      keys.filter(key => key !== CACHE_VERSION && /hqkv8|tracnghiem|learning|pwa/i.test(key)).map(key => caches.delete(key))
     )).then(() => self.clients.claim())
   );
 });
@@ -28,7 +26,7 @@ self.addEventListener('fetch', event => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
 
-  // Không cache dữ liệu/API ngoài domain để tránh cũ dữ liệu trắc nghiệm.
+  // Không cache dữ liệu/API ngoài domain để tránh cũ dữ liệu học tập/trắc nghiệm.
   if (url.origin !== self.location.origin) return;
 
   if (req.mode === 'navigate' || (req.headers.get('accept') || '').includes('text/html')) {
