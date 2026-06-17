@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="color-scheme" content="light">
-<title>HQKV8 Learning + Trắc nghiệm V201</title>
+<title>Trắc nghiệm kiến thức HQKV8 V205</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#063a63">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,7 +22,8 @@ a{color:inherit}
 .app{display:flex;min-height:100vh}
 .sidebar{width:270px;background:linear-gradient(180deg,#063a63,#0b4f86);color:#fff;padding:18px 14px;position:sticky;top:0;height:100vh;overflow:auto}
 .brand{display:flex;gap:12px;align-items:center;padding:12px 10px 18px;border-bottom:1px solid rgba(255,255,255,.18);margin-bottom:14px}
-.logo{width:44px;height:44px;border-radius:13px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-size:24px}
+.logo{width:44px;height:44px;border-radius:13px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden}
+.logo img{width:100%;height:100%;object-fit:contain;border-radius:50%;background:#fff;padding:2px}.topbar-brand{display:flex;align-items:center;gap:10px;min-width:0}.topbar-logo{width:32px;height:32px;object-fit:contain;border-radius:50%;flex-shrink:0}.topbar-tools{display:flex;align-items:center;gap:8px}
 .brand b{font-size:1rem;line-height:1.25}
 .brand span{display:block;font-size:.72rem;color:rgba(255,255,255,.72);margin-top:2px}
 .nav-title{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.55);padding:12px 10px 6px}
@@ -93,9 +94,9 @@ a{color:inherit}
 }
 .login-banner::after{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.05);top:-60px;right:-40px}
 .login-logo{
-  width:82px;height:82px;margin:0 auto 14px;border-radius:22px;
-  display:grid;place-items:center;font-size:42px;background:rgba(255,255,255,.14);
-  box-shadow:0 4px 14px rgba(0,0,0,.22);position:relative;z-index:1;
+  width:88px;height:88px;margin:0 auto 14px;border-radius:50%;
+  display:block;object-fit:contain;background:#fff;padding:4px;
+  box-shadow:0 4px 14px rgba(0,0,0,.28);position:relative;z-index:1;
 }
 .login-banner .line1{font-size:.82rem;font-weight:600;color:rgba(255,255,255,.85);text-transform:uppercase;letter-spacing:.8px;margin:0 0 3px;position:relative;z-index:1}
 .login-banner .line2{font-size:.82rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.5px;margin:0 0 12px;position:relative;z-index:1;line-height:1.35}
@@ -161,13 +162,154 @@ th{background:#eef4fd;color:var(--navy);font-size:.76rem;text-transform:uppercas
   .embed{height:62vh}.qgrid{grid-template-columns:repeat(10,1fr)}
 }
 @media(max-width:520px){.grid.stats{grid-template-columns:1fr}.grid.cards{grid-template-columns:1fr}}
+
+
+/* ===== V204: KHÔI PHỤC GIAO DIỆN CHỌN ĐỀ / LÀM BÀI GIỐNG BẢN TRẮC NGHIỆM CŨ ===== */
+.exam-setup-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.3fr) minmax(320px,.7fr);
+  gap:20px;
+  align-items:start;
+}
+.form-label{
+  font-size:.85rem;
+  font-weight:800;
+  color:#0f1f3d;
+  margin-bottom:8px;
+  text-transform:uppercase;
+}
+.bank-select{
+  width:100%;
+  padding:14px 16px;
+  border:1.5px solid #e2e8f4;
+  border-radius:9px;
+  font-size:.95rem;
+  font-weight:700;
+  color:#0f1f3d;
+  background:#f7f9fc;
+  outline:none;
+  cursor:pointer;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234a5c7a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 16px center;
+  padding-right:40px;
+  transition:border-color .2s,box-shadow .2s,background .2s;
+}
+.bank-select:focus{border-color:#3b72d4;background-color:#fff;box-shadow:0 0 0 3px #d6e6fb;}
+.bank-select:disabled{opacity:.6;cursor:not-allowed;}
+.count-chips{display:flex;gap:8px;flex-wrap:wrap;}
+.chip{
+  padding:8px 18px;
+  border-radius:50px;
+  border:1.5px solid #e2e8f4;
+  background:#f7f9fc;
+  font-size:.85rem;
+  font-weight:800;
+  cursor:pointer;
+  color:#4a5c7a;
+  transition:all .15s;
+}
+.chip:hover{border-color:#3b72d4;color:#2558a8;}
+.chip.active{background:#2558a8;border-color:#2558a8;color:#fff;}
+.btn-start{
+  width:100%;
+  margin-top:18px;
+  padding:16px;
+  background:linear-gradient(135deg,#d4a843 0%,#f4cf72 55%,#ffe08a 100%);
+  color:#0a1628;
+  border:none;
+  border-radius:16px;
+  font-size:1.02rem;
+  font-weight:900;
+  letter-spacing:.3px;
+  box-shadow:0 14px 28px rgba(212,168,67,.28);
+  cursor:pointer;
+  transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
+}
+.btn-start:hover{transform:translateY(-2px);box-shadow:0 18px 36px rgba(212,168,67,.36);filter:brightness(1.03);}
+.exam-guide{
+  background:linear-gradient(135deg,#fff8e1,#ffffff);
+  border:1px solid #f0d58a;
+  border-radius:18px;
+  padding:20px 22px;
+  color:#3d2b06;
+  box-shadow:0 10px 28px rgba(212,168,67,.12);
+}
+.exam-guide-title{font-weight:900;margin-bottom:10px;color:#0f1f3d;}
+.exam-guide ul{padding-left:18px;line-height:1.7;font-size:.9rem;}
+.alert-hidden{display:none!important;}
+.alert-error{background:#fdecea!important;color:#c0392b!important;}
+.alert-info{background:#eef4fd!important;color:#163566!important;}
+.alert-success{background:#e6f7ef!important;color:#0f7c4a!important;}
+
+.quiz-container{display:flex;gap:24px;max-width:1400px;width:100%;margin:0 auto;align-items:flex-start;}
+.quiz-left-panel{width:320px;flex-shrink:0;display:flex;flex-direction:column;position:sticky;top:82px;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(10,22,40,.18);}
+.quiz-panel-header{background:linear-gradient(160deg,#0d1f3a 0%,#163566 60%,#1e4a8a 100%);padding:28px 24px 20px;text-align:center;border-bottom:none;}
+#quizHeaderLines{display:block;margin-bottom:10px;}
+#line1{font-size:.7rem;font-weight:800;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px;}
+#line2{font-size:.85rem;font-weight:900;color:#fff;line-height:1.3;margin-bottom:6px;text-transform:uppercase;}
+#line3{display:block;font-size:.78rem;font-weight:900;color:#f0c96a;text-transform:uppercase;letter-spacing:.5px;line-height:1.35;margin-top:6px;padding:0;background:none;border:none;text-align:center;}
+.timer-clock{font-size:3rem;font-weight:900;font-variant-numeric:tabular-nums;color:#fff;line-height:1.1;letter-spacing:-1px;}
+.timer-clock.warning{color:#fbbf24;}
+.timer-clock.danger{color:#f87171;animation:pulse .6s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.42}}
+.quiz-panel-body{padding:18px 20px 14px;background:#fff;}
+.q-grid-box{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;max-height:calc(100vh - 310px);overflow-y:auto;padding-right:4px;}
+.q-dot{width:100%;aspect-ratio:1;border-radius:6px;border:1.5px solid #dde4f0;background:#f8fafd;font-size:.72rem;font-weight:800;color:#4a5c7a;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;}
+.q-dot:hover{border-color:#3b72d4;background:#eef4fd;color:#2558a8;}
+.q-dot.answered{background:#ddeeff;border-color:#2558a8;color:#163566;}
+.q-dot.active{background:#fef0cc;border-color:#d4a843;color:#7a5a00;box-shadow:0 0 0 2.5px #f0c96a;}
+.quiz-panel-footer{padding:14px 20px 20px;text-align:center;background:#f0f5ff;border-top:1px solid #dde8fb;}
+.quiz-right-panel{flex:1;min-width:0;min-height:500px;display:flex;flex-direction:column;justify-content:space-between;background:#fff;border:1px solid #e2e8f4;border-radius:16px;box-shadow:0 2px 16px rgba(10,22,40,.08);padding:32px;}
+.qblock{display:none;border:none;box-shadow:none;padding:0;margin:0;}
+.qblock.active{display:block;animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.qnum{font-size:.85rem;font-weight:800;color:#4a5c7a;text-transform:uppercase;letter-spacing:.4px;margin-bottom:12px;}
+.qtext{font-size:1.1rem;font-weight:800;color:#0f1f3d;line-height:1.65;margin-bottom:24px;}
+.opt{display:flex;align-items:flex-start;gap:12px;padding:14px 18px;border-radius:8px;border:1.5px solid #e2e8f4;margin-bottom:12px;cursor:pointer;transition:all .15s;font-size:1rem;font-weight:600;user-select:none;color:#0f1f3d;}
+.opt:hover{border-color:#3b72d4;background:#eef4fd;}
+.opt.selected{border-color:#2558a8;background:#eef4fd;}
+.opt input[type=checkbox]{width:20px;height:20px;margin-top:2px;flex-shrink:0;accent-color:#2558a8;}
+.quiz-actions{display:flex;justify-content:space-between;margin-top:40px;padding-top:24px;border-top:1px solid #e2e8f4;}
+.btn-nav{padding:12px 28px;background:#fff;border:1.5px solid #c8d5ed;border-radius:8px;font-weight:800;color:#4a5c7a;cursor:pointer;transition:all .2s;}
+.btn-nav:hover:not(:disabled){background:#f7f9fc;border-color:#0f1f3d;color:#0f1f3d;}
+.btn-nav:disabled{opacity:.4;cursor:not-allowed;}
+.btn-submit{width:100%;padding:14px;background:linear-gradient(135deg,#c85608,#e87820);color:#fff;border:none;border-radius:9px;font-size:1rem;font-weight:900;letter-spacing:.3px;box-shadow:0 4px 18px rgba(200,86,8,.4);cursor:pointer;transition:all .2s;}
+.btn-submit:hover{opacity:.92;box-shadow:0 6px 22px rgba(200,86,8,.5);}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed;}
+
+.result-container{max-width:960px;margin:0 auto;}
+.result-hero{background:linear-gradient(135deg,#0a1628 0%,#163566 100%);border-radius:16px;padding:32px 28px;margin-bottom:22px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;}
+.result-score-big{font-size:3.5rem;font-weight:900;color:#f0c96a;line-height:1;}
+.result-score-label{font-size:.78rem;color:rgba(255,255,255,.55);margin-bottom:4px;}
+.result-score10{font-size:1.1rem;font-weight:600;color:rgba(255,255,255,.74);margin-top:6px;}
+.result-meta{font-size:.78rem;color:rgba(255,255,255,.55);margin-top:6px;}
+.result-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;}
+.result-stat{background:#fff;border:1px solid #e2e8f4;border-radius:9px;padding:14px;text-align:center;}
+.result-stat-val{font-size:1.3rem;font-weight:900;line-height:1;margin-bottom:3px;}
+.result-stat-lbl{font-size:.7rem;color:#8496b0;}
+.val-green{color:#0f7c4a!important}.val-red{color:#c0392b!important}.val-blue{color:#2558a8!important}.val-orange{color:#d4600a!important}
+.late-banner{background:#c0392b;color:#fff;padding:12px 18px;border-radius:8px;font-size:.83rem;font-weight:800;margin-bottom:16px;display:none;}
+.rq{background:#fff;border:1px solid #e2e8f4;border-radius:12px;padding:18px 20px;margin-bottom:10px;border-left:4px solid #e2e8f4;}
+.rq.full{border-left-color:#0f7c4a}.rq.partial{border-left-color:#d4600a}.rq.wrong{border-left-color:#c0392b}
+.rq-hd{display:flex;align-items:center;gap:8px;margin-bottom:9px}.rq-num{font-size:.72rem;font-weight:800;color:#8496b0}.rq-score{margin-left:auto;font-size:.75rem;font-weight:900;padding:2px 9px;border-radius:50px}
+.s-full{background:#e6f7ef;color:#0f7c4a}.s-partial{background:#fff3e0;color:#d4600a}.s-zero{background:#fdecea;color:#c0392b}
+.rq-text{font-size:.88rem;font-weight:800;color:#0f1f3d;margin-bottom:10px;line-height:1.5}.ropt{display:flex;align-items:flex-start;gap:7px;padding:6px 10px;border-radius:7px;font-size:.83rem;margin-bottom:4px;border:1px solid #e2e8f4}.ropt.ok{border-color:#0f7c4a;background:#e6f7ef;color:#0f7c4a}.ropt.bad{border-color:#c0392b;background:#fdecea;color:#c0392b}.ropt.missed{border-color:#d4600a;background:#fff3e0;color:#d4600a}.rexplain{margin-top:9px;padding:9px 12px;background:#eef4fd;border-radius:7px;font-size:.79rem;color:#163566;font-style:italic}
+.dashboard-quiz-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;}
+
+.stat-filterbar{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:10px;align-items:end}.wide-card{max-width:1100px}.action-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.muted{color:var(--muted)}.form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.form-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}.article-card{border-left:4px solid var(--blue);}.article-card .article-date{font-size:.78rem;color:var(--muted);font-weight:700}.logo-watermark{position:absolute;right:-22px;bottom:-34px;width:155px;opacity:.07;pointer-events:none}.mini-logo{width:22px;height:22px;border-radius:50%;object-fit:contain;vertical-align:middle;background:#fff;padding:1px}.settings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}.btn.icon{padding:9px 11px}.dash-logo-card{position:relative;overflow:hidden}.dash-logo-card .stat{position:relative;z-index:1}@media(max-width:900px){.stat-filterbar,.form-grid-2,.form-grid-3{grid-template-columns:1fr}.topbar-tools .btn.secondary{display:none}}
+
+@media(max-width:900px){.exam-setup-grid{grid-template-columns:1fr}.quiz-container{flex-direction:column-reverse;padding:0}.quiz-left-panel{width:100%;position:static;max-height:none;border-radius:18px}.quiz-right-panel{width:100%;min-height:auto;padding:20px 16px;border-radius:18px}.q-grid-box{grid-template-columns:repeat(10,1fr);gap:5px;max-height:180px}.q-dot{font-size:.68rem;border-radius:5px}.result-hero{grid-template-columns:1fr;text-align:center}.result-stats-row,.dashboard-quiz-summary{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.result-stats-row,.dashboard-quiz-summary{grid-template-columns:1fr}.count-chips .chip{flex:1 1 calc(50% - 8px);text-align:center}}
+
 </style>
 </head>
 <body>
 <div id="login" class="login-screen">
   <div class="login-card">
     <div class="login-banner">
-      <div class="login-logo">🎓</div>
+      <img class="login-logo" src="logo-hq.png" alt="Logo Hải quan">
       <p class="line1">CỤC HẢI QUAN</p>
       <p class="line2">CHI CỤC HẢI QUAN KHU VỰC VIII</p>
       <div class="login-line-divider"></div>
@@ -186,30 +328,36 @@ th{background:#eef4fd;color:var(--navy);font-size:.76rem;text-transform:uppercas
 
 <div class="app">
   <aside id="sidebar" class="sidebar">
-    <div class="brand"><div class="logo">🎓</div><div><b>Trắc nghiệm kiến thức</b><span>Học tập · Trắc nghiệm · Lưu kết quả</span></div></div>
+    <div class="brand"><div class="logo"><img src="logo-hq.png" alt="Logo Hải quan"></div><div><b>Trắc nghiệm kiến thức</b><span>Chi cục Hải quan khu vực VIII</span></div></div>
     <div class="nav">
       <div class="nav-title">Học tập</div>
       <button data-screen="dashboard" onclick="App.goto('dashboard')">🏠 Tổng quan</button>
       <button data-screen="courses" onclick="App.goto('courses')">📚 Khóa học</button>
+      <button data-screen="ai-daily" onclick="App.goto('ai-daily')">☀️ Phổ cập AI</button>
       <button data-screen="assignments" onclick="App.goto('assignments')">📌 Khóa học được giao</button>
+      <button data-screen="course-progress" class="leader-only" onclick="App.goto('course-progress')">📈 Tiến độ khóa học</button>
       <button data-screen="practice" onclick="App.goto('practice')">📝 Bài tập thực hành</button>
       <div class="nav-title">Trắc nghiệm</div>
       <button data-screen="quiz-setup" onclick="App.goto('quiz-setup')">▶ Làm bài trắc nghiệm</button>
       <button data-screen="my-stats" onclick="App.goto('my-stats')">📊 Kết quả của tôi</button>
+      <button data-screen="unit-stats" class="leader-only" onclick="App.goto('unit-stats')">👥 Kết quả đơn vị</button>
       <button data-screen="all-stats" class="admin-only" onclick="App.goto('all-stats')">🏆 Kết quả toàn Chi cục</button>
       <div class="nav-title admin-only">Quản trị</div>
+      <button data-screen="assign-courses" class="admin-only" onclick="App.goto('assign-courses')">📄 Giao khóa học</button>
+      <button data-screen="manage-courses" class="admin-only" onclick="App.goto('manage-courses')">✏️ Quản lý khóa học</button>
       <button data-screen="admin-import" class="admin-only" onclick="App.goto('admin-import')">⬆ Nhập khóa học JSON</button>
+      <button data-screen="admin-settings" class="admin-only" onclick="App.goto('admin-settings')">⚙️ Cài đặt hệ thống</button>
     </div>
     <div class="userbox">
       <b id="sideUser">—</b><small id="sideUnit">—</small>
-      <button onclick="App.logout()">Đăng xuất</button>
+      <button onclick="App.openPasswordModal()">Đổi mật khẩu</button><button onclick="App.logout()">Đăng xuất</button>
     </div>
   </aside>
   <main class="main">
     <div class="topbar">
       <button class="mobile-menu" onclick="App.toggleMenu()">☰</button>
-      <h1 id="pageTitle">Tổng quan</h1>
-      <button class="btn secondary" onclick="App.reload()">Làm mới</button>
+      <div class="topbar-brand"><img class="topbar-logo" src="logo-hq.png" alt="Logo Hải quan"><h1 id="pageTitle">Tổng quan</h1></div>
+      <div class="topbar-tools"><button class="btn secondary" onclick="App.openPasswordModal()">Đổi mật khẩu</button><button class="btn secondary" onclick="App.reload()">Làm mới</button></div>
     </div>
     <div class="content">
       <section id="screen-dashboard" class="screen active"></section>
@@ -222,11 +370,29 @@ th{background:#eef4fd;color:var(--navy);font-size:.76rem;text-transform:uppercas
       <section id="screen-result" class="screen"></section>
       <section id="screen-my-stats" class="screen"></section>
       <section id="screen-all-stats" class="screen"></section>
+      <section id="screen-unit-stats" class="screen"></section>
+      <section id="screen-ai-daily" class="screen"></section>
+      <section id="screen-course-progress" class="screen"></section>
+      <section id="screen-assign-courses" class="screen"></section>
+      <section id="screen-manage-courses" class="screen"></section>
+      <section id="screen-admin-settings" class="screen"></section>
       <section id="screen-admin-import" class="screen"></section>
     </div>
   </main>
 </div>
 <div id="loading" class="loading hidden"><div class="loading-box">Đang xử lý...</div></div>
+
+<div id="passwordModal" class="loading hidden" style="background:rgba(6,58,99,.55);z-index:250">
+  <div class="card" style="width:min(440px,96vw);margin:0">
+    <h3>Đổi mật khẩu</h3>
+    <div id="pwMsg" class="alert hidden"></div>
+    <div class="field"><label>Mật khẩu cũ</label><input id="pwOld" type="password"></div>
+    <div class="field"><label>Mật khẩu mới</label><input id="pwNew" type="password"></div>
+    <div class="field"><label>Nhập lại mật khẩu mới</label><input id="pwNew2" type="password"></div>
+    <div class="action-row"><button class="btn" onclick="App.savePassword()">Lưu mật khẩu</button><button class="btn secondary" onclick="App.closePasswordModal()">Đóng</button></div>
+  </div>
+</div>
+
 
 <script>
 /* Dán URL Web App Apps Script của anh vào đây */
@@ -245,8 +411,8 @@ const fmtDate=v=>{ if(!v) return '—'; const d=new Date(v); return isNaN(d)?esc
 
 const S={
   user:null, token:'', courses:[], currentCourse:null, currentLesson:null,
-  banks:[], quiz:null, answers:{}, currentQ:0, timer:null, timeLeft:0,
-  coursePracticeId:'', allStatsFilters:{bankId:'',timeRange:'all',unit:''}
+  banks:[], allBanks:[], quiz:null, quizData:null, answers:{}, currentQ:0, timer:null, timeLeft:0, examCount:30, autoNextTimer:null,
+  coursePracticeId:'', allStatsFilters:{bankId:'',timeRange:'all',unit:''}, unitStatsFilters:{bankId:'',timeRange:'all'}, aiFilter:{loai:'',q:''}
 };
 
 const App={
@@ -290,7 +456,8 @@ const App={
   toggleMenu(){document.getElementById('sidebar').classList.toggle('show')},
   setAdminVisible(){
     const role=(S.user&&S.user.role)||'';
-    document.querySelectorAll('.admin-only').forEach(el=>el.style.display=(role==='admin'||role==='lanh_dao_chi_cuc'||role==='lanh_dao_doi')?'block':'none');
+    document.querySelectorAll('.admin-only').forEach(el=>el.style.display=(role==='admin')?'block':'none');
+    document.querySelectorAll('.leader-only').forEach(el=>el.style.display=(role==='admin'||role==='lanh_dao_chi_cuc'||role==='lanh_dao_doi')?'block':'none');
   },
   title(t){document.getElementById('pageTitle').textContent=t},
   goto(screen){
@@ -298,16 +465,22 @@ const App={
     document.getElementById('screen-'+screen).classList.add('active');
     document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.screen===screen));
     document.getElementById('sidebar').classList.remove('show');
-    const map={dashboard:'Tổng quan',courses:'Khóa học',assignments:'Khóa học được giao',practice:'Bài tập thực hành','quiz-setup':'Làm bài trắc nghiệm','my-stats':'Kết quả của tôi','all-stats':'Kết quả toàn Chi cục','admin-import':'Nhập khóa học JSON'};
+    const map={dashboard:'Tổng quan',courses:'Khóa học','ai-daily':'Phổ cập AI',assignments:'Khóa học được giao','course-progress':'Tiến độ khóa học',practice:'Bài tập thực hành','quiz-setup':'Làm bài trắc nghiệm','my-stats':'Kết quả của tôi','unit-stats':'Kết quả đơn vị','all-stats':'Kết quả toàn Chi cục','assign-courses':'Giao khóa học','manage-courses':'Quản lý khóa học','admin-import':'Nhập khóa học JSON','admin-settings':'Cài đặt hệ thống'};
     this.title(map[screen]||'');
     if(screen==='dashboard') this.renderDashboard();
     if(screen==='courses') this.loadCourses();
+    if(screen==='ai-daily') this.loadAIDaily();
     if(screen==='assignments') this.loadAssignments();
+    if(screen==='course-progress') this.loadCourseProgress();
     if(screen==='practice') this.loadPractice();
     if(screen==='quiz-setup') this.loadBanks();
     if(screen==='my-stats') this.loadMyStats();
+    if(screen==='unit-stats') this.loadUnitStats();
     if(screen==='all-stats') this.loadAllStats();
+    if(screen==='assign-courses') this.loadAssignCourses();
+    if(screen==='manage-courses') this.loadManageCourses();
     if(screen==='admin-import') this.renderAdminImport();
+    if(screen==='admin-settings') this.loadAdminSettings();
   },
   reload(){ const active=[...document.querySelectorAll('.screen')].find(x=>x.classList.contains('active')); if(active) this.goto(active.id.replace('screen-','')); },
 
@@ -318,14 +491,29 @@ const App={
       const res=await callGAS({action:'getMyLearningDashboard',token:S.token,user:S.user});
       if(!res.ok) throw new Error(res.msg);
       const courses=res.courses||[];
+      const quizHistory=res.quizHistory||[];
+      const scores=quizHistory.map(x=>Number(x.score10)).filter(x=>!isNaN(x));
+      const quizAvg=scores.length?scores.reduce((a,b)=>a+b,0)/scores.length:0;
+      const quizBest=scores.length?Math.max(...scores):0;
+      const quizPass=scores.length?Math.round(scores.filter(x=>x>=5).length/scores.length*100):0;
       const avg=courses.length?Math.round(courses.reduce((s,c)=>s+(c.pct||0),0)/courses.length):0;
       document.getElementById('dashPct').textContent=avg+'%';
       document.getElementById('dashBody').innerHTML=`
         <div class="grid stats">
-          <div class="card stat"><i>📚</i><div><b>${courses.length}</b><span>Khóa học</span></div></div>
+          <div class="card stat dash-logo-card"><img class="logo-watermark" src="logo-hq.png" alt=""><i>📚</i><div><b>${courses.length}</b><span>Khóa học</span></div></div>
           <div class="card stat"><i>✅</i><div><b>${courses.filter(c=>c.pct>=100).length}</b><span>Đã hoàn thành</span></div></div>
-          <div class="card stat"><i>🧠</i><div><b>${(res.quizHistory||[]).length}</b><span>Lần trắc nghiệm</span></div></div>
+          <div class="card stat"><i>🧠</i><div><b>${quizHistory.length}</b><span>Lần trắc nghiệm</span></div></div>
           <div class="card stat"><i>📝</i><div><b>${(res.practiceSubmits||[]).length}</b><span>Bài tập đã nộp</span></div></div>
+        </div>
+        <div class="card">
+          <h3>Tổng hợp kết quả trắc nghiệm của tôi</h3>
+          <div class="dashboard-quiz-summary">
+            <div class="result-stat"><div class="result-stat-val val-blue">${quizHistory.length}</div><div class="result-stat-lbl">Lượt làm bài</div></div>
+            <div class="result-stat"><div class="result-stat-val val-orange">${quizAvg.toFixed(2)}</div><div class="result-stat-lbl">Điểm trung bình</div></div>
+            <div class="result-stat"><div class="result-stat-val val-green">${quizBest.toFixed(2)}</div><div class="result-stat-lbl">Điểm cao nhất</div></div>
+            <div class="result-stat"><div class="result-stat-val ${quizPass>=70?'val-green':quizPass>=50?'val-orange':'val-red'}">${quizPass}%</div><div class="result-stat-lbl">Tỷ lệ đạt từ 5 điểm</div></div>
+          </div>
+          <div class="table-wrap"><table><thead><tr><th>Thời gian</th><th>Bộ đề</th><th>Số câu</th><th>Điểm</th><th>Khóa/Bài</th></tr></thead><tbody>${quizHistory.slice(0,10).map(r=>`<tr><td>${fmtDate(r.time)}</td><td>${esc(r.banks)}</td><td>${r.count||''}</td><td>${scorePill(r.score10)}</td><td>${esc(r.courseId||'')}${r.lessonId?' / '+esc(r.lessonId):''}</td></tr>`).join('')||'<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:18px">Chưa có dữ liệu trắc nghiệm.</td></tr>'}</tbody></table></div>
         </div>
         <div class="card"><h3>Khóa học gần đây</h3>${this.courseCards(courses.slice(0,6))}</div>`;
     }catch(e){document.getElementById('dashBody').innerHTML=`<div class="alert err">${esc(e.message)}</div>`}
@@ -486,81 +674,213 @@ const App={
 
   async loadBanks(){
     const el=document.getElementById('screen-quiz-setup');
-    el.innerHTML='<div class="card">Đang tải ngân hàng câu hỏi...</div>';
+    S.examCount=S.examCount||30;
+    el.innerHTML=`<div class="exam-setup-grid">
+      <div>
+        <div class="card" style="padding:0;overflow:hidden;border:1.5px solid #e2e8f4;box-shadow:0 4px 24px rgba(10,22,40,.10);">
+          <div style="background:linear-gradient(135deg,#0f2347 0%,#1d4585 100%);padding:18px 24px 16px;display:flex;align-items:center;gap:12px;">
+            <div style="width:36px;height:36px;background:rgba(255,255,255,.12);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#f0c96a" stroke-width="2.2" width="18" height="18"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            </div>
+            <div><div style="font-size:.68rem;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:1px;">Cấu hình</div><div style="font-size:.95rem;font-weight:900;color:#fff;letter-spacing:.3px;">THIẾT LẬP BỘ ĐỀ KIỂM TRA</div></div>
+          </div>
+          <div style="padding:24px;">
+            <div style="margin-bottom:20px;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#2558a8,#3b72d4);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900;color:#fff;flex-shrink:0;">1</div><label class="form-label" style="margin:0;">Chọn lĩnh vực</label></div><select id="categorySelect" class="bank-select" onchange="App.filterBanks()"><option value="">Đang tải dữ liệu...</option></select></div>
+            <div style="height:1px;background:linear-gradient(90deg,transparent,#e2e8f4,transparent);margin-bottom:20px;"></div>
+            <div style="margin-bottom:20px;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#2558a8,#3b72d4);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900;color:#fff;flex-shrink:0;">2</div><label class="form-label" style="margin:0;">Chọn bộ đề</label></div><select id="bankSelect" class="bank-select" disabled><option value="">— Vui lòng chọn lĩnh vực trước —</option></select></div>
+            <div style="height:1px;background:linear-gradient(90deg,transparent,#e2e8f4,transparent);margin-bottom:20px;"></div>
+            <div id="examCountRow" style="margin-bottom:24px;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;"><div style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#2558a8,#3b72d4);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900;color:#fff;flex-shrink:0;">3</div><div class="form-label" style="margin:0;">Chọn số câu hỏi</div></div><div class="count-chips">
+              ${[5,10,20,30,50,60].map(n=>`<button class="chip ${n===S.examCount?'active':''}" onclick="App.setExamCount(${n},this)">${n} câu</button>`).join('')}
+            </div></div>
+            <div class="alert alert-hidden" id="dashAlert"></div>
+            <button class="btn-start" onclick="App.startQuiz()">▶ Tạo bộ đề và làm bài kiểm tra</button>
+          </div>
+        </div>
+      </div>
+      <div class="exam-guide"><div class="exam-guide-title">📌 Hướng dẫn nhanh</div><ul><li>Chọn lĩnh vực nghiệp vụ.</li><li>Chọn bộ đề tương ứng trong lĩnh vực.</li><li>Chọn số lượng câu hỏi phù hợp với thời gian thực tế.</li><li>Hệ thống tự tạo câu hỏi ngẫu nhiên.</li><li>Bấm “Nộp bài” để xem điểm và chi tiết đáp án.</li></ul></div>
+    </div>`;
     try{
       const res=await callGAS({action:'getBanks'});
-      if(!res.ok) throw new Error(res.msg);
-      S.banks=res.banks||[];
-      const cats=[...new Set(S.banks.map(b=>b.linhVuc))];
-      el.innerHTML=`<div class="hero"><div><h2>Làm bài trắc nghiệm</h2><p>Chọn lĩnh vực, bộ đề và số câu hỏi.</p></div></div>
-      <div class="card" style="max-width:760px">
-        <div class="field"><label>Lĩnh vực</label><select id="qCat" onchange="App.fillBankSelect()">${cats.map(c=>`<option>${esc(c)}</option>`).join('')}</select></div>
-        <div class="field"><label>Bộ đề</label><select id="qBank"></select></div>
-        <div class="field"><label>Số câu</label><select id="qCount"><option value="0">Toàn bộ câu hỏi</option><option>5</option><option>10</option><option>15</option><option>20</option><option>30</option></select></div>
-        <button class="btn" onclick="App.startSelectedQuiz()">Bắt đầu làm bài</button>
-      </div>`;
-      this.fillBankSelect();
-    }catch(e){el.innerHTML=`<div class="alert err">${esc(e.message)}</div>`}
+      if(!res.ok) throw new Error(res.msg||'Không tải được ngân hàng câu hỏi');
+      S.banks=res.banks||[]; S.allBanks=S.banks;
+      this.renderCategories(S.allBanks,res.defaultLinhVuc||'',res.defaultBankId||'',S.examCount||30);
+      this.hideAlert('dashAlert');
+    }catch(e){
+      const cat=document.getElementById('categorySelect'); if(cat) cat.innerHTML='<option value="">Lỗi tải dữ liệu</option>';
+      this.showAlert('dashAlert','Lỗi tải lĩnh vực: '+e.message);
+    }
   },
-  fillBankSelect(){
-    const cat=document.getElementById('qCat')?.value||'';
-    const banks=S.banks.filter(b=>!cat||b.linhVuc===cat);
-    document.getElementById('qBank').innerHTML=banks.map(b=>`<option value="${esc(b.id)}">${esc(b.name)} (${b.count} câu)</option>`).join('');
+
+  renderCategories(banks,defaultLinhVuc='',defaultBankId='',defaultCount=30){
+    const cat=document.getElementById('categorySelect');
+    const bank=document.getElementById('bankSelect');
+    const categories=[...new Set((banks||[]).map(b=>String(b.linhVuc||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'vi'));
+    if(!categories.length){cat.innerHTML='<option value="">Không tìm thấy lĩnh vực</option>';bank.innerHTML='<option value="">— Chưa có bộ đề —</option>';bank.disabled=true;return;}
+    const defaultBank=defaultBankId?(banks||[]).find(b=>String(b.id)===String(defaultBankId)):null;
+    if(!defaultLinhVuc && defaultBank && defaultBank.linhVuc) defaultLinhVuc=String(defaultBank.linhVuc||'').trim();
+    cat.innerHTML='<option value="">— Chọn lĩnh vực —</option>'+categories.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('');
+    if(defaultLinhVuc && categories.includes(defaultLinhVuc)){
+      cat.value=defaultLinhVuc; this.filterBanks();
+      if(defaultBankId){ const bankEl=document.getElementById('bankSelect'); if(bankEl && Array.from(bankEl.options).some(o=>String(o.value)===String(defaultBankId))) bankEl.value=defaultBankId; }
+    }else{ bank.innerHTML='<option value="">— Vui lòng chọn lĩnh vực trước —</option>'; bank.disabled=true; }
+    const countNum=Number(defaultCount||0);
+    if(countNum>0){ S.examCount=countNum; document.querySelectorAll('.count-chips .chip').forEach(ch=>{const n=parseInt(ch.textContent,10); ch.classList.toggle('active',n===countNum);}); }
   },
-  startSelectedQuiz(){
-    const bankId=document.getElementById('qBank').value;
-    const count=Number(document.getElementById('qCount').value||0);
-    this.startQuiz(bankId,count,'','');
+
+  filterBanks(){
+    const catVal=document.getElementById('categorySelect')?.value||'';
+    const bank=document.getElementById('bankSelect');
+    if(!bank) return;
+    if(!catVal){bank.innerHTML='<option value="">— Vui lòng chọn lĩnh vực trước —</option>';bank.disabled=true;return;}
+    const list=(S.allBanks||[]).filter(b=>String(b.linhVuc||'').trim()===catVal).sort((a,b)=>String(a.name||'').localeCompare(String(b.name||''),'vi'));
+    if(!list.length){bank.innerHTML='<option value="">— Không có bộ đề trong lĩnh vực này —</option>';bank.disabled=true;return;}
+    bank.innerHTML='<option value="">— Chọn bộ đề —</option>'+list.map(b=>`<option value="${esc(b.id)}">${esc(b.name)} (${Number(b.count||0)} câu)</option>`).join('');
+    bank.disabled=false;
   },
-  async startQuiz(bankId,count=0,courseId='',lessonId=''){
+
+  setExamCount(n,btn){
+    S.examCount=n;
+    document.querySelectorAll('.count-chips .chip').forEach(c=>c.classList.remove('active'));
+    if(btn) btn.classList.add('active');
+  },
+
+  showAlert(id,msg,type='error'){
+    const el=document.getElementById(id); if(!el) return;
+    el.className='alert '+(type==='success'?'alert-success':type==='info'?'alert-info':'alert-error');
+    el.textContent=msg; el.classList.remove('alert-hidden','hidden');
+  },
+  hideAlert(id){const el=document.getElementById(id); if(el) el.classList.add('alert-hidden');},
+
+  startSelectedQuiz(){ return this.startQuiz(); },
+
+  async startQuiz(bankId='',count=0,courseId='',lessonId=''){
+    let finalBankId=bankId;
+    let finalCount=Number(count||0);
+    if(!finalBankId){
+      const catSel=document.getElementById('categorySelect');
+      if(!catSel || !catSel.value){ this.showAlert('dashAlert','Vui lòng chọn Lĩnh vực trước!'); return; }
+      const sel=document.getElementById('bankSelect');
+      if(!sel || !sel.value){ this.showAlert('dashAlert','Vui lòng chọn một Bộ đề cụ thể!'); return; }
+      finalBankId=sel.value;
+      finalCount=Number(S.examCount||30);
+      const selectedBank=(S.allBanks||[]).find(b=>String(b.id)===String(finalBankId));
+      if(selectedBank && finalCount>Number(selectedBank.count||0)){ this.showAlert('dashAlert',`Bộ đề này hiện chỉ có ${selectedBank.count} câu hợp lệ, không đủ để tạo bài thi ${finalCount} câu.`); return; }
+    }
+    this.hideAlert('dashAlert');
+    this.showLoading(true);
     try{
-      this.showLoading();
-      const res=await callGAS({action:'generateQuiz',bankId,count,courseId,lessonId,token:S.token,user:S.user});
+      const res=await callGAS({action:'generateQuiz',username:S.user.username,bankId:finalBankId,mode:'exam',count:finalCount,courseId,lessonId,token:S.token,user:S.user});
       this.showLoading(false);
-      if(!res.ok) throw new Error(res.msg);
-      S.quiz=res; S.answers={}; S.currentQ=0; S.timeLeft=res.timeLimitSec||0;
-      this.renderQuiz();
-      this.goto('quiz');
-      this.startTimer();
-    }catch(e){this.showLoading(false);alert(e.message)}
+      if(!res.ok) throw new Error(res.msg||'Không tạo được đề thi');
+      S.quiz=res; S.quizData=res; S.answers={}; S.currentQ=0; S.timeLeft=res.timeLimitSec||0;
+      this.renderQuiz(res);
+    }catch(e){ this.showLoading(false); this.showAlert('dashAlert',e.message||'Lỗi kết nối'); }
   },
-  renderQuiz(){
-    const q=S.quiz.questions[S.currentQ];
+
+  renderQuiz(q){
+    this.stopTimer();
+    const h=q.headerLines||{};
+    const isParty=((q.category||'')+(h.d3||'')+(q.bankName||'')).toLowerCase().includes('đảng') || ((h.d3||'')+(q.bankName||'')).toUpperCase().includes('DANG');
     const el=document.getElementById('screen-quiz');
-    el.innerHTML=`<div class="quiz-layout">
-      <div class="card qnav"><h3>${esc(S.quiz.bankName)}</h3><p><b id="timer">--:--</b></p><div class="qgrid">${S.quiz.questions.map((_,i)=>`<button class="qdot ${i===S.currentQ?'active':''} ${S.answers[i]?'answered':''}" onclick="App.goQ(${i})">${i+1}</button>`).join('')}</div><button class="btn gold" style="width:100%;margin-top:14px" onclick="App.submitQuiz()">Nộp bài</button></div>
-      <div class="card"><div class="qtext">Câu ${S.currentQ+1}. ${esc(q.question)}</div>${q.options.map((o,i)=>`<label class="opt ${this.isChosen(S.currentQ,i)?'selected':''}"><input type="checkbox" ${this.isChosen(S.currentQ,i)?'checked':''} onchange="App.choose(${i},this.checked)"> <b>${letter(i)}.</b> <span>${esc(o)}</span></label>`).join('')}<div style="display:flex;justify-content:space-between;margin-top:20px"><button class="btn secondary" ${S.currentQ===0?'disabled':''} onclick="App.goQ(S.currentQ-1)">← Câu trước</button><button class="btn secondary" ${S.currentQ===S.quiz.questions.length-1?'disabled':''} onclick="App.goQ(S.currentQ+1)">Câu sau →</button></div></div>
+    el.innerHTML=`<div class="quiz-container">
+      <div class="quiz-left-panel">
+        <div class="quiz-panel-header"><div id="quizHeaderLines"><div id="line1">${esc(h.d1||'')}</div><div id="line2">${esc(h.d2||'')}</div><div id="line3" style="color:${isParty?'#C82929':'#f0c96a'}">${esc(h.d3||q.bankName||'')}</div></div><div class="timer-clock" id="timerClock">--:--</div><div class="timer-info" id="timerInfo" style="display:none;">Kiểm tra</div></div>
+        <div class="quiz-panel-body"><div class="q-nav-meta" style="text-align:center;margin-bottom:14px;font-size:.83rem;font-weight:800;color:#4a5c7a;">Đã trả lời: <b id="answeredCount" style="color:#2558a8">0</b> / <b id="totalCount">${q.count}</b> câu</div><div class="q-grid-box" id="qDots">${q.questions.map((_,i)=>`<button class="q-dot" id="dot-${i}" onclick="App.scrollToQ(${i})">${i+1}</button>`).join('')}</div></div>
+        <div class="quiz-panel-footer"><button class="btn-submit" onclick="App.confirmSubmit()">📤 NỘP BÀI</button></div>
+      </div>
+      <div class="quiz-right-panel"><div class="quiz-body" id="quizBody">${q.questions.map((q2,i)=>`<div class="qblock" id="qb-${i}"><div class="qnum">Câu ${i+1} / ${q.count}</div><div class="qtext">${esc(q2.question)}</div>${q2.options.map((opt,o)=>`<label class="opt" id="opt-${i}-${o}"><input type="checkbox" value="${o}" onchange="App.pickOpt(${i},${o},this.checked,this.closest('.opt'))"><span>${letter(o)}. ${esc(opt)}</span></label>`).join('')}</div>`).join('')}</div><div class="quiz-actions"><button class="btn-nav" id="btnPrev" onclick="App.prevQ()">⬅ Câu trước</button><button class="btn-nav" id="btnNext" onclick="App.nextQ()">Câu tiếp theo ➡</button></div></div>
     </div>`;
-    this.updateTimer();
+    this.goto('quiz');
+    S.currentQ=0;
+    document.getElementById('totalCount').textContent=q.count;
+    document.getElementById('answeredCount').textContent=0;
+    const timeSecs=Number(q.timeLimitSec||q.count*60);
+    const ti=document.getElementById('timerInfo'); if(ti) ti.textContent=`Kiểm tra – ${q.count} câu`;
+    this.startTimer(timeSecs);
+    this.showQ(0);
   },
-  isChosen(qi,oi){return (S.answers[qi]||[]).indexOf(oi)>=0},
-  choose(oi,checked){
-    const arr=S.answers[S.currentQ]||[];
-    if(checked && arr.indexOf(oi)<0) arr.push(oi);
-    if(!checked){ const idx=arr.indexOf(oi); if(idx>=0) arr.splice(idx,1); }
-    S.answers[S.currentQ]=arr.sort((a,b)=>a-b);
-    this.renderQuiz();
+
+  showQ(index){
+    if(!S.quizData || index<0 || index>=S.quizData.count) return;
+    S.currentQ=index;
+    document.querySelectorAll('.qblock').forEach((el,i)=>el.classList.toggle('active',i===index));
+    document.querySelectorAll('.q-dot').forEach((el,i)=>el.classList.toggle('active',i===index));
+    const prev=document.getElementById('btnPrev'), next=document.getElementById('btnNext');
+    if(prev) prev.disabled=(index===0);
+    if(next) next.disabled=(index===S.quizData.count-1);
   },
-  goQ(i){S.currentQ=Math.max(0,Math.min(i,S.quiz.questions.length-1));this.renderQuiz()},
-  startTimer(){clearInterval(S.timer); if(!S.timeLeft) return; S.timer=setInterval(()=>{S.timeLeft--;this.updateTimer();if(S.timeLeft<=0){clearInterval(S.timer);this.submitQuiz()}},1000)},
-  updateTimer(){const el=document.getElementById('timer'); if(!el) return; const m=Math.floor(S.timeLeft/60),s=S.timeLeft%60; el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')},
-  async submitQuiz(forceSave=false){
-    if(!confirm('Nộp bài trắc nghiệm?')) return;
+  nextQ(){this.showQ(S.currentQ+1);},
+  prevQ(){this.showQ(S.currentQ-1);},
+  scrollToQ(i){this.showQ(i);},
+  goQ(i){this.showQ(i);},
+  isChosen(qi,oi){return (S.answers[qi]||[]).indexOf(oi)>=0;},
+
+  pickOpt(qi,oi,checked,el){
+    if(!S.answers[qi]) S.answers[qi]=[];
+    if(checked){ if(!S.answers[qi].includes(oi)) S.answers[qi].push(oi); }
+    else S.answers[qi]=S.answers[qi].filter(x=>x!==oi);
+    if(el) el.classList.toggle('selected',checked);
+    const dot=document.getElementById('dot-'+qi); if(dot) dot.classList.toggle('answered',(S.answers[qi]||[]).length>0);
+    const ac=document.getElementById('answeredCount'); if(ac) ac.textContent=Object.values(S.answers).filter(a=>a&&a.length>0).length;
+  },
+
+  choose(oi,checked){this.pickOpt(S.currentQ,oi,checked,document.getElementById(`opt-${S.currentQ}-${oi}`));},
+
+  startTimer(total){
+    this.stopTimer();
+    S.timeLeft=Number(total||0);
+    this.updateTimer(S.timeLeft,total);
+    if(!S.timeLeft) return;
+    S.timer=setInterval(()=>{S.timeLeft--;this.updateTimer(S.timeLeft,total);if(S.timeLeft===60)this.showTimerBanner('⚠️ Còn 1 phút! Kiểm tra lại bài.');if(S.timeLeft<=0){this.stopTimer();this.lockQuiz();this.showCountdown();}},1000);
+  },
+  updateTimer(left,total){
+    const el=document.getElementById('timerClock')||document.getElementById('timer'); if(!el) return;
+    left=Math.max(0,Number(left||0)); total=Number(total||left||1);
+    const m=String(Math.floor(left/60)).padStart(2,'0'),s=String(left%60).padStart(2,'0');
+    el.textContent=`${m}:${s}`;
+    el.className='timer-clock'+(left<=60?' danger':left<=total*.25?' warning':'');
+  },
+  stopTimer(){ if(S.timer){clearInterval(S.timer);S.timer=null;} },
+  lockQuiz(){document.querySelectorAll('#quizBody input').forEach(i=>i.disabled=true);const b=document.querySelector('.btn-submit');if(b){b.disabled=true;b.textContent='⏰ Đang nộp tự động...';}},
+  showTimerBanner(msg){let el=document.getElementById('timerBanner');if(!el){el=document.createElement('div');el.id='timerBanner';el.style.cssText='position:fixed;top:66px;left:50%;transform:translateX(-50%);z-index:600;background:#d4600a;color:#fff;padding:9px 20px;border-radius:8px;font-size:.83rem;font-weight:800;box-shadow:0 4px 16px rgba(0,0,0,.2);white-space:nowrap';document.body.appendChild(el);}el.textContent=msg;el.style.display='block';clearTimeout(el._t);el._t=setTimeout(()=>el.style.display='none',4000);},
+  showCountdown(){let ov=document.getElementById('cdOverlay');if(!ov){ov=document.createElement('div');ov.id='cdOverlay';ov.style.cssText='position:fixed;inset:0;z-index:900;background:rgba(10,22,40,.8);display:flex;align-items:center;justify-content:center';ov.innerHTML='<div style="background:#fff;border-radius:16px;padding:36px 44px;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,.3)"><div style="font-size:2.8rem;margin-bottom:10px">⏰</div><h2 style="font-size:1.1rem;font-weight:900;color:#0f1f3d;margin-bottom:8px">Hết giờ làm bài!</h2><p style="color:#4a5c7a;font-size:.85rem;margin-bottom:16px">Bài thi sẽ tự động nộp sau</p><div id="cdNum" style="font-size:4rem;font-weight:900;color:#c0392b;line-height:1">3</div><p style="color:#8496b0;font-size:.75rem;margin-top:4px">giây</p></div>';document.body.appendChild(ov);}ov.style.display='flex';let n=3;const t=setInterval(()=>{n--;const el=document.getElementById('cdNum');if(el)el.textContent=n;if(n<=0){clearInterval(t);ov.style.display='none';this.submitQuiz(false,false);}},1000);},
+  confirmSubmit(){const total=S.quizData?.count||0,ans=Object.values(S.answers).filter(a=>a&&a.length>0).length;const left=total-ans;const msg=left>0?`Còn ${left} câu chưa trả lời. Vẫn nộp bài?`:`Đã trả lời đủ ${total} câu. Nộp bài?`;if(confirm(msg))this.submitQuiz(false,true);},
+
+  async submitQuiz(forceSave=false,manual=false){
+    this.stopTimer();
     try{
-      clearInterval(S.timer); this.showLoading();
-      const res=await callGAS({action:'submitQuiz',token:S.token,user:S.user,quizId:S.quiz.quizId,userAnswers:S.answers,forceSave,courseId:S.quiz.courseId,lessonId:S.quiz.lessonId,guestMode:S.user.isGuest});
+      this.showLoading(true);
+      const res=await callGAS({action:'submitQuiz',token:S.token,user:S.user,quizId:S.quizData.quizId,userAnswers:S.answers,forceSave,courseId:S.quizData.courseId,lessonId:S.quizData.lessonId,guestMode:S.user.isGuest});
       this.showLoading(false);
-      if(!res.ok) throw new Error(res.msg);
-      if(res.promptSave && confirm(`Điểm ${Number(res.score10).toFixed(2)}/10 chưa đạt. Anh có muốn lưu kết quả không?`)) return this.submitQuiz(true);
-      this.renderResult(res);
-      this.goto('result');
-    }catch(e){this.showLoading(false);alert(e.message)}
+      if(!res.ok) throw new Error(res.msg||'Không nộp được bài');
+      if(res.promptSave){
+        const want=confirm(`Điểm của bạn là: ${Number(res.score10).toFixed(2)} / 10 (Chưa đạt).
+Bạn có muốn lưu kết quả trắc nghiệm này vào hệ thống không?`);
+        if(want) return this.submitQuiz(true,false);
+        this.renderResult(res,false); return;
+      }
+      this.renderResult(res,!!res.saved);
+    }catch(e){this.showLoading(false);alert('Lỗi nộp bài: '+e.message);}
   },
-  renderResult(res){
-    const pct=res.totalQ?Math.round((res.correctCount/res.totalQ)*100):0;
-    document.getElementById('screen-result').innerHTML=`<div class="hero"><div><h2>Kết quả trắc nghiệm</h2><p>${esc(res.bankName)} · ${res.saved?'Đã lưu kết quả':'Chưa lưu kết quả'}</p></div><div class="badge"><b>${Number(res.score10).toFixed(2)}</b><span>/10 điểm</span></div></div>
-    <div class="grid stats"><div class="card stat"><i>✅</i><div><b>${res.correctCount}</b><span>Câu đúng</span></div></div><div class="card stat"><i>📌</i><div><b>${res.totalQ}</b><span>Tổng câu</span></div></div><div class="card stat"><i>🎯</i><div><b>${pct}%</b><span>Tỷ lệ đúng</span></div></div><div class="card stat"><i>💾</i><div><b>${res.saved?'Có':'Không'}</b><span>Lưu kết quả</span></div></div></div>
-    <div class="card"><h3>Chi tiết đáp án</h3>${(res.detail||[]).map((r,i)=>`<div class="result-row ${r.score>=1?'ok':r.score>0?'partial':'bad'}"><b>Câu ${i+1}: ${esc(r.question)}</b><div style="margin-top:8px">${r.options.map((o,oi)=>`<div>${letter(oi)}. ${esc(o.text)} ${o.isCorrect?'✅':''} ${o.isChosen?'← chọn':''}</div>`).join('')}</div>${r.explain?`<p><i>Giải thích: ${esc(r.explain)}</i></p>`:''}</div>`).join('')}</div>`;
+
+  renderResult(res,isSaved=true){
+    const correctCount=Number(res.correctCount||0), score10=Number(res.score10||0), totalQ=Number(res.totalQ||0), detail=res.detail||[];
+    const pct=Math.round(score10/10*100);
+    let full=0,partial=0,partialWrong=0,wrong=0;
+    const detailHtml=detail.map((d,i)=>{
+      const sc=Number(d.score||0); const cls=sc>=.999?'full':sc>0?'partial':'wrong'; const scCls=sc>=.999?'s-full':sc>0?'s-partial':'s-zero';
+      let correctChosen=0, wrongChosen=0, totalCorrect=0;
+      const opts=(d.options||[]).map((o,oi)=>{let c2='',ic='';if(o.isCorrect) totalCorrect++;if(o.isCorrect&&o.isChosen){c2='ok';ic='✓';correctChosen++;}else if(!o.isCorrect&&o.isChosen){c2='bad';ic='✗';wrongChosen++;}else if(o.isCorrect&&!o.isChosen){c2='missed';ic='!';}return `<div class="ropt ${c2}"><span style="flex-shrink:0;font-size:.78rem">${ic||'·'}</span><span>${letter(oi)}. ${esc(o.text)}</span></div>`;}).join('');
+      if(correctChosen===totalCorrect && wrongChosen===0) full++; else if(correctChosen===0) wrong++; else if(correctChosen>0 && wrongChosen===0) partial++; else if(correctChosen>0 && wrongChosen>0) partialWrong++;
+      const expl=d.explain?`<div class="rexplain">💡 ${esc(d.explain)}</div>`:'';
+      return `<div class="rq ${cls}"><div class="rq-hd"><span class="rq-num">Câu ${i+1}</span><span class="rq-score ${scCls}">${sc.toFixed(3)} điểm</span></div><div class="rq-text">${esc(d.question)}</div>${opts}${expl}</div>`;
+    }).join('');
+    let banner='';
+    if(S.user&&S.user.isGuest) banner='<div class="late-banner" style="display:block;background:#2558a8">👤 Bạn đang xem kết quả với tư cách <b>Khách (GUEST)</b>. Kết quả <b>KHÔNG</b> được lưu vào hệ thống.</div>';
+    else if(!isSaved) banner='<div class="late-banner" style="display:block;background:#d4600a">⚠️ Kết quả này <b>KHÔNG</b> được lưu vào hệ thống do chưa đạt điểm và bạn đã chọn từ chối lưu.</div>';
+    document.getElementById('screen-result').innerHTML=`<div class="result-container"><div class="result-hero"><div><div class="result-score-label">Kết quả bài kiểm tra</div><div class="result-score-big">${score10.toFixed(2)} / 10</div><div class="result-score10">Số câu đúng hoàn toàn: ${correctCount} / ${totalQ}</div><div class="result-meta">📝 Kiểm tra | ${esc(S.quizData?.headerLines?.d3||S.quizData?.bankName||'')}</div></div><div style="text-align:center;color:#fff"><div style="font-size:2.4rem;font-weight:900;color:#f0c96a">${pct}%</div><div style="font-size:.75rem;color:rgba(255,255,255,.65)">Mức hoàn thành</div></div></div>${banner}<div class="result-stats-row"><div class="result-stat"><div class="result-stat-val val-green">${full}</div><div class="result-stat-lbl">Đúng hoàn toàn</div></div><div class="result-stat"><div class="result-stat-val val-orange">${partial}</div><div class="result-stat-lbl">Đúng một phần</div></div><div class="result-stat"><div class="result-stat-val val-orange">${partialWrong}</div><div class="result-stat-lbl">Sai một phần</div></div><div class="result-stat"><div class="result-stat-val val-red">${wrong}</div><div class="result-stat-lbl">Sai hoàn toàn</div></div></div><div class="card"><h3>Chi tiết đáp án</h3>${detailHtml}</div><button class="btn secondary" onclick="App.goto('quiz-setup')">Làm bài khác</button></div>`;
+    this.goto('result');
+    window.scrollTo(0,0);
   },
 
   async loadMyStats(){
@@ -621,6 +941,99 @@ const App={
     S.allStatsFilters={bankId:'',timeRange:'all',unit:''};
     this.loadAllStats();
   },
+
+
+  async loadUnitStats(){
+    const el=document.getElementById('screen-unit-stats');
+    const f=S.unitStatsFilters||{bankId:'',timeRange:'all'};
+    el.innerHTML='<div class="card">Đang tải kết quả đơn vị...</div>';
+    try{
+      const [res,banksRes]=await Promise.all([callGAS({action:'getUnitStats',token:S.token,user:S.user,bankId:f.bankId,timeRange:f.timeRange}),callGAS({action:'getBanks'})]);
+      if(!res.ok) throw new Error(res.msg);
+      const banks=(banksRes&&banksRes.ok)?(banksRes.banks||[]):[];
+      const times=[['all','Toàn bộ'],['week','Tuần này'],['month','Tháng này'],['quarter','Quý này'],['year','Năm này']];
+      el.innerHTML=`<div class="hero"><div><h2>Kết quả đơn vị</h2><p>${esc(res.unit||S.user.unit||'Đơn vị')} · lọc theo bài thi và thời gian.</p></div><div class="badge"><b>${res.stats.exams||0}</b><span>lượt thi</span></div></div>
+      <div class="card"><div class="stat-filterbar"><div class="field"><label>Bài thi</label><select id="unitBank" onchange="App.applyUnitStatsFilter()"><option value="">Tất cả bài thi</option>${banks.map(b=>`<option value="${esc(b.id)}" ${f.bankId===b.id?'selected':''}>${esc(b.name)}</option>`).join('')}</select></div><div class="field"><label>Thời gian</label><select id="unitTime" onchange="App.applyUnitStatsFilter()">${times.map(t=>`<option value="${t[0]}" ${f.timeRange===t[0]?'selected':''}>${t[1]}</option>`).join('')}</select></div><div></div><button class="btn secondary" onclick="App.resetUnitStatsFilter()">Xóa lọc</button></div></div>
+      <div class="grid stats"><div class="card stat"><i>👥</i><div><b>${res.stats.members||0}</b><span>Cán bộ trong đơn vị</span></div></div><div class="card stat"><i>🧠</i><div><b>${res.stats.exams||0}</b><span>Lượt thi</span></div></div><div class="card stat"><i>📈</i><div><b>${Number(res.stats.avg||0).toFixed(2)}</b><span>Điểm TB</span></div></div><div class="card stat"><i>✅</i><div><b>${res.stats.passRate||0}%</b><span>Tỷ lệ đạt</span></div></div></div>
+      <div class="card"><h3>Xếp hạng trong đơn vị</h3><div class="table-wrap"><table><thead><tr><th>Họ tên</th><th>Lượt thi</th><th>Điểm cao nhất</th><th>Điểm TB</th></tr></thead><tbody>${(res.ranking||[]).map(r=>`<tr><td>${esc(r.fullname||r.username)}</td><td>${r.exams}</td><td>${scorePill(r.best)}</td><td>${scorePill(r.avg)}</td></tr>`).join('')||'<tr><td colspan="4">Không có dữ liệu.</td></tr>'}</tbody></table></div></div>`;
+    }catch(e){el.innerHTML=`<div class="alert err">${esc(e.message)}</div>`}
+  },
+  applyUnitStatsFilter(){S.unitStatsFilters={bankId:document.getElementById('unitBank')?.value||'',timeRange:document.getElementById('unitTime')?.value||'all'};this.loadUnitStats();},
+  resetUnitStatsFilter(){S.unitStatsFilters={bankId:'',timeRange:'all'};this.loadUnitStats();},
+
+  async loadAIDaily(){
+    const el=document.getElementById('screen-ai-daily');
+    const f=S.aiFilter||{loai:'',q:''};
+    el.innerHTML='<div class="card">Đang tải nội dung phổ cập AI...</div>';
+    try{
+      const res=await callGAS({action:'getAIArticles',token:S.token,user:S.user,loai:f.loai,q:f.q,limit:200});
+      if(!res.ok) throw new Error(res.msg);
+      const types=res.types||[];
+      const rows=res.rows||[];
+      el.innerHTML=`<div class="hero"><div><h2>Phổ cập AI</h2><p>Các nội dung ngắn, gợi ý thực hành và cập nhật về ứng dụng AI trong công việc.</p></div><div class="badge"><b>${rows.length}</b><span>nội dung</span></div></div>
+      <div class="card"><div class="stat-filterbar"><div class="field"><label>Tìm kiếm</label><input id="aiQ" value="${esc(f.q)}" placeholder="Từ khóa, công cụ, chủ đề..."></div><div class="field"><label>Loại</label><select id="aiType"><option value="">Tất cả</option>${types.map(t=>`<option ${f.loai===t?'selected':''}>${esc(t)}</option>`).join('')}</select></div><div></div><button class="btn" onclick="App.applyAIFilter()">Lọc</button></div>${this.isAdmin()?'<div class="action-row"><button class="btn secondary" onclick="App.showAIEditor()">Thêm nội dung AI</button></div>':''}</div>
+      <div class="grid cards">${rows.map(a=>`<div class="card article-card"><div class="article-date">${esc(a.ngay||a.createdAt||'')} · ${esc(a.loai)}</div><h3>${esc(a.title)}</h3><div class="lesson-content">${a.content||''}</div>${a.link?`<a class="btn secondary" target="_blank" href="${esc(a.link)}">Mở liên kết</a>`:''}</div>`).join('')||'<div class="card">Chưa có nội dung phổ cập AI.</div>'}</div>`;
+    }catch(e){el.innerHTML=`<div class="alert err">${esc(e.message)}</div>`}
+  },
+  applyAIFilter(){S.aiFilter={q:document.getElementById('aiQ')?.value||'',loai:document.getElementById('aiType')?.value||''};this.loadAIDaily();},
+  showAIEditor(){
+    const title=prompt('Tiêu đề nội dung AI:'); if(!title) return;
+    const content=prompt('Nội dung ngắn hoặc HTML đơn giản:')||'';
+    callGAS({action:'saveAIArticle',token:S.token,article:{title,content,loai:'Bài viết'}}).then(r=>{if(!r.ok)throw new Error(r.msg);this.loadAIDaily();}).catch(e=>alert(e.message));
+  },
+
+  async loadCourseProgress(){
+    const el=document.getElementById('screen-course-progress');
+    el.innerHTML='<div class="card">Đang tải tiến độ khóa học...</div>';
+    try{
+      const [res,dir]=await Promise.all([callGAS({action:'getCourseReport',token:S.token,unit:S.allStatsFilters?.unit||''}),callGAS({action:'getDirectory',token:S.token})]);
+      if(!res.ok) throw new Error(res.msg);
+      const units=(dir&&dir.ok)?(dir.units||[]):[];
+      const current=S.allStatsFilters?.unit||'';
+      const rows=res.rows||[];
+      el.innerHTML=`<div class="hero"><div><h2>Tiến độ khóa học</h2><p>Theo dõi tỷ lệ hoàn thành bài học theo đơn vị, cán bộ và khóa học.</p></div></div><div class="card"><div class="stat-filterbar"><div class="field"><label>Đơn vị</label><select id="progressUnit" onchange="App.applyCourseProgressUnit()"><option value="">Tất cả đơn vị</option>${units.map(u=>`<option value="${esc(u)}" ${current===u?'selected':''}>${esc(u)}</option>`).join('')}</select></div><div></div><div></div><button class="btn secondary" onclick="App.resetCourseProgressUnit()">Xóa lọc</button></div></div>
+      <div class="card"><h3>Bảng tiến độ</h3><div class="table-wrap"><table><thead><tr><th>Họ tên</th><th>Đơn vị</th><th>Khóa học</th><th>Tiến độ</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.fullname||r.username)}</td><td>${esc(r.unit)}</td><td>${esc(r.courseTitle)}</td><td>${r.completed}/${r.total} (${r.pct}%)<div class="progress"><div style="width:${r.pct}%"></div></div></td></tr>`).join('')||'<tr><td colspan="4">Không có dữ liệu.</td></tr>'}</tbody></table></div></div>`;
+    }catch(e){el.innerHTML=`<div class="alert err">${esc(e.message)}</div>`}
+  },
+  applyCourseProgressUnit(){S.allStatsFilters.unit=document.getElementById('progressUnit')?.value||'';this.loadCourseProgress();},
+  resetCourseProgressUnit(){S.allStatsFilters.unit='';this.loadCourseProgress();},
+
+  async loadAssignCourses(){
+    const el=document.getElementById('screen-assign-courses');
+    el.innerHTML='<div class="card">Đang tải dữ liệu giao khóa học...</div>';
+    try{
+      const [coursesRes,dir]=await Promise.all([callGAS({action:'getCourses',token:S.token,user:S.user}),callGAS({action:'getDirectory',token:S.token})]);
+      const courses=coursesRes.courses||[], units=(dir&&dir.ok)?(dir.units||[]):[], users=(dir&&dir.ok)?(dir.users||[]):[];
+      el.innerHTML=`<div class="hero"><div><h2>Giao khóa học</h2><p>Giao khóa học cho toàn Chi cục, đơn vị hoặc cá nhân.</p></div></div><div class="card wide-card"><div class="form-grid-2"><div class="field"><label>Khóa học</label><select id="asCourse">${courses.map(c=>`<option value="${esc(c.id)}">${esc(c.title)}</option>`).join('')}</select></div><div class="field"><label>Phạm vi giao</label><select id="asScope" onchange="App.renderAssignScopeOptions()"><option value="all">Toàn Chi cục</option><option value="unit">Theo đơn vị</option><option value="person">Theo cá nhân</option></select></div></div><div id="asScopeBox"></div><div class="form-grid-2"><div class="field"><label>Hạn hoàn thành</label><input id="asDue" type="date"></div><div class="field"><label>Ghi chú</label><input id="asNote" placeholder="Yêu cầu, ghi chú..."></div></div><button class="btn" onclick="App.saveAssignmentUI()">Lưu giao khóa học</button><div id="asMsg"></div></div>`;
+      S._assignUnits=units;S._assignUsers=users;this.renderAssignScopeOptions();
+    }catch(e){el.innerHTML=`<div class="alert err">${esc(e.message)}</div>`}
+  },
+  renderAssignScopeOptions(){const box=document.getElementById('asScopeBox');if(!box)return;const scope=document.getElementById('asScope')?.value||'all';if(scope==='unit')box.innerHTML=`<div class="field"><label>Đơn vị</label><select id="asScopeValue">${(S._assignUnits||[]).map(u=>`<option value="${esc(u)}">${esc(u)}</option>`).join('')}</select></div>`;else if(scope==='person')box.innerHTML=`<div class="field"><label>Cá nhân</label><select id="asScopeValue">${(S._assignUsers||[]).map(u=>`<option value="${esc(u.username)}">${esc(u.fullname||u.username)} - ${esc(u.unit)}</option>`).join('')}</select></div>`;else box.innerHTML='<div class="alert ok">Giao cho toàn bộ người dùng trong Chi cục.</div>';},
+  async saveAssignmentUI(){try{const a={courseId:document.getElementById('asCourse').value,scopeType:document.getElementById('asScope').value,scopeValue:document.getElementById('asScopeValue')?.value||'',due:document.getElementById('asDue').value,note:document.getElementById('asNote').value};const res=await callGAS({action:'saveAssignment',token:S.token,assignment:a});document.getElementById('asMsg').innerHTML=`<div class="alert ${res.ok?'ok':'err'}">${res.ok?'Đã lưu giao khóa học.':esc(res.msg)}</div>`;}catch(e){alert(e.message)}},
+
+  async loadManageCourses(){
+    const el=document.getElementById('screen-manage-courses');
+    el.innerHTML='<div class="card">Đang tải quản lý khóa học...</div>';
+    try{
+      const res=await callGAS({action:'getCourses',token:S.token,user:S.user});
+      const courses=res.courses||[];
+      el.innerHTML=`<div class="hero"><div><h2>Quản lý khóa học</h2><p>Tạo nhanh khóa học, mở chi tiết để quản lý bài học bằng JSON hoặc nhập thủ công.</p></div></div><div class="card wide-card"><h3>Tạo/sửa khóa học</h3><div class="form-grid-2"><div class="field"><label>Mã khóa học</label><input id="mcId" placeholder="VD: AI001"></div><div class="field"><label>Nhóm</label><input id="mcGroup" value="Phổ cập AI"></div></div><div class="field"><label>Tiêu đề</label><input id="mcTitle" placeholder="Tên khóa học"></div><div class="field"><label>Mô tả/Tổng quan</label><textarea id="mcOverview"></textarea></div><div class="form-grid-3"><div class="field"><label>Tác giả</label><input id="mcAuthor"></div><div class="field"><label>Link gốc</label><input id="mcSource"></div><div class="field"><label>Thời lượng</label><input id="mcDuration"></div></div><button class="btn" onclick="App.saveCourseUI()">Lưu khóa học</button><div id="mcMsg"></div></div><div class="card"><h3>Danh sách khóa học</h3><div class="table-wrap"><table><thead><tr><th>Mã</th><th>Tên khóa học</th><th>Nhóm</th><th>Số bài</th><th></th></tr></thead><tbody>${courses.map(c=>`<tr><td>${esc(c.id)}</td><td>${esc(c.title)}</td><td>${esc(c.group)}</td><td>${c.lessonCount||0}</td><td><button class="btn secondary" onclick="App.prefillCourse('${esc(c.id)}')">Sửa nhanh</button></td></tr>`).join('')}</tbody></table></div></div>`;
+      S._manageCourses=courses;
+    }catch(e){el.innerHTML=`<div class="alert err">${esc(e.message)}</div>`}
+  },
+  prefillCourse(id){const c=(S._manageCourses||[]).find(x=>x.id===id);if(!c)return;document.getElementById('mcId').value=c.id;document.getElementById('mcGroup').value=c.group||'';document.getElementById('mcTitle').value=c.title||'';document.getElementById('mcOverview').value=c.overview||c.desc||'';document.getElementById('mcAuthor').value=c.author||'';document.getElementById('mcSource').value=c.sourceUrl||'';document.getElementById('mcDuration').value=c.duration||'';window.scrollTo(0,0);},
+  async saveCourseUI(){try{const course={id:document.getElementById('mcId').value,group:document.getElementById('mcGroup').value,title:document.getElementById('mcTitle').value,overview:document.getElementById('mcOverview').value,author:document.getElementById('mcAuthor').value,sourceUrl:document.getElementById('mcSource').value,duration:document.getElementById('mcDuration').value};const res=await callGAS({action:'saveCourse',token:S.token,course});document.getElementById('mcMsg').innerHTML=`<div class="alert ${res.ok?'ok':'err'}">${res.ok?'Đã lưu khóa học '+esc(res.id):esc(res.msg)}</div>`;}catch(e){alert(e.message)}},
+
+  async loadAdminSettings(){
+    const el=document.getElementById('screen-admin-settings');
+    el.innerHTML='<div class="card">Đang tải cài đặt...</div>';
+    try{const [settings,banksRes]=await Promise.all([callGAS({action:'getSettings',token:S.token}),callGAS({action:'getBanks'})]);const s=settings.settings||{},banks=(banksRes&&banksRes.ok)?banksRes.banks||[]:[];const cats=[...new Set(banks.map(b=>b.linhVuc).filter(Boolean))];el.innerHTML=`<div class="hero"><div><h2>Cài đặt hệ thống</h2><p>Cấu hình bộ đề mặc định và số câu mặc định khi làm trắc nghiệm.</p></div></div><div class="card wide-card"><div class="settings-grid"><div class="field"><label>Lĩnh vực mặc định</label><select id="setLinhVuc"><option value="">Không chọn</option>${cats.map(c=>`<option value="${esc(c)}" ${s.defaultLinhVuc===c?'selected':''}>${esc(c)}</option>`).join('')}</select></div><div class="field"><label>Bộ đề mặc định</label><select id="setBank"><option value="">Không chọn</option>${banks.map(b=>`<option value="${esc(b.id)}" ${s.defaultBankId===b.id?'selected':''}>${esc(b.name)} (${esc(b.id)})</option>`).join('')}</select></div><div class="field"><label>Số câu mặc định</label><input id="setCount" type="number" min="1" value="${esc(s.defaultCount||10)}"></div></div><button class="btn" onclick="App.saveAdminSettings()">Lưu cài đặt</button><button class="btn secondary" onclick="App.setupSheets()">Tạo/kiểm tra sheet</button><div id="settingsMsg"></div></div>`;}catch(e){el.innerHTML=`<div class="alert err">${esc(e.message)}</div>`}
+  },
+  async saveAdminSettings(){try{const settings={defaultLinhVuc:document.getElementById('setLinhVuc').value,defaultBankId:document.getElementById('setBank').value,defaultCount:document.getElementById('setCount').value};const res=await callGAS({action:'saveSettings',token:S.token,settings});document.getElementById('settingsMsg').innerHTML=`<div class="alert ${res.ok?'ok':'err'}">${res.ok?'Đã lưu cài đặt.':esc(res.msg)}</div>`;}catch(e){alert(e.message)}},
+  isAdmin(){return S.user&&S.user.role==='admin'},
+  openPasswordModal(){if(S.user&&S.user.isGuest)return alert('Chế độ khách không đổi mật khẩu.');document.getElementById('passwordModal').classList.remove('hidden');},
+  closePasswordModal(){document.getElementById('passwordModal').classList.add('hidden');},
+  async savePassword(){try{const oldPassword=document.getElementById('pwOld').value,newPassword=document.getElementById('pwNew').value,newPassword2=document.getElementById('pwNew2').value;if(!oldPassword||!newPassword||!newPassword2)throw new Error('Vui lòng nhập đầy đủ thông tin.');if(newPassword.length<6)throw new Error('Mật khẩu mới phải có ít nhất 6 ký tự.');if(newPassword!==newPassword2)throw new Error('Mật khẩu mới không khớp.');const res=await callGAS({action:'changePassword',token:S.token,user:S.user,username:S.user.username,oldPassword,newPassword});const m=document.getElementById('pwMsg');m.className='alert '+(res.ok?'ok':'err');m.textContent=res.ok?'Đổi mật khẩu thành công.':res.msg;if(res.ok)setTimeout(()=>this.closePasswordModal(),1200);}catch(e){const m=document.getElementById('pwMsg');m.className='alert err';m.textContent=e.message;}},
 
   renderAdminImport(){
     const sample={
